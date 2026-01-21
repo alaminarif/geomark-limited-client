@@ -1,12 +1,11 @@
-function App() {
-  // const [count, setCount] = useState(0)
+import { Outlet } from "react-router";
+import CommonLayout from "./components/layout/CommonLayout";
 
+function App() {
   return (
-    <>
-      <div className="App">
-        <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      </div>
-    </>
+    <CommonLayout>
+      <Outlet />
+    </CommonLayout>
   );
 }
 
