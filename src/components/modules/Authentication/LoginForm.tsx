@@ -14,15 +14,19 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await login(data).unwrap();
-      console.log(res);
+      if (res.success) {
+        toast.success("Logged in successfully");
+        navigate("/");
+      }
     } catch (err) {
-      console.error(err);
-
-      if (err.status === 401) {
-        toast.error("Your account is not verified");
-        navigate("/verify", { state: data.email });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((err as any).data?.message === "Password does not match") {
+        toast.error("Invalid credentials");
+        return;
       }
     }
+    toast.success("Login successful");
+    navigate("/");
   };
 
   return (

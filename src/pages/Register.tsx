@@ -1,4 +1,4 @@
-import TravelRegister from "@/assets/images/travel-register.jpg";
+import TravelRegister from "@/assets/images/ATN-PHOTO.jpeg";
 import { Link } from "react-router";
 // import Logo from "@/assets/icons/Geomark_Logo_png.png";
 import { RegisterForm } from "@/components/modules/Authentication/RegisterForm";

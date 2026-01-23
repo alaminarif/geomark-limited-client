@@ -34,10 +34,10 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      name: "Rakib",
+      email: "rakib@gmail.com",
+      password: "111222",
+      confirmPassword: "111222",
     },
   });
 
@@ -52,7 +52,7 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
       const result = await register(userInfo).unwrap();
       console.log(result);
       toast.success("User created successfully");
-      navigate("/verify");
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
