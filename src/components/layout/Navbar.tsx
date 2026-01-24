@@ -1,5 +1,5 @@
 import { ModeToggle } from "./ModeToggler";
-// import Logo from "../../assets/images/Geomark_Logo_png.png";
+import Logo from "../../assets/images/Geomark_Logo_png.png";
 
 import { Button } from "@/components/ui/button";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu";
@@ -11,6 +11,9 @@ import { Link } from "react-router";
 const navigationLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/projects", label: "Projects" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -66,9 +69,9 @@ export default function Navbar() {
           </Popover>
           {/* Main nav */}
           <div className="flex items-center gap-6">
-            <a href="#" className="text-primary hover:text-primary/90">
-              {/* <Logo /> */}
-            </a>
+            <Link to="/" className="text-primary hover:text-primary/90">
+              <img src={Logo} alt="Geomark Logo" className="h-8 w-auto" />
+            </Link>
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
