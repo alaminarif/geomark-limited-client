@@ -22,11 +22,8 @@ export default function Navbar() {
   const [logout] = useLogoutMutation();
 
   const handleLogout = () => {
-    try {
-      logout(undefined);
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
+    logout(undefined);
+    console.log("click");
   };
 
   return (
