@@ -6,7 +6,8 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 import { Link } from "react-router";
-import { useLogoutMutation, useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import { authApi, useLogoutMutation, useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import { useAppDispatch } from "@/redux/hook";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -20,10 +21,10 @@ const navigationLinks = [
 export default function Navbar() {
   const { data } = useUserInfoQuery(undefined);
   const [logout] = useLogoutMutation();
-
-  const handleLogout = () => {
-    logout(undefined);
-    console.log("click");
+  const dispatch = useAppDispatch();
+  const handleLogout = async () => {
+    await logout(undefined);
+    dispatch(authApi.util.resetApiState());
   };
 
   return (
@@ -109,6 +110,9 @@ export default function Navbar() {
             </Button>
           )}
         </div>
+        <Button variant="outline" size="sm" onClick={handleLogout}>
+          Logout
+        </Button>
       </div>
     </header>
   );
