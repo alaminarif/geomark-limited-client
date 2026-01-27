@@ -1,15 +1,14 @@
-export const adminSidebarItems = [
+import Admin from "@/pages/Admin/Admin";
+import type { ISidebarItem } from "@/types";
+
+export const adminSidebarItems: ISidebarItem[] = [
   {
-    title: "Getting Started",
-    url: "#",
+    title: "Admin History",
     items: [
       {
-        title: "Building Your Application",
-        url: "#",
-      },
-      {
-        title: "API Reference",
-        url: "#",
+        title: "Admins",
+        url: "/admin/admin",
+        component: Admin,
       },
     ],
   },
