@@ -6,7 +6,7 @@ import type { ISidebarItem } from "@/types";
 
 export const adminSidebarItems: ISidebarItem[] = [
   {
-    title: "Admin History",
+    title: "Dashboard",
     items: [
       {
         title: "Admin Management",

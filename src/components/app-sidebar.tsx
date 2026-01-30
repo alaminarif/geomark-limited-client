@@ -16,12 +16,22 @@ import {
 } from "@/components/ui/sidebar";
 import { Link } from "react-router";
 import { getSidebarItems } from "@/utils/getSidebarItems";
-import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import { authApi, useLogoutMutation, useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import { useAppDispatch } from "@/redux/hook";
+import { Button } from "./ui/button";
 
 // This is sample data.
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: userData } = useUserInfoQuery(undefined);
+  const [logout] = useLogoutMutation();
+  const dispatch = useAppDispatch();
+
+  const handleLogout = async () => {
+    await logout(undefined);
+
+    dispatch(authApi.util.resetApiState());
+  };
 
   const data = {
     navMain: getSidebarItems(userData?.data?.role),
@@ -52,6 +62,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ))}
       </SidebarContent>
       <SidebarRail />
+      {/* <div className="mb-4"> */}
+      <Button variant="outline" size="sm" className="mb-4" onClick={handleLogout}>
+        Logout
+      </Button>
+      {/* </div> */}
     </Sidebar>
   );
 }
