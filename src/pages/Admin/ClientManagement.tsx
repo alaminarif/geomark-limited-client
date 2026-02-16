@@ -1,13 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { DeleteConfirmation } from "@/components/DeleteConfirmation";
+import AddClientModal from "@/components/modules/Admin/Client/AddClientModal";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useGetClientsQuery } from "@/redux/features/client/client.api";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useDeleteClientMutation, useGetClientsQuery } from "@/redux/features/client/client.api";
+import { MoreHorizontalIcon } from "lucide-react";
 const ClientManagement = () => {
   const { data } = useGetClientsQuery(undefined);
+  const [deleteClient] = useDeleteClientMutation();
+
+  const handleDeleteClient = async (clientId: string) => {
+    const res = await deleteClient(clientId).unwrap();
+    console.log(res);
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto px-5">
+      <div className="flex justify-between my-5">
+        <h1>Client</h1>
+        <AddClientModal />
+      </div>
+
       <Table className="border border-muted rounded-4xl">
-        <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="">Name</TableHead>
@@ -21,19 +36,32 @@ const ClientManagement = () => {
         <TableBody>
           {data?.data?.map((item: any) => (
             <TableRow className="">
-              {/* <div>
-               
-              </div> */}
               <TableCell className="font-medium">{item?.name}</TableCell>
               <TableCell className="font-medium">{item?.email}</TableCell>
               <TableCell className="font-medium">{item?.phone}</TableCell>
               <TableCell className="font-medium">{item?.address}</TableCell>
               <TableCell className="font-medium">{item?.joinDate}</TableCell>
 
-              <TableCell className="font-medium text-right space-x-2">
-                <Button variant="outline">View</Button>
-                <Button variant="outline">Edit</Button>
-                <Button variant="destructive">Delete</Button>
+              <TableCell className="font-medium text-right">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="size-8">
+                      <MoreHorizontalIcon />
+                      <span className="sr-only">Open menu</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem>View</DropdownMenuItem>
+                    <DropdownMenuItem>Edit</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+
+                    <DeleteConfirmation onConfirm={() => handleDeleteClient(item._id)}>
+                      <Button variant="outline" className="text-destructive">
+                        Delete
+                      </Button>
+                    </DeleteConfirmation>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </TableCell>
             </TableRow>
           ))}
