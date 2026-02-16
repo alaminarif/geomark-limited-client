@@ -2,17 +2,28 @@
 import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import AddClientModal from "@/components/modules/Admin/Client/AddClientModal";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useDeleteClientMutation, useGetClientsQuery } from "@/redux/features/client/client.api";
 import { MoreHorizontalIcon } from "lucide-react";
+import { toast } from "sonner";
 const ClientManagement = () => {
   const { data } = useGetClientsQuery(undefined);
   const [deleteClient] = useDeleteClientMutation();
 
   const handleDeleteClient = async (clientId: string) => {
-    const res = await deleteClient(clientId).unwrap();
-    console.log(res);
+    const toastId = toast.loading("Deleting client...");
+
+    try {
+      const res = await deleteClient(clientId).unwrap();
+
+      if (res.success) {
+        toast.success("Client deleted successfully", { id: toastId });
+      }
+    } catch (error) {
+      toast.error("Failed to delete client", { id: toastId });
+      console.log(error);
+    }
   };
 
   return (
@@ -33,6 +44,7 @@ const ClientManagement = () => {
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
+
         <TableBody>
           {data?.data?.map((item: any) => (
             <TableRow className="">
@@ -53,8 +65,6 @@ const ClientManagement = () => {
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem>View</DropdownMenuItem>
                     <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-
                     <DeleteConfirmation onConfirm={() => handleDeleteClient(item._id)}>
                       <Button variant="outline" className="text-destructive">
                         Delete

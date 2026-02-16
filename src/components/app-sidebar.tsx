@@ -63,7 +63,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarRail />
       {/* <div className="mb-4"> */}
-      <Button variant="outline" size="sm" className="mb-4" onClick={handleLogout}>
+      <Button variant="outline" size="sm" className="m-4 " onClick={handleLogout}>
         Logout
       </Button>
       {/* </div> */}
