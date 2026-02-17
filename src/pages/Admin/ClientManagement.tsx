@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useDeleteClientMutation, useGetClientsQuery } from "@/redux/features/client/client.api";
+import { format } from "date-fns";
 import { MoreHorizontalIcon } from "lucide-react";
 import { toast } from "sonner";
 const ClientManagement = () => {
@@ -52,8 +53,7 @@ const ClientManagement = () => {
               <TableCell className="font-medium">{item?.email}</TableCell>
               <TableCell className="font-medium">{item?.phone}</TableCell>
               <TableCell className="font-medium">{item?.address}</TableCell>
-              <TableCell className="font-medium">{item?.joinDate}</TableCell>
-
+              <TableCell className="font-medium">{item?.joinDate ? format(new Date(item.joinDate), "PPP") : "-"}</TableCell>
               <TableCell className="font-medium text-right">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>

@@ -9,7 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import SingleImageUploader from "@/components/ui/SingleImageUploader";
 import { cn } from "@/lib/utils";
 import { useAddClientMutation } from "@/redux/features/client/client.api";
-import { format, formatDate, formatISO } from "date-fns";
+import { format, formatISO } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -122,7 +122,7 @@ const AddClientModal = () => {
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button variant={"outline"} className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
-                            {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                            {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
                         </FormControl>
@@ -130,7 +130,7 @@ const AddClientModal = () => {
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="single"
-                          selected={new Date(field.value)}
+                          selected={field.value}
                           onSelect={field.onChange}
                           // disabled={(date) => date < new Date(new Date().setDate(new Date().getDate() - 1))}
                           captionLayout="dropdown"
@@ -141,20 +141,6 @@ const AddClientModal = () => {
                   </FormItem>
                 )}
               />
-
-              {/* <FormField
-                control={form.control}
-                name="joinDate"
-                render={({ field }) => (
-                  <FormItem className="pt-4">
-                    <FormLabel>Join Date</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Join Date" {...field} value={field.value || ""} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
             </form>
           </Form>
 
