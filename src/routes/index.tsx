@@ -16,6 +16,8 @@ import Service from "@/pages/Service";
 import serviceDetails from "@/pages/serviceDetails";
 import Project from "@/pages/Project";
 import ProjectDetails from "@/pages/ProjectDetails";
+import Employee from "@/pages/employee";
+import EmployeeDetails from "@/pages/Admin/employeeDetails";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +52,14 @@ export const router = createBrowserRouter([
       {
         Component: ProjectDetails,
         path: "project/:id",
+      },
+      {
+        Component: Employee,
+        path: "employee",
+      },
+      {
+        Component: EmployeeDetails,
+        path: "employee/:id",
       },
     ],
   },

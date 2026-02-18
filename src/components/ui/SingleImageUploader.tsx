@@ -26,7 +26,7 @@ export default function SingleImageUploader({ onChange }: { onChange: (file: Fil
   const previewUrl = files[0]?.preview || null;
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 pt-4">
       <div className="relative">
         {/* Drop area */}
         <div

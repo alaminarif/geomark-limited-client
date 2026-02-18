@@ -1,6 +1,7 @@
 import Project from "./Project";
 import Service from "./Service";
 import Client from "./Client";
+import Employee from "./Employee";
 
 const Homepage = () => {
   return (
@@ -9,6 +10,7 @@ const Homepage = () => {
       <Service />
       <Project />
       <Client />
+      <Employee />
     </div>
   );
 };

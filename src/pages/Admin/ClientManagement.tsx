@@ -43,9 +43,6 @@ const ClientManagement = () => {
       <div className="flex justify-between my-5">
         <h1>Client</h1>
         <AddClientModal />
-        {/* <div>
-          <Button onClick={handleRegisterUser}>Add Client</Button>
-        </div> */}
       </div>
 
       <Table className="border border-muted rounded-4xl">
