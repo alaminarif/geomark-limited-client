@@ -1,4 +1,4 @@
-import AdminManagement from "@/pages/Admin/AdminManagement";
+import AdminManagement from "@/pages/Admin/UserManagement";
 import ClientManagement from "@/pages/Admin/ClientManagement";
 import ProjectManagement from "@/pages/Admin/ProjectManagement";
 import ServicesManagement from "@/pages/Admin/ServicesManagement";
@@ -9,8 +9,8 @@ export const adminSidebarItems: ISidebarItem[] = [
     title: "Dashboard",
     items: [
       {
-        title: "Admin Management",
-        url: "/admin/admin-management",
+        title: "User Management",
+        url: "/admin/user-management",
         component: AdminManagement,
       },
       {

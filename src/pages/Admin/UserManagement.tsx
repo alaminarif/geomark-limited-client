@@ -1,51 +1,49 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import Loading from "@/components/layout/Loading";
-import AddClientModal from "@/components/modules/Admin/Client/AddClientModal";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useDeleteClientMutation, useGetClientsQuery } from "@/redux/features/client/client.api";
-import { format } from "date-fns";
 import { MoreHorizontalIcon } from "lucide-react";
-import { useNavigate } from "react-router";
 import { toast } from "sonner";
-const ClientManagement = () => {
+import { useNavigate } from "react-router";
+import { useDeleteUserMutation, useGetAllUsersQuery } from "@/redux/features/user/user.api";
+const UserManagement = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetClientsQuery(undefined);
-  const [deleteClient] = useDeleteClientMutation();
+  const { data, isLoading } = useGetAllUsersQuery(undefined);
+  const [deleteUser] = useDeleteUserMutation();
 
-  if (isLoading) {
-    return <Loading />;
-  }
-  const handleDeleteClient = async (clientId: string) => {
-    const toastId = toast.loading("Deleting client...");
+  const handleDeleteUser = async (userId: string) => {
+    const toastId = toast.loading("Deleting user...");
 
     try {
-      const res = await deleteClient(clientId).unwrap();
+      const res = await deleteUser(userId).unwrap();
 
       if (res.success) {
-        toast.success("Client deleted successfully", { id: toastId });
+        toast.success("User deleted successfully", { id: toastId });
       }
     } catch (error) {
-      toast.error("Failed to delete client", { id: toastId });
+      toast.error("Failed to delete user", { id: toastId });
       console.log(error);
     }
   };
 
-  const handleClientDetails = (id: string) => {
-    navigate(`/client/${id}`);
-    console.log("click", id);
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  const handleRegisterUser = () => {
+    navigate("/register"); // Render the Register component when the button is clicked
   };
 
   return (
     <div className="w-full max-w-7xl mx-auto px-5">
       <div className="flex justify-between my-5">
-        <h1>Client</h1>
-        <AddClientModal />
-        {/* <div>
-          <Button onClick={handleRegisterUser}>Add Client</Button>
-        </div> */}
+        <h1>User </h1>
+
+        <div>
+          <Button onClick={handleRegisterUser}>Add User</Button>
+        </div>
       </div>
 
       <Table className="border border-muted rounded-4xl">
@@ -53,9 +51,9 @@ const ClientManagement = () => {
           <TableRow>
             <TableHead className="">Name</TableHead>
             <TableHead className="">Email</TableHead>
-            <TableHead className="">Phone</TableHead>
-            <TableHead className="">Address</TableHead>
-            <TableHead className="">Join</TableHead>
+            <TableHead className="">Role</TableHead>
+            <TableHead className="">Status</TableHead>
+
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -65,10 +63,8 @@ const ClientManagement = () => {
             <TableRow className="">
               <TableCell className="font-medium">{item?.name}</TableCell>
               <TableCell className="font-medium">{item?.email}</TableCell>
-              <TableCell className="font-medium">{item?.phone}</TableCell>
-              <TableCell className="font-medium">{item?.address}</TableCell>
-              <TableCell className="font-medium">{item?.joinDate ? format(new Date(item.joinDate), "PPP") : "-"}</TableCell>
-
+              <TableCell className="font-medium">{item?.role}</TableCell>
+              <TableCell className="font-medium">{item?.isActive}</TableCell>
               <TableCell className="font-medium text-right">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -77,11 +73,10 @@ const ClientManagement = () => {
                       <span className="sr-only">Open menu</span>
                     </Button>
                   </DropdownMenuTrigger>
-
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => handleClientDetails(item?._id)}>View</DropdownMenuItem>
+                    <DropdownMenuItem>View</DropdownMenuItem>
                     <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DeleteConfirmation onConfirm={() => handleDeleteClient(item._id)}>
+                    <DeleteConfirmation onConfirm={() => handleDeleteUser(item._id)}>
                       <Button variant="outline" className="text-destructive">
                         Delete
                       </Button>
@@ -97,4 +92,4 @@ const ClientManagement = () => {
   );
 };
 
-export default ClientManagement;
+export default UserManagement;
