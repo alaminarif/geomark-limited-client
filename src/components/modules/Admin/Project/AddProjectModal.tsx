@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SingleImageUploader from "@/components/ui/SingleImageUploader";
+import { ProjectStatus } from "@/constants/project";
 import { cn } from "@/lib/utils";
 import { useGetClientsQuery } from "@/redux/features/client/client.api";
 import { useAddProjectMutation } from "@/redux/features/project/project.api";
@@ -42,25 +43,38 @@ const AddProjectModal = () => {
     label: item.name,
   }));
 
-  console.log(" => ", serviceTitleOptions);
+  console.log(serviceTitleOptions);
 
-  if (clientsLoading || servicesLoading) {
+  const clientOptions = clientsData?.data?.map((item: any) => ({
+    value: item._id,
+    label: item.name,
+  }));
+
+  const projectStatusOptions = ProjectStatus.map((status) => ({
+    value: status.value,
+    label: status.label,
+  }));
+
+  console.log(clientOptions);
+
+  console.log(projectStatusOptions);
+
+  if (clientsLoading) {
     return <Loading />;
   }
 
   const onSubmit = async (data: any) => {
-    console.log("click");
     const toastId = toast.loading("Adding project...");
 
-    const clientData = {
+    const projectData = {
       ...data,
       startDate: formatISO(data.startDate),
-      endDate: formatISO(data.endDate),
+      endDate: formatISO(data?.endDate),
     };
 
     const formData = new FormData();
 
-    formData.append("data", JSON.stringify(clientData));
+    formData.append("data", JSON.stringify(projectData));
     formData.append("file", image as File);
     try {
       await addProject(formData).unwrap();
@@ -72,7 +86,7 @@ const AddProjectModal = () => {
       toast.error("Failed to add project", { id: toastId });
       console.log(error);
     }
-    console.log(clientData);
+    console.log(projectData);
   };
 
   return (
@@ -103,7 +117,7 @@ const AddProjectModal = () => {
                         </FormControl>
                         <SelectContent>
                           {serviceTitleOptions?.map((item: { label: string; value: string }) => (
-                            <SelectItem key={item.value} value={item.value}>
+                            <SelectItem key={item.value} value={item.label}>
                               {item.label}
                             </SelectItem>
                           ))}
@@ -114,20 +128,6 @@ const AddProjectModal = () => {
                     </FormItem>
                   )}
                 />
-
-                {/* <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Title</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Title" {...field} value={field.value || ""} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                /> */}
 
                 <FormField
                   control={form.control}
@@ -175,11 +175,23 @@ const AddProjectModal = () => {
                   control={form.control}
                   name="status"
                   render={({ field }) => (
-                    <FormItem className="pt-4">
+                    <FormItem className="flex-1 pt-4 ">
                       <FormLabel>Status</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Status" {...field} value={field.value || ""} />
-                      </FormControl>
+                      <Select onValueChange={field.onChange} defaultValue={field.value} disabled={servicesLoading}>
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {projectStatusOptions?.map((item: { label: string; value: string }) => (
+                            <SelectItem key={item.value} value={item.value}>
+                              {item.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+
                       <FormMessage />
                     </FormItem>
                   )}
@@ -249,11 +261,23 @@ const AddProjectModal = () => {
                   control={form.control}
                   name="client"
                   render={({ field }) => (
-                    <FormItem className="py-4">
+                    <FormItem className="flex-1 pt-4">
                       <FormLabel>Client</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Client" {...field} value={field.value || ""} />
-                      </FormControl>
+                      <Select onValueChange={field.onChange} defaultValue={field.value} disabled={servicesLoading}>
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {clientOptions?.map((item: { label: string; value: string }) => (
+                            <SelectItem key={item.value} value={item.value}>
+                              {item.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+
                       <FormMessage />
                     </FormItem>
                   )}
@@ -263,7 +287,7 @@ const AddProjectModal = () => {
             <SingleImageUploader onChange={setImage} />
           </div>
           <DrawerFooter>
-            <Button type="submit" form="add-new-employee">
+            <Button type="submit" form="add-new-project">
               Submit
             </Button>
             <DrawerClose asChild>

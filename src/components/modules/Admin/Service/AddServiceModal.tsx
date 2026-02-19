@@ -74,7 +74,7 @@ export function AddServiceModal() {
                 control={form.control}
                 name="description"
                 render={({ field }) => (
-                  <FormItem className="pt-4">
+                  <FormItem className="mt-4">
                     <FormLabel>Description</FormLabel>
                     <FormControl>
                       <Input placeholder="Description" {...field} value={field.value || ""} />

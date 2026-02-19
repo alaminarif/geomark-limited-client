@@ -34,7 +34,6 @@ const ProjectManagement = () => {
       console.log(error);
     }
   };
-
   const handleProjectDetails = (id: string) => {
     navigate(`/project/${id}`);
     console.log("click", id);
@@ -64,8 +63,8 @@ const ProjectManagement = () => {
         <TableBody>
           {projectsData?.data?.map((item: any) => (
             <TableRow className="">
-              <TableCell className="font-medium">{item?.name}</TableCell>
               <TableCell className="font-medium">{item?.title}</TableCell>
+              <TableCell className="font-medium">{item?.name}</TableCell>
               {/* <TableCell className="font-medium">{item?.description}</TableCell>
               <TableCell className="font-medium">{item?.details}</TableCell> */}
               <TableCell className="font-medium">{item?.status}</TableCell>
