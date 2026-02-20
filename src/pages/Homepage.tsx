@@ -3,6 +3,7 @@ import Service from "./Service";
 import Client from "./Client";
 import Employee from "./Employee";
 import { HeroSection } from "@/components/modules/HomePage/HeroSection";
+import { Community } from "@/components/modules/HomePage/Community";
 
 const Homepage = () => {
   return (
@@ -12,6 +13,7 @@ const Homepage = () => {
       <Project />
       <Client />
       <Employee />
+      <Community />
     </div>
   );
 };

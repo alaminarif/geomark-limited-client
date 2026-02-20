@@ -1,5 +1,12 @@
+import { EmployeeSection } from "@/components/modules/HomePage/EmployeeSection";
+
 const Employee = () => {
-  return <div>this is</div>;
+  return (
+    <div>
+      {" "}
+      <EmployeeSection />
+    </div>
+  );
 };
 
 export default Employee;
