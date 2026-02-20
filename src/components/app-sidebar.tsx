@@ -39,7 +39,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <img src={logo} alt="Geomark Logo" className="h-8 w-auto" />
+        <Link to="/" className="h-8 w-full">
+          <img src={logo} alt="Geomark Logo" className="h-8 w-auto" />
+        </Link>
         <SearchForm />
       </SidebarHeader>
       <SidebarContent>

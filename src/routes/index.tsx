@@ -16,8 +16,8 @@ import Service from "@/pages/Service";
 import serviceDetails from "@/pages/serviceDetails";
 import Project from "@/pages/Project";
 import ProjectDetails from "@/pages/ProjectDetails";
-import Employee from "@/pages/employee";
-import EmployeeDetails from "@/pages/Admin/employeeDetails";
+import Employee from "@/pages/Employee";
+import EmployeeDetails from "@/pages/Admin/EmployeeDetails";
 
 export const router = createBrowserRouter([
   {

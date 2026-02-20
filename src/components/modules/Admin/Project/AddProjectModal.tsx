@@ -43,8 +43,6 @@ const AddProjectModal = () => {
     label: item.name,
   }));
 
-  console.log(serviceTitleOptions);
-
   const clientOptions = clientsData?.data?.map((item: any) => ({
     value: item._id,
     label: item.name,
@@ -54,10 +52,6 @@ const AddProjectModal = () => {
     value: status.value,
     label: status.label,
   }));
-
-  console.log(clientOptions);
-
-  console.log(projectStatusOptions);
 
   if (clientsLoading) {
     return <Loading />;
