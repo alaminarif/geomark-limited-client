@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { motion } from "framer-motion";
 
 import {
   Drawer,
@@ -62,7 +62,14 @@ const AddClientModal = () => {
     <div>
       <Drawer open={open} onOpenChange={setOpen} direction="right">
         <DrawerTrigger asChild>
-          <Button type="button">Add Client</Button>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button
+              type="button"
+              className="w-full rounded-xl bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+            >
+              Add Client
+            </Button>
+          </motion.div>
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>

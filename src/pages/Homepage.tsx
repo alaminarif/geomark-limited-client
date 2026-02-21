@@ -1,19 +1,21 @@
 import Project from "./Project";
-import Service from "./Service";
-import Client from "./Client";
 import Employee from "./Employee";
 import { HeroSection } from "@/components/modules/HomePage/HeroSection";
 import { Community } from "@/components/modules/HomePage/Community";
+import { Contact } from "./Contact";
+import Client from "./Client";
+import { ServiceSection } from "@/components/modules/HomePage/ServiceSection";
 
 const Homepage = () => {
   return (
     <div>
       <HeroSection />
-      <Service />
+      <ServiceSection />
       <Project />
       <Client />
       <Employee />
       <Community />
+      <Contact />
     </div>
   );
 };
