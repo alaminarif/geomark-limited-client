@@ -1,7 +1,11 @@
-import React from "react";
+import { ProjectSection } from "@/components/modules/HomePage/ProjectSection";
 
 const Project = () => {
-  return <div>this is project page</div>;
+  return (
+    <div>
+      <ProjectSection />
+    </div>
+  );
 };
 
 export default Project;

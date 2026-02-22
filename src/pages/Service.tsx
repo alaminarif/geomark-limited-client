@@ -1,5 +1,11 @@
+import { ServiceSection } from "@/components/modules/HomePage/ServiceSection";
+
 const Service = () => {
-  return <div>this is service page</div>;
+  return (
+    <div>
+      <ServiceSection />
+    </div>
+  );
 };
 
 export default Service;

@@ -1780,6 +1780,11 @@ cookie@^1.0.1:
   resolved "https://registry.npmjs.org/cookie/-/cookie-1.1.1.tgz"
   integrity sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==
 
+countup.js@^2.8.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/countup.js/-/countup.js-2.9.0.tgz#599e6482e502e5e3f00f8816637120c9b21856ed"
+  integrity sha512-llqrvyXztRFPp6+i8jx25phHWcVWhrHO4Nlt0uAOSKHB8778zzQswa4MU3qKBvkXfJKftRYFJuVHez67lyKdHg==
+
 cross-spawn@^7.0.6:
   version "7.0.6"
   resolved "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz"
@@ -2118,7 +2123,7 @@ form-data@^4.0.4:
 
 framer-motion@^12.34.3:
   version "12.34.3"
-  resolved "https://registry.npmjs.org/framer-motion/-/framer-motion-12.34.3.tgz"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-12.34.3.tgz#946f716bfef710d564bf721f4f364274f6278fd4"
   integrity sha512-v81ecyZKYO/DfpTwHivqkxSUBzvceOpoI+wLfgCgoUIKxlFKEXdg0oR9imxwXumT4SFy8vRk9xzJ5l3/Du/55Q==
   dependencies:
     motion-dom "^12.34.3"
@@ -2639,6 +2644,13 @@ radix-ui@^1.4.3:
     "@radix-ui/react-use-layout-effect" "1.1.1"
     "@radix-ui/react-use-size" "1.1.1"
     "@radix-ui/react-visually-hidden" "1.2.3"
+
+react-countup@^6.5.3:
+  version "6.5.3"
+  resolved "https://registry.yarnpkg.com/react-countup/-/react-countup-6.5.3.tgz#e892aa3eab2d6ba9c3cdba30bf4ed6764826d848"
+  integrity sha512-udnqVQitxC7QWADSPDOxVWULkLvKUWrDapn5i53HE4DPRVgs+Y5rr4bo25qEl8jSh+0l2cToJgGMx+clxPM3+w==
+  dependencies:
+    countup.js "^2.8.0"
 
 react-day-picker@^9.13.2:
   version "9.13.2"

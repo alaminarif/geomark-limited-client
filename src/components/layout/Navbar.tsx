@@ -1,6 +1,6 @@
 import { ModeToggle } from "./ModeToggler";
 import Logo from "../../assets/images/Geomark_Logo_png.png";
-
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -16,6 +16,7 @@ const navigationLinks = [
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
   { href: "/projects", label: "Projects" },
+  { href: "/employees", label: "Team" },
   { href: "/contact", label: "Contact" },
   { href: "/admin/user-management", label: "Dashboard", role: role.admin },
   { href: "/admin/user-management", label: "Dashboard", role: role.superAdmin },
@@ -56,7 +57,7 @@ export default function Navbar() {
                 >
                   <path
                     d="M4 12L20 12"
-                    className="origin-center -translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
+                    className="origin-center -translate-y-1.75 transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-315"
                   />
                   <path
                     d="M4 12H20"
@@ -64,7 +65,7 @@ export default function Navbar() {
                   />
                   <path
                     d="M4 12H20"
-                    className="origin-center translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
+                    className="origin-center translate-y-1.75 transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-135"
                   />
                 </svg>
               </Button>
@@ -86,7 +87,7 @@ export default function Navbar() {
           {/* Main nav */}
           <div className="flex items-center gap-6">
             <Link to="/" className="text-primary hover:text-primary/90">
-              <img src={Logo} alt="Geomark Logo" className="h-8 w-auto" />
+              <img src={Logo} alt="Geomark Logo" className="h-14 w-auto" />
             </Link>
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
@@ -118,14 +119,26 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <ModeToggle />
           {data?.data?.email && (
-            <Button variant="outline" size="sm" onClick={handleLogout}>
-              Logout
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex justify-end items-center mx-12">
+              <Button
+                onClick={handleLogout}
+                className="w-25 text-center rounded-xl py-2 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50
+                transition-all duration-300"
+              >
+                Logout
+              </Button>
+            </motion.div>
           )}
           {!data?.data?.email && (
-            <Button asChild className="text-sm">
-              <Link to="/login">Login</Link>
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex justify-end items-center mx-12">
+              <Link
+                to="/login"
+                className="w-25 text-center rounded-xl py-2 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50
+                transition-all duration-300"
+              >
+                Login
+              </Link>
+            </motion.div>
           )}
         </div>
       </div>

@@ -1,46 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArrowRight } from "lucide-react";
-import { motion, useMotionValue, useSpring, useScroll } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
 import Loading from "@/components/layout/Loading";
+import { useNavigate } from "react-router";
+import { Magnetic } from "@/utils/Magnetic";
 
 /* ----------------------------------
    Magnetic Button Component
 ----------------------------------- */
-function Magnetic({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const springX = useSpring(x, { stiffness: 150, damping: 15 });
-  const springY = useSpring(y, { stiffness: 150, damping: 15 });
-
-  function handleMouseMove(e: React.MouseEvent) {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-
-    const dx = e.clientX - (rect.left + rect.width / 2);
-    const dy = e.clientY - (rect.top + rect.height / 2);
-
-    x.set(dx * 0.25);
-    y.set(dy * 0.25);
-  }
-
-  function reset() {
-    x.set(0);
-    y.set(0);
-  }
-
-  return (
-    <motion.div ref={ref} onMouseMove={handleMouseMove} onMouseLeave={reset} style={{ x: springX, y: springY }}>
-      {children}
-    </motion.div>
-  );
-}
 
 /* ----------------------------------
    Hover-follow Glow Card
@@ -76,12 +47,17 @@ function GlowCard({ children }: { children: React.ReactNode }) {
 export const ServiceSection = () => {
   /* Scroll Progress */
   const { scrollYProgress } = useScroll();
+  const navigate = useNavigate();
 
   const { data, isLoading } = useGetAllServicesQuery(undefined);
   const services = data?.data || [];
   if (isLoading) {
     return <Loading />;
   }
+
+  const handleService = () => {
+    navigate("/services");
+  };
 
   return (
     <>
@@ -99,7 +75,10 @@ export const ServiceSection = () => {
             </p>
 
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="w-6/12 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300">
+              <Button
+                onClick={handleService}
+                className="w-6/12 rounded-xl bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+              >
                 Veiw All Services
               </Button>
             </motion.div>

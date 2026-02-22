@@ -19,6 +19,7 @@ import ProjectDetails from "@/pages/ProjectDetails";
 import Employee from "@/pages/Employee";
 import EmployeeDetails from "@/pages/Admin/EmployeeDetails";
 import { Contact } from "@/pages/Contact";
+import { AboutPage } from "@/pages/AboutPage";
 
 export const router = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ export const router = createBrowserRouter([
 
       {
         Component: Service,
-        path: "service",
+        path: "services",
       },
       {
         Component: serviceDetails,
@@ -48,7 +49,7 @@ export const router = createBrowserRouter([
       },
       {
         Component: Project,
-        path: "project",
+        path: "projects",
       },
       {
         Component: ProjectDetails,
@@ -56,7 +57,7 @@ export const router = createBrowserRouter([
       },
       {
         Component: Employee,
-        path: "employee",
+        path: "employees",
       },
       {
         Component: EmployeeDetails,
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
       {
         Component: Contact,
         path: "contact",
+      },
+      {
+        Component: AboutPage,
+        path: "about",
       },
     ],
   },

@@ -7,6 +7,8 @@ import { useGetAllEmployeesQuery } from "@/redux/features/employee/employee.api"
 import Loading from "@/components/layout/Loading";
 import { Facebook, Linkedin, Twitter } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router";
 
 interface EmployeeSectionProps {
   heading?: string;
@@ -37,7 +39,12 @@ export const EmployeeSection = ({
   heading = "Team",
   description = "Our diverse team of experts brings together decades of experience in design, engineering, and product development.",
 }: EmployeeSectionProps) => {
+  const navigate = useNavigate();
   const { data, isLoading } = useGetAllEmployeesQuery(undefined);
+
+  const handleAllTeamMembers = () => {
+    navigate("/employees");
+  };
 
   if (isLoading) return <Loading />;
 
@@ -91,6 +98,15 @@ export const EmployeeSection = ({
             </div>
           </motion.div>
         ))}
+      </motion.div>
+
+      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex justify-end items-center mx-12">
+        <Button
+          onClick={handleAllTeamMembers}
+          className="w-50  rounded-xl py-4 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+        >
+          View All Team Members
+        </Button>
       </motion.div>
     </section>
   );

@@ -24,13 +24,13 @@ export const Contact = ({ className }: { className?: string }) => {
       <motion.div
         animate={{ y: [0, -40, 0] }}
         transition={{ duration: 8, repeat: Infinity }}
-        className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-purple-600 opacity-30 blur-[150px]"
+        className="absolute -top-40 -left-40  rounded-full blur-[150px]"
       />
 
       <motion.div
         animate={{ y: [0, 40, 0] }}
         transition={{ duration: 10, repeat: Infinity }}
-        className="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-blue-500 opacity-30 blur-[150px]"
+        className="absolute bottom-0 right-0 h-screen w-full rounded-full bg-blue-500  opacity-5 blur-[150px]"
       />
 
       <div className="container relative z-10">
@@ -91,7 +91,7 @@ export const Contact = ({ className }: { className?: string }) => {
 
             <div className="grid gap-1.5">
               <Label htmlFor="subject">Subject</Label>
-              <Input id="subject" className="glow-input bg-white/5 border-white/20" placeholder="Subject" />
+              <Input id="subject" className="glow-input bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Subject" />
             </div>
 
             <div className="grid gap-1.5">
@@ -101,7 +101,7 @@ export const Contact = ({ className }: { className?: string }) => {
 
             {/* Magnetic Animated Button */}
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="w-full rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300">
+              <Button className="w-full rounded-xl bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300">
                 Send Message
               </Button>
             </motion.div>

@@ -4,13 +4,13 @@ import { HeroSection } from "@/components/modules/HomePage/HeroSection";
 import { Community } from "@/components/modules/HomePage/Community";
 import { Contact } from "./Contact";
 import Client from "./Client";
-import { ServiceSection } from "@/components/modules/HomePage/ServiceSection";
+import Service from "./Service";
 
 const Homepage = () => {
   return (
     <div>
       <HeroSection />
-      <ServiceSection />
+      <Service />
       <Project />
       <Client />
       <Employee />

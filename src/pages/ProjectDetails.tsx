@@ -33,7 +33,7 @@ const ProjectDetails = ({ className }: ProjectDetailsProps) => {
     <section className={cn("pb-32", className)}>
       {/* Full Width Hero with Background Image */}
       <div
-        className="relative flex min-h-[500px] items-center justify-center bg-cover bg-center bg-no-repeat py-32"
+        className="relative flex min-h-125 items-center justify-center bg-cover bg-center bg-no-repeat py-32"
         style={{
           backgroundImage: `url(${bgImage})`,
         }}
