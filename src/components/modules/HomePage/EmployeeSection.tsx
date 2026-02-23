@@ -49,14 +49,14 @@ export const EmployeeSection = ({
   if (isLoading) return <Loading />;
 
   return (
-    <section className={cn("py-20")}>
+    <section className={cn("py-20 container mx-auto ")}>
       {/* Section Heading */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
-        className="container flex flex-col items-center text-center"
+        className="flex flex-col items-center text-center"
       >
         <h2 className="my-6 text-2xl font-bold text-pretty lg:text-4xl">{heading}</h2>
         <p className="mb-12 w-6/12 mx-auto font-medium text-muted-foreground md:text-xl">{description}</p>
@@ -68,14 +68,14 @@ export const EmployeeSection = ({
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }} // triggers when 20% visible
-        className="container mt-16 grid gap-x-8 gap-y-16 md:grid-cols-2 lg:grid-cols-4"
+        className="container mt-16 grid gap-x-12 gap-y-16 md:grid-cols-2 lg:grid-cols-4"
       >
         {data?.data?.map((member: any) => (
           <motion.div
             key={member.id}
             variants={cardVariants}
             whileHover={{ y: -8, scale: 1.02, boxShadow: "0 0 20px rgba(139,92,246,0.3)" }}
-            className="flex flex-col items-center transition-all duration-300"
+            className="flex flex-col items-center transition-all duration-300  "
           >
             <Avatar className="my-4 size-20 border md:mb-5 lg:size-24">
               <AvatarImage src={member.picture} />

@@ -3,22 +3,15 @@ import { ArrowRight } from "lucide-react";
 import { motion, useScroll } from "framer-motion";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
 import Loading from "@/components/layout/Loading";
 import { useNavigate } from "react-router";
 import { Magnetic } from "@/utils/Magnetic";
 
-/* ----------------------------------
-   Magnetic Button Component
------------------------------------ */
-
-/* ----------------------------------
-   Hover-follow Glow Card
------------------------------------ */
+//  Hover-follow Glow Card
 function GlowCard({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
-
   function handleMove(e: React.MouseEvent) {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
@@ -41,9 +34,6 @@ function GlowCard({ children }: { children: React.ReactNode }) {
   );
 }
 
-/* ----------------------------------
-   Main Section
------------------------------------ */
 export const ServiceSection = () => {
   /* Scroll Progress */
   const { scrollYProgress } = useScroll();
@@ -59,13 +49,18 @@ export const ServiceSection = () => {
     navigate("/services");
   };
 
+  const handleServiceDetails = (id: string) => {
+    navigate(`/service/${id}`);
+    console.log("click", id);
+  };
+
   return (
     <>
       {/* Scroll Progress Bar */}
       <motion.div style={{ scaleX: scrollYProgress }} className="fixed left-0 top-0 h-0.75 w-full origin-left bg-violet-500 z-50" />
 
       <section className="py-20">
-        <div className="container mx-auto flex flex-col items-center gap-16 lg:px-16">
+        <div className=" mx-auto flex flex-col items-center gap-16 lg:px-16">
           {/* Header */}
           <div className="text-center max-w-3xl">
             <h2 className="mb-4 text-4xl font-semibold"> Services</h2>
@@ -85,41 +80,40 @@ export const ServiceSection = () => {
           </div>
 
           {/* Cards */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {services.map((service: any) => (
               <motion.div key={service.id} whileHover={{ y: -10 }} transition={{ type: "spring", stiffness: 200 }}>
                 <GlowCard>
                   <Card
-                    className="
-                      overflow-hidden bg-transparent
-                      transition-all duration-300
-                      hover:shadow-[0_0_10px_rgba(139,92,246,0.4)]
-                    "
+                    className="group  flex h-full flex-col bg-primary/10 pt-0 rounded-2xl  overflow-hidden 
+  transition-all duration-300 hover:shadow-[0_0_12px_rgba(139,92,246,0.35)]"
                   >
-                    <div className="aspect-video overflow-hidden rounded-2xl">
+                    {/* IMAGE — fixed & equal for all */}
+                    <div className="relative h-48 w-full overflow-hidden ">
                       <motion.img
                         whileHover={{ scale: 1.06 }}
                         transition={{ duration: 0.4 }}
                         src={service?.picture}
-                        alt={service.name}
-                        className="h-full w-full aspect-video overflow-hidden rounded-3xl   object-cover px-4 "
+                        alt={service?.name}
+                        className="h-full w-full rounded-2xl object-cover"
                       />
                     </div>
 
-                    <CardHeader>
-                      <h3 className="text-lg font-semibold">{service.title}</h3>
+                    {/* CONTENT — stretches automatically */}
+                    <CardHeader className="flex-1 ">
+                      <h3 className="text-md font-semibold leading-snug line-clamp-2 min-h-12">{service.name}</h3>
                     </CardHeader>
 
-                    <CardContent>
-                      <p className="text-muted-foreground">{service.description}</p>
-                    </CardContent>
-
-                    <CardFooter>
+                    {/* FOOTER — always bottom aligned */}
+                    <CardFooter className="mt-auto">
                       <Magnetic>
-                        <a href={service.url} target="_blank" className="flex items-center font-medium">
+                        <Button
+                          onClick={() => handleServiceDetails(service._id)}
+                          className="flex items-center font-medium bg-linear-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg"
+                        >
                           View Details
-                          <ArrowRight className="ml-2 size-4" />
-                        </a>
+                          <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
+                        </Button>
                       </Magnetic>
                     </CardFooter>
                   </Card>

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,107 +6,123 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 export const Contact = ({ className }: { className?: string }) => {
-  const container = {
+  const container: Variants = {
     hidden: {},
     show: {
       transition: { staggerChildren: 0.15 },
     },
   };
 
-  const item = {
+  const item: Variants = {
     hidden: { opacity: 0, y: 40 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
   };
 
   return (
-    <section className={cn(" mx-auto relative py-32 overflow-hidden web3-gradient text-white", className)}>
-      {/* Floating Animated Blobs */}
-      <motion.div
-        animate={{ y: [0, -40, 0] }}
-        transition={{ duration: 8, repeat: Infinity }}
-        className="absolute -top-40 -left-40  rounded-full blur-[150px]"
-      />
+    <section className={cn("relative overflow-hidden text-white py-16 sm:py-20 lg:py-28", className)}>
+      <div className="absolute inset-0 web3-gradient" />
 
+      {/* 🌈 blobs */}
       <motion.div
-        animate={{ y: [0, 40, 0] }}
+        aria-hidden
+        animate={{ y: [0, -60, 0] }}
         transition={{ duration: 10, repeat: Infinity }}
-        className="absolute bottom-0 right-0 h-screen w-full rounded-full bg-blue-500  opacity-5 blur-[150px]"
+        className="absolute -top-40 -left-40 h-112 w-md rounded-full bg-purple-500/20 blur-[140px]"
       />
 
-      <div className="container relative z-10">
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="mx-auto flex max-w-6xl flex-col gap-16 lg:flex-row"
-        >
-          {/* LEFT SIDE */}
-          <motion.div variants={item} className="max-w-md space-y-6">
-            <div>
-              <h1 className="text-5xl font-bold leading-tight">Contact Us</h1>
-              <p className="text-gray-300">We are available for questions, feedback, or collaboration opportunities. Let us know how we can help!</p>
-            </div>
-            <div>
-              <p>
-                <span className="font-semibold">Address: House 33 ,Road 12, Pisciculture Housing Society, Mohammadpur., Dhaka, Bangladesh</span>
-              </p>
-              <p className="py-2">
-                <span className="font-semibold">Phone: 01943223060 </span>
-              </p>
-              <p>
-                <span className="font-bold">Email: geomarkbd@gmail.com </span>
-                <a href="mailto:geomarkbd@gmail.com" className="underline"></a>
-              </p>
-              <p className="pt-2">
-                <span className="font-bold">Web: </span>
-                <a href="https://geomarkbd.com" target="_blank" className="underline">
-                  Visit Website
-                </a>
-              </p>
-            </div>
-          </motion.div>
+      <motion.div
+        aria-hidden
+        animate={{ y: [0, 60, 0] }}
+        transition={{ duration: 12, repeat: Infinity }}
+        className="absolute -bottom-40 -right-40 h-128 w-lg rounded-full bg-blue-500/20 blur-[160px]"
+      />
 
-          {/* GLASS FORM */}
+      {/* ✅ OUTER CONTAINER (gives side padding always) */}
+      <div className="mx-auto w-full px-4 sm:px-6 lg:px-8">
+        {/* ✅ INNER MAX WIDTH (prevents over-stretch on 1536+) */}
+        <div className="mx-auto w-full max-w-350 2xl:max-w-375">
           <motion.div
-            variants={item}
-            whileHover={{ y: -5 }}
-            className="flex w-full max-w-3xl flex-col gap-6 rounded-2xl border border-white/20 bg-white/10 p-10 backdrop-blur-xl shadow-2xl"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="grid items-start gap-14 lg:grid-cols-[0.9fr_1.1fr] xl:gap-20"
           >
-            <div className="flex gap-4">
-              <div className="grid w-full gap-1.5">
-                <Label htmlFor="firstname">First Name</Label>
-                <Input id="firstname" className="glow-input bg-white/5 border-white/20" placeholder="First Name" />
+            {/* LEFT */}
+            <motion.div variants={item} className="max-w-xl space-y-6">
+              <h1 className="text-4xl sm:text-5xl font-bold">Contact Us</h1>
+
+              <p className="text-gray-300">We are available for questions, feedback, or collaboration opportunities. Let us know how we can help!</p>
+
+              <div className="space-y-3 text-gray-200">
+                <p>
+                  <span className="font-semibold text-white">Address:</span> House 33, Road 12, Pisciculture Housing Society, Mohammadpur, Dhaka,
+                  Bangladesh
+                </p>
+
+                <p>
+                  <span className="font-semibold text-white">Phone:</span> 01943223060
+                </p>
+
+                <p>
+                  <span className="font-semibold text-white">Email:</span> geomarkbd@gmail.com
+                </p>
+
+                <p>
+                  <span className="font-semibold text-white">Web:</span>{" "}
+                  <a href="https://geomarkbd.com" target="_blank" className="underline hover:text-blue-400">
+                    Visit Website
+                  </a>
+                </p>
               </div>
-              <div className="grid w-full gap-1.5">
-                <Label htmlFor="lastname">Last Name</Label>
-                <Input id="lastname" className="glow-input bg-white/5 border-white/20" placeholder="Last Name" />
+            </motion.div>
+
+            {/* FORM */}
+            <motion.div
+              variants={item}
+              whileHover={{ y: -6 }}
+              className="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-xl p-6 sm:p-8 lg:p-10 shadow-2xl"
+            >
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div className="grid gap-1.5">
+                  <Label>First Name</Label>
+                  <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" />
+                </div>
+
+                <div className="grid gap-1.5">
+                  <Label>Last Name</Label>
+                  <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" />
+                </div>
               </div>
-            </div>
 
-            <div className="grid gap-1.5">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" className="glow-input bg-white/5 border-white/20" placeholder="Email" />
-            </div>
+              <div className="grid gap-1.5 mt-5">
+                <Label>Email</Label>
+                <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" />
+              </div>
 
-            <div className="grid gap-1.5">
-              <Label htmlFor="subject">Subject</Label>
-              <Input id="subject" className="glow-input bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Subject" />
-            </div>
+              <div className="grid gap-1.5 mt-5">
+                <Label>Subject</Label>
+                <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" />
+              </div>
 
-            <div className="grid gap-1.5">
-              <Label htmlFor="message">Message</Label>
-              <Textarea id="message" className="glow-input bg-white/5 border-white/20" placeholder="Tell us about your idea..." />
-            </div>
+              <div className="grid gap-1.5 mt-5">
+                <Label>Message</Label>
+                <Textarea className="min-h-35 bg-white/5 border-white/20 focus-visible:border-blue-500" />
+              </div>
 
-            {/* Magnetic Animated Button */}
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="w-full rounded-xl bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300">
-                Send Message
-              </Button>
+              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="mt-6">
+                <Button className="w-full rounded-xl bg-linear-to-r from-purple-500 to-blue-500">Send Message</Button>
+              </motion.div>
             </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

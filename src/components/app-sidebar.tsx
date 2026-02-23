@@ -37,14 +37,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     navMain: getSidebarItems(userData?.data?.role),
   };
   return (
-    <Sidebar {...props}>
-      <SidebarHeader>
+    <Sidebar {...props} className="bg-transparent backdrop-blur-xl border-r border-white/10">
+      <SidebarHeader className="bg-transparent">
         <Link to="/" className="h-8 w-full">
           <img src={logo} alt="Geomark Logo" className="h-8 w-auto" />
         </Link>
         <SearchForm />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-transparent">
         {/* We create a SidebarGroup for each parent. */}
         {data.navMain.map((item) => (
           <SidebarGroup key={item.title}>

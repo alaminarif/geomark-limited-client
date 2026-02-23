@@ -119,7 +119,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <ModeToggle />
           {data?.data?.email && (
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex justify-end items-center mx-12">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex justify-end items-center mx-2">
               <Button
                 onClick={handleLogout}
                 className="w-25 text-center rounded-xl py-2 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50
@@ -130,7 +130,7 @@ export default function Navbar() {
             </motion.div>
           )}
           {!data?.data?.email && (
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex justify-end items-center mx-12">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex justify-end items-center mx-2">
               <Link
                 to="/login"
                 className="w-25 text-center rounded-xl py-2 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50
@@ -145,11 +145,3 @@ export default function Navbar() {
     </header>
   );
 }
-
-/*
-Admin Management
-Services Management
-Project Management
-User Management
-Client Management
-*/

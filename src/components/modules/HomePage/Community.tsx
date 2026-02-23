@@ -48,8 +48,8 @@ const cardVariant: Variants = {
 
 export const Community = ({ className }: Community2Props) => {
   return (
-    <section className={cn("relative py-32", className)}>
-      <div className="container mx-auto">
+    <section className={cn("relative container mx-autollllllllllllll", className)}>
+      <div className="">
         {/* Title Animation */}
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
           <h2 className="mb-5 text-2xl text-center font-semibold md:text-3xl">Be part of our network</h2>
@@ -79,7 +79,7 @@ export const Community = ({ className }: Community2Props) => {
               className="group relative rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-lg transition-all duration-300 hover:shadow-[0_0_40px_rgba(139,92,246,0.4)]"
             >
               {/* Glow border effect */}
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-20" />
+              <div className="absolute inset-0 rounded-xl bg-linear-to-r from-purple-500 via-blue-500 to-cyan-400 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-20" />
 
               <div className="relative z-10">
                 <motion.div

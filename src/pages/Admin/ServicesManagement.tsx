@@ -38,7 +38,7 @@ const ServicesManagement = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-5">
+    <div className=" max-w-7xl mx-auto px-5">
       <div className="flex justify-between my-5">
         <h1>Services</h1>
         <AddServiceModal />
@@ -58,7 +58,7 @@ const ServicesManagement = () => {
           {data?.data?.map((item: any) => (
             <TableRow className="">
               <TableCell className="font-medium">{item?.name}</TableCell>
-              <TableCell className="font-medium">{item?.description}</TableCell>
+              <TableCell className="font-medium whitespace-normal wrap-break-word">{item?.description}</TableCell>
               <TableCell className="font-medium text-right">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>

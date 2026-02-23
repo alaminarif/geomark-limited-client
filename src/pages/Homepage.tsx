@@ -12,8 +12,8 @@ const Homepage = () => {
       <HeroSection />
       <Service />
       <Project />
-      <Client />
       <Employee />
+      <Client />
       <Community />
       <Contact />
     </div>

@@ -8,43 +8,14 @@ interface Community2Props {
   className?: string;
 }
 
-// const items = [
-//   {
-//     title: "LinkedIn",
-//     desc: "Connect with us and explore career opportunities.",
-//     icon: <Linkedin className="size-14" />,
-//     link: "https://www.linkedin.com/company/geomark-limited-072025",
-//   },
-//   {
-//     title: "Facebook",
-//     desc: "Join our Facebook community and stay updated.",
-//     icon: <Facebook className="size-14" />,
-//     link: "https://www.facebook.com/profile.php?id=100063466780165",
-//   },
-//   {
-//     title: "Twitter",
-//     desc: "Follow our latest updates and announcements.",
-//     icon: <Twitter className="size-14" />,
-//     link: "https://twitter.com/geomarklimited",
-//   },
-//   {
-//     title: "Github",
-//     desc: "Contribute to our open-source projects.",
-//     icon: <Github className="size-14" />,
-//     link: "#",
-//   },
-// ];
-
-// duplicate items for infinite effect
-
 const Client = ({ className }: Community2Props) => {
   const { data, isLoading } = useGetClientsQuery(undefined);
   if (isLoading) return <Loading />;
   const items = data?.data || [];
   const loopItems = [...items, ...items];
   return (
-    <section className={cn("relative py-20 overflow-hidden", className)}>
-      <div className="container mx-auto">
+    <section className={cn("relative py-20 container mx-auto overflow-hidden", className)}>
+      <div className="">
         <h2 className="mb-5 text-center text-2xl font-bold md:text-3xl">CLIENTS</h2>
         <p className="mb-12 w-10/12 mx-auto font-medium text-muted-foreground md:text-xl">
           Geomark believes in a sustainable relationship with its clients . The team focuses on meeting the objectives of clients most efficiently and

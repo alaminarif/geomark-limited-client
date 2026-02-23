@@ -136,6 +136,7 @@ export const AboutPage = ({ ...props }) => {
             </motion.div>
           </div>
         </section>
+
         <section className="relative py-20">
           <div className="pointer-events-none absolute inset-0 -z-10">
             <div className="absolute left-1/2 top-0 h-100 w-100 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
