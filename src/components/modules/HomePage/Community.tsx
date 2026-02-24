@@ -48,7 +48,7 @@ const cardVariant: Variants = {
 
 export const Community = ({ className }: Community2Props) => {
   return (
-    <section className={cn("relative container mx-autollllllllllllll", className)}>
+    <section className={cn("relative pb-10 container mx-auto", className)}>
       <div className="">
         {/* Title Animation */}
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>

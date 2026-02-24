@@ -3,9 +3,10 @@ import { baseApi } from "@/redux/baseApi";
 export const employeeApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllEmployees: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/employee",
         method: "GET",
+        params,
       }),
       providesTags: ["EMPLOYEE"],
     }),

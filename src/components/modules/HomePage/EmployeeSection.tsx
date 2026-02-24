@@ -40,7 +40,7 @@ export const EmployeeSection = ({
   description = "Our diverse team of experts brings together decades of experience in design, engineering, and product development.",
 }: EmployeeSectionProps) => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetAllEmployeesQuery(undefined);
+  const { data, isLoading } = useGetAllEmployeesQuery({ sort: "createdAt" });
 
   const handleAllTeamMembers = () => {
     navigate("/employees");
