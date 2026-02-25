@@ -20,7 +20,7 @@ const containerVariants: Variants = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.2, // delay between each card
+      staggerChildren: 0.2,
     },
   },
 };
@@ -70,7 +70,7 @@ export const EmployeeSection = ({
         viewport={{ once: true, amount: 0.2 }} // triggers when 20% visible
         className="container mt-16 grid gap-x-12 gap-y-16 md:grid-cols-2 lg:grid-cols-4"
       >
-        {data?.data?.map((member: any) => (
+        {data?.data?.slice(0, 8).map((member: any) => (
           <motion.div
             key={member.id}
             variants={cardVariants}

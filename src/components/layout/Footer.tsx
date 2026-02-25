@@ -2,15 +2,19 @@
 // import Logo from "@/assets/icons/Logo";
 
 import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Loading from "./Loading";
 
 export default function Footer() {
+  const navigate = useNavigate();
   const { data, isLoading } = useGetAllServicesQuery(undefined);
   if (isLoading) {
     return <Loading />;
   }
-
+  const handleServiceDetails = (id: string) => {
+    navigate(`/service/${id}`);
+    console.log("click", id);
+  };
   return (
     <footer>
       <div className=" container mx-auto space-y-8 px-4 py-16">
@@ -68,12 +72,15 @@ export default function Footer() {
               <p className="font-medium text-gray-900 dark:text-muted-foreground/80">Services</p>
 
               <ul className="mt-6 space-y-4 text-sm">
-                {data?.data?.map((item: any) => (
+                {data?.data?.slice(0, 3).map((item: any) => (
                   <li key={item.id}>
-                    <Link to="#" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
+                    <p
+                      onClick={() => handleServiceDetails(item._id)}
+                      className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75"
+                    >
                       {" "}
                       {item.name}{" "}
-                    </Link>
+                    </p>
                   </li>
                 ))}
               </ul>

@@ -143,6 +143,46 @@ const AddEmployeeModal = () => {
 
                 <FormField
                   control={form.control}
+                  name="facebook"
+                  render={({ field }) => (
+                    <FormItem className="pt-4">
+                      <FormLabel>Facebook</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Facebook" {...field} value={field.value || ""} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="linkedin"
+                  render={({ field }) => (
+                    <FormItem className="pt-4">
+                      <FormLabel>Linkedin</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Linkedin" {...field} value={field.value || ""} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="twitter"
+                  render={({ field }) => (
+                    <FormItem className="pt-4">
+                      <FormLabel>Twitter</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Twitter" {...field} value={field.value || ""} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
                   name="joinDate"
                   render={({ field }) => (
                     <FormItem className="flex flex-col flex-1 pt-4">

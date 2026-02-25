@@ -81,7 +81,7 @@ export const ServiceSection = () => {
 
           {/* Cards */}
           <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {services.map((service: any) => (
+            {services.slice(0, 8).map((service: any) => (
               <motion.div key={service.id} whileHover={{ y: -10 }} transition={{ type: "spring", stiffness: 200 }}>
                 <GlowCard>
                   <Card
