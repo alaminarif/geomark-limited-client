@@ -2,7 +2,6 @@ import { motion, type Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 export const Contact = ({ className }: { className?: string }) => {
@@ -57,30 +56,37 @@ export const Contact = ({ className }: { className?: string }) => {
           >
             {/* LEFT */}
             <motion.div variants={item} className="max-w-xl space-y-6">
-              <h1 className="text-4xl sm:text-5xl font-bold">Contact Us</h1>
-
-              <p className="text-gray-300">We are available for questions, feedback, or collaboration opportunities. Let us know how we can help!</p>
-
               <div className="space-y-3 text-gray-200">
+                <p className="text-2xl font-bold">Office Address</p>
                 <p>
-                  <span className="font-semibold text-white">Address:</span> House 33, Road 12, Pisciculture Housing Society, Mohammadpur, Dhaka,
-                  Bangladesh
+                  <span className="font-semibold text-white"></span> House 33, Road 12, Pisciculture Housing Society,<br></br> Mohammadpur, Dhaka,
+                  Bangladesh.
                 </p>
 
-                <p>
-                  <span className="font-semibold text-white">Phone:</span> 01943223060
-                </p>
+                <div>
+                  <p className="text-2xl font-bold">Open Hours</p>
+                  <p className="text-md">
+                    Saturday - Thursday <br />
+                    09:00 AM to 06:00 PM
+                  </p>
+                </div>
+                <div>
+                  <p className="text-2xl font-bold">Contact</p>
+                  <p>
+                    <span className="font-semibold text-white">Phone:</span> 01943223060
+                  </p>
 
-                <p>
-                  <span className="font-semibold text-white">Email:</span> geomarkbd@gmail.com
-                </p>
+                  <p>
+                    <span className="font-semibold text-white">Email:</span> geomarkbd@gmail.com
+                  </p>
 
-                <p>
-                  <span className="font-semibold text-white">Web:</span>{" "}
-                  <a href="https://geomarkbd.com" target="_blank" className="underline hover:text-blue-400">
-                    Visit Website
-                  </a>
-                </p>
+                  <p>
+                    <span className="font-semibold text-white">Web:</span>{" "}
+                    <a href="https://geomarkbd.com" target="_blank" className="underline hover:text-blue-400">
+                      Visit Website
+                    </a>
+                  </p>
+                </div>
               </div>
             </motion.div>
 
@@ -88,33 +94,34 @@ export const Contact = ({ className }: { className?: string }) => {
             <motion.div
               variants={item}
               whileHover={{ y: -6 }}
-              className="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-xl p-6 sm:p-8 lg:p-10 shadow-2xl"
+              className="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-xl py-6 sm:p-8 lg:p-10 shadow-2xl"
             >
+              <h1 className="text-2xl font-bold p-0 mb-4">Have you any question?</h1>
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="grid gap-1.5">
-                  <Label>First Name</Label>
-                  <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" />
+                  {/* <Label>First Name</Label> */}
+                  <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="First Name" />
                 </div>
 
                 <div className="grid gap-1.5">
-                  <Label>Last Name</Label>
-                  <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" />
+                  {/* <Label>Last Name</Label> */}
+                  <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Last Name" />
                 </div>
               </div>
 
-              <div className="grid gap-1.5 mt-5">
-                <Label>Email</Label>
-                <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" />
+              <div className="grid gap-1.5 mt-7">
+                {/* <Label>Email</Label> */}
+                <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Email" />
               </div>
 
-              <div className="grid gap-1.5 mt-5">
-                <Label>Subject</Label>
-                <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" />
+              <div className="grid gap-1.5 mt-7">
+                {/* <Label>Subject</Label> */}
+                <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Subject" />
               </div>
 
-              <div className="grid gap-1.5 mt-5">
-                <Label>Message</Label>
-                <Textarea className="min-h-35 bg-white/5 border-white/20 focus-visible:border-blue-500" />
+              <div className="grid gap-1.5 mt-7">
+                {/* <Label>Message</Label> */}
+                <Textarea className="min-h-35 bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Message" />
               </div>
 
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="mt-6">

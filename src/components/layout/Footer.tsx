@@ -16,8 +16,8 @@ export default function Footer() {
     console.log("click", id);
   };
   return (
-    <footer>
-      <div className=" container mx-auto space-y-8 px-4 py-16">
+    <footer className="container mx-auto">
+      <div className="  space-y-8 px-4 py-16">
         <div className="  grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <div className="text-foreground">{/* <Logo /> */}</div>
@@ -91,7 +91,7 @@ export default function Footer() {
 
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
-                  <Link to="#" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
+                  <Link to="/about" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
                     {" "}
                     About{" "}
                   </Link>
@@ -118,7 +118,7 @@ export default function Footer() {
 
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
-                  <Link to="#" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
+                  <Link to="/contact" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
                     {" "}
                     Contact{" "}
                   </Link>
@@ -132,7 +132,7 @@ export default function Footer() {
                 </li>
 
                 <li>
-                  <Link to="#" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
+                  <Link to="/cotact" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
                     {" "}
                     Live Chat{" "}
                   </Link>
@@ -164,18 +164,12 @@ export default function Footer() {
                     Refund Policy{" "}
                   </Link>
                 </li>
-
-                <li>
-                  <Link to="#" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    Hiring-3 Statistics
-                  </Link>
-                </li>
               </ul>
             </div>
           </div>
         </div>
 
-        <p className="text-xs text-gray-500">&copy; 2022. Company Name. All rights reserved.</p>
+        <p className="text-xs text-gray-500">&copy; 2020. Geomark Limited . All rights reserved.</p>
       </div>
     </footer>
   );

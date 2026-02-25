@@ -29,8 +29,8 @@ export const AboutPage = ({ ...props }) => {
     ...props,
   };
   return (
-    <section className={cn("py-32")}>
-      <div className="container mx-auto">
+    <section className={cn("py-20 container mx-auto")}>
+      <div className="px-4 sm:px-6 lg:px-8">
         <section className="relative mb-24 overflow-hidden">
           {/* 🌈 Animated subtle background */}
           <motion.div
