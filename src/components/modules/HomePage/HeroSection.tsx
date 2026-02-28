@@ -92,7 +92,7 @@ export function HeroSection() {
               <motion.div
                 animate={{ opacity: [0.4, 0.6, 0.4] }}
                 transition={{ duration: 6, repeat: Infinity }}
-                className="absolute inset-0 bg-gradient-to-tr from-black/70 via-black/40 to-black/80"
+                className="absolute inset-0 bg-linear-to-tr from-black/70 via-black/40 to-black/80"
               />
 
               {/* Floating Particles */}

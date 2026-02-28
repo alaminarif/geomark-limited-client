@@ -1,8 +1,13 @@
 import { motion, type Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
+import { toast } from "sonner";
 
 export const Contact = ({ className }: { className?: string }) => {
   const container: Variants = {
@@ -24,11 +29,54 @@ export const Contact = ({ className }: { className?: string }) => {
     },
   };
 
+  const registerSchema = z.object({
+    name: z
+      .string()
+      .min(3, {
+        error: "Name is too short",
+      })
+      .max(50),
+    email: z.email(),
+    subject: z.string().min(3, { error: "Subject is too short" }),
+    message: z.string().min(6, { error: "Message is too short" }),
+  });
+
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+    // defaultValues: {
+    //   name: "Rakib",
+    //   email: "rakib@gmail.com",
+    //   password: "111222",
+    //   confirmPassword: "111222",
+    // },
+  });
+
+  const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+    const contactInfo = {
+      name: data.name,
+      email: data.email,
+      subject: data.subject,
+      message: data.message,
+    };
+
+    console.log(contactInfo);
+    console.log(data);
+
+    try {
+      // const result = await register(userInfo).unwrap();
+      // console.log(result);
+
+      toast.success("User created successfully");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <section className={cn("relative overflow-hidden text-white py-16 sm:py-20 lg:py-28", className)}>
       <div className="absolute inset-0 web3-gradient" />
 
-      {/* 🌈 blobs */}
+      {/*  blobs */}
       <motion.div
         aria-hidden
         animate={{ y: [0, -60, 0] }}
@@ -80,12 +128,12 @@ export const Contact = ({ className }: { className?: string }) => {
                     <span className="font-semibold text-white">Email:</span> geomarkbd@gmail.com
                   </p>
 
-                  <p>
+                  {/* <p>
                     <span className="font-semibold text-white">Web:</span>{" "}
                     <a href="https://geomarkbd.com" target="_blank" className="underline hover:text-blue-400">
                       Visit Website
                     </a>
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </motion.div>
@@ -96,37 +144,78 @@ export const Contact = ({ className }: { className?: string }) => {
               whileHover={{ y: -6 }}
               className="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-xl py-6 sm:p-8 lg:p-10 shadow-2xl"
             >
-              <h1 className="text-2xl font-bold p-0 mb-4">Have you any question?</h1>
-              <div className="grid gap-5 sm:grid-cols-2">
-                <div className="grid gap-1.5">
-                  {/* <Label>First Name</Label> */}
-                  <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="First Name" />
-                </div>
+              <h1 className="text-2xl font-bold p-0 mb-4">Do you have any question?</h1>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        {/* <FormLabel>Name</FormLabel> */}
+                        <FormControl>
+                          <Input placeholder="Mohammad Christopher J Smith" {...field} />
+                        </FormControl>
+                        <FormDescription className="sr-only">This is your public display name.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        {/* <FormLabel>Email</FormLabel> */}
+                        <FormControl>
+                          <Input placeholder="Email" type="email" {...field} />
+                        </FormControl>
+                        <FormDescription className="sr-only">This is your public display name.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                <div className="grid gap-1.5">
-                  {/* <Label>Last Name</Label> */}
-                  <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Last Name" />
-                </div>
-              </div>
+                  <FormField
+                    control={form.control}
+                    name="subject"
+                    render={({ field }) => (
+                      <FormItem>
+                        {/* <FormLabel></FormLabel> */}
+                        <FormControl>
+                          <Input placeholder="Subject" {...field} />
+                        </FormControl>
+                        <FormDescription className="sr-only">This is your public display name.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-              <div className="grid gap-1.5 mt-7">
-                {/* <Label>Email</Label> */}
-                <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Email" />
-              </div>
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        {/* <FormLabel>Name</FormLabel> */}
+                        <FormControl>
+                          <Textarea placeholder="Message" {...field} />
+                        </FormControl>
+                        <FormDescription className="sr-only">This is your public display name.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-              <div className="grid gap-1.5 mt-7">
-                {/* <Label>Subject</Label> */}
-                <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Subject" />
-              </div>
-
-              <div className="grid gap-1.5 mt-7">
-                {/* <Label>Message</Label> */}
-                <Textarea className="min-h-35 bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Message" />
-              </div>
-
-              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="mt-6">
-                <Button className="w-full rounded-xl bg-linear-to-r from-purple-500 to-blue-500">Send Message</Button>
-              </motion.div>
+                  {/* <Button type="submit" className="w-full">
+                    Submit
+                  </Button> */}
+                  <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="mt-6">
+                    <Button type="submit" className="w-full rounded-xl bg-linear-to-r from-purple-500 to-blue-500">
+                      Send Message
+                    </Button>
+                  </motion.div>
+                </form>
+              </Form>
             </motion.div>
           </motion.div>
         </div>
@@ -134,3 +223,30 @@ export const Contact = ({ className }: { className?: string }) => {
     </section>
   );
 };
+
+//  <div className="grid gap-5 sm:grid-cols-2">
+//                 <div className="grid gap-1.5">
+//                   {/* <Label>First Name</Label> */}
+//                   <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="First Name" />
+//                 </div>
+
+//                 <div className="grid gap-1.5">
+//                   {/* <Label>Last Name</Label> */}
+//                   <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Last Name" />
+//                 </div>
+//               </div>
+
+//               <div className="grid gap-1.5 mt-7">
+//                 {/* <Label>Email</Label> */}
+//                 <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Email" />
+//               </div>
+
+//               <div className="grid gap-1.5 mt-7">
+//                 {/* <Label>Subject</Label> */}
+//                 <Input className="bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Subject" />
+//               </div>
+
+//               <div className="grid gap-1.5 mt-7">
+//                 {/* <Label>Message</Label> */}
+//                 <Textarea className="min-h-35 bg-white/5 border-white/20 focus-visible:border-blue-500" placeholder="Message" />
+//               </div>

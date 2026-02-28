@@ -105,7 +105,7 @@ export const EmployeeSection = ({
           onClick={handleAllTeamMembers}
           className="w-50  rounded-xl py-4 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
         >
-          View All Team Members
+          Know More..
         </Button>
       </motion.div>
     </section>
