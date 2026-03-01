@@ -51,12 +51,12 @@ export const ServiceSection = () => {
     <>
       <motion.div style={{ scaleX: scrollYProgress }} className="fixed left-0 top-0 h-0.75 w-full origin-left bg-violet-500 z-50" />
 
-      <section className="py-20">
+      <section className="py-20 overflow-hidden">
         {/* ✅ FIX: make container full width so the grid doesn't collapse */}
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-16 flex flex-col items-center gap-16">
           {/* Header */}
           <div className="text-center max-w-3xl">
-            <h2 className="mb-4 text-4xl font-semibold">Services</h2>
+            <h2 className="mb-4 text-4xl font-semibold text-muted-foreground dark:text-white">Services</h2>
 
             <p className="mb-12 w-10/12 mx-auto font-medium text-muted-foreground md:text-xl">
               Discover the latest trends, tips, and best practices in modern web development.
@@ -71,9 +71,9 @@ export const ServiceSection = () => {
           </div>
 
           {/* Cards */}
-          {/* ✅ FIX: grid must be w-full */}
+
           <div className="grid w-full gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 ">
-            {services.slice(0, 8).map((service: any) => (
+            {services.slice(0, 9).map((service: any) => (
               <motion.div key={service._id} whileHover={{ y: -10 }} transition={{ type: "spring", stiffness: 200 }} className="w-full ">
                 <GlowCard>
                   <Card
@@ -90,10 +90,10 @@ export const ServiceSection = () => {
       group-hover:scale-[1.1]"
                       />
 
-                      <div className="absolute inset-0 bg-linear-to-t from-black/35 via-black/15 to-transparent" />
+                      <div className="absolute inset-0 bg-linear-to-t from-black/45 via-black/15 to-transparent" />
 
                       <div className="absolute bottom-0 left-0 right-0">
-                        <div className="inline-flex w-full bg-black/12 backdrop-blur-md  p-2">
+                        <div className="inline-flex w-full bg-black/25 backdrop-blur-md  px-2">
                           <h3 className="text-base md:text-lg font-semibold text-white line-clamp-2">{service?.name}</h3>
                         </div>
                       </div>
@@ -106,7 +106,7 @@ export const ServiceSection = () => {
         </div>
       </section>
 
-      {/* ✅ SINGLE MODAL */}
+      {/* MODAL */}
       <ServiceModal open={open} setOpen={setOpen} service={selectedService} />
     </>
   );

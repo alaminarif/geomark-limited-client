@@ -64,12 +64,12 @@ export function HeroSection() {
   };
 
   return (
-    <Carousel plugins={[autoplay]} setApi={setEmblaApi} opts={{ loop: true }} className="w-full">
+    <Carousel plugins={[autoplay]} setApi={setEmblaApi} opts={{ loop: true }} className="w-full min-h-[calc(100vh-100px)]">
       <CarouselContent>
         {slides.map((_, index) => (
           <CarouselItem key={index} className="basis-full">
-            <div onMouseMove={handleMouseMove} className="relative h-screen w-full overflow-hidden">
-              {/* Cinematic Background */}
+            <div onMouseMove={handleMouseMove} className="relative min-h-[calc(100vh-60px)] w-full overflow-hidden flex flex-col justify-end">
+              {/* Background Image */}
               <AnimatePresence mode="wait">
                 <motion.img
                   key={slide.image}
@@ -114,57 +114,29 @@ export function HeroSection() {
                 ))}
               </div>
 
-              {/* Content */}
-              <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white px-4">
+              {/* Slide Title */}
+              <div className="relative z-10 px-4 pb-6">
                 <AnimatePresence mode="wait">
-                  <motion.div
+                  <motion.h1
                     key={currentIndex}
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    variants={{
-                      visible: { transition: { staggerChildren: 0.08 } },
-                    }}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 40 }}
+                    transition={{ duration: 0.8 }}
+                    className="text-2xl sm:text-2xl md:text-2xl font-bold tracking-wide bg-black/25 backdrop-blur-md w-fit px-4 py-2 rounded-md"
                   >
-                    {/* Word Reveal Title */}
-                    <motion.h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-wide">
-                      {slide.title.split(" ").map((word, i) => (
-                        <motion.span
-                          key={i}
-                          className="inline-block mr-3"
-                          variants={{
-                            hidden: { opacity: 0, y: 40 },
-                            visible: { opacity: 1, y: 0 },
-                          }}
-                          transition={{ duration: 0.6 }}
-                        >
-                          {word}
-                        </motion.span>
-                      ))}
-                    </motion.h1>
-
-                    {/* Subtitle */}
-                    <motion.p
-                      className="mt-6 text-lg md:text-2xl text-gray-200"
-                      variants={{
-                        hidden: { opacity: 0, y: 30 },
-                        visible: { opacity: 1, y: 0 },
-                      }}
-                      transition={{ duration: 0.8, delay: 0.5 }}
-                    >
-                      {slide.subtitle}
-                    </motion.p>
-
-                    {/* Glass CTA */}
-                    <motion.button
-                      whileHover={{ scale: 1.08 }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ type: "spring", stiffness: 200 }}
-                      className="mt-10 px-8 py-4 rounded-full backdrop-blur-md bg-white/10 border border-white/30 text-white font-semibold text-lg shadow-xl hover:bg-white/20"
-                    >
-                      {slide.button}
-                    </motion.button>
-                  </motion.div>
+                    {slide.title.split(" ").map((word, i) => (
+                      <motion.span
+                        key={i}
+                        className="inline-block mr-3"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: i * 0.08 }}
+                      >
+                        {word}
+                      </motion.span>
+                    ))}
+                  </motion.h1>
                 </AnimatePresence>
               </div>
             </div>

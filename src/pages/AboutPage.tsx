@@ -32,7 +32,6 @@ export const AboutPage = ({ ...props }) => {
     <section className={cn("py-20 container mx-auto")}>
       <div className="px-4 sm:px-6 lg:px-8">
         <section className="relative mb-24 overflow-hidden">
-          {/* 🌈 Animated subtle background */}
           <motion.div
             aria-hidden
             className="pointer-events-none absolute inset-0 -z-10"
@@ -81,7 +80,6 @@ export const AboutPage = ({ ...props }) => {
               </motion.div>
             </motion.div>
 
-            {/* 📝 TEXT */}
             <motion.div
               initial="hidden"
               whileInView="show"

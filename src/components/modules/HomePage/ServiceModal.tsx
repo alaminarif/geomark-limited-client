@@ -12,8 +12,7 @@ export const ServiceModal = ({ open, setOpen, service }: any) => {
           // width
           "w-[92vw] sm:w-[80vw] lg:w-[50vw] max-w-none",
 
-          // style
-          "border-0 bg-background/90 backdrop-blur-xl rounded-2xl p-6",
+          "border-0 bg-muted/40 backdrop-blur-xl rounded-2xl p-6",
 
           // ✅ hide the default close (X) button that shadcn adds
           "[&>button]:hidden",
@@ -29,11 +28,11 @@ export const ServiceModal = ({ open, setOpen, service }: any) => {
         ].join(" ")}
       >
         <DialogHeader>
-          <img src={service?.picture} alt={service?.name} className="h-64 w-full rounded-xl object-cover mb-4" />
+          <img src={service?.picture} alt={service?.name} className="h-64 w-full rounded-xl object-cover" />
 
-          <DialogTitle className="text-2xl font-semibold">{service?.name}</DialogTitle>
+          <DialogTitle className="text-2xl font-semibold ">{service?.name}</DialogTitle>
 
-          <DialogDescription className="text-sm text-muted-foreground leading-relaxed">{service?.description}</DialogDescription>
+          <DialogDescription className="text-sm text-justify leading-relaxed">{service?.description}</DialogDescription>
         </DialogHeader>
       </DialogContent>
     </Dialog>

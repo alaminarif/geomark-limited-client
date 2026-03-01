@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
 
 import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetAllEmployeesQuery } from "@/redux/features/employee/employee.api";
 import Loading from "@/components/layout/Loading";
-import { Facebook, Linkedin, Twitter } from "lucide-react";
+import { Facebook, Linkedin } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
@@ -68,34 +66,32 @@ export const EmployeeSection = ({
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }} // triggers when 20% visible
-        className="container mt-16 grid gap-x-12 gap-y-16 md:grid-cols-2 lg:grid-cols-4"
+        className="container mt-16 grid gap-x-12 gap-y-16 md:grid-cols-2 lg:grid-cols-3"
       >
         {data?.data?.slice(0, 8).map((member: any) => (
           <motion.div
             key={member.id}
             variants={cardVariants}
             whileHover={{ y: -8, scale: 1.02, boxShadow: "0 0 20px rgba(139,92,246,0.3)" }}
-            className="flex flex-col items-center transition-all duration-300  "
+            className="flex flex-col items-center transition-all duration-300"
           >
-            <Avatar className="my-4 size-20 border md:mb-5 lg:size-24">
-              <AvatarImage src={member.picture} />
-              <AvatarFallback>{member.name}</AvatarFallback>
-            </Avatar>
+            <div className="relative my-4 w-75 h-90 rounded-sm overflow-hidden border-2">
+              <img src={member.picture} alt={member.name} className="w-full h-full object-cover" />
+
+              {/* SOCIAL ICONS */}
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-3 z-10">
+                <a href={member.facebook || "#"} className="rounded-lg  bg-black/25 backdrop-blur-md p-2 shadow">
+                  <Facebook className="size-6 " />
+                </a>
+
+                <a href={member.linkedin || "#"} className="rounded-lg bg-black/25 backdrop-blur-md p-2 shadow">
+                  <Linkedin className="size-6 " />
+                </a>
+              </div>
+            </div>
 
             <p className="text-center font-medium">{member.name}</p>
-            <p className="text-center text-muted-foreground">{member.designation}</p>
-
-            <div className="flex gap-3 my-4">
-              <a href={member.facebook || "#"} className="rounded-lg bg-muted/50 p-2">
-                <Facebook className="size-4 text-muted-foreground" />
-              </a>
-              <a href={member.linkedin || "#"} className="rounded-lg bg-muted/50 p-2">
-                <Linkedin className="size-4 text-muted-foreground" />
-              </a>
-              <a href={member.twitter || "#"} className="rounded-lg bg-muted/50 p-2">
-                <Twitter className="size-4 text-muted-foreground" />
-              </a>
-            </div>
+            <p className="text-center text-muted-foreground mb-3">{member.designation}</p>
           </motion.div>
         ))}
       </motion.div>

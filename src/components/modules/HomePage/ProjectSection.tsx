@@ -73,7 +73,7 @@ export const ProjectSection = () => {
 
                 <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent" />
 
-                <CardContent className="relative z-10 flex justify-between p-6">
+                <CardContent className="absolute z-10 flex justify-between px-6 top-0 bg-black/25 backdrop-blur-md">
                   <motion.div layoutId={`title-${i}`} className="font-semibold text-white">
                     {project.name}
                   </motion.div>
@@ -107,7 +107,7 @@ export const ProjectSection = () => {
 
                   <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent" />
 
-                  <CardContent className="relative z-10 flex justify-between p-4">
+                  <CardContent className="absolute top-0 z-10 flex justify-between bg-black/25 backdrop-blur-md w-full px-2 ">
                     <motion.div layoutId={`title-${i + 2}`} className="text-sm font-semibold text-white">
                       {project.title}
                     </motion.div>

@@ -104,22 +104,22 @@ export const Contact = ({ className }: { className?: string }) => {
           >
             {/* LEFT */}
             <motion.div variants={item} className="max-w-xl space-y-6">
-              <div className="space-y-3 text-gray-200">
-                <p className="text-2xl font-bold">Office Address</p>
+              <div className=" text-gray-200">
+                <p className="text-2xl  font-bold">Office Address</p>
                 <p>
-                  <span className="font-semibold text-white"></span> House 33, Road 12, Pisciculture Housing Society,<br></br> Mohammadpur, Dhaka,
+                  <span className="font-semibold text-white "></span> House 33, Road 12, Pisciculture Housing Society,<br></br> Mohammadpur, Dhaka,
                   Bangladesh.
                 </p>
 
                 <div>
-                  <p className="text-2xl font-bold">Open Hours</p>
+                  <p className="text-2xl font-bold mt-4">Open Hours</p>
                   <p className="text-md">
                     Saturday - Thursday <br />
                     09:00 AM to 06:00 PM
                   </p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">Contact</p>
+                  <p className="text-2xl font-bold mt-4">Contact</p>
                   <p>
                     <span className="font-semibold text-white">Phone:</span> 01943223060
                   </p>
@@ -154,7 +154,7 @@ export const Contact = ({ className }: { className?: string }) => {
                       <FormItem>
                         {/* <FormLabel>Name</FormLabel> */}
                         <FormControl>
-                          <Input placeholder="Mohammad Christopher J Smith" {...field} />
+                          <Input placeholder="Name" {...field} />
                         </FormControl>
                         <FormDescription className="sr-only">This is your public display name.</FormDescription>
                         <FormMessage />
