@@ -33,6 +33,14 @@ const cardVariants: Variants = {
   },
 };
 
+const facebookHover = {
+  backgroundColor: "#5641b8",
+};
+
+const linkedinHover = {
+  backgroundColor: "#5641b8",
+};
+
 export const EmployeeSection = ({
   heading = "Team",
   description = "Our diverse team of experts brings together decades of experience in design, engineering, and product development.",
@@ -80,13 +88,27 @@ export const EmployeeSection = ({
 
               {/* SOCIAL ICONS */}
               <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-3 z-10">
-                <a href={member.facebook || "#"} className="rounded-lg  bg-black/25 backdrop-blur-md p-2 shadow">
-                  <Facebook className="size-6 " />
-                </a>
+                {/* Facebook */}
+                <motion.a
+                  href={member.linkedin || "#"}
+                  whileHover={{ y: -6, scale: 1.15, rotate: 6, ...linkedinHover }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                  className="rounded-lg bg-black/25 backdrop-blur-md p-2 shadow"
+                >
+                  <Linkedin className="size-6 text-white" />
+                </motion.a>
 
-                <a href={member.linkedin || "#"} className="rounded-lg bg-black/25 backdrop-blur-md p-2 shadow">
-                  <Linkedin className="size-6 " />
-                </a>
+                {/* LinkedIn */}
+                <motion.a
+                  href={member.facebook || "#"}
+                  whileHover={{ y: -6, scale: 1.15, rotate: 6, ...facebookHover }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                  className="rounded-lg bg-black/25 backdrop-blur-md p-2 shadow"
+                >
+                  <Facebook className="size-6 text-white" />
+                </motion.a>
               </div>
             </div>
 
