@@ -33,14 +33,6 @@ const cardVariants: Variants = {
   },
 };
 
-const facebookHover = {
-  backgroundColor: "#5641b8",
-};
-
-const linkedinHover = {
-  backgroundColor: "#5641b8",
-};
-
 export const EmployeeSection = ({
   heading = "Team",
   description = "Our diverse team of experts brings together decades of experience in design, engineering, and product development.",
@@ -91,10 +83,11 @@ export const EmployeeSection = ({
                 {/* Facebook */}
                 <motion.a
                   href={member.linkedin || "#"}
-                  whileHover={{ y: -6, scale: 1.15, rotate: 6, ...linkedinHover }}
+                  whileHover={{ y: -6, scale: 1.15 }}
                   whileTap={{ scale: 0.9 }}
                   transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                  className="rounded-lg bg-black/25 backdrop-blur-md p-2 shadow"
+                  className="rounded-lg bg-linear-to-r from-purple-500 to-blue-500 text-white  hover:from-purple-700
+hover:to-blue-700  p-2 shadow"
                 >
                   <Linkedin className="size-6 text-white" />
                 </motion.a>
@@ -102,10 +95,11 @@ export const EmployeeSection = ({
                 {/* LinkedIn */}
                 <motion.a
                   href={member.facebook || "#"}
-                  whileHover={{ y: -6, scale: 1.15, rotate: 6, ...facebookHover }}
+                  whileHover={{ y: -6, scale: 1.15 }}
                   whileTap={{ scale: 0.9 }}
                   transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                  className="rounded-lg bg-black/25 backdrop-blur-md p-2 shadow"
+                  className="rounded-lg bg-linear-to-r from-purple-500 to-blue-500 text-white hover:from-purple-700
+hover:to-blue-700 p-2 shadow"
                 >
                   <Facebook className="size-6 text-white" />
                 </motion.a>

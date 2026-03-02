@@ -10,11 +10,13 @@ import { Toaster } from "sonner";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
+    {" "}
     <ReduxProvider store={store}>
+      {" "}
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <RouterProvider router={router} />
-        <Toaster richColors />
-      </ThemeProvider>
-    </ReduxProvider>
+        {" "}
+        <RouterProvider router={router} /> <Toaster richColors />{" "}
+      </ThemeProvider>{" "}
+    </ReduxProvider>{" "}
   </StrictMode>,
 );
