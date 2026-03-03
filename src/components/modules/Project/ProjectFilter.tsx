@@ -1,6 +1,7 @@
 import Loading from "@/components/layout/Loading";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ProjectStatus } from "@/constants/project";
 import { useGetAllProjectsQuery } from "@/redux/features/project/project.api";
 import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
 import { useSearchParams } from "react-router";
@@ -18,6 +19,18 @@ const ProjectFilter = () => {
     value: item._id,
   }));
 
+  const projectPeriodOptions = projects?.data?.map((item: { _id: string; startDate: string }) => ({
+    label: item.startDate,
+    value: item._id,
+  }));
+
+  console.log(projectPeriodOptions);
+
+  const projectStatusOptions = ProjectStatus.map((item: { label: string; value: string }) => ({
+    label: item.label,
+    value: item.value,
+  }));
+
   // console.log(serviceOptions);
 
   const handleServiceChange = (value: string) => {
@@ -27,10 +40,43 @@ const ProjectFilter = () => {
     console.log(value);
   };
 
+  const handleProjectPeriodChange = (value: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("startDate", value);
+    setSearchParams(params);
+    console.log(value);
+  };
+
+  const handleProjectStatusChange = (value: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("status", value);
+    setSearchParams(params);
+    console.log(value);
+  };
+
   const handleClearFilter = () => {
     const params = new URLSearchParams(searchParams);
     params.delete("title");
-    // params.delete("tourType");
+    params.delete("period");
+    params.delete("status");
+    setSearchParams(params);
+  };
+
+  const handleClearFilterPeriod = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("period");
+    setSearchParams(params);
+  };
+
+  const handleClearFilterStatus = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("status");
+    setSearchParams(params);
+  };
+
+  const handleClearFilterSector = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("title");
     setSearchParams(params);
   };
 
@@ -40,24 +86,96 @@ const ProjectFilter = () => {
 
   return (
     <div>
-      <div className="div">
-        <div className="flex justify-between items-center my-4">
-          <h1 className="text-xl font-bold">Project Filters</h1>
-          <Button size="sm" variant="outline" onClick={handleClearFilter}>
-            Clear Filter
-          </Button>
+      <div className="flex justify-between items-center my-4">
+        <h1 className="text-xl font-bold">Project Filters</h1>
+        <Button size="sm" variant="outline" onClick={handleClearFilter}>
+          Clear Filter
+        </Button>
+      </div>
+
+      <div className=" grid  grid-cols-12 gap-12  lg:gap-16 mx-auto">
+        <div className="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 ">
+          <Select
+            onValueChange={(val) => {
+              if (val === "__all__") {
+                handleClearFilterSector();
+                return;
+              }
+              handleServiceChange(val);
+            }}
+            value={seletedService ? seletedService : ""}
+            disabled={isLoading}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="All Sector" />
+            </SelectTrigger>
+            <SelectContent className="bg-linear-to-br from-primary/10 via-transparent to-purple-500/10">
+              <SelectGroup>
+                <SelectItem value="__all__" className="text-white border-2 mb-2">
+                  All Sector
+                </SelectItem>
+                {serviceOptions?.map((item: { value: string; label: string }) => (
+                  <SelectItem key={item.value} value={item.label} className="text-white   border-2 mb-2">
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
 
-        <div className="div">
-          <Select onValueChange={(label) => handleServiceChange(label)} value={seletedService ? seletedService : ""} disabled={isLoading}>
-            <SelectTrigger className="w-full max-w-48">
-              <SelectValue placeholder="Select A Sector" />
+        <div className="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 ">
+          <Select
+            onValueChange={(val) => {
+              if (val === "__all__") {
+                handleClearFilterPeriod();
+                return;
+              }
+              handleProjectPeriodChange(val);
+            }}
+            value={seletedService ? seletedService : ""}
+            disabled={isLoading}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="All Year" />
             </SelectTrigger>
-            <SelectContent className="">
+            <SelectContent className="bg-linear-to-br from-primary/10 via-transparent to-purple-500/10">
               <SelectGroup>
-                <SelectLabel>Category</SelectLabel>
+                <SelectItem value="__all__" className="text-white border-2 mb-2">
+                  All Year
+                </SelectItem>
                 {serviceOptions?.map((item: { value: string; label: string }) => (
-                  <SelectItem key={item.value} value={item.label} className="text-white">
+                  <SelectItem key={item.value} value={item.label} className="text-white   border-2 mb-2">
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 ">
+          <Select
+            onValueChange={(val) => {
+              if (val === "__all__") {
+                handleClearFilterStatus();
+                return;
+              }
+              handleProjectStatusChange(val);
+            }}
+            value={seletedService ? seletedService : ""}
+            disabled={isLoading}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="All Status" />
+            </SelectTrigger>
+            <SelectContent className="bg-linear-to-br from-primary/10 via-transparent to-purple-500/10">
+              <SelectGroup>
+                <SelectItem value="__all__" className="text-white border-2 mb-2">
+                  All Status
+                </SelectItem>
+                {projectStatusOptions?.map((item: { value: string; label: string }) => (
+                  <SelectItem key={item.value} value={item.value} className="text-white   border-2 mb-2">
                     {item.label}
                   </SelectItem>
                 ))}

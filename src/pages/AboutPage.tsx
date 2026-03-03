@@ -209,15 +209,9 @@ export const AboutPage = ({ ...props }) => {
                 transition={{ delay: idx * 0.15, duration: 0.6 }}
                 className="flex flex-col gap-2"
               >
-                {/* ✅ COUNTER */}
+                {/* COUNTER */}
                 <span className="text-4xl font-semibold md:text-5xl text-white">
-                  <CountUp
-                    end={Number(item.value)} // ⚠️ must be number
-                    duration={2.2}
-                    enableScrollSpy
-                    scrollSpyOnce
-                  />
-                  +
+                  <CountUp end={Number(item.value)} duration={2.2} enableScrollSpy scrollSpyOnce />+
                 </span>
 
                 <p className="text-sm text-white/80 md:text-base">{item.label}</p>
