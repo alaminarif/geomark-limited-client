@@ -34,6 +34,7 @@ const ProjectManagement = () => {
       console.log(error);
     }
   };
+
   const handleProjectDetails = (id: string) => {
     navigate(`/project/${id}`);
     console.log("click", id);
