@@ -1,5 +1,5 @@
 import Loading from "@/components/layout/Loading";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ProjectStatus } from "@/constants/project";
 import { useGetAllProjectsQuery } from "@/redux/features/project/project.api";
@@ -54,13 +54,13 @@ const ProjectFilter = () => {
     console.log(value);
   };
 
-  const handleClearFilter = () => {
-    const params = new URLSearchParams(searchParams);
-    params.delete("title");
-    params.delete("period");
-    params.delete("status");
-    setSearchParams(params);
-  };
+  // const handleClearFilter = () => {
+  //   const params = new URLSearchParams(searchParams);
+  //   params.delete("title");
+  //   params.delete("period");
+  //   params.delete("status");
+  //   setSearchParams(params);
+  // };
 
   const handleClearFilterPeriod = () => {
     const params = new URLSearchParams(searchParams);
@@ -88,13 +88,13 @@ const ProjectFilter = () => {
     <div>
       <div className="flex justify-between items-center my-4">
         <h1 className="text-xl font-bold">Project Filters</h1>
-        <Button size="sm" variant="outline" onClick={handleClearFilter}>
+        {/* <Button size="sm" variant="outline" className="text-destructive" onClick={handleClearFilter}>
           Clear Filter
-        </Button>
+        </Button> */}
       </div>
 
       <div className=" grid  grid-cols-12 gap-12  lg:gap-16 mx-auto">
-        <div className="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 ">
+        <div className="col-span-9 sm:col-span-6 md:col-span-6 lg:col-span-4 ">
           <Select
             onValueChange={(val) => {
               if (val === "__all__") {
@@ -106,7 +106,7 @@ const ProjectFilter = () => {
             value={seletedService ? seletedService : ""}
             disabled={isLoading}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full ">
               <SelectValue placeholder="All Sector" />
             </SelectTrigger>
             <SelectContent className="bg-linear-to-br from-primary/10 via-transparent to-purple-500/10">
@@ -124,7 +124,7 @@ const ProjectFilter = () => {
           </Select>
         </div>
 
-        <div className="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 ">
+        <div className="col-span-9 sm:col-span-6 md:col-span-6 lg:col-span-4 ">
           <Select
             onValueChange={(val) => {
               if (val === "__all__") {
@@ -154,7 +154,7 @@ const ProjectFilter = () => {
           </Select>
         </div>
 
-        <div className="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 ">
+        <div className="col-span-9 sm:col-span-6 md:col-span-6 lg:col-span-4 ">
           <Select
             onValueChange={(val) => {
               if (val === "__all__") {

@@ -16,8 +16,8 @@ const ProjectPage = () => {
   const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ViewMode>("table");
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit] = useState(3);
-  const [searchParams] = useSearchParams();
+  const [limit] = useState();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const title = searchParams.get("title") || undefined;
   const status = searchParams.get("status") || undefined;
@@ -33,31 +33,38 @@ const ProjectPage = () => {
     navigate(`/project/${id}`);
   };
 
+  const handleClearFilter = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("title");
+    params.delete("period");
+    params.delete("status");
+    setSearchParams(params);
+  };
+
   return (
     <section className="container mx-auto">
-      <div className="mx-6">
-        <div className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-12 lg:items-end ">
-          {/* 9/12 width */}
-          <div className="lg:col-span-9">
-            <ProjectFilter />
-          </div>
+      <div className="px-4 md:px-6 lg:px-8 xl:px-10">
+        <div className="mt-4  ">
+          <ProjectFilter />
 
-          {/* 3/12 width */}
-          <div className="lg:col-span-3 flex justify-start lg:justify-end">
+          <div className=" flex justify-between mt-6 ">
             <Button
-              variant="outline"
               size="sm"
-              className="w-auto h-9 px-3"
+              className="text-center rounded-md px-4 py-1 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
               onClick={() => setViewMode((prev) => (prev === "card" ? "table" : "card"))}
             >
               {viewMode === "card" ? "Table View" : "Card View"}
+            </Button>
+
+            <Button size="sm" variant="outline" className="text-destructive" onClick={handleClearFilter}>
+              Clear Filter
             </Button>
           </div>
         </div>
 
         {/* CARD VIEW */}
         {viewMode === "card" && (
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3  xl:grid-cols-4 gap-2 sm:gap-3  md:gap-4 lg:gap-6 xl:gap-8 ">
             {projects?.data?.map((item: any) => (
               <ProjectCard key={item?._id} item={item} onView={handleProjectDetails} />
             ))}
@@ -106,10 +113,13 @@ const ProjectPage = () => {
                     <p>{item?.client?.name}</p>
                   </TableCell>
 
-                  <TableCell className="font-medium text-right">
-                    <Button onClick={() => handleProjectDetails(item?._id)} variant="outline" className="text-destructive">
+                  <TableCell className=" text-right">
+                    <p
+                      onClick={() => handleProjectDetails(item?._id)}
+                      className="text-center rounded-md px-4 py-1 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+                    >
                       View
-                    </Button>
+                    </p>
                   </TableCell>
                 </TableRow>
               ))}

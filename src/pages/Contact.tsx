@@ -73,7 +73,7 @@ export const Contact = ({ className }: { className?: string }) => {
   };
 
   return (
-    <section className={cn("relative overflow-hidden text-white py-16 sm:py-20 lg:py-28", className)}>
+    <section className={cn("relative overflow-hidden text-white py-16 sm:py-20 lg:py-24", className)}>
       <div className="absolute inset-0 web3-gradient" />
 
       {/*  blobs */}
@@ -92,7 +92,7 @@ export const Contact = ({ className }: { className?: string }) => {
       />
 
       {/* ✅ OUTER CONTAINER (gives side padding always) */}
-      <div className="mx-auto w-full px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto w-fullpx-2 sm:px-4 md:px-6 lg:px-8 xl:px-10 ">
         {/* ✅ INNER MAX WIDTH (prevents over-stretch on 1536+) */}
         <div className="mx-auto w-full max-w-350 2xl:max-w-375">
           <motion.div

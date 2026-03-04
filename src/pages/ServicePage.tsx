@@ -4,13 +4,11 @@ import { useState } from "react";
 
 import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
 import Loading from "@/components/layout/Loading";
-import { ServiceModal } from "./ServiceModal";
-import ServiceCard from "../Service/ServiceCard";
-import { Link } from "react-router";
+import ServiceCard from "@/components/modules/Service/ServiceCard";
+import { ServiceModal } from "@/components/modules/HomePage/ServiceModal";
 
-export const ServiceSection = () => {
+export const ServicePage = () => {
   const { scrollYProgress } = useScroll();
-  const [hovered, setHovered] = useState(false);
 
   const { data, isLoading } = useGetAllServicesQuery(undefined);
   const services = data?.data || [];
@@ -43,28 +41,12 @@ export const ServiceSection = () => {
               <ServiceCard service={service} handleOpenModal={handleOpenModal} />
             ))}
           </div>
-
-          <motion.div className="flex justify-end items-center mx-2">
-            <motion.div
-              onHoverStart={() => setHovered(true)}
-              onHoverEnd={() => setHovered(false)}
-              animate={hovered ? { scale: [1, 1.08, 1] } : { scale: 1 }}
-              transition={hovered ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" } : { duration: 1.2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link
-                to="/services"
-                className="inline-block mt-4 text-center rounded-xl px-4 py-2 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
-              >
-                View More
-              </Link>
-            </motion.div>
-          </motion.div>
         </div>
+
+        <ServiceModal open={open} setOpen={setOpen} service={selectedService} />
       </section>
 
       {/* MODAL */}
-      <ServiceModal open={open} setOpen={setOpen} service={selectedService} />
     </>
   );
 };

@@ -12,7 +12,7 @@ const EmployeePage = () => {
   if (isLoading) return <Loading />;
   return (
     <section className="container mx-auto">
-      <div>
+      <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10 ">
         <div className="grid  grid-cols-12  gap-8 md:gap-16">
           <div className="col-span-12  lg:col-span-4 bg-accent p-2  ">
             {/* {services.map((service: any) => (

@@ -12,7 +12,7 @@ import type { TRole } from "@/types";
 import Homepage from "@/pages/Homepage";
 import Client from "@/pages/Client";
 import ClientDetails from "@/pages/ClientDetails";
-import Service from "@/pages/Service";
+import { ServicePage } from "@/pages/ServicePage";
 import serviceDetails from "@/pages/serviceDetails";
 import Project from "@/pages/ProjectPage";
 import ProjectDetails from "@/pages/ProjectDetails";
@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
       },
 
       {
-        Component: Service,
+        Component: ServicePage,
         path: "services",
       },
       {
