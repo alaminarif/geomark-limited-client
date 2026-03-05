@@ -48,7 +48,7 @@ const ServiceCard = ({ service, handleOpenModal }: any) => {
 
               <div className="absolute bottom-0 left-0 right-0">
                 <div className="inline-flex w-full bg-black/25 backdrop-blur-md  px-2">
-                  <h3 className="text-base md:text-lg font-semibold text-white line-clamp-2">{service?.name}</h3>
+                  <h3 className="text-base md:text-lg font-semibold text-white line-clamp-1">{service?.name}</h3>
                 </div>
               </div>
             </div>

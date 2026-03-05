@@ -14,20 +14,28 @@ const breakoutCards = [
     title: "MISSION",
     text: `Mission of the GEOMARK LIMITED is to improve the quality of mass people’s life by active contribution in the thrust business sectors of Bangladesh through responsible application of knowledge, skill and technology. Is committed to create a large pool of satisfied customers by providing the highest level of service value, trust and goodwill. GEOMARK believes its customers to get benefited, i.e. company is committed to be developed as a Customer Focused Organization. So, surveying the interest of valued customers is our utmost priority. We have developed an extremely qualified support staffs to meet the expectations and ensure the customers’ satisfaction. We work as a team in every sense of the word.`,
     src: Misson,
+    buttonText: "Discover more",
+    buttonUrl: "https://shadcnblocks.com",
   },
   {
     title: "VISION",
     text: `GEOMARK LIMITED will adopt strategies that ensure excellence in products, process and services to make customer’s investment worthy. Use resources, adaptation of appropriate technology effectively and efficiently to attain a high level of productivity in all its operations. Encourage and assist in the qualitative improvement of services for its internal and external customers.
 Encourage an environment where personal growth and learning of the employee is assured.`,
     src: Vision,
+    buttonText: "Discover more",
+    buttonUrl: "https://shadcnblocks.com",
   },
 ];
 
-export const AboutPage = ({ ...props }) => {
-  const { title, mainImage, breakout, achievementsTitle, achievementsDescription, achievements } = {
-    ...defaultProps,
-    ...props,
-  };
+const Achievements = [
+  { label: "Completed Projects ", value: 300 },
+  { label: "On Going Projects", value: 8 },
+  { label: "Clients", value: 99 },
+  { label: "Countries", value: 5 },
+  { label: "Years in Business", value: 10 },
+];
+
+export const AboutPage = () => {
   return (
     <section className={cn("py-20 container mx-auto")}>
       <div className="px-4 sm:px-6 lg:px-8">
@@ -53,8 +61,8 @@ export const AboutPage = ({ ...props }) => {
             >
               {/* Parallax zoom */}
               <motion.img
-                src={mainImage.src}
-                alt={mainImage.alt}
+                src={AboutImage}
+                alt="AboutUs"
                 className="h-full w-full object-cover"
                 initial={{ scale: 1.2 }}
                 whileInView={{ scale: 1 }}
@@ -100,7 +108,7 @@ export const AboutPage = ({ ...props }) => {
                 transition={{ duration: 0.7 }}
                 className="mb-6 text-4xl font-semibold leading-tight lg:text-5xl"
               >
-                {title}
+                About Us
               </motion.h1>
 
               <motion.p
@@ -171,8 +179,8 @@ export const AboutPage = ({ ...props }) => {
                 </div>
 
                 <Button variant="outline" asChild className="mr-auto transition-all duration-300 group-hover:bg-primary group-hover:text-white">
-                  <a href={breakout.buttonUrl} target="_blank">
-                    {breakout.buttonText}
+                  <a href={item.buttonUrl} target="_blank">
+                    {item.buttonText}
                   </a>
                 </Button>
               </motion.div>
@@ -184,23 +192,10 @@ export const AboutPage = ({ ...props }) => {
           <Client />
         </div>
 
-        <div className="relative overflow-hidden rounded-xl p-7 md:p-16">
-          {/* 📝 Heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="flex flex-col gap-4 text-center md:text-left"
-          >
-            <h2 className="text-3xl font-semibold text-white md:text-4xl">{achievementsTitle}</h2>
-
-            <p className="max-w-xl text-white/90">{achievementsDescription}</p>
-          </motion.div>
-
+        <div className="relative overflow-hidden rounded-xl">
           {/* 🔢 Stats */}
-          <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 text-center lg:grid-cols-4">
-            {achievements.map((item: any, idx: number) => (
+          <div className=" grid  gap-4 gap-y-8 text-center grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {Achievements.map((item: any, idx: number) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 30 }}
@@ -222,64 +217,4 @@ export const AboutPage = ({ ...props }) => {
       </div>
     </section>
   );
-};
-
-const defaultCompanies = [
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-1.svg",
-    alt: "Arc",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-2.svg",
-    alt: "Descript",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-3.svg",
-    alt: "Mercury",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-4.svg",
-    alt: "Ramp",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-5.svg",
-    alt: "Retool",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-6.svg",
-    alt: "Watershed",
-  },
-];
-
-const defaultAchievements = [
-  { label: "Companies ", value: 300 },
-  { label: "Projects Finalized", value: 800 },
-  { label: "Happy Customers", value: 99 },
-  { label: "Recognized Awards", value: 10 },
-];
-
-const defaultProps = {
-  title: "About Us",
-  description: "Shadcnblocks is a passionate team dedicated to creating innovative solutions that empower businesses to thrive in the digital age.",
-  mainImage: {
-    src: AboutImage,
-    alt: "placeholder",
-  },
-  secondaryImage: {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-2.svg",
-    alt: "placeholder",
-  },
-  breakout: {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-1.svg",
-    alt: "logo",
-    title: "Hundreds of blocks at Shadcnblocks.com",
-    description: "Providing businesses with effective tools to improve workflows, boost efficiency, and encourage growth.",
-    buttonText: "Discover more",
-    buttonUrl: "https://shadcnblocks.com",
-  },
-  companiesTitle: "Valued by clients worldwide",
-  companies: defaultCompanies,
-  achievementsTitle: "Our Achievements in Numbers",
-  achievementsDescription: "Providing businesses with effective tools to improve workflows, boost efficiency, and encourage growth.",
-  achievements: defaultAchievements,
 };

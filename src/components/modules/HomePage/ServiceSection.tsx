@@ -33,7 +33,7 @@ export const ServiceSection = () => {
         <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10">
           {/* Header */}
           <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-            <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4 text-chart-2 uppercase">Sectors</h2>
+            <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase text-blue-800">Sectors</h2>
           </motion.div>
 
           {/* Cards */}

@@ -5,13 +5,8 @@ import { useGetAllEmployeesQuery } from "@/redux/features/employee/employee.api"
 import Loading from "@/components/layout/Loading";
 import { Facebook, Linkedin } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router";
-
-interface EmployeeSectionProps {
-  heading?: string;
-  description?: string;
-}
+import { useState } from "react";
+import { Link } from "react-router";
 
 /* Container for staggered animation */
 const containerVariants: Variants = {
@@ -33,16 +28,9 @@ const cardVariants: Variants = {
   },
 };
 
-export const EmployeeSection = ({
-  heading = "Team",
-  description = "Our diverse team of experts brings together decades of experience in design, engineering, and product development.",
-}: EmployeeSectionProps) => {
-  const navigate = useNavigate();
+export const EmployeeSection = () => {
+  const [hovered, setHovered] = useState(false);
   const { data, isLoading } = useGetAllEmployeesQuery({ sort: "createdAt" });
-
-  const handleAllTeamMembers = () => {
-    navigate("/employees");
-  };
 
   if (isLoading) return <Loading />;
 
@@ -50,15 +38,8 @@ export const EmployeeSection = ({
     <section className={cn("py-20 container mx-auto ")}>
       {/* Section Heading */}
       <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10 ">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="flex flex-col items-center text-center"
-        >
-          <h2 className="my-6 text-2xl font-bold text-pretty lg:text-4xl">{heading}</h2>
-          <p className="mb-12 w-6/12 mx-auto font-medium text-muted-foreground md:text-xl">{description}</p>
+        <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
+          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase text-blue-800">Geomark Team</h2>
         </motion.div>
 
         {/* Employee Cards with staggered scroll reveal */}
@@ -113,13 +94,21 @@ hover:to-blue-700 p-2 shadow"
           ))}
         </motion.div>
 
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex justify-end items-center mx-12">
-          <Button
-            onClick={handleAllTeamMembers}
-            className="w-50  rounded-xl py-4 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+        <motion.div className="flex justify-end items-center mx-2">
+          <motion.div
+            onHoverStart={() => setHovered(true)}
+            onHoverEnd={() => setHovered(false)}
+            animate={hovered ? { scale: [1, 1.08, 1] } : { scale: 1 }}
+            transition={hovered ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" } : { duration: 1.2 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Know More..
-          </Button>
+            <Link
+              to="/services"
+              className="inline-block mt-4 text-center rounded-xl px-4 py-2 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+            >
+              Know More
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -2,11 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
-
-import { cn } from "@/lib/utils";
-
 import { useGetAllProjectsQuery } from "@/redux/features/project/project.api";
-
 import { Link, useNavigate } from "react-router";
 import ProjectCard from "../Project/ProjectCard";
 export const ProjectSection = () => {
@@ -15,19 +11,15 @@ export const ProjectSection = () => {
   const { data: projects } = useGetAllProjectsQuery(undefined);
   const ref = useRef(null);
 
-  // const handleProject = () => {
-  //   navigate("/projects");
-  // };
-
   const handleProjectDetails = (id: string) => {
     navigate(`/project/${id}`);
   };
 
   return (
-    <section ref={ref} className={cn("py-10 container mx-auto overflow-hidden ")}>
+    <section ref={ref} className="py-10 container mx-auto overflow-hidden ">
       <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10 ">
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4 text-chart-2 uppercase">Projects</h2>
+          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase ">Projects</h2>
         </motion.div>
 
         <motion.div

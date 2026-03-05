@@ -49,11 +49,10 @@ const cardVariant: Variants = {
 export const Community = ({ className }: Community2Props) => {
   return (
     <section className={cn("relative pb-10 container mx-auto", className)}>
-      <div className="">
+      <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10">
         {/* Title Animation */}
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-          <h2 className="mb-5 text-2xl text-center font-semibold md:text-3xl">Be part of our network</h2>
-          <p className="font-medium text-center text-muted-foreground md:text-xl">Connect with others, share experiences, and stay in the loop.</p>
+          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4  uppercase text-blue-800">Be part of our network</h2>
         </motion.div>
 
         {/* Cards */}

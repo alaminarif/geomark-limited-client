@@ -16,13 +16,10 @@ const Client = ({ className }: CommunityProps) => {
 
   return (
     <section className={cn("relative py-20 container mx-auto overflow-hidden", className)}>
-      <div className="">
-        <h2 className="mb-5 text-center text-2xl font-bold md:text-3xl">CLIENTS</h2>
-        <p className="mb-12 w-10/12 mx-auto text-justify font-medium text-muted-foreground md:text-xl">
-          Geomark believes in a sustainable relationship with its clients . The team focuses on meeting the objectives of clients most efficiently and
-          effectively with its available resources. Therefore, the number of clients has grown over the years since the birth of the organization. So
-          far, it worked for and with government agencies, donor agencies, INGOs, local NGOs, and various academic and research institutions.
-        </p>
+      <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10">
+        <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
+          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase text-blue-800">Clients</h2>
+        </motion.div>
 
         {/* Carousel Track */}
         <motion.div
