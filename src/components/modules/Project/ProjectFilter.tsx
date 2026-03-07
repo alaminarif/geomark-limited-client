@@ -13,18 +13,20 @@ const ProjectFilter = () => {
   const { data: services, isLoading } = useGetAllServicesQuery(undefined);
 
   const seletedService = searchParams.get("title") || undefined;
+  const seletedYear = searchParams.get("year") || undefined;
+  const seletedStatus = searchParams.get("status") || undefined;
 
   const serviceOptions = services?.data?.map((item: { _id: string; name: string }) => ({
     label: item.name,
     value: item._id,
   }));
 
-  const projectPeriodOptions = projects?.data?.map((item: { _id: string; startDate: string }) => ({
+  const projectYearOptions = projects?.data?.map((item: { _id: string; startDate: string }) => ({
     label: item.startDate,
     value: item._id,
   }));
 
-  console.log(projectPeriodOptions);
+  console.log(projectYearOptions);
 
   const projectStatusOptions = ProjectStatus.map((item: { label: string; value: string }) => ({
     label: item.label,
@@ -40,7 +42,7 @@ const ProjectFilter = () => {
     console.log(value);
   };
 
-  const handleProjectPeriodChange = (value: string) => {
+  const handleProjectYearChange = (value: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("startDate", value);
     setSearchParams(params);
@@ -57,14 +59,14 @@ const ProjectFilter = () => {
   // const handleClearFilter = () => {
   //   const params = new URLSearchParams(searchParams);
   //   params.delete("title");
-  //   params.delete("period");
+  //   params.delete("Year");
   //   params.delete("status");
   //   setSearchParams(params);
   // };
 
-  const handleClearFilterPeriod = () => {
+  const handleClearFilterYear = () => {
     const params = new URLSearchParams(searchParams);
-    params.delete("period");
+    params.delete("Year");
     setSearchParams(params);
   };
 
@@ -128,12 +130,12 @@ const ProjectFilter = () => {
           <Select
             onValueChange={(val) => {
               if (val === "__all__") {
-                handleClearFilterPeriod();
+                handleClearFilterYear();
                 return;
               }
-              handleProjectPeriodChange(val);
+              handleProjectYearChange(val);
             }}
-            value={seletedService ? seletedService : ""}
+            value={seletedYear ? seletedYear : ""}
             disabled={isLoading}
           >
             <SelectTrigger className="w-full">
@@ -163,7 +165,7 @@ const ProjectFilter = () => {
               }
               handleProjectStatusChange(val);
             }}
-            value={seletedService ? seletedService : ""}
+            value={seletedStatus ? seletedStatus : ""}
             disabled={isLoading}
           >
             <SelectTrigger className="w-full">

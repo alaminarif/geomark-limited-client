@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
+import { ArrowBigRight } from "lucide-react";
 
 type Props = {
   item: any;
@@ -96,10 +97,14 @@ const ProjectCard = ({ item, onView }: Props) => {
             </div>
           </div>
 
-          <div className="mt-4 flex justify-end">
+          <div className="mt-4 ">
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-              <Button onClick={() => onView(item?._id)} className="bg-linear-to-r from-purple-500 to-blue-500">
-                View
+              <Button onClick={() => onView(item?._id)} className="w-full bg-linear-to-r from-purple-500 to-blue-500">
+                View{" "}
+                <span>
+                  {" "}
+                  <ArrowBigRight />
+                </span>
               </Button>
             </motion.div>
           </div>
