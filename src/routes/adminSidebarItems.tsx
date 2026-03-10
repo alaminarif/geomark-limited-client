@@ -34,6 +34,11 @@ export const adminSidebarItems: ISidebarItem[] = [
         url: "/admin/employee-management",
         component: EmployeeManagement,
       },
+      {
+        title: "News And Update Management",
+        url: "/admin/news-management",
+        component: EmployeeManagement,
+      },
     ],
   },
 ];
