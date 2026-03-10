@@ -17,7 +17,7 @@ export default function Footer() {
   };
   return (
     <footer className="container mx-auto">
-      <div className="  space-y-8 px-4 py-16">
+      <div className="  space-y-8 px-4 py-16 ">
         <div className="  grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <div className="text-foreground">{/* <Logo /> */}</div>
@@ -169,7 +169,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="text-xs text-gray-500">&copy; 2020. Geomark Limited . All rights reserved.</p>
+        <p className="text-xs text-gray-500 flex flex-cols justify-center">&copy; 2020. Geomark Limited . All rights reserved.</p>
       </div>
     </footer>
   );

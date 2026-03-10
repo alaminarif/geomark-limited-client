@@ -50,18 +50,22 @@ const ProjectPage = () => {
   const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ViewMode>("table");
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit] = useState(2);
+  const [limit] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const title = searchParams.get("title") || undefined;
+  const year = searchParams.get("year") || undefined;
   const status = searchParams.get("status") || undefined;
 
   const { data: projects, isLoading } = useGetAllProjectsQuery({
     title,
+    year,
     status,
     page: currentPage,
     limit,
   });
+
+  console.log(projects);
 
   const totalPage = projects?.meta?.totalPage || 1;
 
@@ -74,7 +78,7 @@ const ProjectPage = () => {
   const handleClearFilter = () => {
     const params = new URLSearchParams(searchParams);
     params.delete("title");
-    params.delete("period");
+    params.delete("year");
     params.delete("status");
     setSearchParams(params);
     setCurrentPage(1);
@@ -153,12 +157,12 @@ const ProjectPage = () => {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/40">
-                    <TableHead className="text-center font-bold">Image</TableHead>
-                    <TableHead className="text-center font-bold">Project Name</TableHead>
-                    <TableHead className="text-center font-bold">Period</TableHead>
+                    <TableHead className="text font-bold">Image</TableHead>
+                    <TableHead className="text font-bold">Project Name</TableHead>
+                    <TableHead className="text font-bold">Period</TableHead>
                     <TableHead className="text-center font-bold">Status</TableHead>
-                    <TableHead className="text-center font-bold">Sector</TableHead>
-                    <TableHead className="text-center font-bold">Client</TableHead>
+                    <TableHead className="text font-bold">Sector</TableHead>
+                    <TableHead className="text font-bold">Client</TableHead>
                     <TableHead className="text-right font-bold">Action</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -230,7 +234,7 @@ const ProjectPage = () => {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.05 + 0.1, duration: 0.35 }}
                         >
-                          {item?.client?.name}
+                          {item?.client}
                         </motion.p>
                       </TableCell>
 

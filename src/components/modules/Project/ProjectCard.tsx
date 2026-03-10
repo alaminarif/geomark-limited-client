@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
-import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { ArrowBigRight } from "lucide-react";
 
@@ -71,11 +70,11 @@ const ProjectCard = ({ item, onView }: Props) => {
                   <rect x="3" y="4" width="18" height="18" rx="2" />
                 </svg>
 
-                <span>{item?.startDate ? format(new Date(item.startDate), "PPP") : "-"}</span>
+                <span>{item?.year ? item.year : "-"}</span>
               </span>
 
-              {/* contact + client name */}
-              <span className="flex items-center gap-1">
+              {/*  client name */}
+              <span className="flex items-center ml-6 gap-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="15"
@@ -92,7 +91,7 @@ const ProjectCard = ({ item, onView }: Props) => {
                   <circle cx="12" cy="7" r="4" />
                 </svg>
 
-                <span>{item?.client?.name || "-"}</span>
+                <span className="line-clamp-1">{item?.client || "-"}</span>
               </span>
             </div>
           </div>

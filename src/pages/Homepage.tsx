@@ -5,11 +5,13 @@ import Client from "./Client";
 import { ProjectSection } from "@/components/modules/HomePage/ProjectSection";
 import { EmployeeSection } from "@/components/modules/HomePage/EmployeeSection";
 import { ServiceSection } from "@/components/modules/HomePage/ServiceSection";
+import { NewsSection } from "@/components/modules/HomePage/NewsSection";
 
 const Homepage = () => {
   return (
     <div>
       <HeroSection />
+      <NewsSection />
       <ServiceSection />
       <ProjectSection />
       <EmployeeSection />

@@ -21,19 +21,17 @@ const ProjectFilter = () => {
     value: item._id,
   }));
 
-  const projectYearOptions = projects?.data?.map((item: { _id: string; startDate: string }) => ({
-    label: item.startDate,
-    value: item._id,
-  }));
-
-  console.log(projectYearOptions);
+  const projectYearOptions = [...new Set(((projects?.data ?? []) as { _id: string; year: string }[]).map((item) => item.year))]
+    .sort((a, b) => Number(b) - Number(a))
+    .map((year) => ({
+      label: year,
+      value: year,
+    }));
 
   const projectStatusOptions = ProjectStatus.map((item: { label: string; value: string }) => ({
     label: item.label,
     value: item.value,
   }));
-
-  // console.log(serviceOptions);
 
   const handleServiceChange = (value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -44,7 +42,7 @@ const ProjectFilter = () => {
 
   const handleProjectYearChange = (value: string) => {
     const params = new URLSearchParams(searchParams);
-    params.set("startDate", value);
+    params.set("year", value);
     setSearchParams(params);
     console.log(value);
   };
@@ -56,17 +54,9 @@ const ProjectFilter = () => {
     console.log(value);
   };
 
-  // const handleClearFilter = () => {
-  //   const params = new URLSearchParams(searchParams);
-  //   params.delete("title");
-  //   params.delete("Year");
-  //   params.delete("status");
-  //   setSearchParams(params);
-  // };
-
   const handleClearFilterYear = () => {
     const params = new URLSearchParams(searchParams);
-    params.delete("Year");
+    params.delete("year");
     setSearchParams(params);
   };
 
@@ -138,7 +128,7 @@ const ProjectFilter = () => {
             value={seletedYear ? seletedYear : ""}
             disabled={isLoading}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full ">
               <SelectValue placeholder="All Year" />
             </SelectTrigger>
             <SelectContent className="bg-linear-to-br from-primary/10 via-transparent to-purple-500/10">
@@ -146,7 +136,7 @@ const ProjectFilter = () => {
                 <SelectItem value="__all__" className="text-white border-2 mb-2">
                   All Year
                 </SelectItem>
-                {serviceOptions?.map((item: { value: string; label: string }) => (
+                {projectYearOptions?.map((item: { value: string; label: string }) => (
                   <SelectItem key={item.value} value={item.label} className="text-white   border-2 mb-2">
                     {item.label}
                   </SelectItem>
