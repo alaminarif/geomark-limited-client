@@ -22,7 +22,7 @@ type Project = {
   year?: string;
   status?: string;
   title?: string;
-  client?: string;
+  client?: string | { name?: string };
 };
 
 const pageVariants: Variants = {
@@ -175,11 +175,16 @@ const SkeletonBlock = ({ className = "" }: { className?: string }) => {
 
 const SkeletonProjectPage = () => {
   return (
-    <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className="container mx-auto">
-      <div className="px-4 md:px-6 lg:px-8 xl:px-10">
+    <motion.div
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35 }}
+      className="container mx-auto overflow-x-hidden"
+    >
+      <div className="px-4 ">
         <div className="my-6">
-          <SkeletonBlock className="h-8 w-40 rounded-lg" />
-          <SkeletonBlock className="mt-2 h-4 w-80 rounded-lg" />
+          <SkeletonBlock className="h-8  rounded-lg" />
+          <SkeletonBlock className="mt-2 h-4  rounded-lg" />
         </div>
 
         <div className="rounded-3xl border border-border/50 bg-background/70 p-4 backdrop-blur-xl shadow-[0_16px_60px_-20px_rgba(0,0,0,0.35)]">
@@ -190,63 +195,65 @@ const SkeletonProjectPage = () => {
           </div>
 
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-            <SkeletonBlock className="h-10 w-48 rounded-xl" />
-            <SkeletonBlock className="h-10 w-28 rounded-xl" />
+            <SkeletonBlock className="h-10 rounded-xl" />
+            <SkeletonBlock className="h-10 rounded-xl" />
           </div>
         </div>
 
         <div className="relative mt-6 rounded-3xl border border-border/50 bg-background/70 p-3 backdrop-blur-xl shadow-[0_16px_60px_-20px_rgba(0,0,0,0.35)]">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
-          <Table className="border-separate [border-spacing:0_10px]">
-            <TableHeader>
-              <TableRow className="border-none hover:bg-transparent">
-                <TableHead className="px-4">Image</TableHead>
-                <TableHead className="px-4">Project Name</TableHead>
-                <TableHead className="px-4">Period</TableHead>
-                <TableHead className="px-4">Status</TableHead>
-                <TableHead className="px-4">Sector</TableHead>
-                <TableHead className="px-4">Client</TableHead>
-                <TableHead className="px-4 text-right">Action</TableHead>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {Array.from({ length: 6 }).map((_, index) => (
-                <TableRow key={index} className="border-none hover:bg-transparent">
-                  <TableCell className="rounded-l-2xl border-y border-l border-border/50 bg-background/80 px-4 py-3">
-                    <SkeletonBlock className="h-20 w-24 min-h-20 min-w-24 rounded-xl" />
-                  </TableCell>
-
-                  <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
-                    <SkeletonBlock className="h-5 w-40" />
-                  </TableCell>
-
-                  <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
-                    <SkeletonBlock className="h-5 w-20" />
-                  </TableCell>
-
-                  <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
-                    <SkeletonBlock className="h-8 w-24 rounded-full" />
-                  </TableCell>
-
-                  <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
-                    <SkeletonBlock className="h-5 w-36" />
-                  </TableCell>
-
-                  <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
-                    <SkeletonBlock className="h-5 w-32" />
-                  </TableCell>
-
-                  <TableCell className="rounded-r-2xl border-y border-r border-border/50 bg-background/80 px-4 py-3 text-right">
-                    <div className="flex justify-end">
-                      <SkeletonBlock className="h-9 w-9 rounded-full" />
-                    </div>
-                  </TableCell>
+          <div className=" overflow-x-auto">
+            <Table className=" border-separate [border-spacing:0_10px]">
+              <TableHeader>
+                <TableRow className="border-none hover:bg-transparent">
+                  <TableHead className="px-4">Image</TableHead>
+                  <TableHead className="px-4">Project Name</TableHead>
+                  <TableHead className="px-4">Period</TableHead>
+                  <TableHead className="px-4">Status</TableHead>
+                  <TableHead className="px-4">Sector</TableHead>
+                  <TableHead className="px-4">Client</TableHead>
+                  <TableHead className="px-4 text-right">Action</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+
+              <TableBody>
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <TableRow key={index} className="border-none hover:bg-transparent">
+                    <TableCell className="rounded-l-2xl border-y border-l border-border/50 bg-background/80 px-4 py-3">
+                      <SkeletonBlock className="h-20 w-24 min-h-20 min-w-24 rounded-xl" />
+                    </TableCell>
+
+                    <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
+                      <SkeletonBlock className="h-5 " />
+                    </TableCell>
+
+                    <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
+                      <SkeletonBlock className="h-5 " />
+                    </TableCell>
+
+                    <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
+                      <SkeletonBlock className="h-8  rounded-full" />
+                    </TableCell>
+
+                    <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
+                      <SkeletonBlock className="h-5 " />
+                    </TableCell>
+
+                    <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
+                      <SkeletonBlock className="h-5" />
+                    </TableCell>
+
+                    <TableCell className="rounded-r-2xl border-y border-r border-border/50 bg-background/80 px-4 py-3 text-right">
+                      <div className="flex justify-end">
+                        <SkeletonBlock className="h-9 w-9 rounded-full" />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       </div>
     </motion.div>
@@ -331,7 +338,7 @@ const ProjectManagement = () => {
   }
 
   return (
-    <section className="container mx-auto">
+    <section className="container mx-auto overflow-x-hidden">
       <motion.div variants={pageVariants} initial="hidden" animate="visible" className="px-4 md:px-6 lg:px-8 xl:px-10">
         <motion.div variants={headerVariants} className="my-6">
           <motion.div
@@ -447,259 +454,255 @@ const ProjectManagement = () => {
               exit="exit"
               className="relative mt-6 rounded-3xl border border-border/50 bg-background/70 p-3 backdrop-blur-xl shadow-[0_16px_60px_-20px_rgba(0,0,0,0.35)]"
             >
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
-              <Table className="border-separate [border-spacing:0_10px]">
-                <TableHeader>
-                  <TableRow className="border-none hover:bg-transparent">
-                    <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
-                    <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Project Name</TableHead>
-                    <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Period</TableHead>
-                    <TableHead className="px-4 text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">Status</TableHead>
-                    <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Sector</TableHead>
-                    <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Client</TableHead>
-                    <TableHead className="px-4 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
+              <div className="w-full overflow-x-auto ">
+                <Table className="border-separate [border-spacing:0_10px]">
+                  <TableHeader>
+                    <TableRow className="border-none hover:bg-transparent">
+                      <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
+                      <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Project Name</TableHead>
+                      <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Period</TableHead>
+                      <TableHead className="px-4 text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">Status</TableHead>
+                      {/* <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Sector</TableHead> */}
+                      <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Client</TableHead>
+                      <TableHead className="px-4 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">Action</TableHead>
+                    </TableRow>
+                  </TableHeader>
 
-                <TableBody>
-                  {projects?.data?.map((item: Project, index: number) => {
-                    const baseDelay = 0.08 + index * 0.05;
-                    const isSelected = selectedProjectId === item._id;
-                    const toneClass = isSelected ? "border-primary/35 bg-primary/[0.06]" : "border-border/50 bg-background/80";
+                  <TableBody>
+                    {projects?.data?.map((item: Project, index: number) => {
+                      const baseDelay = 0.08 + index * 0.05;
+                      const isSelected = selectedProjectId === item._id;
+                      const toneClass = isSelected ? "border-primary/35 bg-primary/[0.06]" : "border-border/50 bg-background/80";
 
-                    return (
-                      <TableRow
-                        key={item._id}
-                        onClick={() => setSelectedProjectId(item._id)}
-                        className="group cursor-pointer border-none hover:bg-transparent"
-                      >
-                        <TableCell
-                          className={`relative rounded-l-2xl border-y border-l px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}
+                      const clientName = typeof item.client === "string" ? item.client : item.client?.name || "-";
+
+                      return (
+                        <TableRow
+                          key={item._id}
+                          onClick={() => setSelectedProjectId(item._id)}
+                          className="group cursor-pointer border-none hover:bg-transparent"
                         >
-                          {isSelected && (
-                            <motion.div
-                              layoutId="selected-project-row-indicator"
-                              className="absolute left-1 top-1/2 h-12 w-1 -translate-y-1/2 rounded-full bg-primary shadow-[0_0_20px_rgba(59,130,246,0.45)]"
-                              transition={{ type: "spring", stiffness: 320, damping: 28 }}
-                            />
-                          )}
-
-                          <motion.div custom={baseDelay} variants={cellVariants} initial="hidden" animate="visible" className="relative w-fit">
-                            <motion.div
-                              className="absolute inset-0 rounded-2xl bg-primary/15 blur-xl"
-                              initial={{ opacity: 0, scale: 0.85 }}
-                              whileHover={{ opacity: 1, scale: 1.18 }}
-                              animate={isSelected ? { opacity: 1, scale: 1.08 } : { opacity: 0, scale: 0.9 }}
-                              transition={{ duration: 0.28 }}
-                            />
-
-                            <motion.img
-                              src={item.picture || "https://placehold.co/96x80/png"}
-                              alt={item.name}
-                              className="relative h-20 w-24 min-h-20 min-w-24 shrink-0 rounded-xl border border-border/50 object-cover shadow-md"
-                              whileHover={{
-                                y: -2,
-                                scale: 1.05,
-                                rotate: 0.5,
-                              }}
-                              animate={isSelected ? { scale: 1.03, y: -1 } : { scale: 1, y: 0 }}
-                              transition={{
-                                type: "spring",
-                                stiffness: 260,
-                                damping: 18,
-                              }}
-                            />
-                          </motion.div>
-                        </TableCell>
-
-                        <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                          <motion.div
-                            custom={baseDelay + 0.03}
-                            variants={cellVariants}
-                            initial="hidden"
-                            animate="visible"
-                            className="flex items-center gap-2"
+                          <TableCell
+                            className={`relative rounded-l-2xl border-y border-l px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}
                           >
-                            <div className="min-w-0">
+                            {isSelected && (
                               <motion.div
-                                className="break-words font-medium whitespace-normal"
-                                whileHover={{ x: 3 }}
-                                animate={isSelected ? { x: 2 } : { x: 0 }}
-                                transition={{ type: "spring", stiffness: 260 }}
-                              >
-                                {item.name}
-                              </motion.div>
+                                layoutId="selected-project-row-indicator"
+                                className="absolute left-1 top-1/2 h-12 w-1 -translate-y-1/2 rounded-full bg-primary shadow-[0_0_20px_rgba(59,130,246,0.45)]"
+                                transition={{ type: "spring", stiffness: 320, damping: 28 }}
+                              />
+                            )}
 
-                              <AnimatePresence>
-                                {isSelected && (
-                                  <motion.span
-                                    initial={{ opacity: 0, scale: 0.85, y: 6 }}
-                                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                                    exit={{ opacity: 0, scale: 0.85, y: 6 }}
-                                    transition={{ duration: 0.18 }}
-                                    className="mt-1 inline-flex rounded-full border border-primary/20 bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary"
-                                  >
-                                    Selected
-                                  </motion.span>
-                                )}
-                              </AnimatePresence>
-                            </div>
-                          </motion.div>
-                        </TableCell>
+                            <motion.div custom={baseDelay} variants={cellVariants} initial="hidden" animate="visible" className="relative w-fit">
+                              <motion.div
+                                className="absolute inset-0 rounded-2xl bg-primary/15 blur-xl"
+                                initial={{ opacity: 0, scale: 0.85 }}
+                                whileHover={{ opacity: 1, scale: 1.18 }}
+                                animate={isSelected ? { opacity: 1, scale: 1.08 } : { opacity: 0, scale: 0.9 }}
+                                transition={{ duration: 0.28 }}
+                              />
 
-                        <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                          <motion.div
-                            custom={baseDelay + 0.06}
-                            variants={cellVariants}
-                            initial="hidden"
-                            animate="visible"
-                            className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/[0.08] px-3 py-1.5 text-xs font-semibold text-primary"
-                          >
-                            <CalendarRange className="h-3.5 w-3.5" />
-                            <span>{item.year || "-"}</span>
-                          </motion.div>
-                        </TableCell>
+                              <motion.img
+                                src={item.picture || "https://placehold.co/96x80/png"}
+                                alt={item.name}
+                                className="relative h-20 w-24 min-h-20 min-w-24 shrink-0 rounded-xl border border-border/50 object-cover shadow-md"
+                                whileHover={{
+                                  y: -2,
+                                  scale: 1.05,
+                                  rotate: 0.5,
+                                }}
+                                animate={isSelected ? { scale: 1.03, y: -1 } : { scale: 1, y: 0 }}
+                                transition={{
+                                  type: "spring",
+                                  stiffness: 260,
+                                  damping: 18,
+                                }}
+                              />
+                            </motion.div>
+                          </TableCell>
 
-                        <TableCell className={`border-y px-4 py-3 text-center align-middle transition-all duration-300 ${toneClass}`}>
-                          <motion.div custom={baseDelay + 0.09} variants={cellVariants} initial="hidden" animate="visible">
-                            <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold ${getStatusTone(item.status)}`}>
-                              {item.status || "-"}
-                            </span>
-                          </motion.div>
-                        </TableCell>
-
-                        <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                          <motion.div
-                            custom={baseDelay + 0.12}
-                            variants={cellVariants}
-                            initial="hidden"
-                            animate="visible"
-                            className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/[0.08] px-3 py-1.5 text-xs font-semibold text-primary"
-                          >
-                            <FolderKanban className="h-3.5 w-3.5" />
-                            <span className="break-words whitespace-normal">{item.title || "-"}</span>
-                          </motion.div>
-                        </TableCell>
-
-                        <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                          <motion.div
-                            custom={baseDelay + 0.15}
-                            variants={cellVariants}
-                            initial="hidden"
-                            animate="visible"
-                            className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/[0.08] px-3 py-1.5 text-xs font-semibold text-primary"
-                          >
-                            <BriefcaseBusiness className="h-3.5 w-3.5" />
-                            <span className="break-words whitespace-normal">{item.client || "-"}</span>
-                          </motion.div>
-                        </TableCell>
-
-                        <TableCell
-                          className={`rounded-r-2xl border-y border-r px-4 py-3 text-right align-middle transition-all duration-300 ${toneClass}`}
-                        >
-                          <motion.div
-                            custom={baseDelay + 0.18}
-                            variants={cellVariants}
-                            initial="hidden"
-                            animate="visible"
-                            className="flex justify-end"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <DropdownMenu modal={false}>
-                              <DropdownMenuTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  onClick={(e) => e.stopPropagation()}
-                                  className={`group/btn size-9 rounded-full border backdrop-blur-sm transition-all duration-300 ${
-                                    isSelected
-                                      ? "border-primary/30 bg-primary/10 shadow-[0_8px_24px_-8px_rgba(59,130,246,0.35)]"
-                                      : "border-transparent bg-background/70 hover:border-primary/20 hover:bg-primary/10 hover:shadow-[0_8px_24px_-8px_rgba(59,130,246,0.35)]"
-                                  }`}
+                          <TableCell className={`border-y px-2 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                            <motion.div
+                              custom={baseDelay + 0.03}
+                              variants={cellVariants}
+                              initial="hidden"
+                              animate="visible"
+                              className="flex items-center gap-2"
+                            >
+                              <div className="min-w-40">
+                                <motion.div
+                                  className="wrap-break-word line-clamp-3 font-medium whitespace-normal"
+                                  whileHover={{ x: 3 }}
+                                  animate={isSelected ? { x: 2 } : { x: 0 }}
+                                  transition={{ type: "spring", stiffness: 260 }}
                                 >
-                                  <motion.div
-                                    whileHover={{ rotate: 90, scale: 1.08 }}
-                                    whileTap={{ scale: 0.92 }}
-                                    transition={{
-                                      type: "spring",
-                                      stiffness: 260,
-                                      damping: 18,
-                                    }}
-                                    className="flex items-center justify-center"
-                                  >
-                                    <MoreHorizontalIcon className="h-4 w-4 transition-colors duration-300 group-hover/btn:text-primary" />
-                                  </motion.div>
-                                  <span className="sr-only">Open menu</span>
-                                </Button>
-                              </DropdownMenuTrigger>
-
-                              <DropdownMenuContent
-                                align="end"
-                                sideOffset={10}
-                                onClick={(e) => e.stopPropagation()}
-                                className="
-                                  w-48 overflow-hidden rounded-2xl border border-white/10
-                                  bg-background/95 p-2 shadow-2xl backdrop-blur-xl
-                                  data-[state=open]:animate-in
-                                  data-[state=closed]:animate-out
-                                  data-[state=open]:fade-in-0
-                                  data-[state=closed]:fade-out-0
-                                  data-[state=open]:zoom-in-95
-                                  data-[state=closed]:zoom-out-95
-                                  data-[side=bottom]:slide-in-from-top-2
-                                  data-[side=top]:slide-in-from-bottom-2
-                                  duration-200
-                                "
-                              >
-                                <motion.div initial="hidden" animate="visible" className="space-y-1">
-                                  <motion.div custom={0.02} variants={dropdownItemVariants}>
-                                    <DropdownMenuItem
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleProjectDetails(item._id);
-                                      }}
-                                      className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
-                                    >
-                                      <Eye className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
-                                      <span className="font-medium">View</span>
-                                    </DropdownMenuItem>
-                                  </motion.div>
-
-                                  <motion.div custom={0.05} variants={dropdownItemVariants}>
-                                    <DropdownMenuItem
-                                      onClick={(e) => e.stopPropagation()}
-                                      className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
-                                    >
-                                      <Pencil className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
-                                      <span className="font-medium">Edit</span>
-                                    </DropdownMenuItem>
-                                  </motion.div>
-
-                                  <DropdownMenuSeparator className="my-1 opacity-50" />
-
-                                  <motion.div custom={0.08} variants={dropdownItemVariants}>
-                                    <DeleteConfirmation onConfirm={() => handleDeleteProject(item._id)}>
-                                      <DropdownMenuItem
-                                        onSelect={(e) => e.preventDefault()}
-                                        onClick={(e) => e.stopPropagation()}
-                                        className="group/item cursor-pointer rounded-xl px-3 py-2.5 text-destructive transition-all duration-200 hover:bg-destructive/10 focus:bg-destructive/10 focus:text-destructive"
-                                      >
-                                        <Trash2 className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
-                                        <span className="font-medium">Delete</span>
-                                      </DropdownMenuItem>
-                                    </DeleteConfirmation>
-                                  </motion.div>
+                                  {item.name}
                                 </motion.div>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </motion.div>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
+
+                                <AnimatePresence>
+                                  {isSelected && (
+                                    <motion.span
+                                      initial={{ opacity: 0, scale: 0.85, y: 6 }}
+                                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                                      exit={{ opacity: 0, scale: 0.85, y: 6 }}
+                                      transition={{ duration: 0.18 }}
+                                      className="mt-1 inline-flex rounded-full border border-primary/20 bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary"
+                                    >
+                                      Selected
+                                    </motion.span>
+                                  )}
+                                </AnimatePresence>
+                              </div>
+                            </motion.div>
+                          </TableCell>
+
+                          <TableCell className={`border-y  py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                            <motion.div
+                              custom={baseDelay + 0.06}
+                              variants={cellVariants}
+                              initial="hidden"
+                              animate="visible"
+                              className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/8 px-3 py-1.5 text-xs font-semibold text-primary"
+                            >
+                              <CalendarRange className="h-3.5 w-3.5" />
+                              <span>{item.year || "-"}</span>
+                            </motion.div>
+                          </TableCell>
+
+                          <TableCell className={`border-y  py-3 text-center align-middle transition-all duration-300 ${toneClass}`}>
+                            <motion.div custom={baseDelay + 0.09} variants={cellVariants} initial="hidden" animate="visible">
+                              <span className={`inline-flex px-2 rounded-full border  py-1 text-xs font-semibold ${getStatusTone(item.status)}`}>
+                                {item.status || "-"}
+                              </span>
+                            </motion.div>
+                          </TableCell>
+
+                          <TableCell className={`border-y  py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                            <motion.div custom={baseDelay + 0.12} variants={cellVariants} initial="hidden" animate="visible" className="">
+                              <div className="inline-flex  items-center gap-2 py-1.5 text-xs font-semibold text-primary">
+                                <FolderKanban className="h-3.5 " />
+                                <span className="wrap-break-word line-clamp-3 whitespace-normal">{item.title || "-"}</span>
+                              </div>
+                            </motion.div>
+                          </TableCell>
+
+                          <TableCell className={`border-y border py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                            <motion.div custom={baseDelay + 0.15} variants={cellVariants} initial="hidden" animate="visible" className="">
+                              <div className="inline-flex items-center line-clamp-3 gap-2 text-xs text-foreground/90">
+                                <BriefcaseBusiness className="h-3.5  text-primary" />
+                                <span className="wrap-break-word  whitespace-normal">{clientName || "-"}</span>
+                              </div>
+                            </motion.div>
+                          </TableCell>
+
+                          <TableCell
+                            className={`rounded-r-2xl border-y border-r  py-3 text-right align-middle transition-all duration-300 ${toneClass}`}
+                          >
+                            <motion.div
+                              custom={baseDelay + 0.18}
+                              variants={cellVariants}
+                              initial="hidden"
+                              animate="visible"
+                              className="flex justify-end"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <DropdownMenu modal={false}>
+                                <DropdownMenuTrigger asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={(e) => e.stopPropagation()}
+                                    className={`group/btn size-9 rounded-full border backdrop-blur-sm transition-all duration-300 ${
+                                      isSelected
+                                        ? "border-primary/30 bg-primary/10 shadow-[0_8px_24px_-8px_rgba(59,130,246,0.35)]"
+                                        : "border-transparent bg-background/70 hover:border-primary/20 hover:bg-primary/10 hover:shadow-[0_8px_24px_-8px_rgba(59,130,246,0.35)]"
+                                    }`}
+                                  >
+                                    <motion.div
+                                      whileHover={{ rotate: 90, scale: 1.08 }}
+                                      whileTap={{ scale: 0.92 }}
+                                      transition={{
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 18,
+                                      }}
+                                      className="flex items-center justify-center"
+                                    >
+                                      <MoreHorizontalIcon className="h-4 w-4 transition-colors duration-300 group-hover/btn:text-primary" />
+                                    </motion.div>
+                                    <span className="sr-only">Open menu</span>
+                                  </Button>
+                                </DropdownMenuTrigger>
+
+                                <DropdownMenuContent
+                                  align="end"
+                                  sideOffset={10}
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="
+                                    w-48 overflow-hidden rounded-2xl border border-white/10
+                                    bg-background/95 p-2 shadow-2xl backdrop-blur-xl
+                                    data-[state=open]:animate-in
+                                    data-[state=closed]:animate-out
+                                    data-[state=open]:fade-in-0
+                                    data-[state=closed]:fade-out-0
+                                    data-[state=open]:zoom-in-95
+                                    data-[state=closed]:zoom-out-95
+                                    data-[side=bottom]:slide-in-from-top-2
+                                    data-[side=top]:slide-in-from-bottom-2
+                                    duration-200
+                                  "
+                                >
+                                  <motion.div initial="hidden" animate="visible" className="space-y-1">
+                                    <motion.div custom={0.02} variants={dropdownItemVariants}>
+                                      <DropdownMenuItem
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleProjectDetails(item._id);
+                                        }}
+                                        className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
+                                      >
+                                        <Eye className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
+                                        <span className="font-medium">View</span>
+                                      </DropdownMenuItem>
+                                    </motion.div>
+
+                                    <motion.div custom={0.05} variants={dropdownItemVariants}>
+                                      <DropdownMenuItem
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
+                                      >
+                                        <Pencil className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
+                                        <span className="font-medium">Edit</span>
+                                      </DropdownMenuItem>
+                                    </motion.div>
+
+                                    <DropdownMenuSeparator className="my-1 opacity-50" />
+
+                                    <motion.div custom={0.08} variants={dropdownItemVariants}>
+                                      <DeleteConfirmation onConfirm={() => handleDeleteProject(item._id)}>
+                                        <DropdownMenuItem
+                                          onSelect={(e) => e.preventDefault()}
+                                          onClick={(e) => e.stopPropagation()}
+                                          className="group/item cursor-pointer rounded-xl px-3 py-2.5 text-destructive transition-all duration-200 hover:bg-destructive/10 focus:bg-destructive/10 focus:text-destructive"
+                                        >
+                                          <Trash2 className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
+                                          <span className="font-medium">Delete</span>
+                                        </DropdownMenuItem>
+                                      </DeleteConfirmation>
+                                    </motion.div>
+                                  </motion.div>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            </motion.div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
