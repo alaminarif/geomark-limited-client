@@ -4,6 +4,7 @@ import ProjectManagement from "@/pages/Admin/ProjectManagement";
 import ServicesManagement from "@/pages/Admin/ServicesManagement";
 import type { ISidebarItem } from "@/types";
 import EmployeeManagement from "@/pages/Admin/EmployeeManagement";
+import NewsManagement from "@/pages/Admin/NewsManagement";
 
 export const adminSidebarItems: ISidebarItem[] = [
   {
@@ -37,7 +38,7 @@ export const adminSidebarItems: ISidebarItem[] = [
       {
         title: "News And Update Management",
         url: "/admin/news-management",
-        component: EmployeeManagement,
+        component: NewsManagement,
       },
     ],
   },

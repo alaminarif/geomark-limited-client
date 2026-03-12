@@ -10,16 +10,17 @@ import { format } from "date-fns";
 import { BriefcaseBusiness, Eye, MoreHorizontalIcon, Pencil, Trash2, UserRound } from "lucide-react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 type Employee = {
   _id: string;
   name: string;
-  email: string;
-  phone: string;
-  address: string;
+  email?: string;
+  phone?: string;
+  address?: string;
   designation: string;
   joinDate?: string;
+  picture?: string;
 };
 
 const pageVariants: Variants = {
@@ -238,11 +239,12 @@ const EmployeeManagement = () => {
         animate="visible"
         className="relative rounded-3xl border border-border/50 bg-background/70 p-3 backdrop-blur-xl shadow-[0_16px_60px_-20px_rgba(0,0,0,0.35)]"
       >
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <Table className="border-separate [border-spacing:0_10px]">
           <TableHeader>
             <TableRow className="border-none hover:bg-transparent">
+              <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Name</TableHead>
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email</TableHead>
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Phone</TableHead>
@@ -268,7 +270,7 @@ const EmployeeManagement = () => {
                   <TableCell className={`relative rounded-l-2xl border-y border-l px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
                     {isSelected && (
                       <motion.div
-                        layoutId="selected-employee-row-indicator"
+                        layoutId="selected-user-row-indicator"
                         className="absolute left-1 top-1/2 h-12 w-1 -translate-y-1/2 rounded-full bg-primary shadow-[0_0_20px_rgba(59,130,246,0.45)]"
                         transition={{ type: "spring", stiffness: 320, damping: 28 }}
                       />
@@ -276,7 +278,7 @@ const EmployeeManagement = () => {
 
                     <motion.div custom={baseDelay} variants={cellVariants} initial="hidden" animate="visible" className="flex items-center gap-3">
                       <motion.div
-                        className="relative flex h-11 w-11 min-h-11 min-w-11 shrink-0 items-center justify-center rounded-2xl border border-border/50 bg-background shadow-sm"
+                        className="relative flex h-11 w-11 min-h-11 min-w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-border/50 bg-background shadow-sm"
                         whileHover={{ y: -2, scale: 1.04 }}
                         animate={
                           isSelected
@@ -295,36 +297,33 @@ const EmployeeManagement = () => {
                           animate={isSelected ? { opacity: 1, scale: 1.08 } : { opacity: 0, scale: 0.9 }}
                           transition={{ duration: 0.28 }}
                         />
-                        <UserRound className="relative h-5 w-5 text-primary" />
+
+                        {item.picture ? (
+                          <motion.img
+                            src={item.picture}
+                            alt={item.name || "User"}
+                            className="relative h-full w-full object-cover"
+                            whileHover={{ scale: 1.05 }}
+                            transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                          />
+                        ) : (
+                          <UserRound className="relative h-8 w-8 text-primary" />
+                        )}
                       </motion.div>
-
-                      <div className="min-w-0">
-                        <motion.div
-                          className="truncate font-medium"
-                          whileHover={{ x: 3 }}
-                          animate={isSelected ? { x: 2 } : { x: 0 }}
-                          transition={{ type: "spring", stiffness: 260 }}
-                        >
-                          {item.name}
-                        </motion.div>
-
-                        <AnimatePresence>
-                          {isSelected && (
-                            <motion.span
-                              initial={{ opacity: 0, scale: 0.85, y: 6 }}
-                              animate={{ opacity: 1, scale: 1, y: 0 }}
-                              exit={{ opacity: 0, scale: 0.85, y: 6 }}
-                              transition={{ duration: 0.18 }}
-                              className="mt-1 inline-flex rounded-full border border-primary/20 bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary"
-                            >
-                              Selected
-                            </motion.span>
-                          )}
-                        </AnimatePresence>
-                      </div>
                     </motion.div>
                   </TableCell>
 
+                  <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                    <motion.div
+                      custom={baseDelay + 0.03}
+                      variants={cellVariants}
+                      initial="hidden"
+                      animate="visible"
+                      className="font-medium text-sm text-foreground/90"
+                    >
+                      {item.name || "-"}
+                    </motion.div>
+                  </TableCell>
                   <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
                     <motion.div
                       custom={baseDelay + 0.03}

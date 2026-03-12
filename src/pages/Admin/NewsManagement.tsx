@@ -1,21 +1,20 @@
 import { useState } from "react";
 import { DeleteConfirmation } from "@/components/DeleteConfirmation";
+import { AddServiceModal } from "@/components/modules/Admin/Service/AddServiceModal";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { BadgeCheck, Eye, MoreHorizontalIcon, Pencil, ShieldCheck, Trash2, UserRound, UserRoundPlus, XCircle } from "lucide-react";
-import { toast } from "sonner";
+import { Eye, MoreHorizontalIcon, Pencil, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router";
-import { useDeleteUserMutation, useGetAllUsersQuery } from "@/redux/features/user/user.api";
-import { motion, type Variants } from "framer-motion";
+import { toast } from "sonner";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { useDeleteNewsMutation, useGetAllNewssQuery } from "@/redux/features/news/news.api";
 
-type User = {
+type Service = {
   _id: string;
-  picture: string;
-  name?: string;
-  email?: string;
-  role?: string;
-  isActive?: boolean | string;
+  name: string;
+  description?: string;
+  picture?: string;
 };
 
 const pageVariants: Variants = {
@@ -100,7 +99,7 @@ const SkeletonBlock = ({ className = "" }: { className?: string }) => {
   );
 };
 
-const SkeletonUserTable = () => {
+const SkeletonServicesTable = () => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
@@ -110,24 +109,22 @@ const SkeletonUserTable = () => {
     >
       <div className="my-6 flex items-center justify-between">
         <div>
-          <SkeletonBlock className="h-8 w-32 rounded-lg" />
-          <SkeletonBlock className="mt-2 h-4 w-64 rounded-lg" />
+          <SkeletonBlock className="h-8 w-36 rounded-lg" />
+          <SkeletonBlock className="mt-2 h-4 w-72 rounded-lg" />
         </div>
-        <SkeletonBlock className="h-10 w-28 rounded-xl" />
+        <SkeletonBlock className="h-10 w-36 rounded-xl" />
       </div>
 
       <div className="relative rounded-3xl border border-border/50 bg-background/70 p-3 backdrop-blur-xl shadow-[0_16px_60px_-20px_rgba(0,0,0,0.35)]">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="w-full overflow-x-auto">
-          <Table className=" border-separate [border-spacing:0_10px]">
+          <Table className="min-w-262.5 border-separate [border-spacing:0_10px]">
             <TableHeader>
               <TableRow className="border-none hover:bg-transparent">
                 <TableHead className="px-4">Image</TableHead>
                 <TableHead className="px-4">Name</TableHead>
-                <TableHead className="px-4">Email</TableHead>
-                <TableHead className="px-4">Role</TableHead>
-                <TableHead className="px-4">Status</TableHead>
+                <TableHead className="px-4">Description</TableHead>
                 <TableHead className="px-4 text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -136,25 +133,22 @@ const SkeletonUserTable = () => {
               {Array.from({ length: 6 }).map((_, index) => (
                 <TableRow key={index} className="border-none hover:bg-transparent">
                   <TableCell className="rounded-l-2xl border-y border-l border-border/50 bg-background/80 px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <SkeletonBlock className="h-11 w-11 rounded-2xl" />
-                      <div className="space-y-2">
-                        <SkeletonBlock className="h-4 w-28" />
-                        <SkeletonBlock className="h-3 w-20" />
-                      </div>
+                    <SkeletonBlock className="h-20 w-24 min-h-20 min-w-24 rounded-xl" />
+                  </TableCell>
+
+                  <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
+                    <div className="space-y-2">
+                      <SkeletonBlock className="h-4 w-36" />
+                      <SkeletonBlock className="h-4 w-28" />
                     </div>
                   </TableCell>
 
                   <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
-                    <SkeletonBlock className="h-5 w-44" />
-                  </TableCell>
-
-                  <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
-                    <SkeletonBlock className="h-8 w-24 rounded-full" />
-                  </TableCell>
-
-                  <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
-                    <SkeletonBlock className="h-8 w-24 rounded-full" />
+                    <div className="space-y-2">
+                      <SkeletonBlock className="h-4 w-[90%]" />
+                      <SkeletonBlock className="h-4 w-[85%]" />
+                      <SkeletonBlock className="h-4 w-[70%]" />
+                    </div>
                   </TableCell>
 
                   <TableCell className="rounded-r-2xl border-y border-r border-border/50 bg-background/80 px-4 py-3 text-right">
@@ -172,77 +166,45 @@ const SkeletonUserTable = () => {
   );
 };
 
-const getRoleTone = (role?: string) => {
-  const value = role?.toLowerCase() || "";
-
-  if (value.includes("admin") || value.includes("super")) {
-    return "border-violet-500/20 bg-violet-500/10 text-violet-600 dark:text-violet-400";
-  }
-
-  if (value.includes("manager")) {
-    return "border-blue-500/20 bg-blue-500/10 text-blue-600 dark:text-blue-400";
-  }
-
-  return "border-primary/20 bg-primary/10 text-primary";
-};
-
-const getActiveTone = (value?: boolean | string) => {
-  const active = value === true || value === "true" || value === "active" || value === "ACTIVE" || value === "Active";
-
-  return active
-    ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-    : "border-rose-500/20 bg-rose-500/10 text-rose-600 dark:text-rose-400";
-};
-
-const getActiveLabel = (value?: boolean | string) => {
-  const active = value === true || value === "true" || value === "active" || value === "ACTIVE" || value === "Active";
-
-  return active ? "Active" : "Inactive";
-};
-
-const UserManagement = () => {
+const NewsManagement = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetAllUsersQuery(undefined);
-  const [deleteUser] = useDeleteUserMutation();
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const { data, isLoading } = useGetAllNewssQuery(undefined);
+  const [deleteService] = useDeleteNewsMutation();
+  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
 
-  const handleDeleteUser = async (userId: string) => {
-    const toastId = toast.loading("Deleting user...");
+  const handleDeleteService = async (serviceId: string) => {
+    const toastId = toast.loading("Deleting service...");
 
     try {
-      const res = await deleteUser(userId).unwrap();
+      const res = await deleteService(serviceId).unwrap();
 
       if (res.success) {
-        toast.success("User deleted successfully", { id: toastId });
+        toast.success("Service deleted successfully", { id: toastId });
 
-        if (selectedUserId === userId) {
-          setSelectedUserId(null);
+        if (selectedServiceId === serviceId) {
+          setSelectedServiceId(null);
         }
       }
     } catch (error) {
-      toast.error("Failed to delete user", { id: toastId });
+      toast.error("Failed to delete service", { id: toastId });
       console.log(error);
     }
   };
 
-  const handleRegisterUser = () => {
-    navigate("/register");
-  };
-
-  const handleUserDetails = (id: string) => {
-    navigate(`/user/${id}`);
+  const handleServiceDetails = (id: string) => {
+    navigate(`/service/${id}`);
   };
 
   if (isLoading) {
-    return <SkeletonUserTable />;
+    return <SkeletonServicesTable />;
   }
 
   return (
     <motion.div variants={pageVariants} initial="hidden" animate="visible" className="w-full max-w-7xl mx-auto px-5">
       <motion.div variants={headerVariants} className="my-6 flex items-center justify-between">
         <motion.div initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>
-          <h1 className="text-2xl font-bold tracking-tight">User</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Manage users with a cleaner premium dashboard feel</p>
+          <h1 className="text-2xl font-bold tracking-tight">Services</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Manage services with a cleaner premium dashboard feel</p>
         </motion.div>
 
         <motion.div
@@ -252,13 +214,7 @@ const UserManagement = () => {
           whileHover={{ y: -2, scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <Button
-            onClick={handleRegisterUser}
-            className="rounded-xl bg-linear-to-r from-purple-500 to-blue-500 shadow-lg transition-all duration-300 hover:shadow-purple-500/30"
-          >
-            <UserRoundPlus className="mr-2 h-4 w-4" />
-            Add User
-          </Button>
+          <AddServiceModal />
         </motion.div>
       </motion.div>
 
@@ -271,121 +227,104 @@ const UserManagement = () => {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="w-full overflow-x-auto">
-          <Table className=" border-separate [border-spacing:0_10px]">
+          <Table className="border-separate [border-spacing:0_10px]">
             <TableHeader>
               <TableRow className="border-none hover:bg-transparent">
                 <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
                 <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Name</TableHead>
-                <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email</TableHead>
-                <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Role</TableHead>
-                <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Status</TableHead>
+                <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Description</TableHead>
                 <TableHead className="px-4 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">Actions</TableHead>
               </TableRow>
             </TableHeader>
 
             <TableBody>
-              {data?.data?.map((item: User, index: number) => {
+              {data?.data?.map((item: Service, index: number) => {
                 const baseDelay = 0.08 + index * 0.05;
-                const isSelected = selectedUserId === item._id;
+                const isSelected = selectedServiceId === item._id;
                 const toneClass = isSelected ? "border-primary/35 bg-primary/[0.06]" : "border-border/50 bg-background/80";
+
+                const imageSrc = item.picture || item.picture || "https://placehold.co/96x80/png";
 
                 return (
                   <TableRow
                     key={item._id}
-                    onClick={() => setSelectedUserId(item._id)}
+                    onClick={() => setSelectedServiceId(item._id)}
                     className="group cursor-pointer border-none hover:bg-transparent"
                   >
                     <TableCell className={`relative rounded-l-2xl border-y border-l px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
                       {isSelected && (
                         <motion.div
-                          layoutId="selected-user-row-indicator"
+                          layoutId="selected-service-row-indicator"
                           className="absolute left-1 top-1/2 h-12 w-1 -translate-y-1/2 rounded-full bg-primary shadow-[0_0_20px_rgba(59,130,246,0.45)]"
                           transition={{ type: "spring", stiffness: 320, damping: 28 }}
                         />
                       )}
 
-                      <motion.div custom={baseDelay} variants={cellVariants} initial="hidden" animate="visible" className="flex items-center gap-3">
+                      <motion.div custom={baseDelay} variants={cellVariants} initial="hidden" animate="visible" className="relative w-fit">
                         <motion.div
-                          className="relative flex h-11 w-11 min-h-11 min-w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-border/50 bg-background shadow-sm"
-                          whileHover={{ y: -2, scale: 1.04 }}
-                          animate={
-                            isSelected
-                              ? {
-                                  scale: 1.03,
-                                  boxShadow: "0 8px 24px -8px rgba(59,130,246,0.35)",
-                                }
-                              : { scale: 1, boxShadow: "0 0 0 rgba(0,0,0,0)" }
-                          }
-                          transition={{ type: "spring", stiffness: 260, damping: 18 }}
-                        >
-                          <motion.div
-                            className="absolute inset-0 rounded-2xl bg-primary/15 blur-xl"
-                            initial={{ opacity: 0, scale: 0.85 }}
-                            whileHover={{ opacity: 1, scale: 1.18 }}
-                            animate={isSelected ? { opacity: 1, scale: 1.08 } : { opacity: 0, scale: 0.9 }}
-                            transition={{ duration: 0.28 }}
-                          />
+                          className="absolute inset-0 rounded-2xl bg-primary/15 blur-xl"
+                          initial={{ opacity: 0, scale: 0.85 }}
+                          whileHover={{ opacity: 1, scale: 1.18 }}
+                          animate={isSelected ? { opacity: 1, scale: 1.08 } : { opacity: 0, scale: 0.9 }}
+                          transition={{ duration: 0.28 }}
+                        />
 
-                          {item.picture ? (
-                            <motion.img
-                              src={item.picture}
-                              alt={item.name || "User"}
-                              className="relative h-full w-full object-cover"
-                              whileHover={{ scale: 1.05 }}
-                              transition={{ type: "spring", stiffness: 260, damping: 18 }}
-                            />
-                          ) : (
-                            <UserRound className="relative h-8 w-8 text-primary" />
+                        <motion.img
+                          src={imageSrc}
+                          alt={item.name}
+                          className="relative h-20 w-24 min-h-20 min-w-24 shrink-0 rounded-xl border border-border/50 object-cover shadow-md"
+                          whileHover={{
+                            y: -2,
+                            scale: 1.05,
+                            rotate: 0.5,
+                          }}
+                          animate={isSelected ? { scale: 1.03, y: -1 } : { scale: 1, y: 0 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 18,
+                          }}
+                        />
+                      </motion.div>
+                    </TableCell>
+
+                    <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                      <motion.div custom={baseDelay + 0.03} variants={cellVariants} initial="hidden" animate="visible" className="min-w-0 max-w-65">
+                        <motion.p
+                          className="line-clamp-3 wrap-break-word text-sm font-medium leading-6 whitespace-normal"
+                          whileHover={{ x: 3 }}
+                          animate={isSelected ? { x: 2 } : { x: 0 }}
+                          transition={{ type: "spring", stiffness: 260 }}
+                        >
+                          {item.name}
+                        </motion.p>
+
+                        <AnimatePresence>
+                          {isSelected && (
+                            <motion.span
+                              initial={{ opacity: 0, scale: 0.85, y: 6 }}
+                              animate={{ opacity: 1, scale: 1, y: 0 }}
+                              exit={{ opacity: 0, scale: 0.85, y: 6 }}
+                              transition={{ duration: 0.18 }}
+                              className="mt-2 inline-flex rounded-full border border-primary/20 bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary"
+                            >
+                              Selected
+                            </motion.span>
                           )}
-                        </motion.div>
+                        </AnimatePresence>
                       </motion.div>
                     </TableCell>
 
                     <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                      <motion.div
-                        custom={baseDelay + 0.03}
-                        variants={cellVariants}
-                        initial="hidden"
-                        animate="visible"
-                        className="font-medium text-sm text-foreground/90"
-                      >
-                        {item.name || "-"}
-                      </motion.div>
-                    </TableCell>
-
-                    <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                      <motion.div
-                        custom={baseDelay + 0.03}
-                        variants={cellVariants}
-                        initial="hidden"
-                        animate="visible"
-                        className="font-medium text-sm text-foreground/90"
-                      >
-                        {item.email || "-"}
-                      </motion.div>
-                    </TableCell>
-
-                    <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                      <motion.div custom={baseDelay + 0.06} variants={cellVariants} initial="hidden" animate="visible">
-                        <span
-                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${getRoleTone(item.role)}`}
+                      <motion.div custom={baseDelay + 0.06} variants={cellVariants} initial="hidden" animate="visible" className="max-w-120">
+                        <motion.p
+                          className="line-clamp-3 wrap-break-word text-sm leading-6 text-foreground/90 whitespace-normal"
+                          whileHover={{ x: 2 }}
+                          animate={isSelected ? { x: 1 } : { x: 0 }}
+                          transition={{ type: "spring", stiffness: 240 }}
                         >
-                          <ShieldCheck className="h-3.5 w-3.5" />
-                          <span>{item.role || "-"}</span>
-                        </span>
-                      </motion.div>
-                    </TableCell>
-
-                    <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                      <motion.div custom={baseDelay + 0.09} variants={cellVariants} initial="hidden" animate="visible">
-                        <span
-                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${getActiveTone(
-                            item.isActive,
-                          )}`}
-                        >
-                          {getActiveLabel(item.isActive) === "Active" ? <BadgeCheck className="h-3.5 w-3.5" /> : <XCircle className="h-3.5 w-3.5" />}
-                          <span>{getActiveLabel(item.isActive)}</span>
-                        </span>
+                          {item.description || "-"}
+                        </motion.p>
                       </motion.div>
                     </TableCell>
 
@@ -393,7 +332,7 @@ const UserManagement = () => {
                       className={`rounded-r-2xl border-y border-r px-4 py-3 text-right align-middle transition-all duration-300 ${toneClass}`}
                     >
                       <motion.div
-                        custom={baseDelay + 0.12}
+                        custom={baseDelay + 0.09}
                         variants={cellVariants}
                         initial="hidden"
                         animate="visible"
@@ -451,7 +390,7 @@ const UserManagement = () => {
                                 <DropdownMenuItem
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    handleUserDetails(item._id);
+                                    handleServiceDetails(item._id);
                                   }}
                                   className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
                                 >
@@ -473,7 +412,7 @@ const UserManagement = () => {
                               <DropdownMenuSeparator className="my-1 opacity-50" />
 
                               <motion.div custom={0.08} variants={dropdownItemVariants}>
-                                <DeleteConfirmation onConfirm={() => handleDeleteUser(item._id)}>
+                                <DeleteConfirmation onConfirm={() => handleDeleteService(item._id)}>
                                   <DropdownMenuItem
                                     onSelect={(e) => e.preventDefault()}
                                     onClick={(e) => e.stopPropagation()}
@@ -500,4 +439,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
+export default NewsManagement;

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import ProjectFilter from "@/components/modules/Project/ProjectFilter";
@@ -165,7 +164,7 @@ const SkeletonBlock = ({ className = "" }: { className?: string }) => {
   return (
     <div className={`relative overflow-hidden rounded-md bg-muted/70 ${className}`}>
       <motion.div
-        className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent"
+        className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent"
         animate={{ x: ["-100%", "100%"] }}
         transition={{ repeat: Infinity, duration: 1.35, ease: "linear" }}
       />
@@ -588,7 +587,7 @@ const ProjectManagement = () => {
                             </motion.div>
                           </TableCell>
 
-                          <TableCell className={`border-y border py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                          <TableCell className={`border-y py-3 align-middle transition-all duration-300 ${toneClass}`}>
                             <motion.div custom={baseDelay + 0.15} variants={cellVariants} initial="hidden" animate="visible" className="">
                               <div className="inline-flex items-center line-clamp-3 gap-2 text-xs text-foreground/90">
                                 <BriefcaseBusiness className="h-3.5  text-primary" />

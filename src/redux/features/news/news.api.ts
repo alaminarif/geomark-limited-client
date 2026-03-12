@@ -2,7 +2,7 @@ import { baseApi } from "@/redux/baseApi";
 
 export const newsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getNewss: builder.query({
+    getAllNewss: builder.query({
       query: () => ({
         url: "/news",
         method: "GET",
@@ -46,4 +46,4 @@ export const newsApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetNewssQuery, useGetSingleNewsQuery, useAddNewsMutation, useUpdateNewsMutation, useDeleteNewsMutation } = newsApi;
+export const { useGetAllNewssQuery, useGetSingleNewsQuery, useAddNewsMutation, useUpdateNewsMutation, useDeleteNewsMutation } = newsApi;

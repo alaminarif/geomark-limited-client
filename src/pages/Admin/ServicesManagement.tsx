@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import { AddServiceModal } from "@/components/modules/Admin/Service/AddServiceModal";
@@ -6,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useDeleteServiceMutation, useGetAllServicesQuery } from "@/redux/features/service/service.api";
-import { Eye, MoreHorizontalIcon, Pencil, Settings2, Trash2 } from "lucide-react";
+import { Eye, MoreHorizontalIcon, Pencil, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
@@ -93,7 +92,7 @@ const SkeletonBlock = ({ className = "" }: { className?: string }) => {
   return (
     <div className={`relative overflow-hidden rounded-md bg-muted/70 ${className}`}>
       <motion.div
-        className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent"
+        className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent"
         animate={{ x: ["-100%", "100%"] }}
         transition={{ repeat: Infinity, duration: 1.35, ease: "linear" }}
       />
@@ -118,10 +117,10 @@ const SkeletonServicesTable = () => {
       </div>
 
       <div className="relative rounded-3xl border border-border/50 bg-background/70 p-3 backdrop-blur-xl shadow-[0_16px_60px_-20px_rgba(0,0,0,0.35)]">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="w-full overflow-x-auto">
-          <Table className="min-w-[1050px] border-separate [border-spacing:0_10px]">
+          <Table className="min-w-262.5 border-separate [border-spacing:0_10px]">
             <TableHeader>
               <TableRow className="border-none hover:bg-transparent">
                 <TableHead className="px-4">Image</TableHead>
@@ -226,10 +225,10 @@ const ServicesManagement = () => {
         animate="visible"
         className="relative rounded-3xl border border-border/50 bg-background/70 p-3 backdrop-blur-xl shadow-[0_16px_60px_-20px_rgba(0,0,0,0.35)]"
       >
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="w-full overflow-x-auto">
-          <Table className="min-w-[1050px] border-separate [border-spacing:0_10px]">
+          <Table className="border-separate [border-spacing:0_10px]">
             <TableHeader>
               <TableRow className="border-none hover:bg-transparent">
                 <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
@@ -291,15 +290,9 @@ const ServicesManagement = () => {
                     </TableCell>
 
                     <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                      <motion.div
-                        custom={baseDelay + 0.03}
-                        variants={cellVariants}
-                        initial="hidden"
-                        animate="visible"
-                        className="min-w-0 max-w-[260px]"
-                      >
+                      <motion.div custom={baseDelay + 0.03} variants={cellVariants} initial="hidden" animate="visible" className="min-w-0 max-w-65">
                         <motion.p
-                          className="line-clamp-3 break-words text-sm font-medium leading-6 whitespace-normal"
+                          className="line-clamp-3 wrap-break-word text-sm font-medium leading-6 whitespace-normal"
                           whileHover={{ x: 3 }}
                           animate={isSelected ? { x: 2 } : { x: 0 }}
                           transition={{ type: "spring", stiffness: 260 }}
@@ -324,9 +317,9 @@ const ServicesManagement = () => {
                     </TableCell>
 
                     <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                      <motion.div custom={baseDelay + 0.06} variants={cellVariants} initial="hidden" animate="visible" className="max-w-[520px]">
+                      <motion.div custom={baseDelay + 0.06} variants={cellVariants} initial="hidden" animate="visible" className="max-w-120">
                         <motion.p
-                          className="line-clamp-3 break-words text-sm leading-6 text-foreground/90 whitespace-normal"
+                          className="line-clamp-3 wrap-break-word text-sm leading-6 text-foreground/90 whitespace-normal"
                           whileHover={{ x: 2 }}
                           animate={isSelected ? { x: 1 } : { x: 0 }}
                           transition={{ type: "spring", stiffness: 240 }}
