@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { DeleteConfirmation } from "@/components/DeleteConfirmation";
-import { AddServiceModal } from "@/components/modules/Admin/Service/AddServiceModal";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -9,6 +8,7 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { useDeleteNewsMutation, useGetAllNewssQuery } from "@/redux/features/news/news.api";
+import { AddNewsModal } from "@/components/modules/Admin/News/AddNewsModal";
 
 type Service = {
   _id: string;
@@ -203,8 +203,8 @@ const NewsManagement = () => {
     <motion.div variants={pageVariants} initial="hidden" animate="visible" className="w-full max-w-7xl mx-auto px-5">
       <motion.div variants={headerVariants} className="my-6 flex items-center justify-between">
         <motion.div initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>
-          <h1 className="text-2xl font-bold tracking-tight">Services</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Manage services with a cleaner premium dashboard feel</p>
+          <h1 className="text-2xl font-bold tracking-tight">News And Update</h1>
+          {/* <p className="mt-1 text-sm text-muted-foreground">Manage services with a cleaner premium dashboard feel</p> */}
         </motion.div>
 
         <motion.div
@@ -214,7 +214,7 @@ const NewsManagement = () => {
           whileHover={{ y: -2, scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <AddServiceModal />
+          <AddNewsModal />
         </motion.div>
       </motion.div>
 
