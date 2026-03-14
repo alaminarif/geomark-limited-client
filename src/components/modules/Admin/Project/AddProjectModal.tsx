@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Loading from "@/components/layout/Loading";
 import { Button } from "@/components/ui/button";
@@ -87,7 +86,12 @@ const AddProjectModal = () => {
     <div>
       <Drawer open={open} onOpenChange={setOpen} direction="right">
         <DrawerTrigger asChild>
-          <Button type="button">Add Project</Button>
+          <Button
+            type="button"
+            className="w-full rounded-xl bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+          >
+            Add Project
+          </Button>
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>

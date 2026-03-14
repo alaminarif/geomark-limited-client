@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { toast } from "sonner";
+import { useAddContactMutation } from "@/redux/features/contact/contact.api";
 
 export const Contact = ({ className }: { className?: string }) => {
   const container: Variants = {
@@ -29,7 +30,7 @@ export const Contact = ({ className }: { className?: string }) => {
     },
   };
 
-  const registerSchema = z.object({
+  const contactScheema = z.object({
     name: z
       .string()
       .min(3, {
@@ -40,9 +41,9 @@ export const Contact = ({ className }: { className?: string }) => {
     subject: z.string().min(3, { error: "Subject is too short" }),
     message: z.string().min(6, { error: "Message is too short" }),
   });
-
-  const form = useForm<z.infer<typeof registerSchema>>({
-    resolver: zodResolver(registerSchema),
+  const [addContact] = useAddContactMutation();
+  const form = useForm<z.infer<typeof contactScheema>>({
+    resolver: zodResolver(contactScheema),
     // defaultValues: {
     //   name: "Rakib",
     //   email: "rakib@gmail.com",
@@ -51,7 +52,7 @@ export const Contact = ({ className }: { className?: string }) => {
     // },
   });
 
-  const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+  const onSubmit = async (data: z.infer<typeof contactScheema>) => {
     const contactInfo = {
       name: data.name,
       email: data.email,
@@ -60,11 +61,11 @@ export const Contact = ({ className }: { className?: string }) => {
     };
 
     console.log(contactInfo);
-    console.log(data);
+    // console.log(data);
 
     try {
-      // const result = await register(userInfo).unwrap();
-      // console.log(result);
+      const result = await addContact(contactInfo).unwrap();
+      console.log(result);
 
       toast.success("User created successfully");
     } catch (error) {

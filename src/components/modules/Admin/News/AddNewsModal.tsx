@@ -13,7 +13,7 @@ import {
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import SingleImageUploader from "@/components/ui/SingleImageUploader";
-import { useAddServiceMutation } from "@/redux/features/service/service.api";
+import { useAddNewsMutation } from "@/redux/features/news/news.api";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -22,7 +22,7 @@ export function AddNewsModal() {
   const form = useForm();
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState<File | null>(null);
-  const [addService] = useAddServiceMutation();
+  const [addNews] = useAddNewsMutation();
 
   const onSubmit = async (data: any) => {
     const toastId = toast.loading("Adding service...");
@@ -32,8 +32,8 @@ export function AddNewsModal() {
     formData.append("data", JSON.stringify(data));
     formData.append("file", image as File);
     try {
-      await addService(formData).unwrap();
-      toast.success("Service added successfully", { id: toastId });
+      await addNews(formData).unwrap();
+      toast.success("News added successfully", { id: toastId });
       setOpen(false);
       form.reset();
       setImage(null);
@@ -46,7 +46,9 @@ export function AddNewsModal() {
   return (
     <Drawer open={open} onOpenChange={setOpen} direction="right">
       <DrawerTrigger asChild>
-        <Button>Add News</Button>
+        <Button className="w-full rounded-xl bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300">
+          Add News
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>

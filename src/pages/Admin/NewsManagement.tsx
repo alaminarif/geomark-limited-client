@@ -169,29 +169,29 @@ const SkeletonServicesTable = () => {
 const NewsManagement = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useGetAllNewssQuery(undefined);
-  const [deleteService] = useDeleteNewsMutation();
-  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
+  const [deleteNews] = useDeleteNewsMutation();
+  const [selectedNewsId, setselectedNewsId] = useState<string | null>(null);
 
-  const handleDeleteService = async (serviceId: string) => {
+  const handledeleteNews = async (newsId: string) => {
     const toastId = toast.loading("Deleting service...");
 
     try {
-      const res = await deleteService(serviceId).unwrap();
+      const res = await deleteNews(newsId).unwrap();
 
       if (res.success) {
-        toast.success("Service deleted successfully", { id: toastId });
+        toast.success("News deleted successfully", { id: toastId });
 
-        if (selectedServiceId === serviceId) {
-          setSelectedServiceId(null);
+        if (selectedNewsId === newsId) {
+          setselectedNewsId(null);
         }
       }
     } catch (error) {
-      toast.error("Failed to delete service", { id: toastId });
+      toast.error("Failed to delete News", { id: toastId });
       console.log(error);
     }
   };
 
-  const handleServiceDetails = (id: string) => {
+  const handleNewsDetails = (id: string) => {
     navigate(`/service/${id}`);
   };
 
@@ -240,7 +240,7 @@ const NewsManagement = () => {
             <TableBody>
               {data?.data?.map((item: Service, index: number) => {
                 const baseDelay = 0.08 + index * 0.05;
-                const isSelected = selectedServiceId === item._id;
+                const isSelected = selectedNewsId === item._id;
                 const toneClass = isSelected ? "border-primary/35 bg-primary/[0.06]" : "border-border/50 bg-background/80";
 
                 const imageSrc = item.picture || item.picture || "https://placehold.co/96x80/png";
@@ -248,7 +248,7 @@ const NewsManagement = () => {
                 return (
                   <TableRow
                     key={item._id}
-                    onClick={() => setSelectedServiceId(item._id)}
+                    onClick={() => setselectedNewsId(item._id)}
                     className="group cursor-pointer border-none hover:bg-transparent"
                   >
                     <TableCell className={`relative rounded-l-2xl border-y border-l px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
@@ -390,7 +390,7 @@ const NewsManagement = () => {
                                 <DropdownMenuItem
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    handleServiceDetails(item._id);
+                                    handleNewsDetails(item._id);
                                   }}
                                   className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
                                 >
@@ -412,7 +412,7 @@ const NewsManagement = () => {
                               <DropdownMenuSeparator className="my-1 opacity-50" />
 
                               <motion.div custom={0.08} variants={dropdownItemVariants}>
-                                <DeleteConfirmation onConfirm={() => handleDeleteService(item._id)}>
+                                <DeleteConfirmation onConfirm={() => handledeleteNews(item._id)}>
                                   <DropdownMenuItem
                                     onSelect={(e) => e.preventDefault()}
                                     onClick={(e) => e.stopPropagation()}

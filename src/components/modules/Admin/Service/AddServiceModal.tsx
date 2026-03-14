@@ -20,7 +20,6 @@ import { toast } from "sonner";
 
 export function AddServiceModal() {
   const form = useForm();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [addService] = useAddServiceMutation();
@@ -47,7 +46,9 @@ export function AddServiceModal() {
   return (
     <Drawer open={open} onOpenChange={setOpen} direction="right">
       <DrawerTrigger asChild>
-        <Button>Add Service</Button>
+        <Button className="w-full rounded-xl bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300">
+          Add Service
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>

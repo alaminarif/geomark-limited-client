@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -61,7 +60,12 @@ const AddEmployeeModal = () => {
     <div>
       <Drawer open={open} onOpenChange={setOpen} direction="right">
         <DrawerTrigger asChild>
-          <Button type="button">Add Employee</Button>
+          <Button
+            type="button"
+            className="w-full rounded-xl bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+          >
+            Add Employee
+          </Button>
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>

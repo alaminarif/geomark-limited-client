@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import AddEmployeeModal from "@/components/modules/Admin/Employee/AddEmployeeModal";
@@ -97,7 +96,7 @@ const SkeletonBlock = ({ className = "" }: { className?: string }) => {
   return (
     <div className={`relative overflow-hidden rounded-md bg-muted/70 ${className}`}>
       <motion.div
-        className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent"
+        className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent"
         animate={{ x: ["-100%", "100%"] }}
         transition={{ repeat: Infinity, duration: 1.35, ease: "linear" }}
       />
@@ -122,7 +121,7 @@ const SkeletonEmployeeTable = () => {
       </div>
 
       <div className="relative rounded-3xl border border-border/50 bg-background/70 p-3 backdrop-blur-xl shadow-[0_16px_60px_-20px_rgba(0,0,0,0.35)]">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <Table className="border-separate [border-spacing:0_10px]">
           <TableHeader>
@@ -313,54 +312,54 @@ const EmployeeManagement = () => {
                     </motion.div>
                   </TableCell>
 
-                  <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                  <TableCell className={`border-y px-2 py-3 align-middle transition-all duration-300 ${toneClass} `}>
                     <motion.div
                       custom={baseDelay + 0.03}
                       variants={cellVariants}
                       initial="hidden"
                       animate="visible"
-                      className="font-medium text-sm text-foreground/90"
+                      className="font-medium text-sm text-foreground/90 line-clamp-2"
                     >
                       {item.name || "-"}
                     </motion.div>
                   </TableCell>
-                  <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                  <TableCell className={`border-y px-2 py-3 align-middle transition-all duration-300 ${toneClass}`}>
                     <motion.div
                       custom={baseDelay + 0.03}
                       variants={cellVariants}
                       initial="hidden"
                       animate="visible"
-                      className="font-medium text-sm text-foreground/90"
+                      className="font-medium text-xs 2xl:text-sm text-foreground/90"
                     >
                       {item.email}
                     </motion.div>
                   </TableCell>
 
-                  <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                  <TableCell className={`border-y px-2 py-3 align-middle transition-all duration-300 ${toneClass}`}>
                     <motion.div
                       custom={baseDelay + 0.06}
                       variants={cellVariants}
                       initial="hidden"
                       animate="visible"
-                      className="font-medium text-sm text-foreground/90"
+                      className="font-medium text-xs 2xl:text-sm text-foreground/90"
                     >
                       {item.phone}
                     </motion.div>
                   </TableCell>
 
-                  <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                  <TableCell className={`border-y px-2 py-3 align-middle transition-all duration-300 ${toneClass}`}>
                     <motion.div
                       custom={baseDelay + 0.09}
                       variants={cellVariants}
                       initial="hidden"
                       animate="visible"
-                      className="font-medium text-sm text-foreground/90"
+                      className="font-medium text-xs 2xl:text-sm text-foreground/90"
                     >
                       {item.address}
                     </motion.div>
                   </TableCell>
 
-                  <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                  <TableCell className={`border-y px-2 py-3 align-middle transition-all duration-300 ${toneClass}`}>
                     <motion.div custom={baseDelay + 0.12} variants={cellVariants} initial="hidden" animate="visible">
                       <motion.div
                         whileHover={{ y: -1 }}
@@ -374,19 +373,19 @@ const EmployeeManagement = () => {
                     </motion.div>
                   </TableCell>
 
-                  <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                  <TableCell className={`border-y px-2 py-3 align-middle transition-all duration-300 ${toneClass}`}>
                     <motion.div
                       custom={baseDelay + 0.15}
                       variants={cellVariants}
                       initial="hidden"
                       animate="visible"
-                      className="font-medium text-sm text-foreground/90"
+                      className="font-medium text-xs 2xl:text-sm text-foreground/90"
                     >
                       {item.joinDate ? format(new Date(item.joinDate), "PPP") : "-"}
                     </motion.div>
                   </TableCell>
 
-                  <TableCell className={`rounded-r-2xl border-y border-r px-4 py-3 text-right align-middle transition-all duration-300 ${toneClass}`}>
+                  <TableCell className={`rounded-r-2xl border-y border-r px-2 py-3 text-right align-middle transition-all duration-300 ${toneClass}`}>
                     <motion.div
                       custom={baseDelay + 0.18}
                       variants={cellVariants}

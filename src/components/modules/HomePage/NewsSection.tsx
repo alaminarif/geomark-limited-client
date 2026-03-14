@@ -1,16 +1,17 @@
-// import { Facebook, Github, Linkedin, Twitter } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Loading from "@/components/layout/Loading";
-import { useGetClientsQuery } from "@/redux/features/client/client.api";
+import { useGetAllNewssQuery } from "@/redux/features/news/news.api";
 
 interface CommunityProps {
   className?: string;
 }
 
 export const NewsSection = ({ className }: CommunityProps) => {
-  const { data, isLoading } = useGetClientsQuery(undefined);
+  const { data, isLoading } = useGetAllNewssQuery(undefined);
+
   if (isLoading) return <Loading />;
+
   const items = data?.data || [];
   const loopItems = [...items, ...items];
 
@@ -21,12 +22,9 @@ export const NewsSection = ({ className }: CommunityProps) => {
           <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase text-blue-800">News and update</h2>
         </motion.div>
 
-        {/* Carousel Track */}
         <motion.div
-          className="flex gap-6"
-          animate={{
-            x: ["3%", "-50%"],
-          }}
+          className="flex gap-6 w-max"
+          animate={{ x: ["0%", "-50%"] }}
           transition={{
             repeat: Infinity,
             repeatType: "loop",
@@ -35,33 +33,23 @@ export const NewsSection = ({ className }: CommunityProps) => {
           }}
         >
           {loopItems.map((item, index) => (
-            <a
+            <div
               key={index}
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                min-w-[80%]
-                sm:min-w-[45%]
-                md:min-w-[30%]
-                lg:min-w-[22%]
-                group relative rounded-xl 
-                 p-6 backdrop-blur-lg
-                transition-all duration-300
-                hover:shadow-[0_0_10px_rgba(139,92,246,0.4)]
-              "
+              className="group relative shrink-0 w-[90%] sm:w-[70%] lg:w-[calc((100vw-160px)/2)] rounded-xl p-4 md:p-6 backdrop-blur-lg transition-all duration-300 hover:shadow-[0_0_10px_rgba(139,92,246,0.4)]"
             >
-              {/* Glow */}
-              <div className="absolute inset-0 rounded-xl bg-linear-to-r from-purple-500 via-blue-500 to-cyan-400 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-20" />
+              <div className="absolute inset-0 rounded-xl bg-linear-to-r from-purple-500 via-blue-500 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-20" />
 
-              <div className="relative z-10 text-center border">
-                <div className="flex justify-center mb-4">
-                  <img src={item.picture} alt={item.name} className="size-64 object-contain" />
+              <div className="relative z-10  md:p-8 border rounded">
+                <div className="flex justify-center mb-6  rounded">
+                  <div className="h-72 w-full overflow-hidden rounded-xl">
+                    <img src={item.picture} alt={item.name} className="h-full w-full object-cover" />
+                  </div>
                 </div>
-                <h3 className="mb-1 text-2xl font-bold">{item.name}</h3>
-                <p className="text-muted-foreground">{item.desc}</p>
+
+                <h3 className="mb-2 text-2xl md:text-3xl font-bold text-center">{item.name}</h3>
+                <p className="text-base md:text-lg text-muted-foreground text-justify">{item.description}</p>
               </div>
-            </a>
+            </div>
           ))}
         </motion.div>
       </div>

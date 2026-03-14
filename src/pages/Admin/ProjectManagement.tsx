@@ -11,6 +11,7 @@ import { BriefcaseBusiness, CalendarRange, Eye, FolderKanban, LayoutGrid, MoreHo
 import { useNavigate, useSearchParams } from "react-router";
 import { toast } from "sonner";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
+import AddProjectModal from "@/components/modules/Admin/Project/AddProjectModal";
 
 type ViewMode = "card" | "table";
 
@@ -208,7 +209,7 @@ const SkeletonProjectPage = () => {
                 <TableRow className="border-none hover:bg-transparent">
                   <TableHead className="px-4">Image</TableHead>
                   <TableHead className="px-4">Project Name</TableHead>
-                  <TableHead className="px-4">Period</TableHead>
+                  <TableHead className="px-4">Year</TableHead>
                   <TableHead className="px-4">Status</TableHead>
                   <TableHead className="px-4">Sector</TableHead>
                   <TableHead className="px-4">Client</TableHead>
@@ -340,14 +341,21 @@ const ProjectManagement = () => {
     <section className="container mx-auto overflow-x-hidden">
       <motion.div variants={pageVariants} initial="hidden" animate="visible" className="px-4 md:px-6 lg:px-8 xl:px-10">
         <motion.div variants={headerVariants} className="my-6">
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-4"
-          >
-            <h1 className="text-2xl font-bold tracking-tight">Project</h1>
-            <p className="mt-1 text-sm text-muted-foreground">Manage projects with premium table and card animations</p>
+          <motion.div variants={headerVariants} className="flex items-center justify-between my-6">
+            <motion.div initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>
+              <h1 className="text-2xl font-bold tracking-tight">Project</h1>
+              {/* <p className="mt-1 text-sm text-muted-foreground">Manage clients with a cleaner premium dashboard feel</p> */}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 24, scale: 0.94 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              transition={{ duration: 0.45, delay: 0.08 }}
+              whileHover={{ y: -2, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <AddProjectModal />
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -424,7 +432,7 @@ const ProjectManagement = () => {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-6"
+              className="mt-6 grid gap-3  grid-cols-1  lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 xl:gap-6"
             >
               {projects?.data?.map((item: Project) => (
                 <motion.div
@@ -461,7 +469,7 @@ const ProjectManagement = () => {
                     <TableRow className="border-none hover:bg-transparent">
                       <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
                       <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Project Name</TableHead>
-                      <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Period</TableHead>
+                      <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Year</TableHead>
                       <TableHead className="px-4 text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">Status</TableHead>
                       {/* <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Sector</TableHead> */}
                       <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Client</TableHead>
