@@ -44,7 +44,7 @@ export default function Navbar() {
             <PopoverTrigger asChild>
               <Button className="group size-8 md:hidden" variant="ghost" size="icon">
                 <svg
-                  className="pointer-events-none"
+                  className="pointer-events-none text-blue-800 dark:text-primary "
                   width={16}
                   height={16}
                   viewBox="0 0 24 24"
@@ -86,7 +86,9 @@ export default function Navbar() {
                       {link.role === data?.data?.role && (
                         <NavigationMenuItem key={index} className="w-full">
                           <NavigationMenuLink asChild className="py-1.5">
-                            <Link to={link.href}>{link.label} </Link>
+                            <Link to={link.href} className="">
+                              {link.label}{" "}
+                            </Link>
                           </NavigationMenuLink>
                         </NavigationMenuItem>
                       )}
@@ -109,7 +111,10 @@ export default function Navbar() {
                   <>
                     {link.role === "PUBLIC" && (
                       <NavigationMenuItem key={index}>
-                        <NavigationMenuLink asChild className="text-muted-foreground hover:text-primary py-1.5 font-medium">
+                        <NavigationMenuLink
+                          asChild
+                          className="text-blue-800 dark:text-muted-foregroundhover:text-primary dark:hover:text-primary   uppercase font-bold py-1.5 "
+                        >
                           <Link to={link.href}>{link.label}</Link>
                         </NavigationMenuLink>
                       </NavigationMenuItem>
@@ -117,7 +122,10 @@ export default function Navbar() {
 
                     {link.role === data?.data?.role && (
                       <NavigationMenuItem key={index}>
-                        <NavigationMenuLink asChild className="text-muted-foreground hover:text-primary py-1.5 font-medium">
+                        <NavigationMenuLink
+                          asChild
+                          className="text-blue-800 dark:text-muted-foreground  hover:text-primary dark:hover:text-primary  uppercase font-bold py-1.5  "
+                        >
                           <Link to={link.href}>{link.label}</Link>
                         </NavigationMenuLink>
                       </NavigationMenuItem>

@@ -256,7 +256,7 @@ const UserManagement = () => {
             onClick={handleRegisterUser}
             className="rounded-xl bg-linear-to-r from-purple-500 to-blue-500 shadow-lg transition-all duration-300 hover:shadow-purple-500/30"
           >
-            <UserRoundPlus className="mr-2 h-4 w-4" />
+            <UserRoundPlus className=" h-4 w-4" />
             Add User
           </Button>
         </motion.div>

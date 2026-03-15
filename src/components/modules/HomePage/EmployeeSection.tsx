@@ -39,7 +39,7 @@ export const EmployeeSection = () => {
       {/* Section Heading */}
       <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10 ">
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase text-blue-800">Geomark Team</h2>
+          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase text-blue-800 dark:text-foreground">Geomark Team</h2>
         </motion.div>
 
         {/* Employee Cards with staggered scroll reveal */}
@@ -54,7 +54,7 @@ export const EmployeeSection = () => {
             <motion.div
               key={member.id}
               variants={cardVariants}
-              whileHover={{ y: -8, scale: 1.02, boxShadow: "0 0 20px rgba(139,92,246,0.3)" }}
+              whileHover={{ y: -8, scale: 1.02, boxShadow: "0 0 0 rgba(139,92,246,0.3)" }}
               className="flex flex-col items-center transition-all duration-300"
             >
               <div className="relative my-4 w-75 h-90 rounded-sm overflow-hidden border-2">
@@ -88,8 +88,8 @@ hover:to-blue-700 p-2 shadow"
                 </div>
               </div>
 
-              <p className="text-center font-medium">{member.name}</p>
-              <p className="text-center text-muted-foreground mb-3">{member.designation}</p>
+              <p className="text-center font-medium text-foreground/80">{member.name}</p>
+              <p className="text-center text-foreground/70 mb-3">{member.designation}</p>
             </motion.div>
           ))}
         </motion.div>

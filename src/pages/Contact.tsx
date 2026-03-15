@@ -74,7 +74,7 @@ export const Contact = ({ className }: { className?: string }) => {
   };
 
   return (
-    <section className={cn("relative overflow-hidden text-white py-16 sm:py-20 lg:py-24", className)}>
+    <section className={cn("relative overflow-hidden text-foreground/80 py-16 sm:py-20 lg:py-24", className)}>
       <div className="absolute inset-0 web3-gradient" />
 
       {/*  blobs */}
@@ -92,9 +92,8 @@ export const Contact = ({ className }: { className?: string }) => {
         className="absolute -bottom-40 -right-40 h-128 w-lg rounded-full bg-blue-500/20 blur-[160px]"
       />
 
-      {/* ✅ OUTER CONTAINER (gives side padding always) */}
+      {/*  OUTER CONTAINER (gives side padding always) */}
       <div className="mx-auto w-fullpx-2 sm:px-4 md:px-6 lg:px-8 xl:px-10 ">
-        {/* ✅ INNER MAX WIDTH (prevents over-stretch on 1536+) */}
         <div className="mx-auto w-full max-w-350 2xl:max-w-375">
           <motion.div
             variants={container}
@@ -105,11 +104,10 @@ export const Contact = ({ className }: { className?: string }) => {
           >
             {/* LEFT */}
             <motion.div variants={item} className="max-w-xl space-y-6">
-              <div className=" text-gray-200">
+              <div className=" text-foreground/80">
                 <p className="text-2xl  font-bold">Office Address</p>
                 <p>
-                  <span className="font-semibold text-white "></span> House 33, Road 12, Pisciculture Housing Society,<br></br> Mohammadpur, Dhaka,
-                  Bangladesh.
+                  <span className="font-semibold "></span> House 33, Road 12, Pisciculture Housing Society,<br></br> Mohammadpur, Dhaka, Bangladesh.
                 </p>
 
                 <div>
@@ -122,19 +120,12 @@ export const Contact = ({ className }: { className?: string }) => {
                 <div>
                   <p className="text-2xl font-bold mt-4">Contact</p>
                   <p>
-                    <span className="font-semibold text-white">Phone:</span> 01943223060
+                    <span className="font-semibold">Phone:</span> 01943223060
                   </p>
 
                   <p>
-                    <span className="font-semibold text-white">Email:</span> geomarkbd@gmail.com
+                    <span className="font-semibold ">Email:</span> geomarkbd@gmail.com
                   </p>
-
-                  {/* <p>
-                    <span className="font-semibold text-white">Web:</span>{" "}
-                    <a href="https://geomarkbd.com" target="_blank" className="underline hover:text-blue-400">
-                      Visit Website
-                    </a>
-                  </p> */}
                 </div>
               </div>
             </motion.div>

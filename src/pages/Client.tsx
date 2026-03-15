@@ -18,7 +18,7 @@ const Client = ({ className }: CommunityProps) => {
     <section className={cn("relative py-20 container mx-auto overflow-hidden", className)}>
       <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10">
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase text-blue-800">Clients</h2>
+          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase text-blue-800 dark:text-foreground">Clients</h2>
         </motion.div>
 
         {/* Carousel Track */}
@@ -58,8 +58,7 @@ const Client = ({ className }: CommunityProps) => {
                 <div className="flex justify-center mb-4">
                   <img src={item.picture} alt={item.name} className="size-28 object-contain" />
                 </div>
-                <h3 className="mb-1 text-2xl font-bold">{item.name}</h3>
-                <p className="text-muted-foreground">{item.desc}</p>
+                <h3 className="mb-1 text-2xl font-bold text-foreground/80 ">{item.name}</h3>
               </div>
             </a>
           ))}

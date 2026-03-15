@@ -19,7 +19,7 @@ export const ProjectSection = () => {
     <section ref={ref} className="py-10 container mx-auto overflow-hidden ">
       <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10 ">
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase ">Projects</h2>
+          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase text-blue-800 dark:text-foreground ">Projects</h2>
         </motion.div>
 
         <motion.div

@@ -14,3 +14,6 @@
 - login, register re-design
 - payment system intrigrete
 - Form validation and add zod
+- multipule photo upload
+- product
+- light color

@@ -52,7 +52,9 @@ export const Community = ({ className }: Community2Props) => {
       <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10">
         {/* Title Animation */}
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4  uppercase text-blue-800">Be part of our network</h2>
+          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4  uppercase text-blue-800 dark:text-foreground">
+            Be part of our network
+          </h2>
         </motion.div>
 
         {/* Cards */}
@@ -84,14 +86,14 @@ export const Community = ({ className }: Community2Props) => {
                 <motion.div
                   whileHover={{ rotate: 8, scale: 1.2 }}
                   transition={{ type: "spring", stiffness: 200 }}
-                  className="flex items-center justify-center"
+                  className="flex items-center justify-center text-blue-500"
                 >
                   {item.icon}
                 </motion.div>
 
                 <div className="mt-4 text-center">
-                  <h3 className="mb-1 text-2xl font-bold">{item.title}</h3>
-                  <p className="text-md text-muted-foreground">{item.desc}</p>
+                  <h3 className="mb-1 text-2xl font-bold text-foreground/80">{item.title}</h3>
+                  <p className="text-md text-foreground/70">{item.desc}</p>
                 </div>
               </div>
             </motion.a>

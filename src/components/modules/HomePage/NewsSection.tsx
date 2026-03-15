@@ -19,7 +19,7 @@ export const NewsSection = ({ className }: CommunityProps) => {
     <section className={cn("relative py-20 container mx-auto overflow-hidden", className)}>
       <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10">
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase text-blue-800">News and update</h2>
+          <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase text-blue-800 dark:text-foreground">News and update</h2>
         </motion.div>
 
         <motion.div
@@ -39,14 +39,14 @@ export const NewsSection = ({ className }: CommunityProps) => {
             >
               <div className="absolute inset-0 rounded-xl bg-linear-to-r from-purple-500 via-blue-500 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-20" />
 
-              <div className="relative z-10  md:p-8 border rounded">
+              <div className="relative z-10  md:p-8 border rounded max-w-4xl">
                 <div className="flex justify-center mb-6  rounded">
                   <div className="h-72 w-full overflow-hidden rounded-xl">
-                    <img src={item.picture} alt={item.name} className="h-full w-full object-cover" />
+                    <img src={item.picture} alt={item.name} className="h-full max-w-svw object-cover" />
                   </div>
                 </div>
 
-                <h3 className="mb-2 text-2xl md:text-3xl font-bold text-center">{item.name}</h3>
+                <h3 className="mb-2 text-xl md:text-2xl font-bold text-center text-foreground/70">{item.name}</h3>
                 <p className="text-base md:text-lg text-muted-foreground text-justify">{item.description}</p>
               </div>
             </div>

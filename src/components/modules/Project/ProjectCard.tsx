@@ -25,7 +25,7 @@ const ProjectCard = ({ item, onView }: Props) => {
         <motion.img
           src={item?.picture}
           alt={item?.name}
-          className="w-full h-40 object-cover shrink-0"
+          className="w-full h-40 object-cover shrink-0 text-foreground/80"
           whileHover={{ scale: 1.06 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
         />
@@ -45,7 +45,7 @@ const ProjectCard = ({ item, onView }: Props) => {
         </motion.p>
 
         <div className="flex-1 min-w-0 p-3">
-          <h3 className="font-semibold text-sm leading-snug line-clamp-2 whitespace-normal wrap-break-word">{item?.name}</h3>
+          <h3 className="font-semibold text-sm text-foreground/80 leading-snug line-clamp-2 whitespace-normal wrap-break-word">{item?.name}</h3>
 
           <div className="mt-2 text-sm text-muted-foreground space-y-1">
             <div className="flex w-full items-center justify-between">
