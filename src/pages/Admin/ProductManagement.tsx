@@ -1,24 +1,24 @@
 import { useState } from "react";
 import { DeleteConfirmation } from "@/components/DeleteConfirmation";
-import AddClientModal from "@/components/modules/Admin/Client/AddClientModal";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useDeleteClientMutation, useGetClientsQuery } from "@/redux/features/client/client.api";
-import { format } from "date-fns";
 import { Eye, MoreHorizontalIcon, Pencil, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/features/product/product.api";
+import AddProductModal from "@/components/modules/Admin/Client/AddClientModal";
 
-type Client = {
+type TProduct = {
   _id: string;
   picture: string;
   name: string;
   email: string;
   phone: string;
   address: string;
-  joinDate?: string;
+  price: string;
+  quantity: string;
 };
 
 const pageVariants: Variants = {
@@ -103,9 +103,9 @@ const SkeletonBlock = ({ className = "" }: { className?: string }) => {
   );
 };
 
-const SkeletonClientTable = () => {
+const SkeletonProducttTable = () => {
   return (
-    <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className="w-full  mx-auto px-5">
+    <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className="w-full mx-auto px-5">
       <div className="flex items-center justify-between my-6">
         <div>
           <SkeletonBlock className="h-8 w-36 rounded-lg" />
@@ -171,45 +171,45 @@ const SkeletonClientTable = () => {
   );
 };
 
-const ClientManagement = () => {
+const ProductManagement = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetClientsQuery(undefined);
-  const [deleteClient] = useDeleteClientMutation();
-  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
+  const { data, isLoading } = useGetAllProductsQuery(undefined);
+  const [deleteProduct] = useDeleteProductMutation();
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
 
-  const handleDeleteClient = async (clientId: string) => {
+  const handleDeleteProduct = async (productId: string) => {
     const toastId = toast.loading("Deleting client...");
 
     try {
-      const res = await deleteClient(clientId).unwrap();
+      const res = await deleteProduct(productId).unwrap();
 
       if (res.success) {
-        toast.success("Client deleted successfully", { id: toastId });
+        toast.success("Product deleted successfully", { id: toastId });
 
-        if (selectedClientId === clientId) {
-          setSelectedClientId(null);
+        if (selectedProductId === productId) {
+          setSelectedProductId(null);
         }
       }
     } catch (error) {
-      toast.error("Failed to delete client", { id: toastId });
+      toast.error("Failed to delete Product", { id: toastId });
       console.log(error);
     }
   };
 
-  const handleClientDetails = (id: string) => {
-    navigate(`/client/${id}`);
+  const handleProductDetails = (id: string) => {
+    navigate(`/product/${id}`);
   };
 
   if (isLoading) {
-    return <SkeletonClientTable />;
+    return <SkeletonProducttTable />;
   }
 
   return (
     <motion.div variants={pageVariants} initial="hidden" animate="visible" className="w-full max-w-7xl mx-auto px-5">
       <motion.div variants={headerVariants} className="flex items-center justify-between my-6">
         <motion.div initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>
-          <h1 className="text-2xl font-bold tracking-tight">Client</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Manage clients with a cleaner premium dashboard feel</p>
+          <h1 className="text-2xl font-bold tracking-tight">Product</h1>
+          {/* <p className="mt-1 text-sm text-muted-foreground">Manage clients with a cleaner premium dashboard feel</p> */}
         </motion.div>
 
         <motion.div
@@ -219,7 +219,7 @@ const ClientManagement = () => {
           whileHover={{ y: -2, scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <AddClientModal />
+          <AddProductModal />
         </motion.div>
       </motion.div>
 
@@ -236,24 +236,24 @@ const ClientManagement = () => {
             <TableRow className="border-none hover:bg-transparent">
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Name</TableHead>
-              <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email</TableHead>
+              <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Price</TableHead>
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Phone</TableHead>
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Address</TableHead>
-              <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Join</TableHead>
+              <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Quantity</TableHead>
               <TableHead className="px-4 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">Actions</TableHead>
             </TableRow>
           </TableHeader>
 
           <TableBody>
-            {data?.data?.map((item: Client, index: number) => {
+            {data?.data?.map((item: TProduct, index: number) => {
               const baseDelay = 0.08 + index * 0.05;
-              const isSelected = selectedClientId === item._id;
+              const isSelected = selectedProductId === item._id;
               const toneClass = isSelected ? "border-primary/35 bg-primary/[0.06]" : "border-border/50 bg-background/80";
 
               return (
                 <TableRow
                   key={item._id}
-                  onClick={() => setSelectedClientId(item._id)}
+                  onClick={() => setSelectedProductId(item._id)}
                   className="group cursor-pointer border-none hover:bg-transparent"
                 >
                   <TableCell className={`relative rounded-l-2xl border-y border-l px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
@@ -334,7 +334,7 @@ const ClientManagement = () => {
                       animate="visible"
                       className="font-medium text-sm text-foreground/90"
                     >
-                      {item.email}
+                      {item.price}
                     </motion.div>
                   </TableCell>
 
@@ -364,13 +364,13 @@ const ClientManagement = () => {
 
                   <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
                     <motion.div
-                      custom={baseDelay + 0.15}
+                      custom={baseDelay + 0.12}
                       variants={cellVariants}
                       initial="hidden"
                       animate="visible"
                       className="font-medium text-sm text-foreground/90"
                     >
-                      {item.joinDate ? format(new Date(item.joinDate), "PPP") : "-"}
+                      {item.quantity}
                     </motion.div>
                   </TableCell>
 
@@ -434,7 +434,7 @@ const ClientManagement = () => {
                               <DropdownMenuItem
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  handleClientDetails(item._id);
+                                  handleProductDetails(item._id);
                                 }}
                                 className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
                               >
@@ -456,7 +456,7 @@ const ClientManagement = () => {
                             <DropdownMenuSeparator className="my-1 opacity-50" />
 
                             <motion.div custom={0.08} variants={dropdownItemVariants}>
-                              <DeleteConfirmation onConfirm={() => handleDeleteClient(item._id)}>
+                              <DeleteConfirmation onConfirm={() => handleDeleteProduct(item._id)}>
                                 <DropdownMenuItem
                                   onSelect={(e) => e.preventDefault()}
                                   onClick={(e) => e.stopPropagation()}
@@ -482,4 +482,4 @@ const ClientManagement = () => {
   );
 };
 
-export default ClientManagement;
+export default ProductManagement;

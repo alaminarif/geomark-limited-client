@@ -5,6 +5,7 @@ import ServicesManagement from "@/pages/Admin/ServicesManagement";
 import type { ISidebarItem } from "@/types";
 import EmployeeManagement from "@/pages/Admin/EmployeeManagement";
 import NewsManagement from "@/pages/Admin/NewsManagement";
+import ProductManagement from "@/pages/Admin/ProductManagement";
 
 export const adminSidebarItems: ISidebarItem[] = [
   {
@@ -15,11 +16,7 @@ export const adminSidebarItems: ISidebarItem[] = [
         url: "/admin/user-management",
         component: AdminManagement,
       },
-      {
-        title: "Client Management",
-        url: "/admin/client-management",
-        component: ClientManagement,
-      },
+
       {
         title: "Services Management",
         url: "/admin/services-management",
@@ -31,9 +28,19 @@ export const adminSidebarItems: ISidebarItem[] = [
         component: ProjectManagement,
       },
       {
+        title: "Product Management",
+        url: "/admin/product-management",
+        component: ProductManagement,
+      },
+      {
         title: "Employee Management",
         url: "/admin/employee-management",
         component: EmployeeManagement,
+      },
+      {
+        title: "Client Management",
+        url: "/admin/client-management",
+        component: ClientManagement,
       },
       {
         title: "News And Update Management",
