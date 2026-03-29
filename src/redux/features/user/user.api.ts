@@ -19,17 +19,17 @@ export const userApi = baseApi.injectEndpoints({
     }),
 
     updateUser: builder.mutation({
-      query: ({ userId, userData }) => ({
-        url: `/user/${userId}`,
-        method: "PUT",
+      query: ({ id, userData }) => ({
+        url: `/user/${id}`,
+        method: "PATCH",
         data: userData,
       }),
       invalidatesTags: ["USER"],
     }),
 
     deleteUser: builder.mutation({
-      query: (userId) => ({
-        url: `/user/${userId}`,
+      query: (id) => ({
+        url: `/user/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["USER"],
