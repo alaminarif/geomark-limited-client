@@ -12,7 +12,6 @@ import Homepage from "@/pages/Homepage";
 import Client from "@/pages/Client";
 import ClientDetails from "@/pages/ClientDetails";
 import { ServicePage } from "@/pages/ServicePage";
-import ServiceDetails from "@/pages/serviceDetails";
 import Project from "@/pages/ProjectPage";
 import ProjectDetails from "@/pages/ProjectDetails";
 import Employee from "@/pages/EmployeePage";
@@ -23,6 +22,9 @@ import UserDetails from "@/pages/Admin/UserDetails";
 import Unauthorized from "@/pages/Unauthorized";
 import type { TRole } from "@/types";
 import UserUpdate from "@/pages/Admin/UserUpdate";
+import ServiceDetails from "@/pages/serviceDetails";
+import AdminServiceDetails from "@/pages/Admin/ServiceDetails";
+import ServiceUpdate from "@/pages/Admin/ServiceUpdate";
 
 export const router = createBrowserRouter([
   {
@@ -81,7 +83,7 @@ export const router = createBrowserRouter([
     path: "/admin",
     children: [
       ...generateRoutes(adminSidebarItems),
-      
+
       {
         path: "user/:id/edit",
         Component: UserUpdate,
@@ -89,7 +91,15 @@ export const router = createBrowserRouter([
       {
         path: "user/:id",
         Component: UserDetails,
-      }
+      },
+      {
+        path: "service/:id/edit",
+        Component: ServiceUpdate,
+      },
+      {
+        path: "service/:id",
+        Component: AdminServiceDetails,
+      },
     ],
   },
 

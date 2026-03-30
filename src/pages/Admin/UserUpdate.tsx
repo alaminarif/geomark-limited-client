@@ -4,7 +4,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useGetSingleUserQuery, useUpdateUserMutation } from "@/redux/features/user/user.api";
@@ -177,9 +177,7 @@ const UserUpdate = () => {
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Update User</h1>
-          <p className="text-sm text-muted-foreground">
-            Modify user information, status and picture.
-          </p>
+          <p className="text-sm text-muted-foreground">Modify user information, status and picture.</p>
         </div>
 
         <Button variant="outline" onClick={() => navigate(-1)}>
@@ -201,11 +199,7 @@ const UserUpdate = () => {
 
                 {user?.picture && !image && (
                   <div className="mb-4 overflow-hidden rounded-2xl border">
-                    <img
-                      src={user.picture}
-                      alt={user.name || "User"}
-                      className="h-56 w-full object-cover"
-                    />
+                    <img src={user.picture} alt={user.name || "User"} className="h-56 w-full object-cover" />
                   </div>
                 )}
 
@@ -237,12 +231,7 @@ const UserUpdate = () => {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Enter email address"
-                        {...field}
-                        value={field.value || ""}
-                      />
+                      <Input type="email" placeholder="Enter email address" {...field} value={field.value || ""} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -257,11 +246,7 @@ const UserUpdate = () => {
                   <FormItem>
                     <FormLabel>Phone</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Enter phone number"
-                        {...field}
-                        value={field.value || ""}
-                      />
+                      <Input placeholder="Enter phone number" {...field} value={field.value || ""} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -316,13 +301,17 @@ const UserUpdate = () => {
               </div>
 
               <div className="flex flex-wrap gap-3 pt-2">
-                <Link to={`/admin/user/${id}`}>
-                  <Button type="button" variant="outline">
-                    Cancel
-                  </Button>
-                </Link>
+                {/* <Link to={`/admin/user/${id}`}> */}
+                <Button type="button" variant="outline" onClick={() => navigate(-1)}>
+                  Cancel
+                </Button>
+                {/* </Link> */}
 
-                <Button type="submit" disabled={isUpdating}>
+                <Button
+                  type="submit"
+                  disabled={isUpdating}
+                  className="rounded-xl bg-linear-to-r from-purple-500 to-blue-500 shadow-lg transition-all duration-300 hover:shadow-purple-500/30 py-2.5 px-4 text-sm font-semibold text-white"
+                >
                   {isUpdating ? "Updating..." : "Update User"}
                 </Button>
               </div>

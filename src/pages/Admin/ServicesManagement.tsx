@@ -193,7 +193,7 @@ const ServicesManagement = () => {
   };
 
   const handleServiceDetails = (id: string) => {
-    navigate(`/service/${id}`);
+    navigate(`/admin/service/${id}`);
   };
 
   if (isLoading) {

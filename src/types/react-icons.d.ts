@@ -22,7 +22,6 @@ declare module 'react-icons/fa6' {
   export const FaBluesky: IconType;
   export const FaThreads: IconType;
   export const FaBereal: IconType;
-  [key: string]: IconType;
 }
 
 declare module 'react-icons' {
