@@ -93,6 +93,8 @@ const UserUpdate = () => {
 
   const user = data?.data;
 
+  console.log(user);
+
   useEffect(() => {
     if (user) {
       form.reset({
@@ -115,11 +117,11 @@ const UserUpdate = () => {
 
     try {
       const userData = {
-        name: values.name,
-        email: values.email,
-        phone: values.phone,
-        role: values.role,
-        isActive: values.isActive,
+        name: values?.name,
+        email: values?.email,
+        phone: values?.phone,
+        role: values?.role,
+        isActive: values?.isActive,
       };
 
       const formData = new FormData();

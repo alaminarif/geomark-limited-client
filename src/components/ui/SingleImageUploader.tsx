@@ -21,7 +21,7 @@ export default function SingleImageUploader({ onChange }: { onChange: (file: Fil
     } else {
       onChange(null);
     }
-  }, [files]);
+  }, [files, onChange]);
 
   const previewUrl = files[0]?.preview || null;
 

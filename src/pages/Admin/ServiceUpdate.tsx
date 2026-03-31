@@ -90,16 +90,32 @@ const ServiceUpdate = () => {
       return;
     }
 
+    const currentName = service?.name?.trim() || "";
+    const currentDescription = service?.description?.trim() || "";
+
+    const newName = values.name.trim();
+    const newDescription = values.description.trim();
+
+    const changedData: Record<string, string> = {};
+
+    if (newName !== currentName) {
+      changedData.name = newName;
+    }
+
+    if (newDescription !== currentDescription) {
+      changedData.description = newDescription;
+    }
+
+    if (Object.keys(changedData).length === 0 && !image) {
+      toast.error("No changes detected");
+      return;
+    }
+
     const toastId = toast.loading("Updating service...");
 
     try {
-      const serviceData = {
-        name: values.name,
-        description: values.description,
-      };
-
       const formData = new FormData();
-      formData.append("data", JSON.stringify(serviceData));
+      formData.append("data", JSON.stringify(changedData));
 
       if (image) {
         formData.append("file", image);
@@ -111,7 +127,7 @@ const ServiceUpdate = () => {
       }).unwrap();
 
       toast.success("Service updated successfully", { id: toastId });
-      navigate(`/admin/service/${id}/edit`);
+      navigate(`/admin/service/${id}`);
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to update service", {
         id: toastId,
