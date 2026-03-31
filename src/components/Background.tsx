@@ -12,7 +12,7 @@ export default function Background({ children }: { children: React.ReactNode }) 
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-hidden web3-global-bg text-white">
+    <div className="relative min-h-screen overflow-hidden text-white">
       {/* Cursor Glow */}
       <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(circle_at_var(--x,50%)_var(--y,50%),rgba(139,92,246,0.15),transparent_40%)]" />
 

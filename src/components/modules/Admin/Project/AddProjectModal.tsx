@@ -62,11 +62,11 @@ const addProjectSchema = z
 
 type AddProjectFormValues = z.infer<typeof addProjectSchema>;
 
-const sectionClass = "rounded-3xl border border-slate-800 bg-slate-900/80 p-5 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm";
+const sectionClass = "rounded-3xl border dark:border-slate-800 dark:bg-slate-900/80 p-5 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm";
 const inputClass =
-  "h-11 rounded-xl border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-400 focus-visible:ring-1 focus-visible:ring-indigo-500";
+  "h-11 rounded-xl dark:border-slate-700 dark:bg-slate-900 text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-indigo-500";
 const textareaClass =
-  "min-h-[110px] rounded-xl border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-400 resize-none focus-visible:ring-1 focus-visible:ring-indigo-500";
+  "min-h-[110px] rounded-xl dark:border-slate-700 dark:bg-slate-900 text-foreground placeholder:text-muted-foreground resize-none focus-visible:ring-1 focus-visible:ring-indigo-500";
 
 const AddProjectModal = () => {
   const [open, setOpen] = useState(false);
@@ -178,11 +178,11 @@ const AddProjectModal = () => {
           </Button>
         </DrawerTrigger>
 
-        <DrawerContent className="ml-auto h-screen w-[65vw]! sm:w-[72vw]! lg:w-[88vw]! xl:w-[82vw]! max-w-300! rounded-none border-l border-slate-800 bg-slate-950 text-slate-100 shadow-[0_0_40px_rgba(0,0,0,0.45)]">
-          <DrawerHeader className="border-b border-slate-800 bg-slate-950/95 backdrop-blur">
-            <div className="rounded-3xl border border-slate-800 bg-linear-to-r dark:from-violet-600/90 dark:via-indigo-600/90 dark:to-blue-600/90 p-5  shadow-lg">
-              <DrawerTitle className="text-2xl text-white font-semibold">Add New Project</DrawerTitle>
-              <DrawerDescription className="mt-1 text-sm text-slate-100/90">
+        <DrawerContent className="ml-auto h-screen w-[65vw]! sm:w-[72vw]! lg:w-[88vw]! xl:w-[82vw]! max-w-300! rounded-none border-l dark:border-slate-800 dark:bg-slate-950 text-foreground shadow-[0_0_40px_rgba(0,0,0,0.45)]">
+          <DrawerHeader className="border-b border-purple-100  dark:border-slate-800 dark:bg-slate-950/95 dark:backdrop-blur">
+            <div className="rounded-3xl border dark:border-slate-800 dark:bg-linear-to-r dark:from-violet-600/90 dark:via-indigo-600/90 dark:to-blue-600/90 p-5  shadow-lg">
+              <DrawerTitle className="text-2xl text-foreground font-semibold">Add New Project</DrawerTitle>
+              <DrawerDescription className="mt-1 text-sm text-foreground">
                 Fill in the project details, schedule, client information, and images.
               </DrawerDescription>
             </div>
@@ -194,12 +194,12 @@ const AddProjectModal = () => {
                 <form id="add-new-project" onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                   <div className={sectionClass}>
                     <div className="mb-4 flex items-center gap-3">
-                      <div className="rounded-2xl bg-violet-500/15 p-2.5 text-violet-300">
+                      <div className="rounded-2xl dark:bg-violet-500/15 p-2.5 text-violet-600 dark:text-violet-300">
                         <FolderPlus className="h-4 w-4" />
                       </div>
                       <div>
-                        <h3 className="text-base font-semibold text-white">Project Information</h3>
-                        <p className="text-sm text-slate-400">Basic information about the project</p>
+                        <h3 className="text-base font-semibold text-foreground">Project Information</h3>
+                        <p className="text-sm text-foreground/70">Basic information about the project</p>
                       </div>
                     </div>
 
@@ -209,14 +209,14 @@ const AddProjectModal = () => {
                         name="title"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-slate-200">Service</FormLabel>
+                            <FormLabel className="text-foreground">Service</FormLabel>
                             <Select onValueChange={field.onChange} value={field.value || undefined}>
                               <FormControl>
-                                <SelectTrigger className="h-11! w-full rounded-xl border-slate-700 bg-slate-900 text-slate-100">
-                                  <SelectValue placeholder="Select service" />
+                                <SelectTrigger className="h-11! w-full rounded-xl dark:border-slate-700 dark:bg-slate-900 text-foreground">
+                                  <SelectValue placeholder="Select service" className="" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent className="border-slate-800 bg-slate-900 text-slate-100">
+                              <SelectContent className="dark:border-slate-800 dark:bg-slate-900 text-foreground ">
                                 {serviceTitleOptions.map((item: { label: string; value: string }) => (
                                   <SelectItem key={item.value} value={item.value}>
                                     {item.label}
@@ -234,14 +234,14 @@ const AddProjectModal = () => {
                         name="status"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-slate-200">Status</FormLabel>
+                            <FormLabel className="text-foreground">Status</FormLabel>
                             <Select onValueChange={field.onChange} value={field.value || undefined}>
                               <FormControl>
-                                <SelectTrigger className="h-11! w-full rounded-xl border-slate-700 bg-slate-900 text-slate-100">
+                                <SelectTrigger className="h-11! w-full rounded-xl dark:border-slate-700 dark:bg-slate-900 text-foreground ">
                                   <SelectValue placeholder="Select status" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent className="border-slate-800 bg-slate-900 text-slate-100">
+                              <SelectContent className="dark:border-slate-800 dark:bg-slate-900 text-foreground">
                                 {projectStatusOptions.map((item: { label: string; value: string }) => (
                                   <SelectItem key={item.value} value={item.value}>
                                     {item.label}
@@ -260,7 +260,7 @@ const AddProjectModal = () => {
                           name="name"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="text-slate-200">Project Name</FormLabel>
+                              <FormLabel className="text-foreground">Project Name</FormLabel>
                               <FormControl>
                                 <Input placeholder="Enter project name" className={inputClass} {...field} />
                               </FormControl>
@@ -276,7 +276,7 @@ const AddProjectModal = () => {
                           name="description"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="text-slate-200">Description</FormLabel>
+                              <FormLabel className="text-foreground">Description</FormLabel>
                               <FormControl>
                                 <Textarea placeholder="Write a short project description" className={textareaClass} {...field} />
                               </FormControl>
@@ -291,11 +291,11 @@ const AddProjectModal = () => {
                         name="objective"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-slate-200">Objective</FormLabel>
+                            <FormLabel className="text-foreground">Objective</FormLabel>
                             <FormControl>
                               <Textarea
                                 placeholder="Project objective"
-                                className="min-h-25 rounded-xl border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-400 resize-none focus-visible:ring-1 focus-visible:ring-indigo-500"
+                                className="min-h-25 rounded-xl dark:border-slate-700 dark:bg-slate-900 text-foreground placeholder:text-muted-foreground resize-none focus-visible:ring-1 focus-visible:ring-indigo-500"
                                 {...field}
                               />
                             </FormControl>
@@ -309,11 +309,11 @@ const AddProjectModal = () => {
                         name="responsibility"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-slate-200">Responsibility</FormLabel>
+                            <FormLabel className="text-foreground">Responsibility</FormLabel>
                             <FormControl>
                               <Textarea
                                 placeholder="Scope of responsibility"
-                                className="min-h-25 rounded-xl border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-400 resize-none focus-visible:ring-1 focus-visible:ring-indigo-500"
+                                className="min-h-25 rounded-xl dark:border-slate-700 dark:bg-slate-900 placeholder:text-muted-foreground  resize-none focus-visible:ring-1 focus-visible:ring-indigo-500"
                                 {...field}
                               />
                             </FormControl>
@@ -326,12 +326,12 @@ const AddProjectModal = () => {
 
                   <div className={sectionClass}>
                     <div className="mb-4 flex items-center gap-3">
-                      <div className="rounded-2xl bg-blue-500/15 p-2.5 text-blue-300">
+                      <div className="rounded-2xl dark:bg-blue-500/15 p-2.5 text-violet-600 dark:text-violet-300">
                         <CalendarIcon className="h-4 w-4" />
                       </div>
                       <div>
-                        <h3 className="text-base font-semibold text-white">Timeline & Client</h3>
-                        <p className="text-sm text-slate-400">Set project dates, location, and client</p>
+                        <h3 className="text-base font-semibold text-foreground">Timeline & Client</h3>
+                        <p className="text-sm text-foreground/70">Set project dates, location, and client</p>
                       </div>
                     </div>
 
@@ -341,7 +341,7 @@ const AddProjectModal = () => {
                         name="startDate"
                         render={({ field }) => (
                           <FormItem className="flex flex-col">
-                            <FormLabel className="text-slate-200">Start Date</FormLabel>
+                            <FormLabel className="text-foreground">Start Date</FormLabel>
                             <Popover>
                               <PopoverTrigger asChild>
                                 <FormControl>
@@ -349,8 +349,8 @@ const AddProjectModal = () => {
                                     type="button"
                                     variant="outline"
                                     className={cn(
-                                      "h-11 justify-start rounded-xl border-slate-700 bg-slate-900 pl-3 text-left font-normal text-slate-100 hover:bg-slate-800",
-                                      !field.value && "text-slate-400",
+                                      "h-11 justify-start rounded-xl dark:border-slate-700 dark:bg-slate-900 pl-3 text-left font-normal text-foreground dark:hover:bg-slate-800",
+                                      !field.value && "text-foreground/60",
                                     )}
                                   >
                                     {field.value ? format(field.value, "PPP") : <span>Pick start date</span>}
@@ -358,7 +358,7 @@ const AddProjectModal = () => {
                                   </Button>
                                 </FormControl>
                               </PopoverTrigger>
-                              <PopoverContent className="w-auto rounded-xl border-slate-800 bg-slate-900 p-0 text-slate-100" align="start">
+                              <PopoverContent className="w-auto rounded-xl dark:border-slate-800 dark:bg-slate-900 p-0 text-foreground" align="start">
                                 <Calendar mode="single" selected={field.value ?? undefined} onSelect={field.onChange} captionLayout="dropdown" />
                               </PopoverContent>
                             </Popover>
@@ -372,7 +372,7 @@ const AddProjectModal = () => {
                         name="endDate"
                         render={({ field }) => (
                           <FormItem className="flex flex-col">
-                            <FormLabel className="text-slate-200">End Date (Optional)</FormLabel>
+                            <FormLabel className="text-foreground">End Date (Optional)</FormLabel>
                             <Popover>
                               <PopoverTrigger asChild>
                                 <FormControl>
@@ -380,8 +380,8 @@ const AddProjectModal = () => {
                                     type="button"
                                     variant="outline"
                                     className={cn(
-                                      "h-11 justify-start rounded-xl border-slate-700 bg-slate-900 pl-3 text-left font-normal text-slate-100 hover:bg-slate-800",
-                                      !field.value && "text-slate-400",
+                                      "h-11 justify-start rounded-xl dark:border-slate-700 dark:bg-slate-900 pl-3 text-left font-normal text-foreground dark:hover:bg-slate-800",
+                                      !field.value && "text-foreground/60",
                                     )}
                                   >
                                     {field.value ? format(field.value, "PPP") : <span>Pick end date</span>}
@@ -389,7 +389,7 @@ const AddProjectModal = () => {
                                   </Button>
                                 </FormControl>
                               </PopoverTrigger>
-                              <PopoverContent className="w-auto rounded-xl border-slate-800 bg-slate-900 p-0 text-slate-100" align="start">
+                              <PopoverContent className="w-auto rounded-xl dark:border-slate-800 dark:bg-slate-900 p-0 text-foreground" align="start">
                                 <Calendar mode="single" selected={field.value ?? undefined} onSelect={field.onChange} captionLayout="dropdown" />
                               </PopoverContent>
                             </Popover>
@@ -398,7 +398,7 @@ const AddProjectModal = () => {
                               <Button
                                 type="button"
                                 variant="ghost"
-                                className="mt-1 h-auto w-fit px-0 text-xs text-slate-400 hover:bg-transparent hover:text-rose-400"
+                                className="mt-1 h-auto w-fit px-0 text-xs text-foreground/60 hover:bg-transparent hover:text-rose-400"
                                 onClick={() => field.onChange(null)}
                               >
                                 <XCircle className="mr-1 h-3.5 w-3.5" />
@@ -416,15 +416,15 @@ const AddProjectModal = () => {
                         name="client"
                         render={({ field }) => (
                           <FormItem className="w-full">
-                            <FormLabel className="text-slate-200">Client</FormLabel>
+                            <FormLabel className="text-foreground">Client</FormLabel>
                             <Select onValueChange={field.onChange} value={field.value || undefined}>
                               <FormControl>
-                                <SelectTrigger className="h-11! w-full rounded-xl border-slate-700 bg-slate-900 text-slate-100">
-                                  {/* <User2 className="mr-2 h-4 w-4 text-slate-400" /> */}
+                                <SelectTrigger className="h-11! w-full rounded-xl dark:border-slate-700 dark:bg-slate-900 text-foreground">
+                                  {/* <User2 className="mr-2 h-4 w-4 text-foreground/60" /> */}
                                   <SelectValue placeholder="Select client" className="" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent className="border-slate-800 bg-slate-900 text-slate-100 w-full">
+                              <SelectContent className="dark:border-slate-800 dark:bg-slate-900 text-foreground w-full">
                                 {clientOptions.map((item: { label: string; value: string }) => (
                                   <SelectItem key={item.value} value={item.value}>
                                     {item.label}
@@ -442,13 +442,13 @@ const AddProjectModal = () => {
                         name="location"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-slate-200">Location</FormLabel>
+                            <FormLabel className="text-foreground">Location</FormLabel>
                             <FormControl>
                               <div className="relative">
-                                <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                                <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/60" />
                                 <Input
                                   placeholder="Enter project location"
-                                  className="h-11 rounded-xl border-slate-700 bg-slate-900 pl-10 text-slate-100 placeholder:text-slate-400 focus-visible:ring-1 focus-visible:ring-indigo-500"
+                                  className="h-11 rounded-xl dark:border-slate-700 dark:bg-slate-900 pl-10 text-foreground placeholder:text-foreground/60 focus-visible:ring-1 focus-visible:ring-indigo-500"
                                   {...field}
                                 />
                               </div>
@@ -462,23 +462,23 @@ const AddProjectModal = () => {
 
                   <div className={sectionClass}>
                     <div className="mb-4 flex items-center gap-3">
-                      <div className="rounded-2xl bg-emerald-500/15 p-2.5 text-emerald-300">
+                      <div className="rounded-2xl dark:bg-emerald-500/15 p-2.5 text-violet-600 dark:text-violet-300">
                         <ImagePlus className="h-4 w-4" />
                       </div>
                       <div>
-                        <h3 className="text-base font-semibold text-white">Project Images</h3>
-                        <p className="text-sm text-slate-400">Upload cover image and gallery images</p>
+                        <h3 className="text-base font-semibold text-foreground">Project Images</h3>
+                        <p className="text-sm text-foreground/60">Upload cover image and gallery images</p>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                      <div className="rounded-3xl border border-dashed border-slate-700 bg-slate-950/60 p-4">
-                        <p className="mb-3 text-sm font-medium text-slate-300">Thumbnail / Featured Image</p>
+                      <div className="rounded-3xl border border-dashed dark:border-slate-700 dark:bg-slate-950/60 p-4">
+                        <p className="mb-3 text-sm font-medium text-foreground">Thumbnail / Featured Image</p>
                         <SingleImageUploader onChange={setImage} />
                       </div>
 
-                      <div className="rounded-3xl border border-dashed border-slate-700 bg-slate-950/60 p-4">
-                        <p className="mb-3 text-sm font-medium text-slate-300">Gallery Images</p>
+                      <div className="rounded-3xl border border-dashed dark:border-slate-700 dark:bg-slate-950/60 p-4">
+                        <p className="mb-3 text-sm font-medium text-foreground/60">Gallery Images</p>
                         <MultipleImageUploader onChange={setImages} />
                       </div>
                     </div>
@@ -488,13 +488,13 @@ const AddProjectModal = () => {
             </motion.div>
           </div>
 
-          <DrawerFooter className="border-t border-slate-800 bg-slate-950">
+          <DrawerFooter className="border-t dark:border-slate-800 dark:bg-slate-950">
             <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               <DrawerClose asChild>
                 <Button
                   type="button"
                   variant="outline"
-                  className="rounded-xl border-slate-700 bg-slate-900 text-slate-200 hover:bg-slate-800"
+                  className="rounded-xl dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
                   onClick={handleClose}
                   disabled={isSubmitting}
                 >
