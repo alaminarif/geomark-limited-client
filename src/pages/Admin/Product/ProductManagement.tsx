@@ -122,10 +122,10 @@ const SkeletonProducttTable = () => {
             <TableRow className="border-none hover:bg-transparent">
               <TableHead className="px-4">Image</TableHead>
               <TableHead className="px-4">Name</TableHead>
-              <TableHead className="px-4">Email</TableHead>
+              <TableHead className="px-4">Price</TableHead>
               <TableHead className="px-4">Phone</TableHead>
               <TableHead className="px-4">Address</TableHead>
-              <TableHead className="px-4">Join</TableHead>
+              <TableHead className="px-4">Quantity</TableHead>
               <TableHead className="px-4 text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>

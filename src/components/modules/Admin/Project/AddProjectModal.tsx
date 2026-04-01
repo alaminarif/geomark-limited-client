@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Loading from "@/components/layout/Loading";
+
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -108,8 +108,8 @@ const AddProjectModal = () => {
   });
 
   const [addProject, { isLoading: isSubmitting }] = useAddProjectMutation();
-  const { data: servicesData, isLoading: servicesLoading } = useGetAllServicesQuery(undefined);
-  const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery(undefined);
+  const { data: servicesData } = useGetAllServicesQuery(undefined);
+  const { data: clientsData } = useGetClientsQuery(undefined);
 
   const serviceTitleOptions = useMemo(
     () =>
@@ -177,10 +177,6 @@ const AddProjectModal = () => {
       console.log(error);
     }
   };
-
-  if (servicesLoading || clientsLoading) {
-    return <Loading />;
-  }
 
   return (
     <div>
@@ -449,7 +445,7 @@ const AddProjectModal = () => {
                             <FormControl>
                               <div className="relative">
                                 <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/60" />
-                                <Input placeholder="Enter project location" className={inputClass} {...field} />
+                                <Input placeholder="Enter project location" className={inputClass + " pl-8"} {...field} />
                               </div>
                             </FormControl>
                             <FormMessage />
