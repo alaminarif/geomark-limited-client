@@ -15,7 +15,7 @@ import { ServicePage } from "@/pages/ServicePage";
 import Project from "@/pages/ProjectPage";
 import ProjectDetails from "@/pages/ProjectDetails";
 import Employee from "@/pages/EmployeePage";
-import EmployeeDetails from "@/pages/Admin/EmployeeDetails";
+import EmployeeDetails from "@/pages/Admin/Employee/EmployeeDetails";
 import { Contact } from "@/pages/Contact";
 import { AboutPage } from "@/pages/AboutPage";
 import UserDetails from "@/pages/Admin/UserDetails";
@@ -25,7 +25,7 @@ import UserUpdate from "@/pages/Admin/UserUpdate";
 import ServiceDetails from "@/pages/serviceDetails";
 import AdminServiceDetails from "@/pages/Admin/ServiceDetails";
 import ServiceUpdate from "@/pages/Admin/ServiceUpdate";
-import ProjectUpdate from "@/pages/Admin/ProjectUpdate";
+import ProjectUpdate from "@/pages/Admin/Project/ProjectUpdate";
 
 export const router = createBrowserRouter([
   {

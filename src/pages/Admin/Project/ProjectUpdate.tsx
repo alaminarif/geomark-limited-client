@@ -251,7 +251,7 @@ const ProjectUpdate = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 px-4 py-6 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 md:px-6">
+    <div className="min-h-screen bg-linear-to-br from-purple-50 via-white to-blue-50 px-4 py-6 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 md:px-6">
       <motion.div
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
@@ -270,7 +270,7 @@ const ProjectUpdate = () => {
               Back
             </Button>
 
-            <div className="rounded-3xl border border-purple-100 bg-gradient-to-r from-purple-300/80 via-violet-200/80 to-blue-300/80 p-5 shadow-md shadow-purple-200/50 dark:border-slate-800 dark:bg-gradient-to-r dark:from-violet-600/90 dark:via-indigo-600/90 dark:to-blue-600/90">
+            <div className="rounded-3xl border border-purple-100 bg-linear-to-r from-purple-300/80 via-violet-200/80 to-blue-300/80 p-5 shadow-md shadow-purple-200/50 dark:border-slate-800 dark:bg-linear-to-r dark:from-violet-600/90 dark:via-indigo-600/90 dark:to-blue-600/90">
               <h1 className="text-2xl font-semibold text-slate-800 dark:text-white">Update Project</h1>
               <p className="mt-1 text-sm text-slate-600 dark:text-slate-200">Edit project details, timeline, client information, and images.</p>
             </div>
@@ -280,7 +280,7 @@ const ProjectUpdate = () => {
             type="submit"
             form="update-project-form"
             disabled={isSubmitting}
-            className="rounded-xl bg-gradient-to-r from-purple-300 via-violet-300 to-blue-300 text-slate-900 shadow-md shadow-purple-200/50 hover:opacity-95 dark:from-violet-600 dark:via-indigo-600 dark:to-blue-600 dark:text-white"
+            className="rounded-xl bg-linear-to-r from-purple-300 via-violet-300 to-blue-300 text-slate-900 shadow-md shadow-purple-200/50 hover:opacity-95 dark:from-violet-600 dark:via-indigo-600 dark:to-blue-600 dark:text-white"
           >
             {isSubmitting ? (
               <>
@@ -401,7 +401,7 @@ const ProjectUpdate = () => {
                       <FormControl>
                         <Textarea
                           placeholder="Project objective"
-                          className="min-h-[100px] rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 text-slate-700 placeholder:text-slate-400 resize-none focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground dark:placeholder:text-muted-foreground dark:focus-visible:ring-indigo-500"
+                          className="min-h-25 rounded-xl border border-purple-200 bg-linear-to-r from-purple-50 to-blue-50 text-slate-700 placeholder:text-slate-400 resize-none focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground dark:placeholder:text-muted-foreground dark:focus-visible:ring-indigo-500"
                           {...field}
                         />
                       </FormControl>
@@ -419,7 +419,7 @@ const ProjectUpdate = () => {
                       <FormControl>
                         <Textarea
                           placeholder="Scope of responsibility"
-                          className="min-h-[100px] rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 text-slate-700 placeholder:text-slate-400 resize-none focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground dark:placeholder:text-muted-foreground dark:focus-visible:ring-indigo-500"
+                          className="min-h-25 rounded-xl border border-purple-200 bg-linear-to-r from-purple-50 to-blue-50 text-slate-700 placeholder:text-slate-400 resize-none focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground dark:placeholder:text-muted-foreground dark:focus-visible:ring-indigo-500"
                           {...field}
                         />
                       </FormControl>
@@ -547,7 +547,7 @@ const ProjectUpdate = () => {
                           <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-foreground/60" />
                           <Input
                             placeholder="Enter project location"
-                            className="h-11 rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 pl-10 text-slate-700 placeholder:text-slate-400 focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground dark:placeholder:text-foreground/60 dark:focus-visible:ring-indigo-500"
+                            className="h-11 rounded-xl border border-purple-200 bg-linear-to-r from-purple-50 to-blue-50 pl-10 text-slate-700 placeholder:text-slate-400 focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground dark:placeholder:text-foreground/60 dark:focus-visible:ring-indigo-500"
                             {...field}
                           />
                         </div>
@@ -630,7 +630,7 @@ const ProjectUpdate = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="rounded-xl bg-gradient-to-r from-purple-300 via-violet-300 to-blue-300 text-slate-900 shadow-md shadow-purple-200/50 hover:opacity-95 dark:from-violet-600 dark:via-indigo-600 dark:to-blue-600 dark:text-white"
+                className="rounded-xl bg-linear-to-r from-purple-300 via-violet-300 to-blue-300 text-slate-900 shadow-md shadow-purple-200/50 hover:opacity-95 dark:from-violet-600 dark:via-indigo-600 dark:to-blue-600 dark:text-white"
               >
                 {isSubmitting ? (
                   <>

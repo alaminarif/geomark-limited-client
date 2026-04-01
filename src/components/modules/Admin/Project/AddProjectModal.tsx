@@ -62,11 +62,28 @@ const addProjectSchema = z
 
 type AddProjectFormValues = z.infer<typeof addProjectSchema>;
 
-const sectionClass = "rounded-3xl border dark:border-slate-800 dark:bg-slate-900/80 p-5 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm";
+const sectionClass =
+  "rounded-3xl border border-purple-100 bg-white/90 p-5 shadow-[0_10px_30px_rgba(147,51,234,0.08)] backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/80 dark:shadow-[0_10px_30px_rgba(0,0,0,0.18)]";
+
 const inputClass =
-  "h-11 rounded-xl dark:border-slate-700 dark:bg-slate-900 text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-indigo-500";
+  "h-11 rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 text-popover-foreground  placeholder:text-slate-400 focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-white dark:placeholder:text-slate-400 dark:focus-visible:ring-indigo-500";
+
 const textareaClass =
-  "min-h-[110px] rounded-xl dark:border-slate-700 dark:bg-slate-900 text-foreground placeholder:text-muted-foreground resize-none focus-visible:ring-1 focus-visible:ring-indigo-500";
+  "min-h-[110px] rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 text-slate-700 placeholder:text-slate-400 resize-none focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground dark:placeholder:text-muted-foreground dark:focus-visible:ring-indigo-500";
+
+const selectTriggerClass =
+  "h-11! w-full rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 text-slate-700 focus:ring-2 focus:ring-purple-300/40 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground";
+
+const selectContentClass = "border-purple-100 bg-white text-slate-700 shadow-xl dark:border-slate-800 dark:bg-slate-900 dark:text-foreground";
+
+const dateButtonClass =
+  "h-11 justify-start rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 pl-3 text-left font-normal text-slate-700 hover:from-purple-100 hover:to-blue-100 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground dark:hover:bg-slate-800";
+
+const popoverContentClass =
+  "w-auto rounded-xl border border-purple-100 bg-white p-0 text-slate-700 shadow-xl dark:border-slate-800 dark:bg-slate-900 dark:text-foreground";
+
+const uploadCardClass =
+  "rounded-3xl border border-dashed border-purple-200 bg-gradient-to-br from-purple-50/80 to-blue-50/80 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 p-4 dark:border-slate-700 dark:bg-slate-900";
 
 const AddProjectModal = () => {
   const [open, setOpen] = useState(false);
@@ -212,11 +229,11 @@ const AddProjectModal = () => {
                             <FormLabel className="text-foreground">Service</FormLabel>
                             <Select onValueChange={field.onChange} value={field.value || undefined}>
                               <FormControl>
-                                <SelectTrigger className="h-11! w-full rounded-xl dark:border-slate-700 dark:bg-slate-900 text-foreground">
+                                <SelectTrigger className={selectTriggerClass}>
                                   <SelectValue placeholder="Select service" className="" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent className="dark:border-slate-800 dark:bg-slate-900 text-foreground ">
+                              <SelectContent className={selectContentClass}>
                                 {serviceTitleOptions.map((item: { label: string; value: string }) => (
                                   <SelectItem key={item.value} value={item.value}>
                                     {item.label}
@@ -237,11 +254,11 @@ const AddProjectModal = () => {
                             <FormLabel className="text-foreground">Status</FormLabel>
                             <Select onValueChange={field.onChange} value={field.value || undefined}>
                               <FormControl>
-                                <SelectTrigger className="h-11! w-full rounded-xl dark:border-slate-700 dark:bg-slate-900 text-foreground ">
+                                <SelectTrigger className={selectTriggerClass}>
                                   <SelectValue placeholder="Select status" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent className="dark:border-slate-800 dark:bg-slate-900 text-foreground">
+                              <SelectContent className={selectContentClass}>
                                 {projectStatusOptions.map((item: { label: string; value: string }) => (
                                   <SelectItem key={item.value} value={item.value}>
                                     {item.label}
@@ -293,11 +310,7 @@ const AddProjectModal = () => {
                           <FormItem>
                             <FormLabel className="text-foreground">Objective</FormLabel>
                             <FormControl>
-                              <Textarea
-                                placeholder="Project objective"
-                                className="min-h-25 rounded-xl dark:border-slate-700 dark:bg-slate-900 text-foreground placeholder:text-muted-foreground resize-none focus-visible:ring-1 focus-visible:ring-indigo-500"
-                                {...field}
-                              />
+                              <Textarea placeholder="Project objective" className={textareaClass} {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -311,11 +324,7 @@ const AddProjectModal = () => {
                           <FormItem>
                             <FormLabel className="text-foreground">Responsibility</FormLabel>
                             <FormControl>
-                              <Textarea
-                                placeholder="Scope of responsibility"
-                                className="min-h-25 rounded-xl dark:border-slate-700 dark:bg-slate-900 placeholder:text-muted-foreground  resize-none focus-visible:ring-1 focus-visible:ring-indigo-500"
-                                {...field}
-                              />
+                              <Textarea placeholder="Scope of responsibility" className={textareaClass} {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -348,17 +357,14 @@ const AddProjectModal = () => {
                                   <Button
                                     type="button"
                                     variant="outline"
-                                    className={cn(
-                                      "h-11 justify-start rounded-xl dark:border-slate-700 dark:bg-slate-900 pl-3 text-left font-normal text-foreground dark:hover:bg-slate-800",
-                                      !field.value && "text-foreground/60",
-                                    )}
+                                    className={cn(dateButtonClass, !field.value && "text-slate-400 dark:text-foreground/60")}
                                   >
                                     {field.value ? format(field.value, "PPP") : <span>Pick start date</span>}
                                     <CalendarIcon className="ml-auto h-4 w-4 opacity-60" />
                                   </Button>
                                 </FormControl>
                               </PopoverTrigger>
-                              <PopoverContent className="w-auto rounded-xl dark:border-slate-800 dark:bg-slate-900 p-0 text-foreground" align="start">
+                              <PopoverContent className={popoverContentClass} align="start">
                                 <Calendar mode="single" selected={field.value ?? undefined} onSelect={field.onChange} captionLayout="dropdown" />
                               </PopoverContent>
                             </Popover>
@@ -379,17 +385,14 @@ const AddProjectModal = () => {
                                   <Button
                                     type="button"
                                     variant="outline"
-                                    className={cn(
-                                      "h-11 justify-start rounded-xl dark:border-slate-700 dark:bg-slate-900 pl-3 text-left font-normal text-foreground dark:hover:bg-slate-800",
-                                      !field.value && "text-foreground/60",
-                                    )}
+                                    className={cn(dateButtonClass, !field.value && "text-slate-400 dark:text-foreground/60")}
                                   >
                                     {field.value ? format(field.value, "PPP") : <span>Pick end date</span>}
                                     <CalendarIcon className="ml-auto h-4 w-4 opacity-60" />
                                   </Button>
                                 </FormControl>
                               </PopoverTrigger>
-                              <PopoverContent className="w-auto rounded-xl dark:border-slate-800 dark:bg-slate-900 p-0 text-foreground" align="start">
+                              <PopoverContent className={popoverContentClass} align="start">
                                 <Calendar mode="single" selected={field.value ?? undefined} onSelect={field.onChange} captionLayout="dropdown" />
                               </PopoverContent>
                             </Popover>
@@ -419,12 +422,12 @@ const AddProjectModal = () => {
                             <FormLabel className="text-foreground">Client</FormLabel>
                             <Select onValueChange={field.onChange} value={field.value || undefined}>
                               <FormControl>
-                                <SelectTrigger className="h-11! w-full rounded-xl dark:border-slate-700 dark:bg-slate-900 text-foreground">
+                                <SelectTrigger className={selectTriggerClass}>
                                   {/* <User2 className="mr-2 h-4 w-4 text-foreground/60" /> */}
                                   <SelectValue placeholder="Select client" className="" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent className="dark:border-slate-800 dark:bg-slate-900 text-foreground w-full">
+                              <SelectContent className={selectContentClass}>
                                 {clientOptions.map((item: { label: string; value: string }) => (
                                   <SelectItem key={item.value} value={item.value}>
                                     {item.label}
@@ -446,11 +449,7 @@ const AddProjectModal = () => {
                             <FormControl>
                               <div className="relative">
                                 <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/60" />
-                                <Input
-                                  placeholder="Enter project location"
-                                  className="h-11 rounded-xl dark:border-slate-700 dark:bg-slate-900 pl-10 text-foreground placeholder:text-foreground/60 focus-visible:ring-1 focus-visible:ring-indigo-500"
-                                  {...field}
-                                />
+                                <Input placeholder="Enter project location" className={inputClass} {...field} />
                               </div>
                             </FormControl>
                             <FormMessage />
@@ -472,12 +471,12 @@ const AddProjectModal = () => {
                     </div>
 
                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                      <div className="rounded-3xl border border-dashed dark:border-slate-700 dark:bg-slate-950/60 p-4">
+                      <div className={uploadCardClass}>
                         <p className="mb-3 text-sm font-medium text-foreground">Thumbnail / Featured Image</p>
                         <SingleImageUploader onChange={setImage} />
                       </div>
 
-                      <div className="rounded-3xl border border-dashed dark:border-slate-700 dark:bg-slate-950/60 p-4">
+                      <div className={uploadCardClass}>
                         <p className="mb-3 text-sm font-medium text-foreground/60">Gallery Images</p>
                         <MultipleImageUploader onChange={setImages} />
                       </div>

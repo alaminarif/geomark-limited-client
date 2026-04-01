@@ -1,11 +1,11 @@
 import AdminManagement from "@/pages/Admin/UserManagement";
-import ClientManagement from "@/pages/Admin/ClientManagement";
-import ProjectManagement from "@/pages/Admin/ProjectManagement";
+import ClientManagement from "@/pages/Admin/Client/ClientManagement";
+import ProjectManagement from "@/pages/Admin/Project/ProjectManagement";
 import ServicesManagement from "@/pages/Admin/ServicesManagement";
 import type { ISidebarItem } from "@/types";
-import EmployeeManagement from "@/pages/Admin/EmployeeManagement";
-import NewsManagement from "@/pages/Admin/NewsManagement";
-import ProductManagement from "@/pages/Admin/ProductManagement";
+import EmployeeManagement from "@/pages/Admin/Employee/EmployeeManagement";
+import NewsManagement from "@/pages/Admin/News/NewsManagement";
+import ProductManagement from "@/pages/Admin/Product/ProductManagement";
 
 export const adminSidebarItems: ISidebarItem[] = [
   {
