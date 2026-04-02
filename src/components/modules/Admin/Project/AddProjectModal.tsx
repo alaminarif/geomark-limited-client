@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -20,12 +19,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import SingleImageUploader from "@/components/ui/SingleImageUploader";
 import { Textarea } from "@/components/ui/textarea";
 import { ProjectStatus } from "@/constants/project";
-import type { FileMetadata } from "@/hooks/use-file-upload";
 import { cn } from "@/lib/utils";
 import { useGetClientsQuery } from "@/redux/features/client/client.api";
 import { useAddProjectMutation } from "@/redux/features/project/project.api";
 import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import imageCompression from "browser-image-compression";
 import { format, formatISO } from "date-fns";
 import { motion } from "framer-motion";
 import { CalendarIcon, FolderPlus, ImagePlus, Loader2, MapPin, XCircle } from "lucide-react";
@@ -42,9 +41,7 @@ const addProjectSchema = z
     objective: z.string().min(5, "Objective is required"),
     responsibility: z.string().min(5, "Responsibility is required"),
     status: z.string().min(1, "Status is required"),
-    startDate: z.date({
-      message: "Start date is required",
-    }),
+    startDate: z.date({ message: "Start date is required" }),
     endDate: z.date().optional().nullable(),
     location: z.string().min(2, "Location is required"),
     client: z.string().min(1, "Client is required"),
@@ -54,42 +51,55 @@ const addProjectSchema = z
       if (!data.endDate) return true;
       return data.endDate >= data.startDate;
     },
-    {
-      message: "End date cannot be earlier than start date",
-      path: ["endDate"],
-    },
+    { message: "End date cannot be earlier than start date", path: ["endDate"] },
   );
-
 type AddProjectFormValues = z.infer<typeof addProjectSchema>;
+type UploadKind = "picture" | "gallery";
+const MAX_SINGLE_FILE_SIZE = 2 * 1024 * 1024;
+const MAX_TOTAL_SIZE = 8 * 1024 * 1024;
 
 const sectionClass =
   "rounded-3xl border border-purple-100 bg-white/90 p-5 shadow-[0_10px_30px_rgba(147,51,234,0.08)] backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/80 dark:shadow-[0_10px_30px_rgba(0,0,0,0.18)]";
-
 const inputClass =
-  "h-11 rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 text-popover-foreground  placeholder:text-slate-400 focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-white dark:placeholder:text-slate-400 dark:focus-visible:ring-indigo-500";
-
+  "h-11 rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 text-popover-foreground placeholder:text-slate-400 focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-white dark:placeholder:text-slate-400 dark:focus-visible:ring-indigo-500";
 const textareaClass =
-  "min-h-[110px] rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 text-slate-700 placeholder:text-slate-400 resize-none focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground dark:placeholder:text-muted-foreground dark:focus-visible:ring-indigo-500";
-
+  "min-h-[110px] rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 text-slate-700 placeholder:text-slate-400 resize-none focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-foreground dark:placeholder:text-muted-foreground dark:focus-visible:ring-indigo-500";
 const selectTriggerClass =
-  "h-11! w-full rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 text-slate-700 focus:ring-2 focus:ring-purple-300/40 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground";
-
+  "h-11! w-full rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 text-slate-700 focus:ring-2 focus:ring-purple-300/40 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-foreground";
 const selectContentClass = "border-purple-100 bg-white text-slate-700 shadow-xl dark:border-slate-800 dark:bg-slate-900 dark:text-foreground";
-
 const dateButtonClass =
-  "h-11 justify-start rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 pl-3 text-left font-normal text-slate-700 hover:from-purple-100 hover:to-blue-100 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground dark:hover:bg-slate-800";
-
+  "h-11 justify-start rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 pl-3 text-left font-normal text-slate-700 hover:from-purple-100 hover:to-blue-100 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-foreground dark:hover:bg-slate-800";
 const popoverContentClass =
   "w-auto rounded-xl border border-purple-100 bg-white p-0 text-slate-700 shadow-xl dark:border-slate-800 dark:bg-slate-900 dark:text-foreground";
-
 const uploadCardClass =
-  "rounded-3xl border border-dashed border-purple-200 bg-gradient-to-br from-purple-50/80 to-blue-50/80 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 p-4 dark:border-slate-700 dark:bg-slate-900";
+  "rounded-3xl border border-dashed border-purple-200 bg-gradient-to-br from-purple-50/80 to-blue-50/80 p-4 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800";
 
+const formatFileSize = (bytes: number) => {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+};
+const canCompressImage = (file: File) => {
+  return ["image/jpeg", "image/png", "image/webp"].includes(file.type);
+};
+const compressImageFile = async (file: File, kind: UploadKind) => {
+  if (!canCompressImage(file)) {
+    return file;
+  }
+  if (file.size <= 300 * 1024) {
+    return file;
+  }
+  const options =
+    kind === "picture"
+      ? { maxSizeMB: 1, maxWidthOrHeight: 1600, useWebWorker: true, initialQuality: 0.82 }
+      : { maxSizeMB: 0.8, maxWidthOrHeight: 1400, useWebWorker: true, initialQuality: 0.78 };
+  const compressed = await imageCompression(file, options);
+  return new File([compressed], file.name, { type: compressed.type || file.type, lastModified: Date.now() });
+};
 const AddProjectModal = () => {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState<File | null>(null);
-  const [images, setImages] = useState<(File | FileMetadata)[]>([]);
-
+  const [images, setImages] = useState<File[]>([]);
   const form = useForm<AddProjectFormValues>({
     resolver: zodResolver(addProjectSchema),
     mode: "onChange",
@@ -106,38 +116,37 @@ const AddProjectModal = () => {
       client: "",
     },
   });
-
   const [addProject, { isLoading: isSubmitting }] = useAddProjectMutation();
   const { data: servicesData } = useGetAllServicesQuery(undefined);
   const { data: clientsData } = useGetClientsQuery(undefined);
-
-  const serviceTitleOptions = useMemo(
-    () =>
-      servicesData?.data?.map((item: any) => ({
-        value: item._id,
-        label: item.name,
-      })) || [],
-    [servicesData],
-  );
-
-  const clientOptions = useMemo(
-    () =>
-      clientsData?.data?.map((item: any) => ({
-        value: item._id,
-        label: item.name,
-      })) || [],
-    [clientsData],
-  );
-
-  const projectStatusOptions = useMemo(
-    () =>
-      ProjectStatus.map((status) => ({
-        value: status.value,
-        label: status.label,
-      })),
-    [],
-  );
-
+  const serviceTitleOptions = useMemo(() => servicesData?.data?.map((item: any) => ({ value: item._id, label: item.name })) || [], [servicesData]);
+  const clientOptions = useMemo(() => clientsData?.data?.map((item: any) => ({ value: item._id, label: item.name })) || [], [clientsData]);
+  const projectStatusOptions = useMemo(() => ProjectStatus.map((status) => ({ value: status.value, label: status.label })), []);
+  const getTotalUploadSize = useCallback(() => {
+    let total = 0;
+    if (image) {
+      total += image.size;
+    }
+    images.forEach((file) => {
+      total += file.size;
+    });
+    return total;
+  }, [image, images]);
+  const validateUploads = useCallback(() => {
+    if (image && image.size > MAX_SINGLE_FILE_SIZE) {
+      return `Thumbnail image must be smaller than ${formatFileSize(MAX_SINGLE_FILE_SIZE)}`;
+    }
+    for (const file of images) {
+      if (file.size > MAX_SINGLE_FILE_SIZE) {
+        return `Each gallery image must be smaller than ${formatFileSize(MAX_SINGLE_FILE_SIZE)}`;
+      }
+    }
+    const totalSize = getTotalUploadSize();
+    if (totalSize > MAX_TOTAL_SIZE) {
+      return `Total upload size is ${formatFileSize(totalSize)}. Maximum allowed is ${formatFileSize(MAX_TOTAL_SIZE)}`;
+    }
+    return null;
+  }, [getTotalUploadSize, image, images]);
   const handleClose = useCallback(() => {
     setOpen(false);
     form.reset();
@@ -146,35 +155,54 @@ const AddProjectModal = () => {
   }, [form]);
 
   const onSubmit = async (data: AddProjectFormValues) => {
+    const uploadError = validateUploads();
+    if (uploadError) {
+      toast.error(uploadError);
+      return;
+    }
     const toastId = toast.loading("Adding project...");
-
     try {
-      const projectData = {
-        ...data,
-        startDate: formatISO(data.startDate),
-        endDate: data.endDate ? formatISO(data.endDate) : null,
-      };
-
       const formData = new FormData();
-      formData.append("data", JSON.stringify(projectData));
-
-      if (image) {
-        formData.append("file", image);
+      formData.append("title", data.title);
+      formData.append("name", data.name);
+      formData.append("description", data.description);
+      formData.append("objective", data.objective);
+      formData.append("responsibility", data.responsibility);
+      formData.append("status", data.status);
+      formData.append("startDate", formatISO(data.startDate));
+      formData.append("location", data.location);
+      formData.append("client", data.client);
+      if (data.endDate) {
+        formData.append("endDate", formatISO(data.endDate));
       }
-
-      images.forEach((item) => {
-        if (item instanceof File) {
-          formData.append("files", item);
-        }
-      });
-
+      if (image) {
+        const compressedPicture = await compressImageFile(image, "picture");
+        formData.append("picture", compressedPicture, compressedPicture.name);
+      }
+      if (images.length > 0) {
+        const compressedGallery = await Promise.all(images.map((file) => compressImageFile(file, "gallery")));
+        compressedGallery.forEach((file) => {
+          formData.append("gallery", file, file.name);
+        });
+      }
       await addProject(formData).unwrap();
-
       toast.success("Project added successfully", { id: toastId });
       handleClose();
     } catch (error: any) {
-      toast.error(error?.data?.message || "Failed to add project", { id: toastId });
       console.log(error);
+      if (error?.status === 500 && error?.data?.err?.code === "LIMIT_UNEXPECTED_FILE") {
+        toast.error("Upload field mismatch. Frontend must send picture and gallery.", { id: toastId });
+        return;
+      }
+      if (error?.status === 413) {
+        toast.error("Upload is still too large. Please use smaller images.", { id: toastId });
+        return;
+      }
+      if (error?.status === "FETCH_ERROR") {
+        toast.error("Network error occurred. Please check your connection and backend settings.", { id: toastId });
+        return;
+      }
+      toast.error(error?.data?.message || error?.error || "Failed to add project", { id: toastId });
     }
   };
 
@@ -186,28 +214,25 @@ const AddProjectModal = () => {
             type="button"
             className="w-full rounded-2xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 text-white shadow-lg transition-all duration-300 hover:scale-[1.01] hover:shadow-indigo-500/30"
           >
-            <FolderPlus className="mr-2 h-4 w-4" />
-            Add Project
+            <FolderPlus className="mr-2 h-4 w-4" /> Add Project
           </Button>
         </DrawerTrigger>
-
-        <DrawerContent className="ml-auto h-screen w-[65vw]! sm:w-[72vw]! lg:w-[88vw]! xl:w-[82vw]! max-w-300! rounded-none border-l dark:border-slate-800 dark:bg-slate-950 text-foreground shadow-[0_0_40px_rgba(0,0,0,0.45)]">
-          <DrawerHeader className="border-b border-purple-100  dark:border-slate-800 dark:bg-slate-950/95 dark:backdrop-blur">
-            <div className="rounded-3xl border dark:border-slate-800 dark:bg-linear-to-r dark:from-violet-600/90 dark:via-indigo-600/90 dark:to-blue-600/90 p-5  shadow-lg">
-              <DrawerTitle className="text-2xl text-foreground font-semibold">Add New Project</DrawerTitle>
+        <DrawerContent className="ml-auto h-screen w-[65vw]! max-w-300! rounded-none border-l text-foreground shadow-[0_0_40px_rgba(0,0,0,0.45)] sm:w-[72vw]! lg:w-[88vw]! xl:w-[82vw]! dark:border-slate-800 dark:bg-slate-950">
+          <DrawerHeader className="border-b border-purple-100 dark:border-slate-800 dark:bg-slate-950/95 dark:backdrop-blur">
+            <div className="rounded-3xl border p-5 shadow-lg dark:border-slate-800 dark:bg-linear-to-r dark:from-violet-600/90 dark:via-indigo-600/90 dark:to-blue-600/90">
+              <DrawerTitle className="text-2xl font-semibold text-foreground">Add New Project</DrawerTitle>
               <DrawerDescription className="mt-1 text-sm text-foreground">
-                Fill in the project details, schedule, client information, and images.
+                Fill in the project details, schedule, client information and images.
               </DrawerDescription>
             </div>
           </DrawerHeader>
-
           <div className="no-scrollbar flex-1 overflow-y-auto px-4 py-5 md:px-6">
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
               <Form {...form}>
                 <form id="add-new-project" onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                   <div className={sectionClass}>
                     <div className="mb-4 flex items-center gap-3">
-                      <div className="rounded-2xl dark:bg-violet-500/15 p-2.5 text-violet-600 dark:text-violet-300">
+                      <div className="rounded-2xl p-2.5 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300">
                         <FolderPlus className="h-4 w-4" />
                       </div>
                       <div>
@@ -215,7 +240,6 @@ const AddProjectModal = () => {
                         <p className="text-sm text-foreground/70">Basic information about the project</p>
                       </div>
                     </div>
-
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                       <FormField
                         control={form.control}
@@ -226,12 +250,12 @@ const AddProjectModal = () => {
                             <Select onValueChange={field.onChange} value={field.value || undefined}>
                               <FormControl>
                                 <SelectTrigger className={selectTriggerClass}>
-                                  <SelectValue placeholder="Select service" className="" />
+                                  <SelectValue placeholder="Select service" />
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent className={selectContentClass}>
                                 {serviceTitleOptions.map((item: { label: string; value: string }) => (
-                                  <SelectItem key={item.value} value={item.value}>
+                                  <SelectItem key={item.value} value={item.label}>
                                     {item.label}
                                   </SelectItem>
                                 ))}
@@ -241,7 +265,6 @@ const AddProjectModal = () => {
                           </FormItem>
                         )}
                       />
-
                       <FormField
                         control={form.control}
                         name="status"
@@ -266,7 +289,6 @@ const AddProjectModal = () => {
                           </FormItem>
                         )}
                       />
-
                       <div className="md:col-span-2">
                         <FormField
                           control={form.control}
@@ -282,7 +304,6 @@ const AddProjectModal = () => {
                           )}
                         />
                       </div>
-
                       <div className="md:col-span-2">
                         <FormField
                           control={form.control}
@@ -298,7 +319,6 @@ const AddProjectModal = () => {
                           )}
                         />
                       </div>
-
                       <FormField
                         control={form.control}
                         name="objective"
@@ -312,7 +332,6 @@ const AddProjectModal = () => {
                           </FormItem>
                         )}
                       />
-
                       <FormField
                         control={form.control}
                         name="responsibility"
@@ -328,18 +347,16 @@ const AddProjectModal = () => {
                       />
                     </div>
                   </div>
-
                   <div className={sectionClass}>
                     <div className="mb-4 flex items-center gap-3">
-                      <div className="rounded-2xl dark:bg-blue-500/15 p-2.5 text-violet-600 dark:text-violet-300">
+                      <div className="rounded-2xl p-2.5 text-violet-600 dark:bg-blue-500/15 dark:text-violet-300">
                         <CalendarIcon className="h-4 w-4" />
                       </div>
                       <div>
                         <h3 className="text-base font-semibold text-foreground">Timeline & Client</h3>
-                        <p className="text-sm text-foreground/70">Set project dates, location, and client</p>
+                        <p className="text-sm text-foreground/70">Set project dates, location and client</p>
                       </div>
                     </div>
-
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                       <FormField
                         control={form.control}
@@ -368,7 +385,6 @@ const AddProjectModal = () => {
                           </FormItem>
                         )}
                       />
-
                       <FormField
                         control={form.control}
                         name="endDate"
@@ -392,7 +408,6 @@ const AddProjectModal = () => {
                                 <Calendar mode="single" selected={field.value ?? undefined} onSelect={field.onChange} captionLayout="dropdown" />
                               </PopoverContent>
                             </Popover>
-
                             {field.value && (
                               <Button
                                 type="button"
@@ -400,16 +415,13 @@ const AddProjectModal = () => {
                                 className="mt-1 h-auto w-fit px-0 text-xs text-foreground/60 hover:bg-transparent hover:text-rose-400"
                                 onClick={() => field.onChange(null)}
                               >
-                                <XCircle className="mr-1 h-3.5 w-3.5" />
-                                Clear end date
+                                <XCircle className="mr-1 h-3.5 w-3.5" /> Clear end date
                               </Button>
                             )}
-
                             <FormMessage />
                           </FormItem>
                         )}
                       />
-
                       <FormField
                         control={form.control}
                         name="client"
@@ -419,13 +431,12 @@ const AddProjectModal = () => {
                             <Select onValueChange={field.onChange} value={field.value || undefined}>
                               <FormControl>
                                 <SelectTrigger className={selectTriggerClass}>
-                                  {/* <User2 className="mr-2 h-4 w-4 text-foreground/60" /> */}
-                                  <SelectValue placeholder="Select client" className="" />
+                                  <SelectValue placeholder="Select client" />
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent className={selectContentClass}>
                                 {clientOptions.map((item: { label: string; value: string }) => (
-                                  <SelectItem key={item.value} value={item.value}>
+                                  <SelectItem key={item.value} value={item.label}>
                                     {item.label}
                                   </SelectItem>
                                 ))}
@@ -435,7 +446,6 @@ const AddProjectModal = () => {
                           </FormItem>
                         )}
                       />
-
                       <FormField
                         control={form.control}
                         name="location"
@@ -445,7 +455,7 @@ const AddProjectModal = () => {
                             <FormControl>
                               <div className="relative">
                                 <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/60" />
-                                <Input placeholder="Enter project location" className={inputClass + " pl-8"} {...field} />
+                                <Input placeholder="Enter project location" className={`${inputClass} pl-8`} {...field} />
                               </div>
                             </FormControl>
                             <FormMessage />
@@ -454,10 +464,9 @@ const AddProjectModal = () => {
                       />
                     </div>
                   </div>
-
                   <div className={sectionClass}>
                     <div className="mb-4 flex items-center gap-3">
-                      <div className="rounded-2xl dark:bg-emerald-500/15 p-2.5 text-violet-600 dark:text-violet-300">
+                      <div className="rounded-2xl p-2.5 text-violet-600 dark:bg-emerald-500/15 dark:text-violet-300">
                         <ImagePlus className="h-4 w-4" />
                       </div>
                       <div>
@@ -465,24 +474,24 @@ const AddProjectModal = () => {
                         <p className="text-sm text-foreground/60">Upload cover image and gallery images</p>
                       </div>
                     </div>
-
                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                       <div className={uploadCardClass}>
                         <p className="mb-3 text-sm font-medium text-foreground">Thumbnail / Featured Image</p>
                         <SingleImageUploader onChange={setImage} />
                       </div>
-
                       <div className={uploadCardClass}>
                         <p className="mb-3 text-sm font-medium text-foreground/60">Gallery Images</p>
                         <MultipleImageUploader onChange={setImages} />
                       </div>
+                    </div>
+                    <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-300">
+                      Keep each image under {formatFileSize(MAX_SINGLE_FILE_SIZE)} and total upload under {formatFileSize(MAX_TOTAL_SIZE)}.
                     </div>
                   </div>
                 </form>
               </Form>
             </motion.div>
           </div>
-
           <DrawerFooter className="border-t dark:border-slate-800 dark:bg-slate-950">
             <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               <DrawerClose asChild>
@@ -496,7 +505,6 @@ const AddProjectModal = () => {
                   Cancel
                 </Button>
               </DrawerClose>
-
               <Button
                 type="submit"
                 form="add-new-project"
@@ -505,13 +513,11 @@ const AddProjectModal = () => {
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Submitting...
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
                   </>
                 ) : (
                   <>
-                    <FolderPlus className="mr-2 h-4 w-4" />
-                    Submit Project
+                    <FolderPlus className="mr-2 h-4 w-4" /> Submit Project
                   </>
                 )}
               </Button>
@@ -522,5 +528,4 @@ const AddProjectModal = () => {
     </div>
   );
 };
-
 export default AddProjectModal;

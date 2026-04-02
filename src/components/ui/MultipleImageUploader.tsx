@@ -1,34 +1,29 @@
 import { AlertCircleIcon, ImageIcon, UploadIcon, XIcon } from "lucide-react";
+import { useEffect } from "react";
 
-import { type FileMetadata, useFileUpload } from "@/hooks/use-file-upload";
+import { useFileUpload } from "@/hooks/use-file-upload";
 import { Button } from "@/components/ui/button";
-import { type Dispatch, useEffect } from "react";
 
-export default function MultipleImageUploader({ onChange }: { onChange: Dispatch<React.SetStateAction<[] | (File | FileMetadata)[]>> }) {
-  const maxSizeMB = 5;
-  const maxSize = maxSizeMB * 1024 * 1024; // 5MB default
-  const maxFiles = 3;
+export default function MultipleImageUploader({ onChange }: { onChange: (files: File[]) => void }) {
+  const maxSizeMB = 2;
+  const maxSize = maxSizeMB * 1024 * 1024;
+  const maxFiles = 6;
 
   const [{ files, isDragging, errors }, { handleDragEnter, handleDragLeave, handleDragOver, handleDrop, openFileDialog, removeFile, getInputProps }] =
     useFileUpload({
-      accept: "image/svg+xml,image/png,image/jpeg,image/jpg,image/gif",
+      accept: "image/png,image/jpeg,image/gif,image/webp",
       maxSize,
       multiple: true,
       maxFiles,
     });
 
   useEffect(() => {
-    if (files.length > 0) {
-      const imageList = files.map((item) => item.file);
-      onChange(imageList);
-    } else {
-      onChange([]);
-    }
+    const imageList = files.map((item) => item.file).filter((file): file is File => file instanceof File);
+    onChange(imageList);
   }, [files, onChange]);
 
   return (
     <div className="flex flex-col gap-2">
-      {/* Drop area */}
       <div
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
@@ -38,7 +33,8 @@ export default function MultipleImageUploader({ onChange }: { onChange: Dispatch
         data-files={files.length > 0 || undefined}
         className="border-input data-[dragging=true]:bg-accent/50 has-[input:focus]:border-ring has-[input:focus]:ring-ring/50 relative flex min-h-52 flex-col items-center overflow-hidden rounded-xl border border-dashed p-4 transition-colors not-data-files:justify-center has-[input:focus]:ring-[3px]"
       >
-        <input {...getInputProps()} className="sr-only" aria-label="Upload image file" />
+        <input {...getInputProps()} className="sr-only" aria-label="Upload image files" />
+
         {files.length > 0 ? (
           <div className="flex w-full flex-col gap-3">
             <div className="flex items-center justify-between gap-2">
@@ -72,7 +68,7 @@ export default function MultipleImageUploader({ onChange }: { onChange: Dispatch
               <ImageIcon className="size-4 opacity-60" />
             </div>
             <p className="mb-1.5 text-sm font-medium">Drop your images here</p>
-            <p className="text-muted-foreground text-xs">SVG, PNG, JPG or GIF (max. {maxSizeMB}MB)</p>
+            <p className="text-muted-foreground text-xs">PNG, JPEG, GIF or WEBP (max. {maxSizeMB}MB each)</p>
             <Button type="button" variant="outline" className="mt-4" onClick={openFileDialog}>
               <UploadIcon className="-ms-1 opacity-60" aria-hidden="true" />
               Select images
@@ -82,9 +78,13 @@ export default function MultipleImageUploader({ onChange }: { onChange: Dispatch
       </div>
 
       {errors.length > 0 && (
-        <div className="text-destructive flex items-center gap-1 text-xs" role="alert">
-          <AlertCircleIcon className="size-3 shrink-0" />
-          <span>{errors[0]}</span>
+        <div className="text-destructive flex flex-col gap-1 text-xs" role="alert">
+          {errors.map((error, index) => (
+            <div key={index} className="flex items-center gap-1">
+              <AlertCircleIcon className="size-3 shrink-0" />
+              <span>{error}</span>
+            </div>
+          ))}
         </div>
       )}
     </div>

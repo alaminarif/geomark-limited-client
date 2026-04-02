@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/refs */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import Loading from "@/components/layout/Loading";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -11,16 +12,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import SingleImageUploader from "@/components/ui/SingleImageUploader";
 import { Textarea } from "@/components/ui/textarea";
 import { ProjectStatus } from "@/constants/project";
-import type { FileMetadata } from "@/hooks/use-file-upload";
 import { cn } from "@/lib/utils";
 import { useGetClientsQuery } from "@/redux/features/client/client.api";
 import { useGetSingleProjectQuery, useUpdateProjectMutation } from "@/redux/features/project/project.api";
 import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import imageCompression from "browser-image-compression";
 import { format, formatISO } from "date-fns";
 import { motion } from "framer-motion";
 import { ArrowLeft, CalendarIcon, FolderPen, ImagePlus, Loader2, MapPin, Save, XCircle } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -28,20 +29,20 @@ import { z } from "zod";
 
 const updateProjectSchema = z
   .object({
-    title: z.string().min(1, "Service is required"),
-    name: z.string().min(1, "Project name is required"),
-    description: z.string().min(10, "Description must be at least 10 characters"),
-    objective: z.string().min(5, "Objective is required"),
-    responsibility: z.string().min(5, "Responsibility is required"),
-    status: z.string().min(1, "Status is required"),
+    title: z.string().optional(),
+    name: z.string().optional(),
+    description: z.string().min(10, "Description must be at least 10 characters").optional(),
+    objective: z.string().optional(),
+    responsibility: z.string().optional(),
+    status: z.string().optional(),
     startDate: z
       .date({
         message: "Start date is required",
       })
       .optional(),
-    endDate: z.date().optional().nullable(),
-    location: z.string().min(2, "Location is required"),
-    client: z.string().min(1, "Client is required"),
+    endDate: z.date().nullable().optional(),
+    location: z.string().optional(),
+    client: z.string().optional(),
   })
   .refine(
     (data) => {
@@ -55,34 +56,38 @@ const updateProjectSchema = z
   );
 
 type UpdateProjectFormValues = z.infer<typeof updateProjectSchema>;
+type UploadKind = "picture" | "gallery";
+
+const MAX_SINGLE_FILE_SIZE = 2 * 1024 * 1024;
+const MAX_TOTAL_SIZE = 8 * 1024 * 1024;
 
 const sectionClass =
-  "rounded-3xl border border-purple-100 bg-white/90 p-5 shadow-[0_10px_30px_rgba(147,51,234,0.08)] backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/80 dark:shadow-[0_10px_30px_rgba(0,0,0,0.18)]";
+  "w-full min-w-0 rounded-3xl border border-purple-100 bg-white/90 p-5 shadow-[0_10px_30px_rgba(147,51,234,0.08)] backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/80 dark:shadow-[0_10px_30px_rgba(0,0,0,0.18)]";
 
 const inputClass =
-  "h-11 rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 text-popover-foreground  placeholder:text-slate-400 focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-white dark:placeholder:text-slate-400 dark:focus-visible:ring-indigo-500";
+  "h-11 rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 text-popover-foreground placeholder:text-slate-400 focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-white dark:placeholder:text-slate-400 dark:focus-visible:ring-indigo-500";
 
 const textareaClass =
-  "min-h-[110px] rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 text-slate-700 placeholder:text-slate-400 resize-none focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground dark:placeholder:text-muted-foreground dark:focus-visible:ring-indigo-500";
+  "min-h-[110px] rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 text-slate-700 placeholder:text-slate-400 resize-none focus-visible:border-purple-300 focus-visible:ring-2 focus-visible:ring-purple-300/40 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-foreground dark:placeholder:text-muted-foreground dark:focus-visible:ring-indigo-500";
 
 const selectTriggerClass =
-  "h-11! w-full rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 text-slate-700 focus:ring-2 focus:ring-purple-300/40 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground";
+  "h-11 w-full rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 text-slate-700 focus:ring-2 focus:ring-purple-300/40 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-foreground";
 
 const selectContentClass = "border-purple-100 bg-white text-slate-700 shadow-xl dark:border-slate-800 dark:bg-slate-900 dark:text-foreground";
 
 const dateButtonClass =
-  "h-11 justify-start rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 pl-3 text-left font-normal text-slate-700 hover:from-purple-100 hover:to-blue-100 dark:border-slate-700 dark:bg-slate-900 dark:text-foreground dark:hover:bg-slate-800";
+  "h-11 justify-start rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 pl-3 text-left font-normal text-slate-700 hover:from-purple-100 hover:to-blue-100 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-foreground dark:hover:bg-slate-800";
 
 const popoverContentClass =
   "w-auto rounded-xl border border-purple-100 bg-white p-0 text-slate-700 shadow-xl dark:border-slate-800 dark:bg-slate-900 dark:text-foreground";
 
 const uploadCardClass =
-  "rounded-3xl border border-dashed border-purple-200 bg-gradient-to-br from-purple-50/80 to-blue-50/80 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 p-4 dark:border-slate-700 dark:bg-slate-900";
+  "rounded-3xl border border-dashed border-purple-200 bg-gradient-to-br from-purple-50/80 to-blue-50/80 p-4 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800";
 
-const getIdValue = (value: any) => {
-  if (!value) return "";
-  if (typeof value === "string") return value;
-  return value?._id || value?.id || "";
+const formatFileSize = (bytes: number) => {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 };
 
 const getImageUrl = (value: any) => {
@@ -91,12 +96,76 @@ const getImageUrl = (value: any) => {
   return value?.url || value?.secure_url || value?.path || "";
 };
 
+const resolveSelectValue = (value: any, options: { value: string; label: string }[]) => {
+  if (!value) return "";
+
+  if (typeof value === "string") {
+    const matchedByValue = options.find((item) => item.value === value);
+    if (matchedByValue) return matchedByValue.value;
+
+    const matchedByLabel = options.find((item) => item.label.trim().toLowerCase() === value.trim().toLowerCase());
+    if (matchedByLabel) return matchedByLabel.value;
+
+    return "";
+  }
+
+  const rawId = value?._id || value?.id || "";
+  if (rawId) {
+    const matchedByValue = options.find((item) => item.value === rawId);
+    if (matchedByValue) return matchedByValue.value;
+  }
+
+  const rawName = value?.name || value?.title || "";
+  if (rawName) {
+    const matchedByLabel = options.find((item) => item.label.trim().toLowerCase() === rawName.trim().toLowerCase());
+    if (matchedByLabel) return matchedByLabel.value;
+  }
+
+  return "";
+};
+
+const canCompressImage = (file: File) => {
+  return ["image/jpeg", "image/png", "image/webp"].includes(file.type);
+};
+
+const compressImageFile = async (file: File, kind: UploadKind) => {
+  if (!canCompressImage(file)) {
+    return file;
+  }
+
+  if (file.size <= 300 * 1024) {
+    return file;
+  }
+
+  const options =
+    kind === "picture"
+      ? {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1600,
+          useWebWorker: true,
+          initialQuality: 0.82,
+        }
+      : {
+          maxSizeMB: 0.8,
+          maxWidthOrHeight: 1400,
+          useWebWorker: true,
+          initialQuality: 0.78,
+        };
+
+  const compressed = await imageCompression(file, options);
+
+  return new File([compressed], file.name, {
+    type: compressed.type || file.type,
+    lastModified: Date.now(),
+  });
+};
+
 const ProjectUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [image, setImage] = useState<File | null>(null);
-  const [images, setImages] = useState<(File | FileMetadata)[]>([]);
+  const [images, setImages] = useState<File[]>([]);
   const initialDataRef = useRef<Record<string, any> | null>(null);
 
   const form = useForm<UpdateProjectFormValues>({
@@ -116,13 +185,21 @@ const ProjectUpdate = () => {
     },
   });
 
-  const { data: projectData, isLoading: projectLoading, isFetching: projectFetching } = useGetSingleProjectQuery(id, { skip: !id });
+  const {
+    data: projectData,
+    isLoading: projectLoading,
+    isFetching: projectFetching,
+  } = useGetSingleProjectQuery(id, {
+    skip: !id,
+  });
 
   const [updateProject, { isLoading: isSubmitting }] = useUpdateProjectMutation();
   const { data: servicesData, isLoading: servicesLoading } = useGetAllServicesQuery(undefined);
   const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery(undefined);
 
-  const project = projectData?.data;
+  const project = useMemo(() => {
+    return projectData?.data?.data || projectData?.data || projectData?.project || projectData || null;
+  }, [projectData]);
 
   const serviceTitleOptions = useMemo(
     () =>
@@ -152,13 +229,13 @@ const ProjectUpdate = () => {
   );
 
   const existingThumbnail = useMemo(() => {
-    return getImageUrl(project?.image) || getImageUrl(project?.thumbnail) || getImageUrl(project?.file) || "";
+    return getImageUrl(project?.picture) || getImageUrl(project?.image) || getImageUrl(project?.thumbnail) || getImageUrl(project?.file) || "";
   }, [project]);
 
   const existingGallery = useMemo(() => {
+    if (Array.isArray(project?.gallery)) return project.gallery.map(getImageUrl).filter(Boolean);
     if (Array.isArray(project?.images)) return project.images.map(getImageUrl).filter(Boolean);
     if (Array.isArray(project?.files)) return project.files.map(getImageUrl).filter(Boolean);
-    if (Array.isArray(project?.gallery)) return project.gallery.map(getImageUrl).filter(Boolean);
     return [];
   }, [project]);
 
@@ -166,7 +243,7 @@ const ProjectUpdate = () => {
     if (!project) return;
 
     const formattedValues: UpdateProjectFormValues = {
-      title: getIdValue(project?.title),
+      title: resolveSelectValue(project?.title, serviceTitleOptions),
       name: project?.name || "",
       description: project?.description || "",
       objective: project?.objective || "",
@@ -175,7 +252,7 @@ const ProjectUpdate = () => {
       startDate: project?.startDate ? new Date(project.startDate) : undefined,
       endDate: project?.endDate ? new Date(project.endDate) : null,
       location: project?.location || "",
-      client: getIdValue(project?.client),
+      client: resolveSelectValue(project?.client, clientOptions),
     };
 
     form.reset(formattedValues);
@@ -185,11 +262,60 @@ const ProjectUpdate = () => {
       startDate: formattedValues.startDate ? formatISO(formattedValues.startDate) : null,
       endDate: formattedValues.endDate ? formatISO(formattedValues.endDate) : null,
     };
-  }, [project, form]);
+  }, [project, serviceTitleOptions, clientOptions, form]);
+
+  const getTotalUploadSize = useCallback(() => {
+    let total = 0;
+
+    if (image) {
+      total += image.size;
+    }
+
+    images.forEach((file) => {
+      total += file.size;
+    });
+
+    return total;
+  }, [image, images]);
+
+  const validateUploads = useCallback(() => {
+    if (image && image.size > MAX_SINGLE_FILE_SIZE) {
+      return `Thumbnail image must be smaller than ${formatFileSize(MAX_SINGLE_FILE_SIZE)}`;
+    }
+
+    for (const file of images) {
+      if (file.size > MAX_SINGLE_FILE_SIZE) {
+        return `Each gallery image must be smaller than ${formatFileSize(MAX_SINGLE_FILE_SIZE)}`;
+      }
+    }
+
+    const totalSize = getTotalUploadSize();
+
+    if (totalSize > MAX_TOTAL_SIZE) {
+      return `Total upload size is ${formatFileSize(totalSize)}. Maximum allowed is ${formatFileSize(MAX_TOTAL_SIZE)}`;
+    }
+
+    return null;
+  }, [getTotalUploadSize, image, images]);
+
+  const appendChangedFields = (formData: FormData, changedData: Record<string, any>) => {
+    formData.append("data", JSON.stringify(changedData));
+  };
+
+  const getErrorMessage = (error: any) => {
+    return error?.data?.message || error?.data?.error || error?.error || error?.message || "Failed to update project";
+  };
 
   const onSubmit = async (data: UpdateProjectFormValues) => {
     if (!id) {
       toast.error("Project ID not found");
+      return;
+    }
+
+    const uploadError = validateUploads();
+
+    if (uploadError) {
+      toast.error(uploadError);
       return;
     }
 
@@ -213,7 +339,7 @@ const ProjectUpdate = () => {
       });
 
       const hasNewThumbnail = !!image;
-      const hasNewGallery = images.some((item) => item instanceof File);
+      const hasNewGallery = images.length > 0;
 
       if (Object.keys(changedData).length === 0 && !hasNewThumbnail && !hasNewGallery) {
         toast.info("No changes detected", { id: toastId });
@@ -222,27 +348,49 @@ const ProjectUpdate = () => {
 
       const formData = new FormData();
 
-      if (Object.keys(changedData).length > 0) {
-        formData.append("data", JSON.stringify(changedData));
-      }
+      appendChangedFields(formData, changedData);
 
       if (image) {
-        formData.append("file", image);
+        const compressedPicture = await compressImageFile(image, "picture");
+        formData.append("picture", compressedPicture, compressedPicture.name);
       }
 
-      images.forEach((item) => {
-        if (item instanceof File) {
-          formData.append("files", item);
-        }
-      });
+      if (images.length > 0) {
+        const compressedGallery = await Promise.all(images.map((file) => compressImageFile(file, "gallery")));
+
+        compressedGallery.forEach((file) => {
+          formData.append("gallery", file, file.name);
+        });
+      }
+
+      // Debug if needed
+      // for (const pair of formData.entries()) {
+      //   console.log(pair[0], pair[1]);
+      // }
 
       await updateProject({ id, data: formData }).unwrap();
 
       toast.success("Project updated successfully", { id: toastId });
       navigate(-1);
     } catch (error: any) {
-      toast.error(error?.data?.message || "Failed to update project", { id: toastId });
-      console.log(error);
+      console.log("Update project error:", error);
+
+      if (error?.status === 500 && error?.data?.err?.code === "LIMIT_UNEXPECTED_FILE") {
+        toast.error("Upload field mismatch. Frontend must send picture and gallery.", { id: toastId });
+        return;
+      }
+
+      if (error?.status === 413) {
+        toast.error("Upload is still too large. Please use smaller images.", { id: toastId });
+        return;
+      }
+
+      if (error?.status === "FETCH_ERROR") {
+        toast.error("Network error occurred. Please check your connection and backend settings.", { id: toastId });
+        return;
+      }
+
+      toast.error(getErrorMessage(error), { id: toastId });
     }
   };
 
@@ -251,12 +399,12 @@ const ProjectUpdate = () => {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-purple-50 via-white to-blue-50 px-4 py-6 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 md:px-6">
+    <div className="min-h-screen overflow-x-hidden bg-linear-to-br from-purple-50 via-white to-blue-50 px-4 py-6 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 md:px-6">
       <motion.div
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="mx-auto max-w-7xl space-y-6"
+        className="mx-auto max-w-7xl min-w-0 space-y-6"
       >
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="space-y-3">
@@ -270,9 +418,9 @@ const ProjectUpdate = () => {
               Back
             </Button>
 
-            <div className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 text-foreground py-2 px-4">
+            <div className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground">
               <h1 className="text-2xl font-semibold">Update Project</h1>
-              <p className="mt-1 text-sm">Edit project details, timeline, client information, and images.</p>
+              <p className="mt-1 text-sm">Edit project details, timeline, client information and images.</p>
             </div>
           </div>
 
@@ -280,7 +428,7 @@ const ProjectUpdate = () => {
             type="submit"
             form="update-project-form"
             disabled={isSubmitting}
-            className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 text-foreground py-2 px-4"
+            className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground"
           >
             {isSubmitting ? (
               <>
@@ -297,7 +445,7 @@ const ProjectUpdate = () => {
         </div>
 
         <Form {...form}>
-          <form id="update-project-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <form id="update-project-form" onSubmit={form.handleSubmit(onSubmit)} className="min-w-0 space-y-5">
             <div className={sectionClass}>
               <div className="mb-4 flex items-center gap-3">
                 <div className="rounded-2xl bg-purple-100 p-2.5 text-purple-700 dark:bg-violet-500/15 dark:text-violet-300">
@@ -324,7 +472,7 @@ const ProjectUpdate = () => {
                         </FormControl>
                         <SelectContent className={selectContentClass}>
                           {serviceTitleOptions.map((item: { label: string; value: string }) => (
-                            <SelectItem key={item.value} value={item.value}>
+                            <SelectItem key={item.value} value={item.label}>
                               {item.label}
                             </SelectItem>
                           ))}
@@ -349,7 +497,7 @@ const ProjectUpdate = () => {
                         </FormControl>
                         <SelectContent className={selectContentClass}>
                           {projectStatusOptions.map((item: { label: string; value: string }) => (
-                            <SelectItem key={item.value} value={item.value}>
+                            <SelectItem key={item.value} value={item.label}>
                               {item.label}
                             </SelectItem>
                           ))}
@@ -429,7 +577,7 @@ const ProjectUpdate = () => {
                 </div>
                 <div>
                   <h3 className="text-base font-semibold text-slate-800 dark:text-foreground">Timeline & Client</h3>
-                  <p className="text-sm text-slate-500 dark:text-muted-foreground">Update dates, location, and client</p>
+                  <p className="text-sm text-slate-500 dark:text-muted-foreground">Update dates, location and client</p>
                 </div>
               </div>
 
@@ -517,7 +665,7 @@ const ProjectUpdate = () => {
                         </FormControl>
                         <SelectContent className={selectContentClass}>
                           {clientOptions.map((item: { label: string; value: string }) => (
-                            <SelectItem key={item.value} value={item.value}>
+                            <SelectItem key={item.value} value={item.label}>
                               {item.label}
                             </SelectItem>
                           ))}
@@ -535,9 +683,9 @@ const ProjectUpdate = () => {
                     <FormItem>
                       <FormLabel className="text-slate-700 dark:text-foreground">Location</FormLabel>
                       <FormControl>
-                        <div className="relative">
+                        <div className="relative min-w-0 w-full">
                           <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-foreground/60" />
-                          <Input placeholder="Enter project location" className={inputClass + " pl-8"} {...field} />
+                          <Input placeholder="Enter project location" className={`${inputClass} pl-8`} {...field} />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -568,7 +716,7 @@ const ProjectUpdate = () => {
                       <img
                         src={existingThumbnail}
                         alt="Current thumbnail"
-                        className="h-48 w-full rounded-2xl object-cover border border-purple-100 dark:border-slate-700"
+                        className="h-48 w-full rounded-2xl border border-purple-100 object-cover dark:border-slate-700"
                       />
                     </div>
                   )}
@@ -582,7 +730,7 @@ const ProjectUpdate = () => {
                             key={index}
                             src={img}
                             alt={`Gallery ${index + 1}`}
-                            className="h-24 w-full rounded-2xl object-cover border border-purple-100 dark:border-slate-700"
+                            className="h-24 w-full rounded-2xl border border-purple-100 object-cover dark:border-slate-700"
                           />
                         ))}
                       </div>
@@ -602,6 +750,10 @@ const ProjectUpdate = () => {
                   <MultipleImageUploader onChange={setImages} />
                 </div>
               </div>
+
+              <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-300">
+                Keep each image under {formatFileSize(MAX_SINGLE_FILE_SIZE)} and total upload under {formatFileSize(MAX_TOTAL_SIZE)}.
+              </div>
             </div>
 
             <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
@@ -618,7 +770,7 @@ const ProjectUpdate = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 text-foreground py-2 px-4"
+                className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground"
               >
                 {isSubmitting ? (
                   <>

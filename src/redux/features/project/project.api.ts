@@ -29,10 +29,10 @@ export const projectApi = baseApi.injectEndpoints({
     }),
 
     updateProject: builder.mutation({
-      query: ({ projectId, projectData }) => ({
-        url: `/project/${projectId}`,
-        method: "PUT",
-        data: projectData,
+      query: ({ id, data }) => ({
+        url: `/project/${id}`,
+        method: "PATCH",
+        data,
       }),
       invalidatesTags: ["PROJECT"],
     }),

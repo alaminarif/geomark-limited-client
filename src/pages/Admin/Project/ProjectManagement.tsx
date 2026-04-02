@@ -471,7 +471,7 @@ const ProjectManagement = () => {
                       <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Project Name</TableHead>
                       <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Year</TableHead>
                       <TableHead className="px-4 text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">Status</TableHead>
-                      {/* <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Sector</TableHead> */}
+                      <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Sector</TableHead>
                       <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Client</TableHead>
                       <TableHead className="px-4 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">Action</TableHead>
                     </TableRow>
