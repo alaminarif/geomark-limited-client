@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils";
 import { useGetClientsQuery } from "@/redux/features/client/client.api";
 import { useAddProjectMutation } from "@/redux/features/project/project.api";
 import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
+import { addProjectSchema } from "@/schemas/project.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import imageCompression from "browser-image-compression";
 import { format, formatISO } from "date-fns";
@@ -34,30 +35,30 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-const addProjectSchema = z
-  .object({
-    title: z.string().min(1, "Service is required"),
-    name: z.string().min(1, "Project name is required"),
-    description: z.string().min(10, "Description must be at least 10 characters"),
-    objective: z.string().min(5, "Objective is required"),
-    responsibility: z.string().min(5, "Responsibility is required"),
-    status: z.string().min(1, "Status is required"),
-    startDate: z.date({ message: "Start date is required" }),
-    endDate: z.date().optional().nullable(),
-    location: z.string().min(2, "Location is required"),
-    client: z.string().min(1, "Client is required"),
-  })
-  .refine(
-    (data) => {
-      if (!data.endDate) return true;
-      return data.endDate >= data.startDate;
-    },
-    { message: "End date cannot be earlier than start date", path: ["endDate"] },
-  );
-type AddProjectFormValues = z.infer<typeof addProjectSchema>;
 type UploadKind = "picture" | "gallery";
+
+type SelectOption = {
+  value: string;
+  label: string;
+};
+
 const MAX_SINGLE_FILE_SIZE = 2 * 1024 * 1024;
 const MAX_TOTAL_SIZE = 8 * 1024 * 1024;
+
+type AddProjectFormValues = z.infer<typeof addProjectSchema>;
+
+const defaultValues: AddProjectFormValues = {
+  service: "",
+  name: "",
+  description: "",
+  objective: "",
+  responsibility: "",
+  status: "",
+  startDate: undefined as unknown as Date,
+  endDate: null,
+  location: "",
+  client: "",
+};
 
 const formatFileSize = (bytes: number) => {
   if (bytes < 1024) return `${bytes} B`;
@@ -73,56 +74,87 @@ const compressImageFile = async (file: File, kind: UploadKind) => {
   if (!canCompressImage(file)) {
     return file;
   }
+
   if (file.size <= 300 * 1024) {
     return file;
   }
+
   const options =
     kind === "picture"
-      ? { maxSizeMB: 1, maxWidthOrHeight: 1600, useWebWorker: true, initialQuality: 0.82 }
-      : { maxSizeMB: 0.8, maxWidthOrHeight: 1400, useWebWorker: true, initialQuality: 0.78 };
+      ? {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1600,
+          useWebWorker: true,
+          initialQuality: 0.82,
+        }
+      : {
+          maxSizeMB: 0.8,
+          maxWidthOrHeight: 1400,
+          useWebWorker: true,
+          initialQuality: 0.78,
+        };
+
   const compressed = await imageCompression(file, options);
-  return new File([compressed], file.name, { type: compressed.type || file.type, lastModified: Date.now() });
+
+  return new File([compressed], file.name, {
+    type: compressed.type || file.type,
+    lastModified: Date.now(),
+  });
+};
+
+const getOptionsFromResponse = (payload: any): SelectOption[] => {
+  const items = Array.isArray(payload?.data?.data) ? payload.data.data : Array.isArray(payload?.data) ? payload.data : [];
+
+  return items
+    .map((item: any) => ({
+      value: String(item?._id || item?.id || ""),
+      label: String(item?.name || ""),
+    }))
+    .filter((item: SelectOption) => item.value && item.label);
+};
+
+const getErrorMessage = (error: any) => {
+  return error?.data?.message || error?.data?.error || error?.error || error?.message || "Failed to add project";
 };
 
 const AddProjectModal = () => {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [images, setImages] = useState<File[]>([]);
+
   const form = useForm<AddProjectFormValues>({
     resolver: zodResolver(addProjectSchema),
     mode: "onChange",
-    defaultValues: {
-      title: "",
-      name: "",
-      description: "",
-      objective: "",
-      responsibility: "",
-      status: "",
-      startDate: undefined,
-      endDate: null,
-      location: "",
-      client: "",
-    },
+    defaultValues,
   });
 
   const [addProject, { isLoading: isSubmitting }] = useAddProjectMutation();
-  const { data: servicesData } = useGetAllServicesQuery(undefined);
-  const { data: clientsData } = useGetClientsQuery(undefined);
+  const { data: servicesData, isLoading: servicesLoading } = useGetAllServicesQuery(undefined);
+  const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery(undefined);
 
-  const serviceTitleOptions = useMemo(() => servicesData?.data?.map((item: any) => ({ value: item._id, label: item.name })) || [], [servicesData]);
+  const serviceOptions = useMemo(() => getOptionsFromResponse(servicesData), [servicesData]);
+  const clientOptions = useMemo(() => getOptionsFromResponse(clientsData), [clientsData]);
 
-  const clientOptions = useMemo(() => clientsData?.data?.map((item: any) => ({ value: item._id, label: item.name })) || [], [clientsData]);
-
-  const projectStatusOptions = useMemo(() => ProjectStatus.map((status) => ({ value: status.value, label: status.label })), []);
+  const projectStatusOptions = useMemo<SelectOption[]>(
+    () =>
+      ProjectStatus.map((status) => ({
+        value: String(status.value),
+        label: String(status.label),
+      })),
+    [],
+  );
 
   const getTotalUploadSize = useCallback(() => {
     let total = 0;
+
     if (image) {
       total += image.size;
     }
+
     images.forEach((file) => {
       total += file.size;
     });
+
     return total;
   }, [image, images]);
 
@@ -138,82 +170,116 @@ const AddProjectModal = () => {
     }
 
     const totalSize = getTotalUploadSize();
+
     if (totalSize > MAX_TOTAL_SIZE) {
       return `Total upload size is ${formatFileSize(totalSize)}. Maximum allowed is ${formatFileSize(MAX_TOTAL_SIZE)}`;
     }
+
     return null;
   }, [getTotalUploadSize, image, images]);
 
   const handleClose = useCallback(() => {
     setOpen(false);
-    form.reset();
+    form.reset(defaultValues);
     setImage(null);
     setImages([]);
   }, [form]);
 
+  const handleOpenChange = useCallback(
+    (nextOpen: boolean) => {
+      if (!nextOpen) {
+        handleClose();
+        return;
+      }
+
+      setOpen(true);
+    },
+    [handleClose],
+  );
+
   const onSubmit = async (data: AddProjectFormValues) => {
     const uploadError = validateUploads();
+
     if (uploadError) {
       toast.error(uploadError);
       return;
     }
+
     const toastId = toast.loading("Adding project...");
+
     try {
       const formData = new FormData();
-      formData.append("title", data.title);
-      formData.append("name", data.name);
-      formData.append("description", data.description);
-      formData.append("objective", data.objective);
-      formData.append("responsibility", data.responsibility);
+
+      formData.append("service", data.service);
+      formData.append("name", data.name.trim());
+      formData.append("description", data.description.trim());
+      if (data.objective) {
+        formData.append("objective", data.objective.trim());
+      }
+      if (data.responsibility) {
+        formData.append("responsibility", data.responsibility.trim());
+      }
       formData.append("status", data.status);
       formData.append("startDate", formatISO(data.startDate));
-      formData.append("location", data.location);
+      formData.append("location", data.location.trim());
       formData.append("client", data.client);
+
       if (data.endDate) {
         formData.append("endDate", formatISO(data.endDate));
       }
+
       if (image) {
         const compressedPicture = await compressImageFile(image, "picture");
         formData.append("picture", compressedPicture, compressedPicture.name);
       }
+
       if (images.length > 0) {
         const compressedGallery = await Promise.all(images.map((file) => compressImageFile(file, "gallery")));
+
         compressedGallery.forEach((file) => {
           formData.append("gallery", file, file.name);
         });
       }
+
       await addProject(formData).unwrap();
+
       toast.success("Project added successfully", { id: toastId });
       handleClose();
     } catch (error: any) {
-      console.log(error);
       if (error?.status === 500 && error?.data?.err?.code === "LIMIT_UNEXPECTED_FILE") {
         toast.error("Upload field mismatch. Frontend must send picture and gallery.", { id: toastId });
         return;
       }
+
       if (error?.status === 413) {
         toast.error("Upload is still too large. Please use smaller images.", { id: toastId });
         return;
       }
+
       if (error?.status === "FETCH_ERROR") {
         toast.error("Network error occurred. Please check your connection and backend settings.", { id: toastId });
         return;
       }
-      toast.error(error?.data?.message || error?.error || "Failed to add project", { id: toastId });
+
+      toast.error(getErrorMessage(error), { id: toastId });
     }
   };
 
+  const isSelectLoading = servicesLoading || clientsLoading;
+
   return (
     <div>
-      <Drawer open={open} onOpenChange={setOpen} direction="right">
+      <Drawer open={open} onOpenChange={handleOpenChange} direction="right">
         <DrawerTrigger asChild>
           <Button
             type="button"
             className="w-full rounded-2xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 text-white shadow-lg transition-all duration-300 hover:scale-[1.01] hover:shadow-indigo-500/30"
           >
-            <FolderPlus className="mr-2 h-4 w-4" /> Add Project
+            <FolderPlus className="mr-2 h-4 w-4" />
+            Add Project
           </Button>
         </DrawerTrigger>
+
         <DrawerContent className="ml-auto h-screen w-[65vw]! max-w-300! rounded-none border-l text-foreground shadow-[0_0_40px_rgba(0,0,0,0.45)] sm:w-[72vw]! lg:w-[88vw]! xl:w-[82vw]! dark:border-slate-800 dark:bg-slate-950">
           <DrawerHeader className="border-b border-purple-100 dark:border-slate-800 dark:bg-slate-950/95 dark:backdrop-blur">
             <div className="rounded-3xl border p-5 shadow-lg dark:border-slate-800 dark:bg-linear-to-r dark:from-violet-600/90 dark:via-indigo-600/90 dark:to-blue-600/90">
@@ -242,19 +308,19 @@ const AddProjectModal = () => {
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                       <FormField
                         control={form.control}
-                        name="title"
+                        name="service"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="text-foreground">Service</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value || undefined}>
+                            <Select onValueChange={field.onChange} value={field.value || undefined} disabled={servicesLoading}>
                               <FormControl>
                                 <SelectTrigger className={FormStyles.selectTrigger}>
-                                  <SelectValue placeholder="Select service" />
+                                  <SelectValue placeholder={servicesLoading ? "Loading services..." : "Select service"} />
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent className={FormStyles.selectContent}>
-                                {serviceTitleOptions.map((item: { label: string; value: string }) => (
-                                  <SelectItem key={item.value} value={item.label}>
+                                {serviceOptions.map((item) => (
+                                  <SelectItem key={item.value} value={item.value}>
                                     {item.label}
                                   </SelectItem>
                                 ))}
@@ -264,6 +330,7 @@ const AddProjectModal = () => {
                           </FormItem>
                         )}
                       />
+
                       <FormField
                         control={form.control}
                         name="status"
@@ -277,7 +344,7 @@ const AddProjectModal = () => {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent className={FormStyles.selectContent}>
-                                {projectStatusOptions.map((item: { label: string; value: string }) => (
+                                {projectStatusOptions.map((item) => (
                                   <SelectItem key={item.value} value={item.value}>
                                     {item.label}
                                   </SelectItem>
@@ -288,6 +355,7 @@ const AddProjectModal = () => {
                           </FormItem>
                         )}
                       />
+
                       <div className="md:col-span-2">
                         <FormField
                           control={form.control}
@@ -413,6 +481,7 @@ const AddProjectModal = () => {
                                 <Calendar mode="single" selected={field.value ?? undefined} onSelect={field.onChange} captionLayout="dropdown" />
                               </PopoverContent>
                             </Popover>
+
                             {field.value && (
                               <Button
                                 type="button"
@@ -420,28 +489,31 @@ const AddProjectModal = () => {
                                 className="mt-1 h-auto w-fit px-0 text-xs text-foreground/60 hover:bg-transparent hover:text-rose-400"
                                 onClick={() => field.onChange(null)}
                               >
-                                <XCircle className="mr-1 h-3.5 w-3.5" /> Clear end date
+                                <XCircle className="mr-1 h-3.5 w-3.5" />
+                                Clear end date
                               </Button>
                             )}
+
                             <FormMessage />
                           </FormItem>
                         )}
                       />
+
                       <FormField
                         control={form.control}
                         name="client"
                         render={({ field }) => (
                           <FormItem className="w-full">
                             <FormLabel className="text-foreground">Client</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value || undefined}>
+                            <Select onValueChange={field.onChange} value={field.value || undefined} disabled={clientsLoading}>
                               <FormControl>
                                 <SelectTrigger className={FormStyles.selectTrigger}>
-                                  <SelectValue placeholder="Select client" />
+                                  <SelectValue placeholder={clientsLoading ? "Loading clients..." : "Select client"} />
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent className={FormStyles.selectContent}>
-                                {clientOptions.map((item: { label: string; value: string }) => (
-                                  <SelectItem key={item.value} value={item.label}>
+                                {clientOptions.map((item) => (
+                                  <SelectItem key={item.value} value={item.value}>
                                     {item.label}
                                   </SelectItem>
                                 ))}
@@ -451,6 +523,7 @@ const AddProjectModal = () => {
                           </FormItem>
                         )}
                       />
+
                       <FormField
                         control={form.control}
                         name="location"
@@ -480,16 +553,19 @@ const AddProjectModal = () => {
                         <p className="text-sm text-foreground/60">Upload cover image and gallery images</p>
                       </div>
                     </div>
+
                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                       <div className={FormStyles.uploadCard}>
                         <p className="mb-3 text-sm font-medium text-foreground">Thumbnail / Featured Image</p>
                         <SingleImageUploader onChange={setImage} />
                       </div>
+
                       <div className={FormStyles.uploadCard}>
                         <p className="mb-3 text-sm font-medium text-foreground/60">Gallery Images</p>
                         <MultipleImageUploader onChange={setImages} />
                       </div>
                     </div>
+
                     <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-300">
                       Keep each image under {formatFileSize(MAX_SINGLE_FILE_SIZE)} and total upload under {formatFileSize(MAX_TOTAL_SIZE)}.
                     </div>
@@ -512,19 +588,22 @@ const AddProjectModal = () => {
                   Cancel
                 </Button>
               </DrawerClose>
+
               <Button
                 type="submit"
                 form="add-new-project"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isSelectLoading}
                 className="rounded-xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 text-white shadow-md hover:opacity-95"
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Submitting...
                   </>
                 ) : (
                   <>
-                    <FolderPlus className="mr-2 h-4 w-4" /> Submit Project
+                    <FolderPlus className="mr-2 h-4 w-4" />
+                    Submit Project
                   </>
                 )}
               </Button>
@@ -535,4 +614,5 @@ const AddProjectModal = () => {
     </div>
   );
 };
+
 export default AddProjectModal;

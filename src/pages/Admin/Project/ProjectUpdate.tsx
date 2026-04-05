@@ -26,7 +26,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 const updateProjectSchema = z
   .object({
-    title: z.string().optional(),
+    service: z.string().optional(),
     name: z.string().optional(),
     description: z.string().min(10, "Description must be at least 10 characters").optional(),
     objective: z.string().optional(),
@@ -119,19 +119,19 @@ const extractArray = (payload: any, extraKeys: string[] = []) => {
 //   return "";
 // };
 
-const resolveSelectValue = (value: string | undefined, options: SelectOption[]) => {
-  if (!value) return "";
+// const resolveSelectValue = (value: string | undefined, options: SelectOption[]) => {
+//   if (!value) return "";
 
-  const cleanedValue = value.trim().toLowerCase();
+//   const cleanedValue = value.trim().toLowerCase();
 
-  const matchedByValue = options.find((item) => item.value.trim().toLowerCase() === cleanedValue);
-  if (matchedByValue) return matchedByValue.value;
+//   const matchedByValue = options.find((item) => item.value.trim().toLowerCase() === cleanedValue);
+//   if (matchedByValue) return matchedByValue.value;
 
-  const matchedByLabel = options.find((item) => item.label.trim().toLowerCase() === cleanedValue);
-  if (matchedByLabel) return matchedByLabel.value;
+//   const matchedByLabel = options.find((item) => item.label.trim().toLowerCase() === cleanedValue);
+//   if (matchedByLabel) return matchedByLabel.value;
 
-  return "";
-};
+//   return "";
+// };
 
 const getOptionLabel = (value: string | undefined, options: SelectOption[]) => {
   if (!value) return "";
@@ -165,7 +165,7 @@ const ProjectUpdate = () => {
   const initialDataRef = useRef<Record<string, any> | null>(null);
 
   const defaultValues = {
-    title: "",
+    service: "",
     name: "",
     description: "",
     objective: "",
@@ -198,10 +198,10 @@ const ProjectUpdate = () => {
     return extractArray(clientsData, ["clients"]);
   }, [clientsData]);
 
-  const serviceTitleOptions = useMemo<SelectOption[]>(
+  const serviceOptions = useMemo<SelectOption[]>(
     () =>
       services
-        .map((item: any) => ({ value: String(item?._id || item?.id || ""), label: String(item?.name || item?.title || "") }))
+        .map((item: any) => ({ value: String(item?._id || item?.id || ""), label: String(item?.name || item?.service?.name || "") }))
         .filter((item: SelectOption) => item.value && item.label),
     [services],
   );
@@ -209,13 +209,17 @@ const ProjectUpdate = () => {
   const clientOptions = useMemo<SelectOption[]>(
     () =>
       clients
-        .map((item: any) => ({ value: String(item?._id || item?.id || ""), label: String(item?.name || item?.title || "") }))
+        .map((item: any) => ({ value: String(item?._id || item?.id || ""), label: String(item?.name || item?.client?.name || "") }))
         .filter((item: SelectOption) => item.value && item.label),
     [clients],
   );
 
   const projectStatusOptions = useMemo<SelectOption[]>(
-    () => ProjectStatus.map((status) => ({ value: String(status.value), label: String(status.label) })),
+    () =>
+      ProjectStatus.map((status) => ({
+        value: String(status.value),
+        label: String(status.label),
+      })),
     [],
   );
 
@@ -234,35 +238,35 @@ const ProjectUpdate = () => {
     if (!project) return;
 
     const formattedValues: UpdateProjectFormValues = {
-      title: resolveSelectValue(project?.title, serviceTitleOptions),
+      service: project?.service.name,
       name: project?.name || "",
       description: project?.description || "",
       objective: project?.objective || "",
       responsibility: project?.responsibility || "",
-      status: resolveSelectValue(project?.status, projectStatusOptions),
+      status: project?.status || "",
       startDate: project?.startDate ? new Date(project.startDate) : undefined,
       endDate: project?.endDate ? new Date(project.endDate) : null,
       location: project?.location || "",
-      client: resolveSelectValue(project?.client, clientOptions),
+      client: project?.client.name,
     };
 
-    console.log("project.title =", project?.title);
-    console.log("project.client =", project?.client);
-    console.log("serviceTitleOptions =", serviceTitleOptions);
-    console.log("clientOptions =", clientOptions);
-    console.log("formattedValues =", formattedValues);
+    // console.log("project.title =", project?.title);
+    // console.log("project.client =", project?.client);
+    // console.log("serviceTitleOptions =", serviceTitleOptions);
+    // console.log("clientOptions =", clientOptions);
+    // console.log("formattedValues =", formattedValues);
 
     form.reset(formattedValues);
 
     initialDataRef.current = {
       ...formattedValues,
-      title: getOptionLabel(formattedValues.title, serviceTitleOptions),
+      service: getOptionLabel(formattedValues.service, serviceOptions),
       status: getOptionLabel(formattedValues.status, projectStatusOptions),
       client: getOptionLabel(formattedValues.client, clientOptions),
       startDate: formattedValues.startDate ? formatISO(formattedValues.startDate) : null,
       endDate: formattedValues.endDate ? formatISO(formattedValues.endDate) : null,
     };
-  }, [project, serviceTitleOptions, clientOptions, projectStatusOptions, form]);
+  }, [project, serviceOptions, clientOptions, projectStatusOptions, form]);
 
   const getTotalUploadSize = useCallback(() => {
     let total = 0;
@@ -310,7 +314,7 @@ const ProjectUpdate = () => {
     try {
       const normalizedData = {
         ...data,
-        title: getOptionLabel(data.title, serviceTitleOptions),
+        service: getOptionLabel(data.service, serviceOptions),
         status: getOptionLabel(data.status, projectStatusOptions),
         client: getOptionLabel(data.client, clientOptions),
         startDate: data.startDate ? formatISO(data.startDate) : null,
@@ -426,7 +430,7 @@ const ProjectUpdate = () => {
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <FormField
                   control={form.control}
-                  name="title"
+                  name="service"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-slate-700 dark:text-foreground">Service</FormLabel>
@@ -437,7 +441,7 @@ const ProjectUpdate = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent className={FormStyles.selectContent}>
-                          {serviceTitleOptions.map((item) => (
+                          {serviceOptions.map((item) => (
                             <SelectItem key={item.value} value={item.value}>
                               {item.label}
                             </SelectItem>

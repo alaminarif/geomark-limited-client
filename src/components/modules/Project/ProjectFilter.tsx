@@ -35,7 +35,7 @@ const ProjectFilter = () => {
 
   const handleServiceChange = (value: string) => {
     const params = new URLSearchParams(searchParams);
-    params.set("title", value);
+    params.set("service", value);
     setSearchParams(params);
     console.log(value);
   };
@@ -68,7 +68,7 @@ const ProjectFilter = () => {
 
   const handleClearFilterSector = () => {
     const params = new URLSearchParams(searchParams);
-    params.delete("title");
+    params.delete("service");
     setSearchParams(params);
   };
 

@@ -17,12 +17,12 @@ type ViewMode = "card" | "table";
 
 type Project = {
   _id: string;
-  picture?: string;
   name: string;
-  year?: string;
-  status?: string;
-  title?: string;
-  client?: string | { name?: string };
+  year: string;
+  status: string;
+  service: { name: string };
+  client: { name: string };
+  picture?: string;
 };
 
 const pageVariants: Variants = {
@@ -285,12 +285,12 @@ const ProjectManagement = () => {
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const title = searchParams.get("title") || undefined;
+  const service = searchParams.get("service") || undefined;
   const year = searchParams.get("year") || undefined;
   const status = searchParams.get("status") || undefined;
 
   const { data: projects, isLoading } = useGetAllProjectsQuery({
-    title,
+    service,
     year,
     status,
     page: currentPage,
@@ -427,7 +427,7 @@ const ProjectManagement = () => {
         <AnimatePresence mode="wait">
           {viewMode === "card" && (
             <motion.div
-              key={`card-${currentPage}-${title ?? ""}-${status ?? ""}-${year ?? ""}`}
+              key={`card-${currentPage}-${service ?? ""}-${status ?? ""}-${year ?? ""}`}
               variants={cardContainerVariants}
               initial="hidden"
               animate="visible"
@@ -454,7 +454,7 @@ const ProjectManagement = () => {
 
           {viewMode === "table" && (
             <motion.div
-              key={`table-${currentPage}-${title ?? ""}-${status ?? ""}-${year ?? ""}`}
+              key={`table-${currentPage}-${service ?? ""}-${status ?? ""}-${year ?? ""}`}
               variants={tableContainerVariants}
               initial="hidden"
               animate="visible"
@@ -482,8 +482,6 @@ const ProjectManagement = () => {
                       const baseDelay = 0.08 + index * 0.05;
                       const isSelected = selectedProjectId === item._id;
                       const toneClass = isSelected ? "border-primary/35 bg-primary/[0.06]" : "border-border/50 bg-background/80";
-
-                      const clientName = typeof item.client === "string" ? item.client : item.client?.name || "-";
 
                       return (
                         <TableRow
@@ -590,7 +588,7 @@ const ProjectManagement = () => {
                             <motion.div custom={baseDelay + 0.12} variants={cellVariants} initial="hidden" animate="visible" className="">
                               <div className="inline-flex  items-center gap-2 py-1.5 text-xs font-semibold text-primary">
                                 <FolderKanban className="h-3.5 " />
-                                <span className="wrap-break-word line-clamp-3 whitespace-normal">{item.title || "-"}</span>
+                                <span className="wrap-break-word line-clamp-3 whitespace-normal">{item?.service?.name || "-"}</span>
                               </div>
                             </motion.div>
                           </TableCell>
@@ -599,7 +597,7 @@ const ProjectManagement = () => {
                             <motion.div custom={baseDelay + 0.15} variants={cellVariants} initial="hidden" animate="visible" className="">
                               <div className="inline-flex items-center line-clamp-3 gap-2 text-xs text-foreground/90">
                                 <BriefcaseBusiness className="h-3.5  text-primary" />
-                                <span className="wrap-break-word  whitespace-normal">{clientName || "-"}</span>
+                                <span className="wrap-break-word  whitespace-normal">{item?.client?.name || "-"}</span>
                               </div>
                             </motion.div>
                           </TableCell>
