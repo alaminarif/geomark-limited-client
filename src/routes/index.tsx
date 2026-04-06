@@ -18,13 +18,13 @@ import Employee from "@/pages/EmployeePage";
 import EmployeeDetails from "@/pages/Admin/Employee/EmployeeDetails";
 import { Contact } from "@/pages/Contact";
 import { AboutPage } from "@/pages/AboutPage";
-import UserDetails from "@/pages/Admin/UserDetails";
+import UserDetails from "@/pages/Admin/User/UserDetails";
 import Unauthorized from "@/pages/Unauthorized";
 import type { TRole } from "@/types";
-import UserUpdate from "@/pages/Admin/UserUpdate";
+import UserUpdate from "@/pages/Admin/User/UserUpdate";
 import ServiceDetails from "@/pages/serviceDetails";
-import AdminServiceDetails from "@/pages/Admin/ServiceDetails";
-import ServiceUpdate from "@/pages/Admin/ServiceUpdate";
+import AdminServiceDetails from "@/pages/Admin/Service/ServiceDetails";
+import ServiceUpdate from "@/pages/Admin/Service/ServiceUpdate";
 import ProjectUpdate from "@/pages/Admin/Project/ProjectUpdate";
 
 export const router = createBrowserRouter([

@@ -1,8 +1,8 @@
 import type { ISidebarItem } from "@/types";
-import AdminManagement from "@/pages/Admin/UserManagement";
+import AdminManagement from "@/pages/Admin/User/UserManagement";
 import ClientManagement from "@/pages/Admin/Client/ClientManagement";
 import ProjectManagement from "@/pages/Admin/Project/ProjectManagement";
-import ServicesManagement from "@/pages/Admin/ServicesManagement";
+import ServicesManagement from "@/pages/Admin/Service/ServicesManagement";
 import EmployeeManagement from "@/pages/Admin/Employee/EmployeeManagement";
 import NewsManagement from "@/pages/Admin/News/NewsManagement";
 import ProductManagement from "@/pages/Admin/Product/ProductManagement";

@@ -91,7 +91,7 @@ const ProjectCard = ({ item, onView }: Props) => {
                   <circle cx="12" cy="7" r="4" />
                 </svg>
 
-                <span className="line-clamp-1">{item?.client || "-"}</span>
+                <span className="line-clamp-1">{item?.client?.name || "-"}</span>
               </span>
             </div>
           </div>

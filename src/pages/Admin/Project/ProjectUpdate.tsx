@@ -1,4 +1,5 @@
-/* eslint-disable react-hooks/refs */ /* eslint-disable @typescript-eslint/no-explicit-any */ import Loading from "@/components/layout/Loading";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { SkeletonUpdateProject } from "@/components/modules/Admin/Project/SkeletonUpdateProject";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -14,48 +15,47 @@ import { cn } from "@/lib/utils";
 import { useGetClientsQuery } from "@/redux/features/client/client.api";
 import { useGetSingleProjectQuery, useUpdateProjectMutation } from "@/redux/features/project/project.api";
 import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
+import { updateProjectSchema } from "@/schemas/project.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import imageCompression from "browser-image-compression";
-import { format, formatISO } from "date-fns";
+import { format, formatISO, isValid } from "date-fns";
 import { motion } from "framer-motion";
 import { ArrowLeft, CalendarIcon, FolderPen, ImagePlus, Loader2, MapPin, Save, XCircle } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
-const updateProjectSchema = z
-  .object({
-    service: z.string().optional(),
-    name: z.string().optional(),
-    description: z.string().min(10, "Description must be at least 10 characters").optional(),
-    objective: z.string().optional(),
-    responsibility: z.string().optional(),
-    status: z.string().optional(),
-    startDate: z.date({ message: "Start date is required" }).optional(),
-    endDate: z.date().nullable().optional(),
-    location: z.string().optional(),
-    client: z.string().optional(),
-  })
-  .refine(
-    (data) => {
-      if (!data.endDate || !data.startDate) return true;
-      return data.endDate >= data.startDate;
-    },
-    { message: "End date cannot be earlier than start date", path: ["endDate"] },
-  );
-type UpdateProjectFormValues = z.infer<typeof updateProjectSchema>;
 
+type UpdateProjectFormValues = z.infer<typeof updateProjectSchema>;
 type UploadKind = "picture" | "gallery";
 type SelectOption = { value: string; label: string };
 
 const MAX_SINGLE_FILE_SIZE = 2 * 1024 * 1024;
 const MAX_TOTAL_SIZE = 8 * 1024 * 1024;
 
+const defaultValues: UpdateProjectFormValues = {
+  service: "",
+  name: "",
+  description: "",
+  objective: "",
+  responsibility: "",
+  status: "",
+  startDate: undefined,
+  endDate: null,
+  location: "",
+  client: "",
+};
+
 const formatFileSize = (bytes: number) => {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+};
+
+const safeString = (value: unknown) => {
+  if (value === null || value === undefined) return "";
+  return String(value).trim();
 };
 
 const getImageUrl = (value: any) => {
@@ -64,78 +64,71 @@ const getImageUrl = (value: any) => {
   return value?.url || value?.secure_url || value?.path || "";
 };
 
-// const getFirstNonEmpty = (...values: any[]) => {
-//   for (const value of values) {
-//     if (value !== undefined && value !== null && value !== "") {
-//       return value;
-//     }
-//   }
-//   return "";
-// };
-
 const extractArray = (payload: any, extraKeys: string[] = []) => {
-  const candidates = [payload?.data?.data, payload?.data?.result, payload?.data?.items, payload?.data, payload?.result, payload?.items, payload];
+  const candidates = [
+    payload?.data?.data,
+    payload?.data?.result,
+    payload?.data?.items,
+    payload?.data?.services,
+    payload?.data?.clients,
+    payload?.data,
+    payload?.result,
+    payload?.items,
+    payload,
+  ];
+
   for (const candidate of candidates) {
-    if (Array.isArray(candidate)) {
-      return candidate;
-    }
+    if (Array.isArray(candidate)) return candidate;
+
     if (candidate && typeof candidate === "object") {
       for (const key of extraKeys) {
-        if (Array.isArray(candidate[key])) {
-          return candidate[key];
-        }
+        if (Array.isArray(candidate[key])) return candidate[key];
       }
     }
   }
+
   return [];
 };
 
-// const normalizeOptionLabel = (value: any) => {
-//   if (value === undefined || value === null) return "";
-//   return String(value).trim().toLowerCase();
-// };
+const extractProject = (payload: any) => {
+  return payload?.data?.data || payload?.data?.project || payload?.project || payload?.data || payload || null;
+};
 
-// const resolveSelectValue = (value: any, options: SelectOption[]) => {
-//   if (!value) return "";
-//   if (typeof value === "string") {
-//     const matchedByValue = options.find((item) => item.value === value);
-//     if (matchedByValue) return matchedByValue.value;
-//     const matchedByLabel = options.find((item) => normalizeOptionLabel(item.label) === normalizeOptionLabel(value));
-//     if (matchedByLabel) return matchedByLabel.value;
-//     return "";
-//   }
+const safeDate = (value: unknown): Date | undefined => {
+  if (!value) return undefined;
+  const date = new Date(value as string | number | Date);
+  return isValid(date) ? date : undefined;
+};
 
-//   const rawId = value?._id || value?.id || "";
-//   if (rawId) {
-//     const matchedByValue = options.find((item) => item.value === rawId);
-//     if (matchedByValue) return matchedByValue.value;
-//   }
+const normalizeSelectValue = (rawValue: any, options: SelectOption[]) => {
+  if (!rawValue || !options.length) return "";
 
-//   const rawName = value?.name || value?.title || value?.label || "";
-//   if (rawName) {
-//     const matchedByLabel = options.find((item) => normalizeOptionLabel(item.label) === normalizeOptionLabel(rawName));
-//     if (matchedByLabel) return matchedByLabel.value;
-//   }
-//   return "";
-// };
+  const candidates: string[] = [];
 
-// const resolveSelectValue = (value: string | undefined, options: SelectOption[]) => {
-//   if (!value) return "";
+  if (typeof rawValue === "string" || typeof rawValue === "number") {
+    candidates.push(String(rawValue));
+  }
 
-//   const cleanedValue = value.trim().toLowerCase();
+  if (typeof rawValue === "object") {
+    if (rawValue?._id) candidates.push(String(rawValue._id));
+    if (rawValue?.id) candidates.push(String(rawValue.id));
+    if (rawValue?.value) candidates.push(String(rawValue.value));
+    if (rawValue?.name) candidates.push(String(rawValue.name));
+    if (rawValue?.label) candidates.push(String(rawValue.label));
+    if (rawValue?.title) candidates.push(String(rawValue.title));
+  }
 
-//   const matchedByValue = options.find((item) => item.value.trim().toLowerCase() === cleanedValue);
-//   if (matchedByValue) return matchedByValue.value;
+  for (const candidate of candidates) {
+    const cleaned = candidate.trim().toLowerCase();
 
-//   const matchedByLabel = options.find((item) => item.label.trim().toLowerCase() === cleanedValue);
-//   if (matchedByLabel) return matchedByLabel.value;
+    const matchedByValue = options.find((item) => item.value.trim().toLowerCase() === cleaned);
+    if (matchedByValue) return matchedByValue.value;
 
-//   return "";
-// };
+    const matchedByLabel = options.find((item) => item.label.trim().toLowerCase() === cleaned);
+    if (matchedByLabel) return matchedByLabel.value;
+  }
 
-const getOptionLabel = (value: string | undefined, options: SelectOption[]) => {
-  if (!value) return "";
-  return options.find((item) => item.value === value)?.label || value;
+  return "";
 };
 
 const canCompressImage = (file: File) => {
@@ -143,39 +136,38 @@ const canCompressImage = (file: File) => {
 };
 
 const compressImageFile = async (file: File, kind: UploadKind) => {
-  if (!canCompressImage(file)) {
-    return file;
-  }
-  if (file.size <= 300 * 1024) {
-    return file;
-  }
+  if (!canCompressImage(file)) return file;
+  if (file.size <= 300 * 1024) return file;
+
   const options =
     kind === "picture"
       ? { maxSizeMB: 1, maxWidthOrHeight: 1600, useWebWorker: true, initialQuality: 0.82 }
       : { maxSizeMB: 0.8, maxWidthOrHeight: 1400, useWebWorker: true, initialQuality: 0.78 };
+
   const compressed = await imageCompression(file, options);
-  return new File([compressed], file.name, { type: compressed.type || file.type, lastModified: Date.now() });
+
+  return new File([compressed], file.name, {
+    type: compressed.type || file.type,
+    lastModified: Date.now(),
+  });
 };
 
 const ProjectUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [image, setImage] = useState<File | null>(null);
-  const [images, setImages] = useState<File[]>([]);
-  const initialDataRef = useRef<Record<string, any> | null>(null);
 
-  const defaultValues = {
-    service: "",
-    name: "",
-    description: "",
-    objective: "",
-    responsibility: "",
-    status: "",
-    startDate: undefined,
-    endDate: null,
-    location: "",
-    client: "",
-  };
+  const imageRef = useRef<File | null>(null);
+  const imagesRef = useRef<File[]>([]);
+  const setImage = useCallback((file: File | null) => {
+    imageRef.current = file;
+  }, []);
+
+  const setImages = useCallback((files: File[]) => {
+    imagesRef.current = files;
+  }, []);
+
+  const initialDataRef = useRef<Record<string, any> | null>(null);
+  const initializedKeyRef = useRef("");
 
   const form = useForm<UpdateProjectFormValues>({
     resolver: zodResolver(updateProjectSchema),
@@ -183,25 +175,30 @@ const ProjectUpdate = () => {
     defaultValues,
   });
 
-  const { data: projectData, isLoading: projectLoading, isFetching: projectFetching } = useGetSingleProjectQuery(id, { skip: !id });
-  const [updateProject, { isLoading: isSubmitting }] = useUpdateProjectMutation();
+  const {
+    data: projectData,
+    isLoading: projectLoading,
+    isFetching: projectFetching,
+  } = useGetSingleProjectQuery(id, {
+    skip: !id,
+  });
+
   const { data: servicesData, isLoading: servicesLoading } = useGetAllServicesQuery(undefined);
   const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery(undefined);
+  const [updateProject, { isLoading: isSubmitting }] = useUpdateProjectMutation();
 
-  const project = projectData?.data?.data || null;
+  const project = useMemo(() => extractProject(projectData), [projectData]);
 
-  const services = useMemo(() => {
-    return extractArray(servicesData, ["services"]);
-  }, [servicesData]);
-
-  const clients = useMemo(() => {
-    return extractArray(clientsData, ["clients"]);
-  }, [clientsData]);
+  const services = useMemo(() => extractArray(servicesData, ["services"]), [servicesData]);
+  const clients = useMemo(() => extractArray(clientsData, ["clients"]), [clientsData]);
 
   const serviceOptions = useMemo<SelectOption[]>(
     () =>
       services
-        .map((item: any) => ({ value: String(item?._id || item?.id || ""), label: String(item?.name || item?.service?.name || "") }))
+        .map((item: any) => ({
+          value: safeString(item?._id),
+          label: safeString(item?.name),
+        }))
         .filter((item: SelectOption) => item.value && item.label),
     [services],
   );
@@ -209,7 +206,10 @@ const ProjectUpdate = () => {
   const clientOptions = useMemo<SelectOption[]>(
     () =>
       clients
-        .map((item: any) => ({ value: String(item?._id || item?.id || ""), label: String(item?.name || item?.client?.name || "") }))
+        .map((item: any) => ({
+          value: safeString(item?._id),
+          label: safeString(item?.name),
+        }))
         .filter((item: SelectOption) => item.value && item.label),
     [clients],
   );
@@ -217,9 +217,9 @@ const ProjectUpdate = () => {
   const projectStatusOptions = useMemo<SelectOption[]>(
     () =>
       ProjectStatus.map((status) => ({
-        value: String(status.value),
-        label: String(status.label),
-      })),
+        value: safeString(status.value),
+        label: safeString(status.label),
+      })).filter((item) => item.value && item.label),
     [],
   );
 
@@ -234,66 +234,85 @@ const ProjectUpdate = () => {
     return [];
   }, [project]);
 
+  const serializeForSubmit = useCallback((values: UpdateProjectFormValues) => {
+    return {
+      service: values.service || "",
+      name: safeString(values.name),
+      description: safeString(values.description),
+      objective: safeString(values.objective),
+      responsibility: safeString(values.responsibility),
+      status: values.status || "",
+      startDate: values.startDate ? formatISO(values.startDate) : null,
+      endDate: values.endDate ? formatISO(values.endDate) : null,
+      location: safeString(values.location),
+      client: values.client || "",
+    };
+  }, []);
+
   useEffect(() => {
-    if (!project) return;
+    initializedKeyRef.current = "";
+    initialDataRef.current = null;
+    form.reset(defaultValues);
+    imageRef.current = null;
+    imagesRef.current = [];
+  }, [id, form]);
+
+  useEffect(() => {
+    const isReady = !!project && serviceOptions.length > 0 && clientOptions.length > 0 && projectStatusOptions.length > 0;
+    if (!isReady) return;
+
+    const initKey = [id || "", safeString(project?._id), serviceOptions.length, clientOptions.length, projectStatusOptions.length].join("|");
+
+    if (initializedKeyRef.current === initKey) return;
 
     const formattedValues: UpdateProjectFormValues = {
-      service: project?.service.name,
-      name: project?.name || "",
-      description: project?.description || "",
-      objective: project?.objective || "",
-      responsibility: project?.responsibility || "",
-      status: project?.status || "",
-      startDate: project?.startDate ? new Date(project.startDate) : undefined,
-      endDate: project?.endDate ? new Date(project.endDate) : null,
-      location: project?.location || "",
-      client: project?.client.name,
+      service: normalizeSelectValue(project?.service.name, serviceOptions),
+      name: safeString(project?.name),
+      description: safeString(project?.description),
+      objective: safeString(project?.objective),
+      responsibility: safeString(project?.responsibility),
+      status: normalizeSelectValue(project?.status, projectStatusOptions),
+      startDate: safeDate(project?.startDate),
+      endDate: safeDate(project?.endDate) || null,
+      location: safeString(project?.location),
+      client: normalizeSelectValue(project?.client, clientOptions),
     };
-
-    // console.log("project.title =", project?.title);
-    // console.log("project.client =", project?.client);
-    // console.log("serviceTitleOptions =", serviceTitleOptions);
-    // console.log("clientOptions =", clientOptions);
-    // console.log("formattedValues =", formattedValues);
 
     form.reset(formattedValues);
-
-    initialDataRef.current = {
-      ...formattedValues,
-      service: getOptionLabel(formattedValues.service, serviceOptions),
-      status: getOptionLabel(formattedValues.status, projectStatusOptions),
-      client: getOptionLabel(formattedValues.client, clientOptions),
-      startDate: formattedValues.startDate ? formatISO(formattedValues.startDate) : null,
-      endDate: formattedValues.endDate ? formatISO(formattedValues.endDate) : null,
-    };
-  }, [project, serviceOptions, clientOptions, projectStatusOptions, form]);
+    initialDataRef.current = serializeForSubmit(formattedValues);
+    initializedKeyRef.current = initKey;
+  }, [id, project, serviceOptions, clientOptions, projectStatusOptions, form, serializeForSubmit]);
 
   const getTotalUploadSize = useCallback(() => {
     let total = 0;
-    if (image) {
-      total += image.size;
-    }
-    images.forEach((file) => {
+
+    if (imageRef.current) total += imageRef.current.size;
+
+    imagesRef.current.forEach((file) => {
       total += file.size;
     });
+
     return total;
-  }, [image, images]);
+  }, []);
 
   const validateUploads = useCallback(() => {
-    if (image && image.size > MAX_SINGLE_FILE_SIZE) {
+    if (imageRef.current && imageRef.current.size > MAX_SINGLE_FILE_SIZE) {
       return `Thumbnail image must be smaller than ${formatFileSize(MAX_SINGLE_FILE_SIZE)}`;
     }
-    for (const file of images) {
+
+    for (const file of imagesRef.current) {
       if (file.size > MAX_SINGLE_FILE_SIZE) {
         return `Each gallery image must be smaller than ${formatFileSize(MAX_SINGLE_FILE_SIZE)}`;
       }
     }
+
     const totalSize = getTotalUploadSize();
     if (totalSize > MAX_TOTAL_SIZE) {
       return `Total upload size is ${formatFileSize(totalSize)}. Maximum allowed is ${formatFileSize(MAX_TOTAL_SIZE)}`;
     }
+
     return null;
-  }, [getTotalUploadSize, image, images]);
+  }, [getTotalUploadSize]);
 
   const getErrorMessage = (error: any) => {
     return error?.data?.message || error?.data?.error || error?.error || error?.message || "Failed to update project";
@@ -304,22 +323,17 @@ const ProjectUpdate = () => {
       toast.error("Project ID not found");
       return;
     }
+
     const uploadError = validateUploads();
     if (uploadError) {
       toast.error(uploadError);
       return;
     }
+
     const toastId = toast.loading("Updating project...");
 
     try {
-      const normalizedData = {
-        ...data,
-        service: getOptionLabel(data.service, serviceOptions),
-        status: getOptionLabel(data.status, projectStatusOptions),
-        client: getOptionLabel(data.client, clientOptions),
-        startDate: data.startDate ? formatISO(data.startDate) : null,
-        endDate: data.endDate ? formatISO(data.endDate) : null,
-      };
+      const normalizedData = serializeForSubmit(data);
 
       const changedData: Record<string, any> = {};
       Object.entries(normalizedData).forEach(([key, value]) => {
@@ -329,8 +343,8 @@ const ProjectUpdate = () => {
         }
       });
 
-      const hasNewThumbnail = !!image;
-      const hasNewGallery = images.length > 0;
+      const hasNewThumbnail = !!imageRef.current;
+      const hasNewGallery = imagesRef.current.length > 0;
 
       if (Object.keys(changedData).length === 0 && !hasNewThumbnail && !hasNewGallery) {
         toast.info("No changes detected", { id: toastId });
@@ -339,41 +353,51 @@ const ProjectUpdate = () => {
 
       const formData = new FormData();
       formData.append("data", JSON.stringify(changedData));
-      if (image) {
-        const compressedPicture = await compressImageFile(image, "picture");
+
+      if (imageRef.current) {
+        const compressedPicture = await compressImageFile(imageRef.current, "picture");
         formData.append("picture", compressedPicture, compressedPicture.name);
       }
-      if (images.length > 0) {
-        const compressedGallery = await Promise.all(images.map((file) => compressImageFile(file, "gallery")));
+
+      if (imagesRef.current.length > 0) {
+        const compressedGallery = await Promise.all(imagesRef.current.map((file) => compressImageFile(file, "gallery")));
         compressedGallery.forEach((file) => {
           formData.append("gallery", file, file.name);
         });
       }
+
       await updateProject({ id, data: formData }).unwrap();
 
       toast.success("Project updated successfully", { id: toastId });
-
       navigate(-1);
     } catch (error: any) {
       if (error?.status === 500 && error?.data?.err?.code === "LIMIT_UNEXPECTED_FILE") {
         toast.error("Upload field mismatch. Frontend must send picture and gallery.", { id: toastId });
         return;
       }
+
       if (error?.status === 413) {
         toast.error("Upload is still too large. Please use smaller images.", { id: toastId });
         return;
       }
+
       if (error?.status === "FETCH_ERROR") {
         toast.error("Network error occurred. Please check your connection and backend settings.", { id: toastId });
         return;
       }
+
       toast.error(getErrorMessage(error), { id: toastId });
     }
   };
 
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    form.handleSubmit(onSubmit)(event);
+  };
+
   if (projectLoading || projectFetching || servicesLoading || clientsLoading) {
-    return <Loading />;
+    return <SkeletonUpdateProject />;
   }
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-linear-to-br from-purple-50 via-white to-blue-50 px-4 py-6 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 md:px-6">
       <motion.div
@@ -392,11 +416,13 @@ const ProjectUpdate = () => {
             >
               <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
+
             <div className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground">
               <h1 className="text-2xl font-semibold">Update Project</h1>
               <p className="mt-1 text-sm">Edit project details, timeline, client information and images.</p>
             </div>
           </div>
+
           <Button
             type="submit"
             form="update-project-form"
@@ -416,7 +442,7 @@ const ProjectUpdate = () => {
         </div>
 
         <Form {...form}>
-          <form id="update-project-form" onSubmit={form.handleSubmit(onSubmit)} className="min-w-0 space-y-5">
+          <form id="update-project-form" onSubmit={handleFormSubmit} className="min-w-0 space-y-5">
             <div className={FormStyles.section}>
               <div className="mb-4 flex items-center gap-3">
                 <div className="rounded-2xl bg-purple-100 p-2.5 text-purple-700 dark:bg-violet-500/15 dark:text-violet-300">
@@ -427,6 +453,7 @@ const ProjectUpdate = () => {
                   <p className="text-sm text-slate-500 dark:text-slate-400">Update the basic information about the project</p>
                 </div>
               </div>
+
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <FormField
                   control={form.control}
@@ -486,7 +513,7 @@ const ProjectUpdate = () => {
                       <FormItem>
                         <FormLabel className="text-slate-700 dark:text-foreground">Project Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter project name" className={FormStyles.input} {...field} />
+                          <Input placeholder="Enter project name" className={FormStyles.input} {...field} value={field.value ?? ""} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -502,13 +529,19 @@ const ProjectUpdate = () => {
                       <FormItem>
                         <FormLabel className="text-slate-700 dark:text-foreground">Description</FormLabel>
                         <FormControl>
-                          <Textarea placeholder="Write a short project description" className={FormStyles.textarea} {...field} />
+                          <Textarea
+                            placeholder="Write a short project description"
+                            className={FormStyles.textarea}
+                            {...field}
+                            value={field.value ?? ""}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                 </div>
+
                 <FormField
                   control={form.control}
                   name="objective"
@@ -516,12 +549,13 @@ const ProjectUpdate = () => {
                     <FormItem>
                       <FormLabel className="text-slate-700 dark:text-foreground">Objective</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Project objective" className={FormStyles.textarea} {...field} />
+                        <Textarea placeholder="Project objective" className={FormStyles.textarea} {...field} value={field.value ?? ""} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="responsibility"
@@ -529,7 +563,7 @@ const ProjectUpdate = () => {
                     <FormItem>
                       <FormLabel className="text-slate-700 dark:text-foreground">Responsibility</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Scope of responsibility" className={FormStyles.textarea} {...field} />
+                        <Textarea placeholder="Scope of responsibility" className={FormStyles.textarea} {...field} value={field.value ?? ""} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -537,6 +571,7 @@ const ProjectUpdate = () => {
                 />
               </div>
             </div>
+
             <div className={FormStyles.section}>
               <div className="mb-4 flex items-center gap-3">
                 <div className="rounded-2xl bg-blue-100 p-2.5 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">
@@ -547,6 +582,7 @@ const ProjectUpdate = () => {
                   <p className="text-sm text-slate-500 dark:text-muted-foreground">Update dates, location and client</p>
                 </div>
               </div>
+
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <FormField
                   control={form.control}
@@ -575,6 +611,7 @@ const ProjectUpdate = () => {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="endDate"
@@ -598,6 +635,7 @@ const ProjectUpdate = () => {
                           <Calendar mode="single" selected={field.value ?? undefined} onSelect={field.onChange} captionLayout="dropdown" />
                         </PopoverContent>
                       </Popover>
+
                       {field.value && (
                         <Button
                           type="button"
@@ -608,10 +646,12 @@ const ProjectUpdate = () => {
                           <XCircle className="mr-1 h-3.5 w-3.5" /> Clear end date
                         </Button>
                       )}
+
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="client"
@@ -636,6 +676,7 @@ const ProjectUpdate = () => {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="location"
@@ -645,7 +686,7 @@ const ProjectUpdate = () => {
                       <FormControl>
                         <div className="relative min-w-0 w-full">
                           <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-foreground/60" />
-                          <Input placeholder="Enter project location" className={`${FormStyles.input} pl-8`} {...field} />
+                          <Input placeholder="Enter project location" className={`${FormStyles.input} pl-8`} {...field} value={field.value ?? ""} />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -654,6 +695,7 @@ const ProjectUpdate = () => {
                 />
               </div>
             </div>
+
             <div className={FormStyles.section}>
               <div className="mb-4 flex items-center gap-3">
                 <div className="rounded-2xl bg-emerald-100 p-2.5 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300">
@@ -666,6 +708,7 @@ const ProjectUpdate = () => {
                   </p>
                 </div>
               </div>
+
               {(existingThumbnail || existingGallery.length > 0) && (
                 <div className="mb-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
                   {existingThumbnail && (
@@ -678,6 +721,7 @@ const ProjectUpdate = () => {
                       />
                     </div>
                   )}
+
                   {existingGallery.length > 0 && (
                     <div className={FormStyles.uploadCard}>
                       <p className="mb-3 text-sm font-medium text-slate-700 dark:text-foreground">Current Gallery</p>
@@ -695,20 +739,24 @@ const ProjectUpdate = () => {
                   )}
                 </div>
               )}
+
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                 <div className={FormStyles.uploadCard}>
                   <p className="mb-3 text-sm font-medium text-slate-700 dark:text-foreground">New Thumbnail / Featured Image</p>
                   <SingleImageUploader onChange={setImage} />
                 </div>
+
                 <div className={FormStyles.uploadCard}>
                   <p className="mb-3 text-sm font-medium text-slate-600 dark:text-foreground/60">New Gallery Images</p>
                   <MultipleImageUploader onChange={setImages} />
                 </div>
               </div>
+
               <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-300">
                 Keep each image under {formatFileSize(MAX_SINGLE_FILE_SIZE)} and total upload under {formatFileSize(MAX_TOTAL_SIZE)}.
               </div>
             </div>
+
             <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               <Button
                 type="button"
@@ -719,6 +767,7 @@ const ProjectUpdate = () => {
               >
                 Cancel
               </Button>
+
               <Button
                 type="submit"
                 disabled={isSubmitting}
@@ -741,4 +790,5 @@ const ProjectUpdate = () => {
     </div>
   );
 };
+
 export default ProjectUpdate;

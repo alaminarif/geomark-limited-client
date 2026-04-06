@@ -23,6 +23,7 @@ export const addProjectSchema = z
       path: ["endDate"],
     },
   );
+
 export const updateProjectSchema = z
   .object({
     service: z.string().optional(),

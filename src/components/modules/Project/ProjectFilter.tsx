@@ -1,5 +1,3 @@
-import Loading from "@/components/layout/Loading";
-// import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ProjectStatus } from "@/constants/project";
 import { useGetAllProjectsQuery } from "@/redux/features/project/project.api";
@@ -71,10 +69,6 @@ const ProjectFilter = () => {
     params.delete("service");
     setSearchParams(params);
   };
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return (
     <div>
