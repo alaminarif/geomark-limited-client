@@ -10,14 +10,15 @@ const ProjectFilter = () => {
   const { data: projects } = useGetAllProjectsQuery(undefined);
   const { data: services, isLoading } = useGetAllServicesQuery(undefined);
 
-  const seletedService = searchParams.get("title") || undefined;
-  const seletedYear = searchParams.get("year") || undefined;
-  const seletedStatus = searchParams.get("status") || undefined;
+  const selectedService = searchParams.get("service") || "";
+  const selectedYear = searchParams.get("year") || "";
+  const selectedStatus = searchParams.get("status") || "";
 
-  const serviceOptions = services?.data?.map((item: { _id: string; name: string }) => ({
-    label: item.name,
-    value: item._id,
-  }));
+  const serviceOptions =
+    services?.data?.map((item: { _id: string; name: string }) => ({
+      label: item.name,
+      value: item._id,
+    })) || [];
 
   const projectYearOptions = [...new Set(((projects?.data ?? []) as { _id: string; year: string }[]).map((item) => item.year))]
     .sort((a, b) => Number(b) - Number(a))
@@ -35,21 +36,18 @@ const ProjectFilter = () => {
     const params = new URLSearchParams(searchParams);
     params.set("service", value);
     setSearchParams(params);
-    console.log(value);
   };
 
   const handleProjectYearChange = (value: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("year", value);
     setSearchParams(params);
-    console.log(value);
   };
 
   const handleProjectStatusChange = (value: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("status", value);
     setSearchParams(params);
-    console.log(value);
   };
 
   const handleClearFilterYear = () => {
@@ -64,7 +62,7 @@ const ProjectFilter = () => {
     setSearchParams(params);
   };
 
-  const handleClearFilterSector = () => {
+  const handleClearFilterService = () => {
     const params = new URLSearchParams(searchParams);
     params.delete("service");
     setSearchParams(params);
@@ -74,34 +72,32 @@ const ProjectFilter = () => {
     <div>
       <div className="flex justify-between items-center my-4">
         <h1 className="text-xl font-bold">Project Filters</h1>
-        {/* <Button size="sm" variant="outline" className="text-destructive" onClick={handleClearFilter}>
-          Clear Filter
-        </Button> */}
       </div>
 
-      <div className=" grid  grid-cols-12 gap-12  lg:gap-16 mx-auto">
-        <div className="col-span-9 sm:col-span-6 md:col-span-6 lg:col-span-4 ">
+      <div className="grid grid-cols-12 gap-12 lg:gap-16 mx-auto">
+        <div className="col-span-9 sm:col-span-6 md:col-span-6 lg:col-span-4">
           <Select
             onValueChange={(val) => {
               if (val === "__all__") {
-                handleClearFilterSector();
+                handleClearFilterService();
                 return;
               }
               handleServiceChange(val);
             }}
-            value={seletedService ? seletedService : ""}
+            value={selectedService}
             disabled={isLoading}
           >
-            <SelectTrigger className="w-full ">
-              <SelectValue placeholder="All Sector" />
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="All Service" />
             </SelectTrigger>
             <SelectContent className="bg-linear-to-br from-primary/10 via-transparent to-purple-500/10">
               <SelectGroup>
                 <SelectItem value="__all__" className="text-white border-2 mb-2">
-                  All Sector
+                  All Service
                 </SelectItem>
-                {serviceOptions?.map((item: { value: string; label: string }) => (
-                  <SelectItem key={item.value} value={item.label} className="text-white   border-2 mb-2">
+
+                {serviceOptions.map((item: { value: string; label: string }) => (
+                  <SelectItem key={item.value} value={item.value} className="text-white border-2 mb-2">
                     {item.label}
                   </SelectItem>
                 ))}
@@ -110,7 +106,7 @@ const ProjectFilter = () => {
           </Select>
         </div>
 
-        <div className="col-span-9 sm:col-span-6 md:col-span-6 lg:col-span-4 ">
+        <div className="col-span-9 sm:col-span-6 md:col-span-6 lg:col-span-4">
           <Select
             onValueChange={(val) => {
               if (val === "__all__") {
@@ -119,10 +115,10 @@ const ProjectFilter = () => {
               }
               handleProjectYearChange(val);
             }}
-            value={seletedYear ? seletedYear : ""}
+            value={selectedYear}
             disabled={isLoading}
           >
-            <SelectTrigger className="w-full ">
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="All Year" />
             </SelectTrigger>
             <SelectContent className="bg-linear-to-br from-primary/10 via-transparent to-purple-500/10">
@@ -130,8 +126,9 @@ const ProjectFilter = () => {
                 <SelectItem value="__all__" className="text-white border-2 mb-2">
                   All Year
                 </SelectItem>
-                {projectYearOptions?.map((item: { value: string; label: string }) => (
-                  <SelectItem key={item.value} value={item.label} className="text-white   border-2 mb-2">
+
+                {projectYearOptions.map((item: { value: string; label: string }) => (
+                  <SelectItem key={item.value} value={item.value} className="text-white border-2 mb-2">
                     {item.label}
                   </SelectItem>
                 ))}
@@ -140,7 +137,7 @@ const ProjectFilter = () => {
           </Select>
         </div>
 
-        <div className="col-span-9 sm:col-span-6 md:col-span-6 lg:col-span-4 ">
+        <div className="col-span-9 sm:col-span-6 md:col-span-6 lg:col-span-4">
           <Select
             onValueChange={(val) => {
               if (val === "__all__") {
@@ -149,7 +146,7 @@ const ProjectFilter = () => {
               }
               handleProjectStatusChange(val);
             }}
-            value={seletedStatus ? seletedStatus : ""}
+            value={selectedStatus}
             disabled={isLoading}
           >
             <SelectTrigger className="w-full">
@@ -160,8 +157,9 @@ const ProjectFilter = () => {
                 <SelectItem value="__all__" className="text-white border-2 mb-2">
                   All Status
                 </SelectItem>
-                {projectStatusOptions?.map((item: { value: string; label: string }) => (
-                  <SelectItem key={item.value} value={item.value} className="text-white   border-2 mb-2">
+
+                {projectStatusOptions.map((item: { value: string; label: string }) => (
+                  <SelectItem key={item.value} value={item.value} className="text-white border-2 mb-2">
                     {item.label}
                   </SelectItem>
                 ))}
