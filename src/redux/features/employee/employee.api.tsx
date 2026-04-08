@@ -29,10 +29,10 @@ export const employeeApi = baseApi.injectEndpoints({
     }),
 
     updateEmployee: builder.mutation({
-      query: ({ employeeId, employeeData }) => ({
-        url: `/employee/${employeeId}`,
-        method: "PUT",
-        data: employeeData,
+      query: ({ id, data }) => ({
+        url: `/employee/${id}`,
+        method: "PATCH",
+        data,
       }),
       invalidatesTags: ["EMPLOYEE"],
     }),

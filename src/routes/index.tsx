@@ -26,6 +26,7 @@ import ServiceDetails from "@/pages/serviceDetails";
 import AdminServiceDetails from "@/pages/Admin/Service/ServiceDetails";
 import ServiceUpdate from "@/pages/Admin/Service/ServiceUpdate";
 import ProjectUpdate from "@/pages/Admin/Project/ProjectUpdate";
+import UpdateEmployee from "@/pages/Admin/Employee/UpdateEmployee";
 
 export const router = createBrowserRouter([
   {
@@ -92,6 +93,14 @@ export const router = createBrowserRouter([
       {
         path: "user/:id",
         Component: UserDetails,
+      },
+      {
+        path: "employee/:id",
+        Component: EmployeeDetails,
+      },
+      {
+        path: "employee/:id/edit",
+        Component: UpdateEmployee,
       },
       {
         path: "service/:id/edit",
