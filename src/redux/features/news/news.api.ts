@@ -28,9 +28,9 @@ export const newsApi = baseApi.injectEndpoints({
     }),
 
     updateNews: builder.mutation({
-      query: ({ newsId, newsData }) => ({
-        url: `/news/${newsId}`,
-        method: "PUT",
+      query: ({ id, newsData }) => ({
+        url: `/news/${id}`,
+        method: "PATCH",
         data: newsData,
       }),
       invalidatesTags: ["NEWS"],

@@ -118,7 +118,7 @@ const ClientManagement = () => {
   };
 
   const handleClientDetails = (id: string) => {
-    navigate(`/client/${id}`);
+    navigate(`/admin/client/${id}`);
   };
 
   if (isLoading) {
@@ -366,7 +366,10 @@ const ClientManagement = () => {
 
                             <motion.div custom={0.05} variants={dropdownItemVariants}>
                               <DropdownMenuItem
-                                onClick={(e) => e.stopPropagation()}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(`/admin/client/${item._id}/edit`);
+                                }}
                                 className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
                               >
                                 <Pencil className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />

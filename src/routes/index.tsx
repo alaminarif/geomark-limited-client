@@ -11,6 +11,7 @@ import { role } from "@/constants/role";
 import Homepage from "@/pages/Homepage";
 import Client from "@/pages/Client";
 import ClientDetails from "@/pages/ClientDetails";
+
 import { ServicePage } from "@/pages/ServicePage";
 import Project from "@/pages/ProjectPage";
 import ProjectDetails from "@/pages/ProjectDetails";
@@ -27,6 +28,10 @@ import AdminServiceDetails from "@/pages/Admin/Service/ServiceDetails";
 import ServiceUpdate from "@/pages/Admin/Service/ServiceUpdate";
 import ProjectUpdate from "@/pages/Admin/Project/ProjectUpdate";
 import UpdateEmployee from "@/pages/Admin/Employee/UpdateEmployee";
+import UpdateClient from "@/pages/Admin/Client/UpdateClient";
+import AdminClientDetails from "@/pages/Admin/Client/ClientDetails";
+import UpdateNews from "@/pages/Admin/News/UpdateNews";
+import NewsDetails from "@/pages/Admin/News/NewsDetails";
 
 export const router = createBrowserRouter([
   {
@@ -103,6 +108,14 @@ export const router = createBrowserRouter([
         Component: UpdateEmployee,
       },
       {
+        path: "client/:id",
+        Component: AdminClientDetails,
+      },
+      {
+        path: "client/:id/edit",
+        Component: UpdateClient,
+      },
+      {
         path: "service/:id/edit",
         Component: ServiceUpdate,
       },
@@ -113,6 +126,14 @@ export const router = createBrowserRouter([
       {
         path: "project/:id/edit",
         Component: ProjectUpdate,
+      },
+      {
+        path: "news/:id",
+        Component: NewsDetails,
+      },
+      {
+        path: "news/:id/edit",
+        Component: UpdateNews,
       },
     ],
   },
