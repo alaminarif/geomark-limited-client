@@ -33,8 +33,7 @@ export const SkeletonProductManagement = () => {
               <TableHead className="px-4">Image</TableHead>
               <TableHead className="px-4">Name</TableHead>
               <TableHead className="px-4">Price</TableHead>
-              <TableHead className="px-4">Phone</TableHead>
-              <TableHead className="px-4">Address</TableHead>
+              <TableHead className="px-4">Location</TableHead>
               <TableHead className="px-4">Quantity</TableHead>
               <TableHead className="px-4 text-right">Actions</TableHead>
             </TableRow>

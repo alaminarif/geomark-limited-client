@@ -32,6 +32,7 @@ import UpdateClient from "@/pages/Admin/Client/UpdateClient";
 import AdminClientDetails from "@/pages/Admin/Client/ClientDetails";
 import UpdateNews from "@/pages/Admin/News/UpdateNews";
 import NewsDetails from "@/pages/Admin/News/NewsDetails";
+import UpdateProduct from "@/pages/Admin/Product/UpdateProduct";
 
 export const router = createBrowserRouter([
   {
@@ -131,6 +132,14 @@ export const router = createBrowserRouter([
         path: "news/:id",
         Component: NewsDetails,
       },
+      {
+        path: "product/:id/edit",
+        Component: UpdateProduct,
+      },
+      // {
+      //   path: "product/:id",
+      //   Component: UpdateProduct,
+      // },
       {
         path: "news/:id/edit",
         Component: UpdateNews,

@@ -8,16 +8,15 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/features/product/product.api";
-import AddProductModal from "@/components/modules/Admin/Client/AddClientModal";
+
 import { SkeletonProductManagement } from "@/components/modules/Admin/Product/SkeletonProductManagement";
+import AddProductModal from "@/components/modules/Admin/Product/AddProduct";
 
 type TProduct = {
   _id: string;
   picture: string;
   name: string;
-  email: string;
-  phone: string;
-  address: string;
+  location: string;
   price: string;
   quantity: string;
 };
@@ -118,7 +117,7 @@ const ProductManagement = () => {
   };
 
   const handleProductDetails = (id: string) => {
-    navigate(`/product/${id}`);
+    navigate(`/admin/product/${id}`);
   };
 
   if (isLoading) {
@@ -158,8 +157,8 @@ const ProductManagement = () => {
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Name</TableHead>
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Price</TableHead>
-              <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Phone</TableHead>
-              <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Address</TableHead>
+
+              <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Location</TableHead>
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Quantity</TableHead>
               <TableHead className="px-4 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">Actions</TableHead>
             </TableRow>
@@ -261,25 +260,13 @@ const ProductManagement = () => {
 
                   <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
                     <motion.div
-                      custom={baseDelay + 0.09}
-                      variants={cellVariants}
-                      initial="hidden"
-                      animate="visible"
-                      className="font-medium text-sm text-foreground/90"
-                    >
-                      {item.phone}
-                    </motion.div>
-                  </TableCell>
-
-                  <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                    <motion.div
                       custom={baseDelay + 0.12}
                       variants={cellVariants}
                       initial="hidden"
                       animate="visible"
                       className="font-medium text-sm text-foreground/90"
                     >
-                      {item.address}
+                      {item.location}
                     </motion.div>
                   </TableCell>
 
@@ -309,7 +296,9 @@ const ProductManagement = () => {
                           <Button
                             variant="ghost"
                             size="icon"
-                            onClick={(e) => e.stopPropagation()}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
                             className={`group/btn size-9 rounded-full border backdrop-blur-sm transition-all duration-300 ${
                               isSelected
                                 ? "border-primary/30 bg-primary/10 shadow-[0_8px_24px_-8px_rgba(59,130,246,0.35)]"
@@ -366,7 +355,10 @@ const ProductManagement = () => {
 
                             <motion.div custom={0.05} variants={dropdownItemVariants}>
                               <DropdownMenuItem
-                                onClick={(e) => e.stopPropagation()}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(`/admin/product/${item._id}/edit`);
+                                }}
                                 className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
                               >
                                 <Pencil className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
