@@ -42,7 +42,7 @@ export const NewsSection = ({ className }: CommunityProps) => {
               <div className="relative z-10  md:p-8 border rounded max-w-4xl">
                 <div className="flex justify-center mb-6  rounded">
                   <div className="h-72 w-full overflow-hidden rounded-xl">
-                    <img src={item.picture} alt={item.name} className="h-full max-w-svw object-cover" />
+                    <img src={item.picture} alt={item.name} className="h-full max-w-svw object-cover text-foreground" />
                   </div>
                 </div>
 

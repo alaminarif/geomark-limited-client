@@ -247,7 +247,7 @@ const ProjectManagement = () => {
         <motion.div variants={headerVariants} className="my-6">
           <motion.div variants={headerVariants} className="flex items-center justify-between my-6">
             <motion.div initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>
-              <h1 className="text-2xl font-bold tracking-tight">Project</h1>
+              <h1 className="text-2xl font-bold tracking-tight text-blue-800 dark:text-foreground">Project</h1>
               {/* <p className="mt-1 text-sm text-muted-foreground">Manage clients with a cleaner premium dashboard feel</p> */}
             </motion.div>
 

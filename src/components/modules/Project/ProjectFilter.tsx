@@ -71,7 +71,7 @@ const ProjectFilter = () => {
   return (
     <div>
       <div className="flex justify-between items-center my-4">
-        <h1 className="text-xl font-bold">Project Filters</h1>
+        <h1 className="text-xl font-bold text-blue-700 dark:text-foreground">Project Filters</h1>
       </div>
 
       <div className="grid grid-cols-12 gap-12 lg:gap-16 mx-auto">

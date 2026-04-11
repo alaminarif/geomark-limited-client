@@ -1,7 +1,7 @@
 import App from "@/App";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import Login from "@/pages/Login";
-import Register from "@/pages/Register";
+import Register from "@/pages/RegisterPage";
 import { generateRoutes } from "@/utils/generateRoutes";
 import { createBrowserRouter } from "react-router";
 import { adminSidebarItems } from "./adminSidebarItems";
@@ -33,6 +33,9 @@ import AdminClientDetails from "@/pages/Admin/Client/ClientDetails";
 import UpdateNews from "@/pages/Admin/News/UpdateNews";
 import NewsDetails from "@/pages/Admin/News/NewsDetails";
 import UpdateProduct from "@/pages/Admin/Product/UpdateProduct";
+import AdminProductDetails from "@/pages/Admin/Product/ProductDetails";
+import ForgotPasswordPage from "@/pages/ForgotPasswordPage";
+import ResetPasswordPage from "@/pages/ResetPasswordPage";
 
 export const router = createBrowserRouter([
   {
@@ -136,10 +139,10 @@ export const router = createBrowserRouter([
         path: "product/:id/edit",
         Component: UpdateProduct,
       },
-      // {
-      //   path: "product/:id",
-      //   Component: UpdateProduct,
-      // },
+      {
+        path: "product/:id",
+        Component: AdminProductDetails,
+      },
       {
         path: "news/:id/edit",
         Component: UpdateNews,
@@ -161,6 +164,16 @@ export const router = createBrowserRouter([
     Component: Register,
     path: "/register",
   },
+
+  {
+    Component: ForgotPasswordPage,
+    path: "/forgot-password",
+  },
+  {
+    Component: ResetPasswordPage,
+    path: "/reset-password",
+  },
+
   {
     Component: Unauthorized,
     path: "/unauthorized",

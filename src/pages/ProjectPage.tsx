@@ -1,75 +1,193 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import Loading from "@/components/layout/Loading";
-import ProjectFilter from "@/components/modules/Project/ProjectFilter";
-import { useGetAllProjectsQuery } from "@/redux/features/project/project.api";
-import { useNavigate, useSearchParams } from "react-router";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
+
+import ProjectFilter from "@/components/modules/Project/ProjectFilter";
 import ProjectCard from "@/components/modules/Project/ProjectCard";
+import { Button } from "@/components/ui/button";
+
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useGetAllProjectsQuery } from "@/redux/features/project/project.api";
+import { BriefcaseBusiness, CalendarRange, FolderKanban, LayoutGrid, Rows3 } from "lucide-react";
+import { useNavigate, useSearchParams } from "react-router";
+
 import { AnimatePresence, motion, type Variants } from "framer-motion";
+import AddProjectModal from "@/components/modules/Admin/Project/AddProjectModal";
+import { SkeletonProjectManagement } from "@/components/modules/Admin/Project/SkeletonProjectManagement";
 
 type ViewMode = "card" | "table";
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0, y: 18 },
+type Project = {
+  _id: string;
+  name: string;
+  year: string;
+  status: string;
+  service: { name: string };
+  client: { name: string };
+  picture?: string;
+};
+
+const pageVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.55,
+      ease: [0.22, 1, 0.36, 1],
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const headerVariants: Variants = {
+  hidden: { opacity: 0, y: -18 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
       duration: 0.45,
       ease: [0.22, 1, 0.36, 1],
-      staggerChildren: 0.08,
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: -12,
-    transition: {
-      duration: 0.25,
-      ease: [0.4, 0, 0.2, 1],
     },
   },
 };
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 24, scale: 0.96 },
+const shellVariants: Variants = {
+  hidden: { opacity: 0, y: 18, scale: 0.985 },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.4,
+      duration: 0.45,
       ease: [0.22, 1, 0.36, 1],
     },
   },
+};
+
+const switchContainerVariants: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.35,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
+const cardContainerVariants: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      staggerChildren: 0.06,
+      duration: 0.35,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -10,
+    transition: {
+      duration: 0.22,
+      ease: [0.4, 0, 0.2, 1],
+    },
+  },
+};
+
+const cardItemVariants: Variants = {
+  hidden: { opacity: 0, y: 20, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.35,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
+const tableContainerVariants: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.35,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -10,
+    transition: {
+      duration: 0.22,
+      ease: [0.4, 0, 0.2, 1],
+    },
+  },
+};
+
+const cellVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 10,
+    filter: "blur(4px)",
+  },
+
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      delay,
+      duration: 0.38,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
+const getStatusTone = (status?: string) => {
+  const value = status?.toLowerCase() || "";
+
+  if (value.includes("complete") || value.includes("done") || value.includes("finish")) {
+    return "border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400";
+  }
+
+  if (value.includes("ongoing") || value.includes("active") || value.includes("running")) {
+    return "border-blue-500/20 bg-blue-500/10 text-blue-600 dark:text-blue-400";
+  }
+
+  if (value.includes("pending") || value.includes("hold") || value.includes("draft")) {
+    return "border-amber-500/20 bg-amber-500/10 text-amber-600 dark:text-amber-400";
+  }
+
+  return "border-primary/20 bg-primary/10 text-primary";
 };
 
 const ProjectPage = () => {
   const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ViewMode>("table");
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit] = useState();
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const title = searchParams.get("title") || undefined;
+  const service = searchParams.get("service") || undefined;
   const year = searchParams.get("year") || undefined;
   const status = searchParams.get("status") || undefined;
 
   const { data: projects, isLoading } = useGetAllProjectsQuery({
-    title,
+    service,
     year,
     status,
     page: currentPage,
-    limit,
+    limit: undefined,
+    sort: "-year",
   });
 
-  console.log(projects);
-
   const totalPage = projects?.meta?.totalPage || 1;
-
-  if (isLoading) return <Loading />;
 
   const handleProjectDetails = (id: string) => {
     navigate(`/project/${id}`);
@@ -77,63 +195,122 @@ const ProjectPage = () => {
 
   const handleClearFilter = () => {
     const params = new URLSearchParams(searchParams);
-    params.delete("title");
+    params.delete("service");
     params.delete("year");
     params.delete("status");
     setSearchParams(params);
     setCurrentPage(1);
   };
 
+  if (isLoading) {
+    return <SkeletonProjectManagement />;
+  }
+
   return (
-    <section className="container mx-auto">
-      <motion.div
-        className="px-4 md:px-6 lg:px-8 xl:px-10"
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: "easeInOut" }}
-      >
-        <div className="mt-4">
-          <ProjectFilter />
-
-          <div className="flex justify-between mt-6 gap-3 flex-wrap">
-            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
-              <Button
-                size="sm"
-                className="text-center rounded-md px-4 py-1 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
-                onClick={() => setViewMode((prev) => (prev === "card" ? "table" : "card"))}
-              >
-                {viewMode === "card" ? "Table View" : "Card View"}
-              </Button>
+    <section className="container mx-auto overflow-x-hidden">
+      <motion.div variants={pageVariants} initial="hidden" animate="visible" className="px-4 md:px-6 lg:px-8 xl:px-10">
+        <motion.div variants={headerVariants} className="my-6">
+          <motion.div variants={headerVariants} className="flex items-center justify-between my-6">
+            <motion.div initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>
+              <h1 className="text-2xl font-bold tracking-tight text-blue-800 dark:text-foreground">Project</h1>
+              {/* <p className="mt-1 text-sm text-muted-foreground">Manage clients with a cleaner premium dashboard feel</p> */}
             </motion.div>
 
-            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
-              <Button size="sm" variant="outline" className="text-destructive" onClick={handleClearFilter}>
-                Clear Filter
-              </Button>
+            <motion.div
+              initial={{ opacity: 0, x: 24, scale: 0.94 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              transition={{ duration: 0.45, delay: 0.08 }}
+              whileHover={{ y: -2, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <AddProjectModal />
             </motion.div>
-          </div>
-        </div>
+          </motion.div>
+
+          <motion.div
+            variants={shellVariants}
+            initial="hidden"
+            animate="visible"
+            className="rounded-3xl border border-border/50 bg-background/70 p-4 backdrop-blur-xl shadow-[0_16px_60px_-20px_rgba(0,0,0,0.35)]"
+          >
+            <ProjectFilter />
+
+            <motion.div
+              variants={switchContainerVariants}
+              initial="hidden"
+              animate="visible"
+              className="mt-5 flex flex-wrap items-center justify-between gap-3"
+            >
+              <div className="inline-flex rounded-2xl border border-border/50 bg-background/70 p-1 backdrop-blur-sm">
+                <button
+                  type="button"
+                  onClick={() => setViewMode("table")}
+                  className={`relative inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                    viewMode === "table" ? "text-white" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {viewMode === "table" && (
+                    <motion.span
+                      layoutId="project-view-toggle"
+                      className="absolute inset-0 rounded-xl bg-linear-to-r from-purple-500 to-blue-500"
+                      transition={{ type: "spring", stiffness: 320, damping: 26 }}
+                    />
+                  )}
+                  <Rows3 className="relative z-10 h-4 w-4" />
+                  <span className="relative z-10">Table View</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setViewMode("card")}
+                  className={`relative inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                    viewMode === "card" ? "text-white" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {viewMode === "card" && (
+                    <motion.span
+                      layoutId="project-view-toggle"
+                      className="absolute inset-0 rounded-xl bg-linear-to-r from-purple-500 to-blue-500"
+                      transition={{ type: "spring", stiffness: 320, damping: 26 }}
+                    />
+                  )}
+                  <LayoutGrid className="relative z-10 h-4 w-4" />
+                  <span className="relative z-10">Card View</span>
+                </button>
+              </div>
+
+              <motion.div whileHover={{ y: -2, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="rounded-xl border-destructive/20 text-destructive hover:bg-destructive/10"
+                  onClick={handleClearFilter}
+                >
+                  Clear Filter
+                </Button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
 
         <AnimatePresence mode="wait">
-          {/* CARD VIEW */}
           {viewMode === "card" && (
             <motion.div
-              key={`card-${currentPage}-${title ?? ""}-${status ?? ""}`}
-              variants={containerVariants}
+              key={`card-${currentPage}-${service ?? ""}-${status ?? ""}-${year ?? ""}`}
+              variants={cardContainerVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-8"
+              className="mt-6 grid gap-3  grid-cols-1  lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 xl:gap-6"
             >
-              {projects?.data?.map((item: any) => (
+              {projects?.data?.map((item: Project) => (
                 <motion.div
-                  key={item?._id}
-                  variants={itemVariants}
-                  layout
+                  key={item._id}
+                  variants={cardItemVariants}
                   whileHover={{
-                    y: -10,
-                    scale: 1.02,
-                    transition: { duration: 0.2 },
+                    y: -8,
+                    scale: 1.015,
+                    transition: { duration: 0.18 },
                   }}
                   whileTap={{ scale: 0.985 }}
                   className="will-change-transform"
@@ -144,128 +321,188 @@ const ProjectPage = () => {
             </motion.div>
           )}
 
-          {/* TABLE VIEW */}
           {viewMode === "table" && (
             <motion.div
-              key={`table-${currentPage}-${title ?? ""}-${status ?? ""}`}
-              variants={containerVariants}
+              key={`table-${currentPage}-${service ?? ""}-${status ?? ""}-${year ?? ""}`}
+              variants={tableContainerVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="mt-6 overflow-hidden rounded-3xl border border-muted shadow-sm"
+              className="relative mt-6 rounded-3xl border border-border/50 bg-background/70 p-3 backdrop-blur-xl shadow-[0_16px_60px_-20px_rgba(0,0,0,0.35)]"
             >
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-muted/40">
-                    <TableHead className="text font-bold">Image</TableHead>
-                    <TableHead className="text font-bold">Project Name</TableHead>
-                    <TableHead className="text font-bold">Period</TableHead>
-                    <TableHead className="text-center font-bold">Status</TableHead>
-                    <TableHead className="text font-bold">Sector</TableHead>
-                    <TableHead className="text font-bold">Client</TableHead>
-                    <TableHead className="text-right font-bold">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
-                <TableBody>
-                  {projects?.data?.map((item: any, index: number) => (
-                    <TableRow key={item?._id} className="group transition-all duration-300 hover:bg-muted/40">
-                      <TableCell className="font-medium">
-                        <motion.div
-                          initial={{ opacity: 0, x: -16 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.05, duration: 0.35 }}
-                        >
-                          <motion.img
-                            src={item.picture}
-                            alt={item.name}
-                            className="w-25 h-20 rounded-xl object-cover"
-                            whileHover={{ scale: 1.08, rotate: 0.5 }}
-                            transition={{ type: "spring", stiffness: 260, damping: 18 }}
-                          />
-                        </motion.div>
-                      </TableCell>
-
-                      <TableCell className="font-medium">
-                        <motion.p
-                          initial={{ opacity: 0, y: 12 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.05 + 0.03, duration: 0.35 }}
-                          className="font-medium whitespace-normal wrap-break-word"
-                        >
-                          {item.name}
-                        </motion.p>
-                      </TableCell>
-
-                      <TableCell>
-                        <motion.p
-                          initial={{ opacity: 0, y: 12 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.05 + 0.05, duration: 0.35 }}
-                        >
-                          <span>{item?.year}</span>
-                        </motion.p>
-                      </TableCell>
-
-                      <TableCell>
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.92 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: index * 0.05 + 0.06, duration: 0.3 }}
-                        >
-                          <span className="inline-flex rounded-full px-3 py-1 text-xs font-medium bg-muted">{item.status}</span>
-                        </motion.div>
-                      </TableCell>
-
-                      <TableCell>
-                        <motion.p
-                          initial={{ opacity: 0, y: 12 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.05 + 0.08, duration: 0.35 }}
-                          className="whitespace-normal wrap-break-word"
-                        >
-                          {item.title}
-                        </motion.p>
-                      </TableCell>
-
-                      <TableCell>
-                        <motion.p
-                          initial={{ opacity: 0, y: 12 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.05 + 0.1, duration: 0.35 }}
-                        >
-                          {item?.client}
-                        </motion.p>
-                      </TableCell>
-
-                      <TableCell className="text-right">
-                        <motion.div
-                          initial={{ opacity: 0, x: 12 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.05 + 0.12, duration: 0.35 }}
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.96 }}
-                          className="inline-block"
-                        >
-                          <Button
-                            onClick={() => handleProjectDetails(item?._id)}
-                            className="rounded-md px-4 py-1 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
-                          >
-                            View
-                          </Button>
-                        </motion.div>
-                      </TableCell>
+              <div className="w-full overflow-x-auto ">
+                <Table className="border-separate [border-spacing:0_10px]">
+                  <TableHeader>
+                    <TableRow className="border-none hover:bg-transparent">
+                      <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
+                      <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Project Name</TableHead>
+                      <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Year</TableHead>
+                      <TableHead className="px-4 text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">Status</TableHead>
+                      <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Sector</TableHead>
+                      <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Client</TableHead>
+                      <TableHead className="px-4 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">Action</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+
+                  <TableBody>
+                    {projects?.data?.map((item: Project, index: number) => {
+                      const baseDelay = 0.08 + index * 0.05;
+                      const isSelected = selectedProjectId === item._id;
+                      const toneClass = isSelected ? "border-primary/35 bg-primary/[0.06]" : "border-border/50 bg-background/80";
+
+                      return (
+                        <TableRow
+                          key={item._id}
+                          onClick={() => setSelectedProjectId(item._id)}
+                          className="group cursor-pointer border-none hover:bg-transparent"
+                        >
+                          <TableCell
+                            className={`relative rounded-l-2xl border-y border-l px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}
+                          >
+                            {isSelected && (
+                              <motion.div
+                                layoutId="selected-project-row-indicator"
+                                className="absolute left-1 top-1/2 h-12 w-1 -translate-y-1/2 rounded-full bg-primary shadow-[0_0_20px_rgba(59,130,246,0.45)]"
+                                transition={{ type: "spring", stiffness: 320, damping: 28 }}
+                              />
+                            )}
+
+                            <motion.div custom={baseDelay} variants={cellVariants} initial="hidden" animate="visible" className="relative w-fit">
+                              <motion.div
+                                className="absolute inset-0 rounded-2xl bg-primary/15 blur-xl"
+                                initial={{ opacity: 0, scale: 0.85 }}
+                                whileHover={{ opacity: 1, scale: 1.18 }}
+                                animate={isSelected ? { opacity: 1, scale: 1.08 } : { opacity: 0, scale: 0.9 }}
+                                transition={{ duration: 0.28 }}
+                              />
+
+                              <motion.img
+                                src={item.picture || "https://placehold.co/96x80/png"}
+                                alt={item.name}
+                                className="relative h-20 w-24 min-h-20 min-w-24 shrink-0 rounded-xl border border-border/50 object-cover shadow-md"
+                                whileHover={{
+                                  y: -2,
+                                  scale: 1.05,
+                                  rotate: 0.5,
+                                }}
+                                animate={isSelected ? { scale: 1.03, y: -1 } : { scale: 1, y: 0 }}
+                                transition={{
+                                  type: "spring",
+                                  stiffness: 260,
+                                  damping: 18,
+                                }}
+                              />
+                            </motion.div>
+                          </TableCell>
+
+                          <TableCell className={`border-y px-2 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                            <motion.div
+                              custom={baseDelay + 0.03}
+                              variants={cellVariants}
+                              initial="hidden"
+                              animate="visible"
+                              className="flex items-center gap-2"
+                            >
+                              <div className="min-w-40">
+                                <motion.div
+                                  className="wrap-break-word line-clamp-3 font-medium whitespace-normal"
+                                  whileHover={{ x: 3 }}
+                                  animate={isSelected ? { x: 2 } : { x: 0 }}
+                                  transition={{ type: "spring", stiffness: 260 }}
+                                >
+                                  {item.name}
+                                </motion.div>
+
+                                <AnimatePresence>
+                                  {isSelected && (
+                                    <motion.span
+                                      initial={{ opacity: 0, scale: 0.85, y: 6 }}
+                                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                                      exit={{ opacity: 0, scale: 0.85, y: 6 }}
+                                      transition={{ duration: 0.18 }}
+                                      className="mt-1 inline-flex rounded-full border border-primary/20 bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary"
+                                    >
+                                      Selected
+                                    </motion.span>
+                                  )}
+                                </AnimatePresence>
+                              </div>
+                            </motion.div>
+                          </TableCell>
+
+                          <TableCell className={`border-y  py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                            <motion.div
+                              custom={baseDelay + 0.06}
+                              variants={cellVariants}
+                              initial="hidden"
+                              animate="visible"
+                              className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/8 px-3 py-1.5 text-xs font-semibold text-primary"
+                            >
+                              <CalendarRange className="h-3.5 w-3.5" />
+                              <span>{item.year || "-"}</span>
+                            </motion.div>
+                          </TableCell>
+
+                          <TableCell className={`border-y  py-3 text-center align-middle transition-all duration-300 ${toneClass}`}>
+                            <motion.div custom={baseDelay + 0.09} variants={cellVariants} initial="hidden" animate="visible">
+                              <span className={`inline-flex px-2 rounded-full border  py-1 text-xs font-semibold ${getStatusTone(item.status)}`}>
+                                {item.status || "-"}
+                              </span>
+                            </motion.div>
+                          </TableCell>
+
+                          <TableCell className={`border-y  py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                            <motion.div custom={baseDelay + 0.12} variants={cellVariants} initial="hidden" animate="visible" className="">
+                              <div className="inline-flex  items-center gap-2 py-1.5 text-xs font-semibold text-primary">
+                                <FolderKanban className="h-3.5 " />
+                                <span className="wrap-break-word line-clamp-3 whitespace-normal">{item?.service?.name || "-"}</span>
+                              </div>
+                            </motion.div>
+                          </TableCell>
+
+                          <TableCell className={`border-y py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                            <motion.div custom={baseDelay + 0.15} variants={cellVariants} initial="hidden" animate="visible" className="">
+                              <div className="inline-flex items-center line-clamp-3 gap-2 text-xs text-foreground/90">
+                                <BriefcaseBusiness className="h-3.5  text-primary" />
+                                <span className="wrap-break-word  whitespace-normal">{item?.client?.name || "-"}</span>
+                              </div>
+                            </motion.div>
+                          </TableCell>
+
+                          <TableCell
+                            className={`rounded-r-2xl border-y border-r  py-3 text-right align-middle transition-all duration-300 ${toneClass}`}
+                          >
+                            <motion.div
+                              custom={baseDelay + 0.18}
+                              variants={cellVariants}
+                              initial="hidden"
+                              animate="visible"
+                              className="flex justify-end"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Button
+                                onClick={() => handleProjectDetails(item?._id)}
+                                className="rounded-md px-4 py-1 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+                              >
+                                View
+                              </Button>
+                            </motion.div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
 
         {totalPage > 1 && (
           <motion.div
-            className="flex justify-end mt-6"
+            className="mt-6 flex justify-end"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.35 }}
@@ -275,7 +512,11 @@ const ProjectPage = () => {
                 <PaginationItem>
                   <motion.div whileHover={{ x: -2, scale: 1.04 }} whileTap={{ scale: 0.95 }}>
                     <PaginationPrevious
-                      onClick={() => setCurrentPage((prev) => prev - 1)}
+                      onClick={() => {
+                        if (currentPage > 1) {
+                          setCurrentPage((prev) => prev - 1);
+                        }
+                      }}
                       className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
                     />
                   </motion.div>
@@ -287,12 +528,12 @@ const ProjectPage = () => {
                       <PaginationLink
                         onClick={() => setCurrentPage(page)}
                         isActive={currentPage === page}
-                        className="relative cursor-pointer overflow-hidden"
+                        className="relative cursor-pointer overflow-hidden rounded-xl"
                       >
                         {currentPage === page && (
                           <motion.span
-                            layoutId="activePageBubble"
-                            className="absolute inset-0 rounded-md bg-linear-to-r from-purple-500 to-blue-500"
+                            layoutId="activeProjectPageBubble"
+                            className="absolute inset-0 rounded-xl bg-linear-to-r from-purple-500 to-blue-500"
                             transition={{ type: "spring", stiffness: 320, damping: 24 }}
                           />
                         )}
@@ -305,7 +546,11 @@ const ProjectPage = () => {
                 <PaginationItem>
                   <motion.div whileHover={{ x: 2, scale: 1.04 }} whileTap={{ scale: 0.95 }}>
                     <PaginationNext
-                      onClick={() => setCurrentPage((prev) => prev + 1)}
+                      onClick={() => {
+                        if (currentPage < totalPage) {
+                          setCurrentPage((prev) => prev + 1);
+                        }
+                      }}
                       className={currentPage === totalPage ? "pointer-events-none opacity-50" : "cursor-pointer"}
                     />
                   </motion.div>

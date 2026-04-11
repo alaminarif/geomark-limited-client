@@ -22,8 +22,9 @@ export default function Footer() {
           <div>
             <div className="text-foreground">{/* <Logo /> */}</div>
 
-            <p className="mt-4 max-w-xs text-gray-700 dark:text-muted-foreground/80">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse non cupiditate quae nam molestias.
+            <p className="mt-4 max-w-xs text-gray-700 dark:text-muted-foreground/80 text-justify">
+              Geomark Limited was founded in 1999 by a group of IT professionals and engineers having long experience in successful implementation of
+              a large number of development studies and consulting projects including GIS and ITES related assignments of various reputed clients.
             </p>
 
             <ul className="mt-8 flex gap-6">
