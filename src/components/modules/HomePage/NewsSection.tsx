@@ -39,15 +39,15 @@ export const NewsSection = ({ className }: CommunityProps) => {
             >
               <div className="absolute inset-0 rounded-xl bg-linear-to-r from-purple-500 via-blue-500 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-20" />
 
-              <div className="relative z-10  md:p-8 border rounded max-w-4xl">
-                <div className="flex justify-center mb-6  rounded">
-                  <div className="h-72 w-full overflow-hidden rounded-xl">
-                    <img src={item.picture} alt={item.name} className="h-full max-w-svw object-cover text-foreground" />
+              <div className="relative z-10 mx-auto w-full max-w-4xl rounded border md:p-8">
+                <div className="mb-6 rounded">
+                  <div className="h-84 w-full overflow-hidden rounded-xl">
+                    <img src={item.picture} alt={item.name} className="block h-full w-full object-cover" />
                   </div>
                 </div>
 
-                <h3 className="mb-2 text-xl md:text-2xl font-bold text-center text-foreground/70">{item.name}</h3>
-                <p className="text-base md:text-lg text-muted-foreground text-justify">{item.description}</p>
+                <h3 className="mb-2 text-center text-xl font-bold text-foreground/70 md:text-2xl">{item.name}</h3>
+                <p className="text-justify text-base text-muted-foreground md:text-lg">{item.description}</p>
               </div>
             </div>
           ))}

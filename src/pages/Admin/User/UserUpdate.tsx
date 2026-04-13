@@ -9,73 +9,22 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useGetSingleUserQuery, useUpdateUserMutation } from "@/redux/features/user/user.api";
 import SingleImageUploader from "@/components/ui/SingleImageUploader";
+import { SkeletonUserUpdate } from "@/components/modules/Admin/User/SkeletonUserUpdate";
 
-type TFormValues = {
-  name: string;
-  email: string;
-  phone: string;
-  role: string;
-  isActive: string;
-};
-
-const UserUpdateSkeleton = () => {
-  return (
-    <div className="mx-auto w-full max-w-5xl space-y-6">
-      <div className="flex items-center justify-between gap-4">
-        <div className="space-y-2">
-          <div className="h-8 w-52 animate-pulse rounded-xl bg-muted" />
-          <div className="h-4 w-72 animate-pulse rounded-xl bg-muted" />
-        </div>
-        <div className="h-10 w-24 animate-pulse rounded-xl bg-muted" />
-      </div>
-
-      <div className="rounded-3xl border bg-background p-6 shadow-sm">
-        <div className="grid gap-6 lg:grid-cols-3">
-          <div className="space-y-3 lg:col-span-1">
-            <div className="h-5 w-24 animate-pulse rounded bg-muted" />
-            <div className="h-52 w-full animate-pulse rounded-2xl bg-muted" />
-          </div>
-
-          <div className="space-y-5 lg:col-span-2">
-            <div className="space-y-2">
-              <div className="h-4 w-20 animate-pulse rounded bg-muted" />
-              <div className="h-11 w-full animate-pulse rounded-xl bg-muted" />
-            </div>
-            <div className="space-y-2">
-              <div className="h-4 w-20 animate-pulse rounded bg-muted" />
-              <div className="h-11 w-full animate-pulse rounded-xl bg-muted" />
-            </div>
-            <div className="space-y-2">
-              <div className="h-4 w-20 animate-pulse rounded bg-muted" />
-              <div className="h-11 w-full animate-pulse rounded-xl bg-muted" />
-            </div>
-            <div className="grid gap-5 md:grid-cols-2">
-              <div className="space-y-2">
-                <div className="h-4 w-20 animate-pulse rounded bg-muted" />
-                <div className="h-11 w-full animate-pulse rounded-xl bg-muted" />
-              </div>
-              <div className="space-y-2">
-                <div className="h-4 w-20 animate-pulse rounded bg-muted" />
-                <div className="h-11 w-full animate-pulse rounded-xl bg-muted" />
-              </div>
-            </div>
-            <div className="flex gap-3 pt-2">
-              <div className="h-11 w-28 animate-pulse rounded-xl bg-muted" />
-              <div className="h-11 w-36 animate-pulse rounded-xl bg-muted" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+// type TFormValues = {
+//   name: string;
+//   email: string;
+//   phone: string;
+//   role: string;
+//   isActive: string;
+// };
 
 const UserUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [image, setImage] = useState<File | null>(null);
 
-  const form = useForm<TFormValues>({
+  const form = useForm({
     defaultValues: {
       name: "",
       email: "",
@@ -107,7 +56,7 @@ const UserUpdate = () => {
     }
   }, [user, form]);
 
-  const onSubmit = async (values: TFormValues) => {
+  const onSubmit = async (values: any) => {
     if (!id) {
       toast.error("User ID not found");
       return;
@@ -137,6 +86,7 @@ const UserUpdate = () => {
       }).unwrap();
 
       toast.success("User updated successfully", { id: toastId });
+
       navigate(`/admin/user/${id}`);
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to update user", {
@@ -155,7 +105,7 @@ const UserUpdate = () => {
   }
 
   if (isLoading) {
-    return <UserUpdateSkeleton />;
+    return <SkeletonUserUpdate />;
   }
 
   if (isError || !user) {
@@ -243,7 +193,6 @@ const UserUpdate = () => {
               <FormField
                 control={form.control}
                 name="phone"
-                rules={{ required: "Phone is required" }}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Phone</FormLabel>

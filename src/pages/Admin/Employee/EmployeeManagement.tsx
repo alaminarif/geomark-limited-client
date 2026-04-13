@@ -94,7 +94,7 @@ const dropdownItemVariants: Variants = {
 
 const EmployeeManagement = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetAllEmployeesQuery(undefined);
+  const { data, isLoading } = useGetAllEmployeesQuery({ sort: "rank", limit: 110 });
   const [deleteEmployee] = useDeleteEmployeeMutation();
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(null);
 
