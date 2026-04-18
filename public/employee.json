@@ -1,148 +1,222 @@
 [
-  {
-    "name": "Name",
-    "email": "@gmail.com",
-    "phone": "01700000000",
-    "address": "Adabar, Dhaka",
-    "designation": "Director",
-    "rank": "100",
-    "description": "",
-    "facebook": "",
-    "linkedin": "",
-    "institute": "",
-    "education": "",
-    "joinDate": "",
-    "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/q_auto/f_auto/v1775981584/Director_dovyoy.png"
-  },
+  [
+    {
+      "name": "Name",
+      "email": "@gmail.com",
+      "phone": "01700000000",
+      "address": "Adabar, Dhaka",
+      "designation": "Director",
+      "rank": "100",
+      "description": "",
+      "facebook": "",
+      "linkedin": "",
+      "institute": "",
+      "education": "",
+      "joinDate": "",
+      "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/q_auto/f_auto/v1775981584/Director_dovyoy.png"
+    },
 
-  {
-    "name": "Dr. ANM Safiqul Alam Shaheen",
-    "email": "geomarkbd@gmail.com",
-    "phone": "01943223060",
-    "address": "Adabar, Dhaka",
-    "designation": "Managing Director",
-    "rank": "200",
-    "description": "",
-    "facebook": "",
-    "linkedin": "",
-    "institute": "",
-    "education": "",
-    "joinDate": "",
-    "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/v1775896605/yb20z27ddm-1775896605403-md-pp-jpeg.jpeg.jpg"
-  },
+    {
+      "name": "Dr. ANM Safiqul Alam Shaheen",
+      "email": "geomarkbd@gmail.com",
+      "phone": "01943223060",
+      "address": "Adabar, Dhaka",
+      "designation": "Managing Director",
+      "rank": "200",
+      "description": "",
+      "facebook": "",
+      "linkedin": "",
+      "institute": "",
+      "education": "",
+      "joinDate": "",
+      "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/v1775896605/yb20z27ddm-1775896605403-md-pp-jpeg.jpeg.jpg"
+    },
 
-  {
-    "name": "Moniza Biswas",
-    "email": "moniza.geomark@gmail.com ",
-    "phone": "01817525889",
-    "address": "Uttara, Dhaka",
-    "designation": "Senior Urban Planner",
-    "rank": "301",
-    "facebook": "",
-    "linkedin": "",
-    "institute": "",
-    "education": "",
-    "joinDate": "",
-    "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/v1775984718/Moniza_zeb6nc.jpg"
-  },
-  {
-    "name": "Md. Zahidul Islam",
-    "email": "geomarkbd.zahidul@gmail.com",
-    "phone": "01951914047",
-    "address": "Adabar, Dhaka",
-    "designation": "Urban Planer",
-    "rank": "351",
-    "facebook": "",
-    "linkedin": "",
-    "institute": "",
-    "education": "",
-    "joinDate": "",
-    "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/q_auto/f_auto/v1775981584/Zahidul.jpg_eenumn.jpg"
-  },
-  {
-    "name": "Soikat",
-    "email": "geomarkbd.soikat@gmail.com",
-    "phone": "01700000000",
-    "address": "Adabar, Dhaka",
-    "designation": "Urban Planer",
-    "rank": "352",
-    "facebook": "",
-    "linkedin": "",
-    "institute": "",
-    "education": "",
-    "joinDate": "",
-    "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/q_auto/f_auto/v1775981583/Soikat.jpg_sxpxqn.jpg"
-  },
+    {
+      "name": "Moniza Biswas",
+      "email": "moniza.geomark@gmail.com ",
+      "phone": "01817525889",
+      "address": "Uttara, Dhaka",
+      "designation": "Senior Urban Planner",
+      "rank": "301",
+      "facebook": "",
+      "linkedin": "",
+      "institute": "",
+      "education": "",
+      "joinDate": "",
+      "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/v1775984718/Moniza_zeb6nc.jpg"
+    },
+    {
+      "name": "Md. Zahidul Islam",
+      "email": "geomarkbd.zahidul@gmail.com",
+      "phone": "01951914047",
+      "address": "Adabar, Dhaka",
+      "designation": "Urban Planer",
+      "rank": "351",
+      "facebook": "",
+      "linkedin": "",
+      "institute": "",
+      "education": "",
+      "joinDate": "",
+      "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/q_auto/f_auto/v1775981584/Zahidul.jpg_eenumn.jpg"
+    },
+    {
+      "name": "Soikat",
+      "email": "geomarkbd.soikat@gmail.com",
+      "phone": "01700000000",
+      "address": "Adabar, Dhaka",
+      "designation": "Urban Planer",
+      "rank": "352",
+      "facebook": "",
+      "linkedin": "",
+      "institute": "",
+      "education": "",
+      "joinDate": "",
+      "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/q_auto/f_auto/v1775981583/Soikat.jpg_sxpxqn.jpg"
+    },
 
-  {
-    "name": "Rakib Rashid",
-    "email": "rakib@gmail.com",
-    "phone": "01700000000",
-    "address": "Adabar, Dhaka",
-    "designation": "GIS Analyst",
-    "rank": "401",
-    "facebook": "",
-    "linkedin": "",
-    "institute": "",
-    "education": "",
-    "joinDate": "",
-    "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/q_auto/f_auto/v1775981734/Rakib.jpg_arxqio.jpg"
-  },
+    {
+      "name": "Rakib Rashid",
+      "email": "rakib@gmail.com",
+      "phone": "01700000000",
+      "address": "Adabar, Dhaka",
+      "designation": "GIS Analyst",
+      "rank": "401",
+      "facebook": "",
+      "linkedin": "",
+      "institute": "",
+      "education": "",
+      "joinDate": "",
+      "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/q_auto/f_auto/v1775981734/Rakib.jpg_arxqio.jpg"
+    },
 
-  {
-    "name": "Ahsan Ahmed Tihan ",
-    "email": "tihan.geomarkbd@gmail.com",
-    "phone": "01777667444",
-    "address": "Mirpur, Dhaka",
-    "designation": "GIS Analyst",
-    "rank": "402",
-    "facebook": "",
-    "linkedin": "",
-    "institute": "",
-    "education": "",
-    "joinDate": "",
-    "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/q_auto/f_auto/v1775981584/Tihan.jpg_u98hqz.jpg"
-  },
-  {
-    "name": "Mahmudul Hasan",
-    "email": "Mahmudgeomark@gmail.com",
-    "phone": "01722295617",
-    "address": "Savar, Dhaka",
-    "designation": "Junior GIS Analyst",
-    "rank": "403",
-    "facebook": "",
-    "linkedin": "",
-    "institute": "",
-    "education": "",
-    "joinDate": "",
-    "picture": ""
-  },
-  {
-    "name": "Arifur Rahman",
-    "email": "office.arif34@gmail.com",
-    "phone": "01793911158",
-    "address": "Adabar, Dhaka",
-    "designation": "Junior GIS Analyst",
-    "rank": "404",
-    "facebook": "",
-    "linkedin": "",
-    "institute": "",
-    "education": "",
-    "joinDate": "",
-    "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/v1771611014/2mxqtsn72qn-1771611014575-20251226172334-jpg.jpg.jpg"
-  },
-  {
-    "name": "Md. Mounuddin Sajal",
-    "email": "geomark.sajal.bd@gmail.com",
-    "phone": "01575343985",
-    "address": "Adabar, Dhaka",
-    "designation": "UAV PILOT",
-    "rank": "501",
-    "facebook": "",
-    "linkedin": "",
-    "institute": "",
-    "education": "",
-    "joinDate": "",
-    "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/q_auto/f_auto/v1775981583/Sajal_uof3sm.jpg"
-  }
+    {
+      "name": "Ahsan Ahmed Tihan ",
+      "email": "tihan.geomarkbd@gmail.com",
+      "phone": "01777667444",
+      "address": "Mirpur, Dhaka",
+      "designation": "GIS Analyst",
+      "rank": "402",
+      "facebook": "",
+      "linkedin": "",
+      "institute": "",
+      "education": "",
+      "joinDate": "",
+      "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/q_auto/f_auto/v1775981584/Tihan.jpg_u98hqz.jpg"
+    },
+    {
+      "name": "Mahmudul Hasan",
+      "email": "Mahmudgeomark@gmail.com",
+      "phone": "01722295617",
+      "address": "Savar, Dhaka",
+      "designation": "Junior GIS Analyst",
+      "rank": "403",
+      "facebook": "",
+      "linkedin": "",
+      "institute": "",
+      "education": "",
+      "joinDate": "",
+      "picture": ""
+    },
+    {
+      "name": "Arifur Rahman",
+      "email": "office.arif34@gmail.com",
+      "phone": "01793911158",
+      "address": "Adabar, Dhaka",
+      "designation": "Junior GIS Analyst",
+      "rank": "404",
+      "facebook": "",
+      "linkedin": "",
+      "institute": "",
+      "education": "",
+      "joinDate": "",
+      "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/v1771611014/2mxqtsn72qn-1771611014575-20251226172334-jpg.jpg.jpg"
+    },
+    {
+      "name": "Md. Mounuddin Sajal",
+      "email": "geomark.sajal.bd@gmail.com",
+      "phone": "01575343985",
+      "address": "Adabar, Dhaka",
+      "designation": "UAV PILOT",
+      "rank": "501",
+      "facebook": "",
+      "linkedin": "",
+      "institute": "",
+      "education": "",
+      "joinDate": "",
+      "picture": "https://res.cloudinary.com/dzipkt5er/image/upload/q_auto/f_auto/v1775981583/Sajal_uof3sm.jpg"
+    }
+  ],
+
+  [
+    "Plan Preparation with Physical Feature Survey and Plan Report, Data base management, Mouza schedule (mouza plot No) Book; Package-5 (Extended)- Magura Sadar Upazila, District- Magura.",
+
+    "Preparation of UAV Based Physical Feature, Topographic & Landuse GIS Database, Mouza Map Collection, Scanning, Digitization, Editing & Printing. Under Preparation of Development Plan for Meherpur Zilla Project.",
+
+    "Preparation of Development Plan for Mirshrai Upazila, Chittagong District: Risk Sensitive land use Plan.",
+    "Mymensingh Strategic Development Plan 2011-2031(MUDP) (Rural & Urban) with Physical Feature Survey work with RTK GPS, Total Station & using3D image with Relevant Supporting other Survey.",
+
+    "Preparation of Payra-Kuakata Comprehensive Plan Focusing on Eco Tourism, (PKCP) with Establishment of BM Pillars, Physical Features, Land use and Topographical Survey.",
+
+    "Consultancy Services for A Pilot Project on Preparation of Comprehensive Development Plan for Nine Upazila (9upzCP), Package 03 (Jagannathpur and South Sunamganj Upazila, Sunamganj).",
+
+    "Consultancy Services for A Pilot Project on Preparation of Comprehensive Development Plan for Nine Upazila (9upzCP), Package 05 (Mohammadpur and Shalikha Upazila, Magura).",
+
+    "GIS Data Collection for Jashore and Benapole Paurashava’s IMIS Following Standard Data Quality Management",
+    "Physical Feature Survey Work with RTK GPS, Total Station & Using 3D Image and Other Surveys for area of Preparation of Development Plan for Benapole-Jessore Highway Corridor Project.",
+
+    "Preparation of Master Plan for Kushtia Paurashava and Jessore Paurashava Under Third Urban Governance Infrastructural Improvement project (UGIIP-III)",
+
+    "Preparation of Master Plan for Dupchachia, Shntahar, Khahloo, Nandigram and Sherpur Paurashava Under Upazila Town Infrastructure Development Project (UTIDP)",
+
+    "Preparation of Master Plan for Kotchandpur, Jibonagar, Darshona, Harinakundu, Shailkupa, Kailakoir, Mirzapur and Bhangah Pourashava.",
+
+    "Preparation of Master Plan for Amtoli, Kalapara, Bakerganj, Betagi, Sarupkathi, Betagi Pourashava, Kuakata Tourism center, Banaripara and Gouranadi Under Upazila Town Infrastructure Development Project (UTIDP)",
+
+    "Preparation of Base Map, Drainage Master Plan & Topography Survey (contour Map) for 18 Paurashava: Mymensingh, Jamalpur, Chandpur, Faridpur, Bhanga, Barguna, Kalapra, Bhola, Munshiganj, Mirzapur, Sreepur, BrahmonBaria, Ghorasal, Comilla, Noakhali, Choumuhuni, Poshuram and Cox’s Bazaar Paurashava.",
+
+    "Topographical Survey of Road, drainage and Landuse GIS Map and Network for Sewerage Master Plan of Zinzira Union.",
+    "Preparation of Master Plan for Barisal City.",
+
+    "Drone based Topographical Survey Works under Consultancy Services for Feasibility Study and tender assistance for Dhaka Circular Rail Line (DCRL) Project.",
+
+    "Topographic and Hydrological Survey work, GIS Based route Map, DEM, Contour and Areal Survey of the route for The Dhaka Mass Rapid Transit Development Project (MRT Line 1).",
+
+    "Topographic and Areal Survey for Eastern Village Project of ATN Properties Limited.",
+    "Topographic and Areal Survey for Amer Bari Project of Greenatic Limited.",
+
+    "Drone Based Topographic Survey for Solar Power Plant at Madhabpur, Habiganj.",
+
+    "Drone Based Topographic Survey for Solar Power Plant at Bahir Char & Char Khondakar, Sonagazi.",
+
+    "Supplying of Re-produced Mouza map and scanning digitization with Geo database for Package-5, Mohammad, Shalikha & Magura Sadar Dist. Magura under 9UpzCp project, UDD.",
+
+    "Supplying of Digitized Mouza maps of MSDP (2011-2031) project area (Hard Copy) with necessary geo-referencing by RTK GPS based ground control Point (GCP).",
+
+    "Supplying of Mouza map (C.S/R. S) at the project directors office of Preparation of Development Plan for Benapole-Jessore Highway Corridor.",
+
+    "Procurement, Supplying of Mouza map of DRLS, GoB (Goods) for Mymensingh Sadar Upazila and Bhangamari Union Under Garuipur Upazila of Mymensingh District.",
+
+    "Supplying of Drone capturing 3D image and Geo database for Package-5, Magura Sadar, Mohammadpur and Salikha Upazila, Dist. Magura under 9UpzCP project, UDD.",
+
+    "Supplying of Drone capturing 3D image and Geo database for Package-3, Jagannathpur and Santiganj (South Sunamganj) Upazila, Dist. Sunamganj under 9UpzCP project, UDD.",
+
+    "Supplying of Drone capturing 3D image and Geo database for Package-2, Bakshiganj and Dewanganj Upazila, Dist. Jamalpur under 9UpzCp project, UDD.",
+
+    "Topographical Survey of Roads, Drain, pipeline and Tubewell for Gazipur City corporation under CGP, LGED",
+    "Feasibility study for Dhaka-Mymensingh Expressway (DME) PPP project",
+
+    "Landscaping, Beautification, Architectural Design and 3D Animation of DND Lake in Narayanganj City Corporation",
+    "Asian Duplex Town Master Plan",
+
+    "Preparation of Master Plan for Green land Town, Purbachal, Dhaka, Bangladesh",
+
+    "Preparation of Master Plan of Neelachol Housing, Purbachol, Dhaka, Bangladesh.",
+
+    "Preparation of Master Plan of Asian Town, Purbachal, Dhaka, Bangladesh.",
+
+    "Topographical Survey of Upazila Road, Bridge, Growth center market, ghat and rural waterways and Preparation of Land acquisition Plan for Rural Transport Improvement projects, (RTIP-II)",
+
+    "Preparation and supply of 45 minutes 3D-visualization and animation along with presentation product on Action Area plan of Block-A (consist of 5 wards) at Narayangonj City Corporation."
+  ]
 ]
