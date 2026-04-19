@@ -16,6 +16,7 @@ const navigationLinks = [
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
   { href: "/projects", label: "Projects" },
+  { href: "/product", label: "Product" },
   { href: "/employees", label: "Team" },
   { href: "/contact", label: "Contact" },
   { href: "/admin/user-management", label: "Dashboard", role: role.admin },

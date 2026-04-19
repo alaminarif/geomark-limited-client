@@ -12,7 +12,7 @@ export const ServiceSection = () => {
   const { scrollYProgress } = useScroll();
   const [hovered, setHovered] = useState(false);
 
-  const { data, isLoading } = useGetAllServicesQuery(undefined);
+  const { data, isLoading } = useGetAllServicesQuery({limit: 8});
   const services = data?.data || [];
 
   const [selectedService, setSelectedService] = useState<any>(null);
@@ -33,12 +33,12 @@ export const ServiceSection = () => {
         <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10">
           {/* Header */}
           <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-            <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase text-blue-800 dark:text-foreground">Sectors</h2>
+            <h2 className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl uppercase text-blue-800 dark:text-foreground">Services</h2>
           </motion.div>
 
           {/* Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3  xl:grid-cols-4 gap-2 sm:gap-3  md:gap-4 lg:gap-6 xl:gap-8  ">
-            {services.slice(0, 8).map((service: any) => (
+            {services.map((service: any) => (
               <ServiceCard service={service} handleOpenModal={handleOpenModal} />
             ))}
           </div>

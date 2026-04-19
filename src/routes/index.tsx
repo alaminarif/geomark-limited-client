@@ -36,6 +36,8 @@ import UpdateProduct from "@/pages/Admin/Product/UpdateProduct";
 import AdminProductDetails from "@/pages/Admin/Product/ProductDetails";
 import ForgotPasswordPage from "@/pages/ForgotPasswordPage";
 import ResetPasswordPage from "@/pages/ResetPasswordPage";
+import ProductPage from "@/pages/ProductPage";
+import ProductDetailsPage from "@/pages/ProductDetails";
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +67,14 @@ export const router = createBrowserRouter([
       {
         Component: Project,
         path: "projects",
+      },
+      {
+        Component: ProductPage,
+        path: "product",
+      },
+      {
+        Component: ProductDetailsPage,
+        path: "product/:id",
       },
       {
         Component: ProjectDetails,

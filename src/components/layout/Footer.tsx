@@ -7,7 +7,7 @@ import Loading from "./Loading";
 
 export default function Footer() {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetAllServicesQuery(undefined);
+  const { data, isLoading } = useGetAllServicesQuery({limit: 4});
   if (isLoading) {
     return <Loading />;
   }
@@ -73,7 +73,7 @@ export default function Footer() {
               <p className="font-medium text-gray-900 dark:text-muted-foreground/80">Services</p>
 
               <ul className="mt-6 space-y-4 text-sm">
-                {data?.data?.slice(0, 3).map((item: any) => (
+                {data?.data?.map((item: any) => (
                   <li key={item.id}>
                     <p
                       onClick={() => handleServiceDetails(item._id)}

@@ -86,7 +86,7 @@ export function ResetPasswordForm({ className, ...props }: ResetPasswordFormProp
                         <Input
                           type={showPassword ? "text" : "password"}
                           placeholder="Enter new password"
-                          className={FormStyles.input}
+                          className={cn(FormStyles.input, "pl-9")}
                           {...field}
                           value={field.value || ""}
                         />
@@ -119,7 +119,7 @@ export function ResetPasswordForm({ className, ...props }: ResetPasswordFormProp
                         <Input
                           type={showConfirmPassword ? "text" : "password"}
                           placeholder="Confirm new password"
-                          className={FormStyles.input}
+                          className={cn(FormStyles.input, "pl-9")}
                           {...field}
                           value={field.value || ""}
                         />

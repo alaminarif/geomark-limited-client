@@ -25,7 +25,7 @@ export function ForgotPasswordForm({ className, ...props }: ForgotPasswordFormPr
     try {
       console.log(data);
       const email = data.email as string;
-      console.log(forgotPassword);
+
       const res = await forgotPassword({ email }).unwrap();
 
       toast.success(res?.message || "Password reset link sent to your email");

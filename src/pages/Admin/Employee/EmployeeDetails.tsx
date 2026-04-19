@@ -61,7 +61,7 @@ const EmployeeDetails = () => {
 
   const employee = data?.data?.data || {};
 
-  const { _id, picture, name, email, phone, designation, address, institute, education, facebook, linkedin, twitter, joinDate } = employee;
+  const { _id, picture, name, email, phone, designation, rank, address, institute, education, facebook, linkedin, twitter, joinDate } = employee;
 
   const profileImage = useMemo(() => {
     return picture || `https://ui-avatars.com/api/?name=${encodeURIComponent(name || "Employee")}&background=0f172a&color=ffffff&size=256`;
@@ -227,6 +227,11 @@ const EmployeeDetails = () => {
                       icon={<Briefcase className="h-5 w-5 text-slate-700 dark:text-slate-200" />}
                       label="Designation"
                       value={designation || "N/A"}
+                    />
+                     <InfoCard
+                      icon={<Briefcase className="h-5 w-5 text-slate-700 dark:text-slate-200" />}
+                      label="Designation"
+                      value={rank || "N/A"}
                     />
                     <InfoCard
                       icon={<CalendarDays className="h-5 w-5 text-slate-700 dark:text-slate-200" />}

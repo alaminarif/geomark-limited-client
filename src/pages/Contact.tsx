@@ -41,6 +41,7 @@ export const Contact = ({ className }: { className?: string }) => {
     subject: z.string().min(3, { error: "Subject is too short" }),
     message: z.string().min(6, { error: "Message is too short" }),
   });
+
   const [addContact] = useAddContactMutation();
   const form = useForm<z.infer<typeof contactScheema>>({
     resolver: zodResolver(contactScheema),
@@ -67,7 +68,7 @@ export const Contact = ({ className }: { className?: string }) => {
       const result = await addContact(contactInfo).unwrap();
       console.log(result);
 
-      toast.success("User created successfully");
+      toast.success("Contact submitted successfully");
     } catch (error) {
       console.error(error);
     }

@@ -163,6 +163,7 @@ const UpdateEmployee = () => {
       email: safeString(employee?.email),
       phone: safeString(employee?.phone),
       designation: safeString(employee?.designation),
+      rank: safeString(employee?.rank),
       address: safeString(employee?.address),
       institute: safeString(employee?.institute),
       education: safeString(employee?.education),
@@ -258,7 +259,7 @@ const UpdateEmployee = () => {
   };
 
   if (employeeLoading || employeeFetching) {
-    return (
+    return  (
       <div className="min-h-screen bg-linear-to-br from-purple-50 via-white to-blue-50 px-4 py-6 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 md:px-6">
         <div className="mx-auto flex min-h-[60vh] max-w-7xl items-center justify-center">
           <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
@@ -445,34 +446,24 @@ const UpdateEmployee = () => {
                     </FormItem>
                   )}
                 />
-
-                <FormField
+                 <FormField
                   control={form.control}
-                  name="joinDate"
+                  name="rank"
                   render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel className="text-foreground">Join Date</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              type="button"
-                              variant="outline"
-                              className={cn(FormStyles.dateButton, !field.value && "text-slate-400 dark:text-foreground/60")}
-                            >
-                              {field.value ? format(field.value, "PPP") : <span>Pick join date</span>}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-60" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className={FormStyles.popoverContent} align="start">
-                          <Calendar mode="single" selected={field.value ?? undefined} onSelect={field.onChange} captionLayout="dropdown" />
-                        </PopoverContent>
-                      </Popover>
+                    <FormItem>
+                      <FormLabel className="text-foreground">Rank</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Briefcase className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/60" />
+                          <Input placeholder="Enter Rank" className={`${FormStyles.input} pl-9`} {...field} value={field.value ?? ""} />
+                        </div>
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+
+               
 
                 <FormField
                   control={form.control}
@@ -503,6 +494,34 @@ const UpdateEmployee = () => {
                           <Input placeholder="Enter education details" className={`${FormStyles.input} pl-9`} {...field} value={field.value ?? ""} />
                         </div>
                       </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                 <FormField
+                  control={form.control}
+                  name="joinDate"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel className="text-foreground">Join Date</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              className={cn(FormStyles.dateButton, !field.value && "text-slate-400 dark:text-foreground/60")}
+                            >
+                              {field.value ? format(field.value, "PPP") : <span>Pick join date</span>}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-60" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className={FormStyles.popoverContent} align="start">
+                          <Calendar mode="single" selected={field.value ?? undefined} onSelect={field.onChange} captionLayout="dropdown" />
+                        </PopoverContent>
+                      </Popover>
                       <FormMessage />
                     </FormItem>
                   )}
