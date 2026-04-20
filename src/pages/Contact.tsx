@@ -9,6 +9,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { toast } from "sonner";
 import { useAddContactMutation } from "@/redux/features/contact/contact.api";
+import { FormStyles } from "@/components/ui/FormStyles";
+import { Mail, MessageSquare, Type, User } from "lucide-react";
 
 export const Contact = ({ className }: { className?: string }) => {
   const container: Variants = {
@@ -132,36 +134,38 @@ export const Contact = ({ className }: { className?: string }) => {
             </motion.div>
 
             {/* FORM */}
-            <motion.div
-              variants={item}
-              whileHover={{ y: -6 }}
-              className="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-xl py-6 sm:p-8 lg:p-10 shadow-2xl"
-            >
+            <motion.div variants={item} whileHover={{ y: -6 }} className="rounded-2xl border border-white/15 py-6 sm:p-8 lg:p-10 shadow-2xl">
               <h1 className="text-2xl font-bold p-0 mb-4">Do you have any question?</h1>
+
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                   <FormField
                     control={form.control}
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        {/* <FormLabel>Name</FormLabel> */}
                         <FormControl>
-                          <Input placeholder="Name" {...field} />
+                          <div className="relative">
+                            <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                            <Input placeholder="Name" {...field} className={cn(FormStyles.input, "pl-10")} />
+                          </div>
                         </FormControl>
                         <FormDescription className="sr-only">This is your public display name.</FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
+
                   <FormField
                     control={form.control}
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        {/* <FormLabel>Email</FormLabel> */}
                         <FormControl>
-                          <Input placeholder="Email" type="email" {...field} />
+                          <div className="relative">
+                            <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                            <Input placeholder="Email" type="email" {...field} className={`${FormStyles.input} pl-10`} />
+                          </div>
                         </FormControl>
                         <FormDescription className="sr-only">This is your public display name.</FormDescription>
                         <FormMessage />
@@ -174,9 +178,11 @@ export const Contact = ({ className }: { className?: string }) => {
                     name="subject"
                     render={({ field }) => (
                       <FormItem>
-                        {/* <FormLabel></FormLabel> */}
                         <FormControl>
-                          <Input placeholder="Subject" {...field} />
+                          <div className="relative">
+                            <Type className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                            <Input placeholder="Subject" {...field} className={`${FormStyles.input} pl-9`} />
+                          </div>
                         </FormControl>
                         <FormDescription className="sr-only">This is your public display name.</FormDescription>
                         <FormMessage />
@@ -189,9 +195,11 @@ export const Contact = ({ className }: { className?: string }) => {
                     name="message"
                     render={({ field }) => (
                       <FormItem>
-                        {/* <FormLabel>Name</FormLabel> */}
                         <FormControl>
-                          <Textarea placeholder="Message" {...field} />
+                          <div className="relative">
+                            <MessageSquare className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                            <Textarea placeholder="Message" {...field} className={`${FormStyles.textarea} pl-10`} />
+                          </div>
                         </FormControl>
                         <FormDescription className="sr-only">This is your public display name.</FormDescription>
                         <FormMessage />
@@ -199,9 +207,6 @@ export const Contact = ({ className }: { className?: string }) => {
                     )}
                   />
 
-                  {/* <Button type="submit" className="w-full">
-                    Submit
-                  </Button> */}
                   <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="mt-6">
                     <Button type="submit" className="w-full rounded-xl bg-linear-to-r from-purple-500 to-blue-500">
                       Send Message

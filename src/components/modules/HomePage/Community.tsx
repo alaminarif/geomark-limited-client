@@ -17,7 +17,7 @@ const items = [
     title: "Facebook",
     desc: "Join our Facebook community and stay updated.",
     icon: <Facebook className="size-14" />,
-    link: "https://www.facebook.com/profile.php?id=100063466780165",
+    link: "https://www.facebook.com/profile.php?id=61565933404947",
   },
   {
     title: "Twitter",
@@ -29,7 +29,7 @@ const items = [
     title: "Whatsapp",
     desc: "Contribute to our open-source projects.",
     icon: <MessageCircle className="size-14" />,
-    link: " ",
+    link: "https://api.whatsapp.com/send?phone=8801716291050",
   },
 ];
 const container = {

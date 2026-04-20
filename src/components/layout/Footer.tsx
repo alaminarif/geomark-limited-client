@@ -7,7 +7,7 @@ import Loading from "./Loading";
 
 export default function Footer() {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetAllServicesQuery({limit: 4});
+  const { data, isLoading } = useGetAllServicesQuery({ limit: 4 });
   if (isLoading) {
     return <Loading />;
   }
@@ -29,7 +29,12 @@ export default function Footer() {
 
             <ul className="mt-8 flex gap-6">
               <li>
-                <a href="#" rel="noreferrer" target="_blank" className="text-gray-700 transition hover:opacity-75">
+                <a
+                  href="https://www.facebook.com/profile.php?id=61565933404947"
+                  rel="noreferrer"
+                  target="_blank"
+                  className="text-gray-700 transition hover:opacity-75"
+                >
                   <span className="sr-only">Facebook</span>
 
                   <svg className="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
