@@ -1,5 +1,5 @@
 import { useMemo, type ReactNode } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useLocation, useNavigate, useParams } from "react-router";
 import { motion, cubicBezier } from "framer-motion";
 import { format } from "date-fns";
 import {
@@ -22,6 +22,8 @@ import {
 
 import { useGetSingleEmployeeQuery } from "@/redux/features/employee/employee.api";
 import { SkeletonEmployeeDetails } from "@/components/modules/Admin/Employee/SkeletonEmployeeDetails";
+import SEO from "@/components/SEO";
+import { createBreadcrumbSchema, truncateText } from "@/lib/seo";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 22 },
@@ -56,10 +58,13 @@ const formatDateValue = (value?: string | Date) => {
 const EmployeeDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { data, isLoading } = useGetSingleEmployeeQuery(id as string);
 
   const employee = data?.data?.data || {};
+  const isAdminRoute = location.pathname.startsWith("/admin");
+  const canonical = isAdminRoute ? location.pathname : `/employee/${id ?? ""}`;
 
   const { _id, picture, name, email, phone, designation, rank, address, institute, education, facebook, linkedin, twitter, joinDate } = employee;
 
@@ -93,12 +98,38 @@ const EmployeeDetails = () => {
   }, [facebook, linkedin, twitter]);
 
   if (isLoading) {
-    return <SkeletonEmployeeDetails />;
+    return (
+      <>
+        <SEO title="Employee Details" description="Loading Geomark Limited employee profile." canonical={canonical} noIndex={isAdminRoute} />
+        <SkeletonEmployeeDetails />
+      </>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-6 transition-colors duration-300 dark:bg-slate-950 md:px-8 md:py-10">
-      <motion.div initial="hidden" animate="visible" className="mx-auto max-w-6xl">
+    <>
+      <SEO
+        title={name ? `${name} - ${designation || "Team Member"}` : "Employee Details"}
+        description={truncateText(
+          name ? `${name} is part of the Geomark Limited team${designation ? ` as ${designation}` : ""}.` : "Geomark Limited employee profile.",
+        )}
+        image={profileImage}
+        type="profile"
+        canonical={canonical}
+        noIndex={isAdminRoute}
+        jsonLd={
+          isAdminRoute
+            ? undefined
+            : createBreadcrumbSchema([
+                { name: "Home", path: "/" },
+                { name: "Team", path: "/employees" },
+                { name: name || "Employee Details", path: canonical },
+              ])
+        }
+      />
+
+      <div className="min-h-screen bg-slate-50 px-4 py-6 transition-colors duration-300 dark:bg-slate-950 md:px-8 md:py-10">
+        <motion.div initial="hidden" animate="visible" className="mx-auto max-w-6xl">
         <motion.div variants={fadeUp} custom={0} className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <button
             onClick={() => navigate(-1)}
@@ -108,13 +139,15 @@ const EmployeeDetails = () => {
             Back
           </button>
 
-          <Link
-            to={`/admin/employee/${id}/edit`}
-            className="inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-purple-500 to-blue-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-purple-500/30"
-          >
-            <Pencil className="h-4 w-4" />
-            Edit Employee
-          </Link>
+          {isAdminRoute && (
+            <Link
+              to={`/admin/employee/${id}/edit`}
+              className="inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-purple-500 to-blue-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-purple-500/30"
+            >
+              <Pencil className="h-4 w-4" />
+              Edit Employee
+            </Link>
+          )}
         </motion.div>
 
         <motion.div
@@ -291,8 +324,9 @@ const EmployeeDetails = () => {
             </motion.div>
           </div>
         </motion.div>
-      </motion.div>
-    </div>
+        </motion.div>
+      </div>
+    </>
   );
 };
 

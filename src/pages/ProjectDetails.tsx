@@ -5,6 +5,8 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Loading from "@/components/layout/Loading";
 import { Button } from "@/components/ui/button";
 import ProjectCard from "@/components/modules/Project/ProjectCard";
+import SEO from "@/components/SEO";
+import { createBreadcrumbSchema, createCreativeWorkSchema, truncateText } from "@/lib/seo";
 import { useGetAllProjectsQuery, useGetSingleProjectQuery } from "@/redux/features/project/project.api";
 
 export const title = "Project Details";
@@ -100,10 +102,13 @@ const ProjectDetails = () => {
   const { data: allProjectsRes } = useGetAllProjectsQuery(undefined);
 
   const project = singleProjectRes?.data?.data as Project | undefined;
+  const canonical = `/project/${id ?? ""}`;
   const allProjects = (allProjectsRes?.data ?? []) as Project[];
   const currentProjectId = project?._id;
 
   const bgImage = project?.picture || DEFAULT_BG_IMAGE;
+  const projectName = project?.name || project?.title || "Project Details";
+  const projectDescription = project?.description || "View this Geomark Limited project profile and related consulting work.";
 
   const keyPoints = text
     .split(";")
@@ -183,24 +188,51 @@ const ProjectDetails = () => {
   }, [handlePrev, handleNext]);
 
   if (isLoading) {
-    return <Loading />;
+    return (
+      <>
+        <SEO title="Project Details" description="Loading Geomark Limited project details." canonical={canonical} type="article" />
+        <Loading />
+      </>
+    );
   }
 
   return (
-    <section className="pb-32">
-      {/* Hero */}
-      <motion.div
-        className="relative flex min-h-130 items-center justify-center overflow-hidden py-32"
-        initial="hidden"
-        animate="show"
-        variants={staggerContainer}
-      >
+    <>
+      <SEO
+        title={projectName}
+        description={truncateText(projectDescription)}
+        image={bgImage}
+        canonical={canonical}
+        type="article"
+        jsonLd={[
+          createCreativeWorkSchema({
+            name: projectName,
+            description: projectDescription,
+            image: bgImage,
+            path: canonical,
+          }),
+          createBreadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Projects", path: "/projects" },
+            { name: projectName, path: canonical },
+          ]),
+        ]}
+      />
+
+      <section className="pb-32">
+        {/* Hero */}
         <motion.div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${bgImage})` }}
-          animate={shouldReduceMotion ? {} : { scale: 1.06 }}
-          transition={{ duration: 8, ease: "easeOut" }}
-        />
+          className="relative flex min-h-130 items-center justify-center overflow-hidden py-32"
+          initial="hidden"
+          animate="show"
+          variants={staggerContainer}
+        >
+          <motion.div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${bgImage})` }}
+            animate={shouldReduceMotion ? {} : { scale: 1.06 }}
+            transition={{ duration: 8, ease: "easeOut" }}
+          />
 
         <div className="absolute inset-0 bg-black/55" />
 
@@ -235,23 +267,23 @@ const ProjectDetails = () => {
           </>
         )}
 
-        <div className="relative z-10 container text-center">
-          <motion.div variants={fadeUp}>
-            <span className="mb-4 inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1 text-sm text-white/90 backdrop-blur-md">
-              Featured Project
-            </span>
-          </motion.div>
+          <div className="relative z-10 container text-center">
+            <motion.div variants={fadeUp}>
+              <span className="mb-4 inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1 text-sm text-white/90 backdrop-blur-md">
+                Featured Project
+              </span>
+            </motion.div>
 
-          <motion.h1
-            variants={fadeUp}
-            className="mx-auto max-w-5xl text-4xl font-semibold tracking-tight text-primary-foreground md:text-5xl lg:text-6xl"
-          >
-            {project?.title}
-          </motion.h1>
+            <motion.h1
+              variants={fadeUp}
+              className="mx-auto max-w-5xl text-4xl font-semibold tracking-tight text-primary-foreground md:text-5xl lg:text-6xl"
+            >
+              {projectName}
+            </motion.h1>
 
-          <motion.div variants={fadeUp} className="mx-auto mt-6 h-1 w-24 rounded-full bg-linear-to-r from-purple-500 to-blue-500" />
-        </div>
-      </motion.div>
+            <motion.div variants={fadeUp} className="mx-auto mt-6 h-1 w-24 rounded-full bg-linear-to-r from-purple-500 to-blue-500" />
+          </div>
+        </motion.div>
 
       {/* Intro */}
       <div className="py-16">
@@ -506,7 +538,8 @@ const ProjectDetails = () => {
           </motion.div>
         </motion.div>
       </div>
-    </section>
+      </section>
+    </>
   );
 };
 

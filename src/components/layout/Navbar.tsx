@@ -9,6 +9,7 @@ import { Link } from "react-router";
 import { authApi, useLogoutMutation, useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hook";
 import { role } from "@/constants/role";
+import { Fragment } from "react";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -23,6 +24,8 @@ const navigationLinks = [
   { href: "/admin/user-management", label: "Dashboard", role: role.superAdmin },
   { href: "/user", label: "Dashboard", role: role.user },
 ];
+
+const navLinkClass = "text-blue-800 dark:text-muted-foreground hover:text-primary dark:hover:text-primary uppercase font-bold py-1.5";
 
 export default function Navbar() {
   const { data } = useUserInfoQuery(undefined);
@@ -74,18 +77,18 @@ export default function Navbar() {
             <PopoverContent align="start" className="w-36 p-1 md:hidden">
               <NavigationMenu className="max-w-none *:w-full">
                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
-                  {navigationLinks.map((link, index) => (
-                    <>
-                      {link.role === "PUBLIC" && (
-                        <NavigationMenuItem key={index} className="w-full">
+                  {navigationLinks.map((link) => (
+                    <Fragment key={`${link.href}-${link.label}-${link.role || "public"}`}>
+                      {!link.role && (
+                        <NavigationMenuItem className="w-full">
                           <NavigationMenuLink asChild className="py-1.5">
                             <Link to={link.href}>{link.label} </Link>
                           </NavigationMenuLink>
                         </NavigationMenuItem>
                       )}
 
-                      {link.role === data?.data?.role && (
-                        <NavigationMenuItem key={index} className="w-full">
+                      {link.role && link.role === data?.data?.role && (
+                        <NavigationMenuItem className="w-full">
                           <NavigationMenuLink asChild className="py-1.5">
                             <Link to={link.href} className="">
                               {link.label}{" "}
@@ -93,7 +96,7 @@ export default function Navbar() {
                           </NavigationMenuLink>
                         </NavigationMenuItem>
                       )}
-                    </>
+                    </Fragment>
                   ))}
                 </NavigationMenuList>
               </NavigationMenu>
@@ -108,30 +111,24 @@ export default function Navbar() {
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
-                {navigationLinks.map((link, index) => (
-                  <>
-                    {link.role === "PUBLIC" && (
-                      <NavigationMenuItem key={index}>
-                        <NavigationMenuLink
-                          asChild
-                          className="text-blue-800 dark:text-muted-foregroundhover:text-primary dark:hover:text-primary   uppercase font-bold py-1.5 "
-                        >
+                {navigationLinks.map((link) => (
+                  <Fragment key={`${link.href}-${link.label}-${link.role || "public"}`}>
+                      {!link.role && (
+                        <NavigationMenuItem>
+                        <NavigationMenuLink asChild className={navLinkClass}>
                           <Link to={link.href}>{link.label}</Link>
                         </NavigationMenuLink>
                       </NavigationMenuItem>
                     )}
 
-                    {link.role === data?.data?.role && (
-                      <NavigationMenuItem key={index}>
-                        <NavigationMenuLink
-                          asChild
-                          className="text-blue-800 dark:text-muted-foreground  hover:text-primary dark:hover:text-primary  uppercase font-bold py-1.5  "
-                        >
+                    {link.role && link.role === data?.data?.role && (
+                      <NavigationMenuItem>
+                        <NavigationMenuLink asChild className={navLinkClass}>
                           <Link to={link.href}>{link.label}</Link>
                         </NavigationMenuLink>
                       </NavigationMenuItem>
                     )}
-                  </>
+                  </Fragment>
                 ))}
               </NavigationMenuList>
             </NavigationMenu>

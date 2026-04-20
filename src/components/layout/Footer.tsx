@@ -2,19 +2,15 @@
 // import Logo from "@/assets/icons/Logo";
 
 import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import Loading from "./Loading";
 
 export default function Footer() {
-  const navigate = useNavigate();
   const { data, isLoading } = useGetAllServicesQuery({ limit: 4 });
   if (isLoading) {
     return <Loading />;
   }
-  const handleServiceDetails = (id: string) => {
-    navigate(`/service/${id}`);
-    console.log("click", id);
-  };
+
   return (
     <footer className="container mx-auto">
       <div className="  space-y-8 px-4 py-16 ">
@@ -79,14 +75,10 @@ export default function Footer() {
 
               <ul className="mt-6 space-y-4 text-sm">
                 {data?.data?.map((item: any) => (
-                  <li key={item.id}>
-                    <p
-                      onClick={() => handleServiceDetails(item._id)}
-                      className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75"
-                    >
-                      {" "}
-                      {item.name}{" "}
-                    </p>
+                  <li key={item._id}>
+                    <Link to={`/service/${item._id}`} className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
+                      {item.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -104,16 +96,14 @@ export default function Footer() {
                 </li>
 
                 <li>
-                  <Link to="#" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    {" "}
-                    Meet the Team{" "}
+                  <Link to="/employees" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
+                    Meet the Team
                   </Link>
                 </li>
 
                 <li>
-                  <Link to="#" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    {" "}
-                    Accounts Review{" "}
+                  <Link to="/client" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
+                    Clients
                   </Link>
                 </li>
               </ul>
@@ -131,16 +121,14 @@ export default function Footer() {
                 </li>
 
                 <li>
-                  <Link to="#" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    {" "}
-                    FAQs{" "}
+                  <Link to="/services" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
+                    Services
                   </Link>
                 </li>
 
                 <li>
-                  <Link to="/cotact" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    {" "}
-                    Live Chat{" "}
+                  <Link to="/projects" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
+                    Projects
                   </Link>
                 </li>
               </ul>
@@ -151,23 +139,20 @@ export default function Footer() {
 
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
-                  <Link to="#" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    {" "}
-                    Accessibility{" "}
+                  <Link to="/product" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
+                    Products
                   </Link>
                 </li>
 
                 <li>
-                  <Link to="#" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    {" "}
-                    Returns Policy{" "}
+                  <Link to="/services" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
+                    Service Sectors
                   </Link>
                 </li>
 
                 <li>
-                  <Link to="#" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    {" "}
-                    Refund Policy{" "}
+                  <Link to="/contact" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
+                    Contact Office
                   </Link>
                 </li>
               </ul>

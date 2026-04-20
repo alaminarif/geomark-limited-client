@@ -25,20 +25,20 @@ export function HeroSection() {
   const slides = [
     {
       image: HeroOne,
-      title: "Beyond Digital Experience",
-      subtitle: "Premium design engineered for performance.",
+      title: "GIS, Surveying and Planning Consultancy",
+      subtitle: "Geospatial services for infrastructure, land and development projects.",
       button: "Start Journey",
     },
     {
       image: HeroTwo,
-      title: "Engineered For Innovation",
-      subtitle: "Crafting the future of web experience.",
+      title: "Digital Mapping and Remote Sensing",
+      subtitle: "Mapping, CAD, GIS and survey data solutions for Bangladesh.",
       button: "Discover More",
     },
     {
       image: HeroThree,
-      title: "Dominate The Future",
-      subtitle: "Power. Precision. Perfection.",
+      title: "Engineering and IT Enabled Services",
+      subtitle: "Planning, design, supervision and software support from one team.",
       button: "Join Now",
     },
   ];
@@ -117,7 +117,7 @@ export function HeroSection() {
               {/* Slide Title */}
               <div className="relative z-10 px-4 pb-6">
                 <AnimatePresence mode="wait">
-                  <motion.h1
+                  <motion.h2
                     key={currentIndex}
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -136,7 +136,7 @@ export function HeroSection() {
                         {word}
                       </motion.span>
                     ))}
-                  </motion.h1>
+                  </motion.h2>
                 </AnimatePresence>
               </div>
             </div>

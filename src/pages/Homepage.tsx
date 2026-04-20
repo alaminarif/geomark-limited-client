@@ -10,6 +10,7 @@ import { NewsSection } from "@/components/modules/HomePage/NewsSection";
 const Homepage = () => {
   return (
     <div>
+      <h1 className="sr-only">Geomark Limited GIS, surveying, digital mapping and planning consultancy in Bangladesh</h1>
       <HeroSection />
       <NewsSection />
       <ServiceSection />
