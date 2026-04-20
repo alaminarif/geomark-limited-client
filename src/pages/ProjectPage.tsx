@@ -407,7 +407,7 @@ const ProjectPage = () => {
                             >
                               <div className="min-w-40">
                                 <motion.div
-                                  className="wrap-break-word line-clamp-3 font-medium whitespace-normal"
+                                  className="wrap-break-word line-clamp-3 font-medium whitespace-normal text-foreground/80"
                                   whileHover={{ x: 3 }}
                                   animate={isSelected ? { x: 2 } : { x: 0 }}
                                   transition={{ type: "spring", stiffness: 260 }}

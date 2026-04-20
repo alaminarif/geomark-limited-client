@@ -24,5 +24,5 @@ export const FormStyles = {
   uploadCard:
     "rounded-3xl border border-dashed border-purple-200 bg-gradient-to-br from-purple-50/80 to-blue-50/80 p-4 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800",
   button:
-    "h-11 rounded-2xl border border-slate-200 bg-white/80 pl-11 pr-11 text-slate-700 shadow-sm transition-all duration-200 placeholder:text-slate-400 focus-visible:border-violet-400 focus-visible:ring-4 focus-visible:ring-violet-500/10 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus-visible:border-violet-500 dark:focus-visible:ring-violet-500/20",
+    "h-11 w-full mt-3 rounded-2xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 text-sm font-semibold text-white  transition-all duration-200 hover:scale-[1.01] hover:from-violet-700 hover:via-indigo-700 hover:to-blue-700 disabled:cursor-not-allowed disabled:opacity-70",
 };

@@ -137,11 +137,7 @@ export function ResetPasswordForm({ className, ...props }: ResetPasswordFormProp
                 )}
               />
 
-              <Button
-                type="submit"
-                disabled={isLoading}
-                className="h-11 w-full rounded-2xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition-all duration-200 hover:scale-[1.01] hover:from-violet-700 hover:via-indigo-700 hover:to-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
-              >
+              <Button type="submit" disabled={isLoading} className={cn(FormStyles.button, isLoading && "cursor-not-allowed opacity-70")}>
                 {isLoading ? (
                   <span className="flex items-center gap-2">
                     <Loader2 className="h-4 w-4 animate-spin" />

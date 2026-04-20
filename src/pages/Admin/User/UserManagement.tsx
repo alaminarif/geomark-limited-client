@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { BadgeCheck, Eye, MoreHorizontalIcon, Pencil, ShieldCheck, Trash2, UserRound, UserRoundPlus, XCircle } from "lucide-react";
-import { toast } from "sonner";
+import { BadgeCheck, Eye, MoreHorizontalIcon, Pencil, ShieldCheck, UserRound, UserRoundPlus, XCircle } from "lucide-react";
 import { useNavigate } from "react-router";
-import { useDeleteUserMutation, useGetAllUsersQuery } from "@/redux/features/user/user.api";
+import { useGetAllUsersQuery } from "@/redux/features/user/user.api";
 import { motion, type Variants } from "framer-motion";
 import { SkeletonUserManagement } from "@/components/modules/Admin/User/SkeletonUserManagement";
 
@@ -120,27 +118,27 @@ const getActiveLabel = (value?: boolean | string) => {
 const UserManagement = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useGetAllUsersQuery(undefined);
-  const [deleteUser] = useDeleteUserMutation();
+  // const [deleteUser] = useDeleteUserMutation();
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
-  const handleDeleteUser = async (userId: string) => {
-    const toastId = toast.loading("Deleting user...");
+  // const handleDeleteUser = async (userId: string) => {
+  //   const toastId = toast.loading("Deleting user...");
 
-    try {
-      const res = await deleteUser(userId).unwrap();
+  //   try {
+  //     const res = await deleteUser(userId).unwrap();
 
-      if (res.success) {
-        toast.success("User deleted successfully", { id: toastId });
+  //     if (res.success) {
+  //       toast.success("User deleted successfully", { id: toastId });
 
-        if (selectedUserId === userId) {
-          setSelectedUserId(null);
-        }
-      }
-    } catch (error) {
-      toast.error("Failed to delete user", { id: toastId });
-      console.log(error);
-    }
-  };
+  //       if (selectedUserId === userId) {
+  //         setSelectedUserId(null);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     toast.error("Failed to delete user", { id: toastId });
+  //     console.log(error);
+  //   }
+  // };
 
   const handleRegisterUser = () => {
     navigate("/register");
@@ -396,7 +394,7 @@ const UserManagement = () => {
 
                               <DropdownMenuSeparator className="my-1 opacity-50" />
 
-                              <motion.div custom={0.08} variants={dropdownItemVariants}>
+                              {/* <motion.div custom={0.08} variants={dropdownItemVariants}>
                                 <DeleteConfirmation onConfirm={() => handleDeleteUser(item._id)}>
                                   <DropdownMenuItem
                                     onSelect={(e) => e.preventDefault()}
@@ -407,7 +405,7 @@ const UserManagement = () => {
                                     <span className="font-medium">Delete</span>
                                   </DropdownMenuItem>
                                 </DeleteConfirmation>
-                              </motion.div>
+                              </motion.div> */}
                             </motion.div>
                           </DropdownMenuContent>
                         </DropdownMenu>

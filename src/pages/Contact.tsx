@@ -207,11 +207,11 @@ export const Contact = ({ className }: { className?: string }) => {
                     )}
                   />
 
-                  <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="mt-6">
-                    <Button type="submit" className="w-full rounded-xl bg-linear-to-r from-purple-500 to-blue-500">
-                      Send Message
-                    </Button>
-                  </motion.div>
+                  {/* <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className=""> */}
+                  <Button type="submit" className={FormStyles.button}>
+                    Send Message
+                  </Button>
+                  {/* </motion.div> */}
                 </form>
               </Form>
             </motion.div>
