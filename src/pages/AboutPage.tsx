@@ -116,7 +116,7 @@ export const AboutPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.35, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="pointer-events-none absolute left-4 z-10 top-4 rounded-xl bg-linear-to-r from-purple-500 to-blue-500 px-3 py-1 text-sm font-medium text-white shadow-lg"
+                className="pointer-events-none absolute left-4 z-10 top-4 rounded-xl bg-linear-to-r from-purple-500 to-blue-500 px-3 py-1 text-sm font-medium text-foreground shadow-lg"
               >
                 Since 1999
               </motion.div>
@@ -143,7 +143,7 @@ export const AboutPage = () => {
               viewport={{ once: true }}
               className="flex flex-col justify-center text-center md:text-left"
             >
-              <motion.h1 variants={fadeUp} className="mb-6 text-4xl font-semibold leading-tight lg:text-5xl">
+              <motion.h1 variants={fadeUp} className="mb-6 text-4xl text-blue-800 dark:text-foreground font-semibold leading-tight lg:text-5xl">
                 About Us
               </motion.h1>
 
@@ -201,7 +201,7 @@ export const AboutPage = () => {
                   />
 
                   <div className="my-6">
-                    <h3 className="mb-3 text-xl font-semibold tracking-wide">{item.title}</h3>
+                    <h3 className="mb-3 text-xl font-semibold text-muted-foreground tracking-wide">{item.title}</h3>
                     <p className="max-w-xl text-justify leading-relaxed text-muted-foreground">{item.text}</p>
                   </div>
                 </div>
@@ -209,7 +209,7 @@ export const AboutPage = () => {
                 <Button
                   variant="outline"
                   asChild
-                  className="relative z-10 mr-auto transition-all duration-300 group-hover:border-primary group-hover:bg-primary group-hover:text-white"
+                  className="relative z-10 mr-auto transition-all  text-foreground duration-300 hover:border-primary hover:bg-primary hover:text-white"
                 >
                   <a href={item.buttonUrl} target="_blank" rel="noopener noreferrer">
                     {item.buttonText}

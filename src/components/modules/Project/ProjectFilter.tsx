@@ -92,12 +92,12 @@ const ProjectFilter = () => {
             </SelectTrigger>
             <SelectContent className="bg-linear-to-br from-primary/10 via-transparent to-purple-500/10">
               <SelectGroup>
-                <SelectItem value="__all__" className="text-white border-2 mb-2">
+                <SelectItem value="__all__" className="text-muted-foreground border-2 mb-2">
                   All Service
                 </SelectItem>
 
                 {serviceOptions.map((item: { value: string; label: string }) => (
-                  <SelectItem key={item.value} value={item.value} className="text-white border-2 mb-2">
+                  <SelectItem key={item.value} value={item.value} className="text-foreground border-2 mb-2">
                     {item.label}
                   </SelectItem>
                 ))}
@@ -123,12 +123,12 @@ const ProjectFilter = () => {
             </SelectTrigger>
             <SelectContent className="bg-linear-to-br from-primary/10 via-transparent to-purple-500/10">
               <SelectGroup>
-                <SelectItem value="__all__" className="text-white border-2 mb-2">
+                <SelectItem value="__all__" className="text-foreground border-2 mb-2">
                   All Year
                 </SelectItem>
 
                 {projectYearOptions.map((item: { value: string; label: string }) => (
-                  <SelectItem key={item.value} value={item.value} className="text-white border-2 mb-2">
+                  <SelectItem key={item.value} value={item.value} className="text-foreground border-2 mb-2">
                     {item.label}
                   </SelectItem>
                 ))}
@@ -154,12 +154,12 @@ const ProjectFilter = () => {
             </SelectTrigger>
             <SelectContent className="bg-linear-to-br from-primary/10 via-transparent to-purple-500/10">
               <SelectGroup>
-                <SelectItem value="__all__" className="text-white border-2 mb-2">
+                <SelectItem value="__all__" className="text-muted-foreground border-2 mb-2">
                   All Status
                 </SelectItem>
 
                 {projectStatusOptions.map((item: { value: string; label: string }) => (
-                  <SelectItem key={item.value} value={item.value} className="text-white border-2 mb-2">
+                  <SelectItem key={item.value} value={item.value} className="text-foreground border-2 mb-2">
                     {item.label}
                   </SelectItem>
                 ))}

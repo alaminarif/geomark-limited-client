@@ -32,7 +32,7 @@
 
 ---
 
-- ### Designed and developed a responsive corporate website and admin dashboard for Geomark Limited using React, TypeScript, Tailwind CSS and Redux Toolkit.
+- ### Designed and developed a responsive corporate website and admin dashboard for Geomark Limited with smooth animations and interactive layouts.
 
 - ### Built secure role-based authentication and full CRUD modules for managing projects, services, products, clients, employees, users and news.
 

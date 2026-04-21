@@ -1,13 +1,15 @@
 import type { ISidebarItem } from "@/types";
-import AdminManagement from "@/pages/Admin/User/UserManagement";
-import ClientManagement from "@/pages/Admin/Client/ClientManagement";
-import ProjectManagement from "@/pages/Admin/Project/ProjectManagement";
-import ServicesManagement from "@/pages/Admin/Service/ServicesManagement";
-import EmployeeManagement from "@/pages/Admin/Employee/EmployeeManagement";
-import NewsManagement from "@/pages/Admin/News/NewsManagement";
-import ProductManagement from "@/pages/Admin/Product/ProductManagement";
+import { lazyRoute } from "@/utils/lazyRoute";
 
 import { Users, BriefcaseBusiness, FolderKanban, Package, UserCog, Handshake, Newspaper } from "lucide-react";
+
+const AdminManagement = lazyRoute(() => import("@/pages/Admin/User/UserManagement"));
+const ClientManagement = lazyRoute(() => import("@/pages/Admin/Client/ClientManagement"));
+const ProjectManagement = lazyRoute(() => import("@/pages/Admin/Project/ProjectManagement"));
+const ServicesManagement = lazyRoute(() => import("@/pages/Admin/Service/ServicesManagement"));
+const EmployeeManagement = lazyRoute(() => import("@/pages/Admin/Employee/EmployeeManagement"));
+const NewsManagement = lazyRoute(() => import("@/pages/Admin/News/NewsManagement"));
+const ProductManagement = lazyRoute(() => import("@/pages/Admin/Product/ProductManagement"));
 
 export const adminSidebarItems: ISidebarItem[] = [
   {

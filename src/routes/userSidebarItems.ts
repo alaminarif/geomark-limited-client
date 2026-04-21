@@ -1,5 +1,7 @@
-import User from "@/pages/User/user";
 import type { ISidebarItem } from "@/types";
+import { lazyRoute } from "@/utils/lazyRoute";
+
+const User = lazyRoute(() => import("@/pages/User/user"));
 
 export const userSidebarItems: ISidebarItem[] = [
   {
