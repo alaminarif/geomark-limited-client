@@ -291,7 +291,7 @@ const UpdateClient = () => {
               <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
 
-            <div className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground">
+            <div className="rounded-3xl border border-blue-400 px-4 py-2 text-foreground">
               <h1 className="text-2xl font-semibold">Update Client</h1>
               <p className="mt-1 text-sm">Edit client information, joining details and image.</p>
             </div>

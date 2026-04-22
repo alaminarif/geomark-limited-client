@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */ import { motion } from "framer-motion";
 import { ArrowLeft, FileText, ImagePlus, Loader2, Newspaper, Save } from "lucide-react";
-import { useEffect, useMemo, useRef, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import SingleImageUploader from "@/components/ui/SingleImageUploader";
 import { useGetSingleNewsQuery, useUpdateNewsMutation } from "@/redux/features/news/news.api";
 type UpdateNewsFormValues = { name: string; description: string };
+type SubmitButton = "header" | "footer";
 const MAX_IMAGE_SIZE = 2 * 1024 * 1024;
 const defaultValues: UpdateNewsFormValues = { name: "", description: "" };
 const formatFileSize = (bytes: number) => {
@@ -39,6 +40,7 @@ const UpdateNews = () => {
   const imageRef = useRef<File | null>(null);
   const initialDataRef = useRef<Record<string, any> | null>(null);
   const initializedKeyRef = useRef("");
+  const [activeSubmitButton, setActiveSubmitButton] = useState<SubmitButton | null>(null);
   const setImage = (file: File | null) => {
     imageRef.current = file;
   };
@@ -122,9 +124,14 @@ const UpdateNews = () => {
       }
       toast.error(getErrorMessage(error), { id: toastId });
       console.log(error);
+    } finally {
+      setActiveSubmitButton(null);
     }
   };
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null;
+    const submitSource = submitter?.dataset.submitSource as SubmitButton | undefined;
+    setActiveSubmitButton(submitSource || "footer");
     form.handleSubmit(onSubmit)(event);
   };
   if (newsLoading || newsFetching) {
@@ -176,7 +183,7 @@ const UpdateNews = () => {
             >
               <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
-            <div className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground">
+            <div className="rounded-3xl border border-blue-400 px-4 py-2 text-foreground">
               <h1 className="text-2xl font-semibold">Update News</h1> <p className="mt-1 text-sm">Edit news title, description and image.</p>
             </div>
           </div>
@@ -184,9 +191,10 @@ const UpdateNews = () => {
             type="submit"
             form="update-news-form"
             disabled={isSubmitting}
+            data-submit-source="header"
             className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground"
           >
-            {isSubmitting ? (
+            {isSubmitting && activeSubmitButton === "header" ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Updating...
               </>
@@ -295,9 +303,10 @@ const UpdateNews = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
+                data-submit-source="footer"
                 className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground"
               >
-                {isSubmitting ? (
+                {isSubmitting && activeSubmitButton === "footer" ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Updating...
                   </>

@@ -27,7 +27,7 @@ export const SkeletonProductManagement = () => {
       <div className="relative rounded-3xl border border-border/50 bg-background/70 p-3 backdrop-blur-xl shadow-[0_16px_60px_-20px_rgba(0,0,0,0.35)]">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
-        <Table className="border-separate [border-spacing:0_10px]">
+        <Table className="min-w-[760px] border-separate [border-spacing:0_10px]">
           <TableHeader>
             <TableRow className="border-none hover:bg-transparent">
               <TableHead className="px-4">Image</TableHead>

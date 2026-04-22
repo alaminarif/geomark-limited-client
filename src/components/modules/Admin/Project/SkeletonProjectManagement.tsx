@@ -20,7 +20,7 @@ export const SkeletonProjectManagement = () => {
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
-      className="container mx-auto overflow-x-hidden"
+      className="container mx-auto"
     >
       <div className="px-4 ">
         <div className="my-6">
@@ -45,7 +45,7 @@ export const SkeletonProjectManagement = () => {
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
           <div className=" overflow-x-auto">
-            <Table className=" border-separate [border-spacing:0_10px]">
+            <Table className="min-w-[920px] border-separate [border-spacing:0_10px]">
               <TableHeader>
                 <TableRow className="border-none hover:bg-transparent">
                   <TableHead className="px-4">Image</TableHead>

@@ -1,16 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { animate, motion, useAnimationFrame, useMotionValue, useMotionValueEvent } from "framer-motion";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import Loading from "@/components/layout/Loading";
-import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useGetAllNewssQuery } from "@/redux/features/news/news.api";
 import NewsCard from "@/components/news/NewsCard";
 
 interface CommunityProps {
   className?: string;
+  items: NewsItem[];
 }
 
 interface NewsItem {
@@ -27,6 +25,10 @@ interface CardMeta {
 }
 
 const AUTO_SPEED = 65;
+const controlButtonClassName =
+  "inline-flex items-center justify-center rounded-full border border-blue-400 bg-background/80 text-blue-600 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary hover:text-primary hover:shadow-md dark:border-blue-400/40 dark:text-foreground/80 dark:hover:border-primary dark:hover:text-primary";
+const indicatorButtonClassName =
+  "h-2.5 rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:shadow-sm";
 
 const normalizeX = (value: number, width: number) => {
   if (!width) return 0;
@@ -39,11 +41,7 @@ const normalizeX = (value: number, width: number) => {
   return next;
 };
 
-export const NewsSection = ({ className }: CommunityProps) => {
-  const { data, isLoading } = useGetAllNewssQuery(undefined);
-
-  const items: NewsItem[] = useMemo(() => data?.data || [], [data]);
-
+export const NewsSection = ({ className, items }: CommunityProps) => {
   const x = useMotionValue(0);
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
@@ -163,7 +161,6 @@ export const NewsSection = ({ className }: CommunityProps) => {
     goToIndex((activeIndex - 1 + items.length) % items.length);
   };
 
-  if (isLoading) return <Loading />;
   if (!items.length) return null;
 
   return (
@@ -236,58 +233,61 @@ export const NewsSection = ({ className }: CommunityProps) => {
 
           <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:mt-8 sm:gap-5">
             <div className="flex items-center justify-center gap-2 sm:gap-3">
-              <Button
+              <motion.button
                 type="button"
-                variant="outline"
-                size="icon"
                 onClick={goPrev}
-                className="h-10 w-10 rounded-full border-blue-300/60 bg-background/80 text-blue-500 backdrop-blur-sm dark:border-violet-300/40 dark:text-foreground/80 sm:h-11 sm:w-11"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                className={cn(controlButtonClassName, "size-10 sm:size-11")}
               >
                 <ChevronLeft className="h-5 w-5" />
-              </Button>
+              </motion.button>
 
-              <Button
+              <motion.button
                 type="button"
-                variant="outline"
                 onClick={() => setIsPaused((prev) => !prev)}
-                className="min-w-28 rounded-full border-blue-300/60 bg-background/80 px-4 text-blue-500 backdrop-blur-sm dark:border-violet-300/40 dark:text-foreground/80 sm:min-w-30 sm:px-5"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className={cn(controlButtonClassName, "h-10 min-w-28 gap-2 px-4 text-sm font-medium sm:h-11 sm:min-w-30 sm:px-5")}
               >
                 {isPaused ? (
                   <>
-                    <Play className="mr-2 h-4 w-4" />
+                    <Play className="h-4 w-4" />
                     Play
                   </>
                 ) : (
                   <>
-                    <Pause className="mr-2 h-4 w-4" />
+                    <Pause className="h-4 w-4" />
                     Pause
                   </>
                 )}
-              </Button>
+              </motion.button>
 
-              <Button
+              <motion.button
                 type="button"
-                variant="outline"
-                size="icon"
                 onClick={goNext}
-                className="h-10 w-10 rounded-full border-blue-300/60 bg-background/80 text-blue-500 backdrop-blur-sm dark:border-violet-300/40 dark:text-foreground/80 sm:h-11 sm:w-11"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                className={cn(controlButtonClassName, "size-10 sm:size-11")}
               >
                 <ChevronRight className="h-5 w-5" />
-              </Button>
+              </motion.button>
             </div>
 
             <div className="flex max-w-full flex-wrap items-center justify-center gap-2 px-2">
               {items.map((_, index) => (
-                <button
+                <motion.button
                   key={index}
                   type="button"
                   onClick={() => goToIndex(index)}
                   aria-label={`Go to news ${index + 1}`}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95 }}
                   className={cn(
-                    "h-2.5 rounded-full transition-all duration-300",
+                    indicatorButtonClassName,
                     activeIndex === index
-                      ? "w-7 bg-blue-700 dark:bg-violet-300 sm:w-8"
-                      : "w-2.5 bg-blue-300 hover:bg-blue-400 dark:bg-violet-300/30 dark:hover:bg-violet-300/50",
+                      ? "w-7 bg-blue-600 shadow-[0_6px_18px_rgba(37,47,126,0.25)] dark:bg-blue-400 sm:w-8"
+                      : "w-2.5 bg-muted-foreground/30 hover:bg-primary/55 dark:bg-blue-300/25 dark:hover:bg-blue-300/50",
                   )}
                 />
               ))}

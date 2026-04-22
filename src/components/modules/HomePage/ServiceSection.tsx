@@ -2,23 +2,21 @@
 import { motion, useScroll } from "framer-motion";
 import { useState } from "react";
 
-import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
-import Loading from "@/components/layout/Loading";
 import { ServiceModal } from "./ServiceModal";
 import ServiceCard from "../Service/ServiceCard";
 import { Link } from "react-router";
 
-export const ServiceSection = () => {
+type ServiceSectionProps = {
+  services?: any[];
+};
+
+export const ServiceSection = ({ services = [] }: ServiceSectionProps) => {
   const { scrollYProgress } = useScroll();
   const [hovered, setHovered] = useState(false);
 
-  const { data, isLoading } = useGetAllServicesQuery({limit: 8});
-  const services = data?.data || [];
-
   const [selectedService, setSelectedService] = useState<any>(null);
   const [open, setOpen] = useState(false);
-
-  if (isLoading) return <Loading />;
+  if (!services.length) return null;
 
   const handleOpenModal = (service: any) => {
     setSelectedService(service);

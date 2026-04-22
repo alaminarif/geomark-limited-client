@@ -7,7 +7,6 @@ import { FormStyles } from "@/components/ui/FormStyles";
 import { Input } from "@/components/ui/input";
 import MultipleImageUploader from "@/components/ui/MultipleImageUploader";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SingleImageUploader from "@/components/ui/SingleImageUploader";
 import { Textarea } from "@/components/ui/textarea";
 import { ProjectStatus } from "@/constants/project";
@@ -20,8 +19,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import imageCompression from "browser-image-compression";
 import { format, formatISO, isValid } from "date-fns";
 import { motion } from "framer-motion";
-import { ArrowLeft, CalendarIcon, FolderPen, ImagePlus, Loader2, MapPin, Save, XCircle } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, type FormEvent } from "react";
+import { ArrowLeft, CalendarIcon, ChevronDown, FolderPen, ImagePlus, Loader2, MapPin, Save, XCircle } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -30,9 +29,12 @@ import { z } from "zod";
 type UpdateProjectFormValues = z.infer<typeof updateProjectSchema>;
 type UploadKind = "picture" | "gallery";
 type SelectOption = { value: string; label: string };
+type SubmitButton = "header" | "footer";
 
 const MAX_SINGLE_FILE_SIZE = 2 * 1024 * 1024;
 const MAX_TOTAL_SIZE = 8 * 1024 * 1024;
+const nativeSelectClassName =
+  "h-11 w-full appearance-none rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 px-3 pr-10 text-slate-700 outline-none transition focus:border-purple-300 focus:ring-2 focus:ring-purple-300/40 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-foreground";
 
 const defaultValues: UpdateProjectFormValues = {
   service: "",
@@ -100,35 +102,99 @@ const safeDate = (value: unknown): Date | undefined => {
   return isValid(date) ? date : undefined;
 };
 
-const normalizeSelectValue = (rawValue: any, options: SelectOption[]) => {
-  if (!rawValue || !options.length) return "";
+const collectSelectCandidates = (rawValue: any) => {
+  if (!rawValue) return [];
 
+  const queue = [rawValue];
+  const visited = new Set<any>();
   const candidates: string[] = [];
 
-  if (typeof rawValue === "string" || typeof rawValue === "number") {
-    candidates.push(String(rawValue));
+  while (queue.length > 0) {
+    const current = queue.shift();
+
+    if (current === null || current === undefined) continue;
+
+    if (typeof current === "string" || typeof current === "number") {
+      const value = String(current).trim();
+      if (value) candidates.push(value);
+      continue;
+    }
+
+    if (typeof current !== "object" || visited.has(current)) continue;
+    visited.add(current);
+
+    if (Array.isArray(current)) {
+      queue.push(...current);
+      continue;
+    }
+
+    const priorityKeys = ["_id", "id", "value", "name", "label", "title", "status"];
+
+    priorityKeys.forEach((key) => {
+      if (current[key] !== undefined && current[key] !== null) {
+        queue.push(current[key]);
+      }
+    });
+
+    Object.values(current).forEach((value) => {
+      if (value !== undefined && value !== null) {
+        queue.push(value);
+      }
+    });
   }
 
-  if (typeof rawValue === "object") {
-    if (rawValue?._id) candidates.push(String(rawValue._id));
-    if (rawValue?.id) candidates.push(String(rawValue.id));
-    if (rawValue?.value) candidates.push(String(rawValue.value));
-    if (rawValue?.name) candidates.push(String(rawValue.name));
-    if (rawValue?.label) candidates.push(String(rawValue.label));
-    if (rawValue?.title) candidates.push(String(rawValue.title));
-  }
+  return [...new Set(candidates)];
+};
+
+const findMatchingOption = (rawValue: any, options: SelectOption[]) => {
+  const candidates = collectSelectCandidates(rawValue);
 
   for (const candidate of candidates) {
     const cleaned = candidate.trim().toLowerCase();
 
     const matchedByValue = options.find((item) => item.value.trim().toLowerCase() === cleaned);
-    if (matchedByValue) return matchedByValue.value;
+    if (matchedByValue) return matchedByValue;
 
     const matchedByLabel = options.find((item) => item.label.trim().toLowerCase() === cleaned);
-    if (matchedByLabel) return matchedByLabel.value;
+    if (matchedByLabel) return matchedByLabel;
   }
 
-  return "";
+  return null;
+};
+
+const buildFallbackOption = (rawValue: any) => {
+  const candidates = collectSelectCandidates(rawValue);
+  if (!candidates.length) return null;
+
+  const labelCandidate =
+    candidates.find((item) => /[a-zA-Z]/.test(item) && item.length < 120) || candidates.find((item) => item.length < 120) || candidates[0];
+
+  const valueCandidate = candidates[0];
+
+  if (!valueCandidate || !labelCandidate) return null;
+
+  return {
+    value: valueCandidate,
+    label: labelCandidate,
+  };
+};
+
+const resolveSelectOption = (rawValue: any, options: SelectOption[]) => {
+  return findMatchingOption(rawValue, options) || buildFallbackOption(rawValue);
+};
+
+const mergeSelectOptions = (options: SelectOption[], resolvedOption: SelectOption | null) => {
+  if (!resolvedOption) return options;
+
+  const exists = options.some(
+    (item) =>
+      item.value.trim().toLowerCase() === resolvedOption.value.trim().toLowerCase() ||
+      item.label.trim().toLowerCase() === resolvedOption.label.trim().toLowerCase(),
+  );
+
+  if (exists) return options;
+
+  return [resolvedOption, ...options];
 };
 
 const canCompressImage = (file: File) => {
@@ -168,6 +234,7 @@ const ProjectUpdate = () => {
 
   const initialDataRef = useRef<Record<string, any> | null>(null);
   const initializedKeyRef = useRef("");
+  const [activeSubmitButton, setActiveSubmitButton] = useState<SubmitButton | null>(null);
 
   const form = useForm<UpdateProjectFormValues>({
     resolver: zodResolver(updateProjectSchema),
@@ -223,6 +290,17 @@ const ProjectUpdate = () => {
     [],
   );
 
+  const resolvedServiceOption = useMemo(() => resolveSelectOption(project?.service, serviceOptions), [project?.service, serviceOptions]);
+  const resolvedStatusOption = useMemo(() => resolveSelectOption(project?.status, projectStatusOptions), [project?.status, projectStatusOptions]);
+  const resolvedClientOption = useMemo(() => resolveSelectOption(project?.client, clientOptions), [project?.client, clientOptions]);
+
+  const hydratedServiceOptions = useMemo(() => mergeSelectOptions(serviceOptions, resolvedServiceOption), [serviceOptions, resolvedServiceOption]);
+  const hydratedStatusOptions = useMemo(
+    () => mergeSelectOptions(projectStatusOptions, resolvedStatusOption),
+    [projectStatusOptions, resolvedStatusOption],
+  );
+  const hydratedClientOptions = useMemo(() => mergeSelectOptions(clientOptions, resolvedClientOption), [clientOptions, resolvedClientOption]);
+
   const existingThumbnail = useMemo(() => {
     return getImageUrl(project?.picture) || getImageUrl(project?.image) || getImageUrl(project?.thumbnail) || getImageUrl(project?.file) || "";
   }, [project]);
@@ -258,30 +336,51 @@ const ProjectUpdate = () => {
   }, [id, form]);
 
   useEffect(() => {
-    const isReady = !!project && serviceOptions.length > 0 && clientOptions.length > 0 && projectStatusOptions.length > 0;
+    const isReady = !!project && projectStatusOptions.length > 0;
     if (!isReady) return;
 
-    const initKey = [id || "", safeString(project?._id), serviceOptions.length, clientOptions.length, projectStatusOptions.length].join("|");
+    const initKey = [
+      id || "",
+      safeString(project?._id),
+      hydratedServiceOptions.length,
+      hydratedClientOptions.length,
+      hydratedStatusOptions.length,
+      safeString(resolvedServiceOption?.value),
+      safeString(resolvedClientOption?.value),
+      safeString(resolvedStatusOption?.value),
+    ].join("|");
 
     if (initializedKeyRef.current === initKey) return;
 
     const formattedValues: UpdateProjectFormValues = {
-      service: normalizeSelectValue(project?.service.name, serviceOptions),
+      service: resolvedServiceOption?.value || "",
       name: safeString(project?.name),
       description: safeString(project?.description),
       objective: safeString(project?.objective),
       responsibility: safeString(project?.responsibility),
-      status: normalizeSelectValue(project?.status, projectStatusOptions),
+      status: resolvedStatusOption?.value || "",
       startDate: safeDate(project?.startDate),
       endDate: safeDate(project?.endDate) || null,
       location: safeString(project?.location),
-      client: normalizeSelectValue(project?.client, clientOptions),
+      client: resolvedClientOption?.value || "",
     };
 
     form.reset(formattedValues);
     initialDataRef.current = serializeForSubmit(formattedValues);
     initializedKeyRef.current = initKey;
-  }, [id, project, serviceOptions, clientOptions, projectStatusOptions, form, serializeForSubmit]);
+  }, [
+    id,
+    project,
+    hydratedServiceOptions.length,
+    hydratedClientOptions.length,
+    hydratedStatusOptions.length,
+    resolvedServiceOption,
+    resolvedClientOption,
+    resolvedStatusOption,
+    projectStatusOptions.length,
+    form,
+    serializeForSubmit,
+  ]);
 
   const getTotalUploadSize = useCallback(() => {
     let total = 0;
@@ -387,10 +486,15 @@ const ProjectUpdate = () => {
       }
 
       toast.error(getErrorMessage(error), { id: toastId });
+    } finally {
+      setActiveSubmitButton(null);
     }
   };
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null;
+    const submitSource = submitter?.dataset.submitSource as SubmitButton | undefined;
+    setActiveSubmitButton(submitSource || "footer");
     form.handleSubmit(onSubmit)(event);
   };
 
@@ -417,7 +521,7 @@ const ProjectUpdate = () => {
               <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
 
-            <div className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground">
+            <div className="rounded-3xl border border-blue-400 px-4 py-2 text-foreground">
               <h1 className="text-2xl font-semibold">Update Project</h1>
               <p className="mt-1 text-sm">Edit project details, timeline, client information and images.</p>
             </div>
@@ -427,9 +531,10 @@ const ProjectUpdate = () => {
             type="submit"
             form="update-project-form"
             disabled={isSubmitting}
+            data-submit-source="header"
             className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground"
           >
-            {isSubmitting ? (
+            {isSubmitting && activeSubmitButton === "header" ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Updating...
               </>
@@ -461,20 +566,32 @@ const ProjectUpdate = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-slate-700 dark:text-foreground">Service</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value || undefined}>
-                        <FormControl>
-                          <SelectTrigger className={FormStyles.selectTrigger}>
-                            <SelectValue placeholder="Select service" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className={FormStyles.selectContent}>
-                          {serviceOptions.map((item) => (
-                            <SelectItem key={item.value} value={item.value}>
-                              {item.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <FormControl>
+                        <div className="relative">
+                          <select
+                            {...field}
+                            value={field.value ?? ""}
+                            onChange={(event) => field.onChange(event.target.value)}
+                            className={nativeSelectClassName}
+                          >
+                            <option value="" disabled>
+                              Select service
+                            </option>
+                            {hydratedServiceOptions.length > 0 ? (
+                              hydratedServiceOptions.map((item) => (
+                                <option key={item.value} value={item.value}>
+                                  {item.label}
+                                </option>
+                              ))
+                            ) : (
+                              <option value="" disabled>
+                                No services available
+                              </option>
+                            )}
+                          </select>
+                          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-foreground/60" />
+                        </div>
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -486,20 +603,26 @@ const ProjectUpdate = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-slate-700 dark:text-foreground">Status</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value || undefined}>
-                        <FormControl>
-                          <SelectTrigger className={FormStyles.selectTrigger}>
-                            <SelectValue placeholder="Select status" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className={FormStyles.selectContent}>
-                          {projectStatusOptions.map((item) => (
-                            <SelectItem key={item.value} value={item.value}>
-                              {item.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <FormControl>
+                        <div className="relative">
+                          <select
+                            {...field}
+                            value={field.value ?? ""}
+                            onChange={(event) => field.onChange(event.target.value)}
+                            className={nativeSelectClassName}
+                          >
+                            <option value="" disabled>
+                              Select status
+                            </option>
+                            {hydratedStatusOptions.map((item) => (
+                              <option key={item.value} value={item.value}>
+                                {item.label}
+                              </option>
+                            ))}
+                          </select>
+                          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-foreground/60" />
+                        </div>
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -658,20 +781,32 @@ const ProjectUpdate = () => {
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel className="text-slate-700 dark:text-foreground">Client</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value || undefined}>
-                        <FormControl>
-                          <SelectTrigger className={FormStyles.selectTrigger}>
-                            <SelectValue placeholder="Select client" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className={FormStyles.selectContent}>
-                          {clientOptions.map((item) => (
-                            <SelectItem key={item.value} value={item.value}>
-                              {item.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <FormControl>
+                        <div className="relative">
+                          <select
+                            {...field}
+                            value={field.value ?? ""}
+                            onChange={(event) => field.onChange(event.target.value)}
+                            className={nativeSelectClassName}
+                          >
+                            <option value="" disabled>
+                              Select client
+                            </option>
+                            {hydratedClientOptions.length > 0 ? (
+                              hydratedClientOptions.map((item) => (
+                                <option key={item.value} value={item.value}>
+                                  {item.label}
+                                </option>
+                              ))
+                            ) : (
+                              <option value="" disabled>
+                                No clients available
+                              </option>
+                            )}
+                          </select>
+                          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-foreground/60" />
+                        </div>
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -771,9 +906,10 @@ const ProjectUpdate = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
+                data-submit-source="footer"
                 className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground"
               >
-                {isSubmitting ? (
+                {isSubmitting && activeSubmitButton === "footer" ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Updating...
                   </>

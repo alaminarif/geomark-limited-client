@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import Loading from "@/components/layout/Loading";
 import { cn } from "@/lib/utils";
-import { useGetAllEmployeesQuery } from "@/redux/features/employee/employee.api";
 import { Facebook, Linkedin } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
 import { Link } from "react-router";
@@ -27,10 +25,12 @@ const cardVariants: Variants = {
   },
 };
 
-export const EmployeeSection = () => {
-  const { data, isLoading } = useGetAllEmployeesQuery({ sort: "rank", limit: 8 });
+type EmployeeSectionProps = {
+  employees?: any[];
+};
 
-  if (isLoading) return <Loading />;
+export const EmployeeSection = ({ employees = [] }: EmployeeSectionProps) => {
+  if (!employees.length) return null;
 
   return (
     <section className={cn("container mx-auto py-20")}>
@@ -48,7 +48,7 @@ export const EmployeeSection = () => {
           viewport={{ once: true, amount: 0.2 }}
           className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8"
         >
-          {data?.data?.map((member: any) => {
+          {employees.map((member: any) => {
             const hasLinkedin = Boolean(member?.linkedin?.trim?.());
             const hasFacebook = Boolean(member?.facebook?.trim?.());
 

@@ -2,12 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Loading from "@/components/layout/Loading";
-import { useGetClientsQuery } from "@/redux/features/client/client.api";
 import ClientCard from "@/components/modules/Client/ClientCard";
 
 interface CommunityProps {
   className?: string;
+  items?: ClientItem[];
 }
 
 interface ClientItem {
@@ -24,10 +23,7 @@ const getItemsPerPage = (width: number) => {
   return 1;
 };
 
-const Client = ({ className }: CommunityProps) => {
-  const { data, isLoading } = useGetClientsQuery(undefined);
-  const items: ClientItem[] = data?.data || [];
-
+const Client = ({ className, items = [] }: CommunityProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [itemsPerPage, setItemsPerPage] = useState(() => {
@@ -80,7 +76,7 @@ const Client = ({ className }: CommunityProps) => {
     setCurrentPage((prev) => (prev + 1) % totalPages);
   };
 
-  if (isLoading) return <Loading />;
+  if (!items.length) return null;
 
   return (
     <section className={cn("relative overflow-hidden py-20 container mx-auto", className)}>
@@ -107,7 +103,7 @@ const Client = ({ className }: CommunityProps) => {
               <button
                 type="button"
                 onClick={handlePrev}
-                className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-background/80 text-foreground shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-500 hover:text-blue-600"
+                className="inline-flex size-11 items-center justify-center rounded-full border  bg-background/80 border-blue-400 text-blue-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary hover:text-primary "
               >
                 <ChevronLeft className="size-5" />
               </button>
@@ -115,7 +111,7 @@ const Client = ({ className }: CommunityProps) => {
               <button
                 type="button"
                 onClick={() => setIsAutoPlay((prev) => !prev)}
-                className="inline-flex h-11 min-w-27.5 items-center justify-center gap-2 rounded-full border border-border bg-background/80 px-4 text-sm font-medium text-foreground shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-500 hover:text-blue-600"
+                className="inline-flex h-11 min-w-27.5 items-center justify-center gap-2 rounded-full border border-blue-400 text-blue-600 bg-background/80 px-4 text-sm font-medium  shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary hover:text-primary"
               >
                 {isAutoPlay ? <Pause className="size-4" /> : <Play className="size-4" />}
                 {isAutoPlay ? "Pause" : "Play"}
@@ -124,7 +120,7 @@ const Client = ({ className }: CommunityProps) => {
               <button
                 type="button"
                 onClick={handleNext}
-                className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-background/80 text-foreground shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-500 hover:text-blue-600"
+                className="inline-flex size-11 items-center justify-center rounded-full border border-blue-400 text-blue-600 bg-background/80  shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary  hover:text-primary"
               >
                 <ChevronRight className="size-5" />
               </button>

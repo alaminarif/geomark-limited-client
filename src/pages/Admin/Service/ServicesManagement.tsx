@@ -2,6 +2,7 @@ import { useState } from "react";
 import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import { AddServiceModal } from "@/components/modules/Admin/Service/AddServiceModal";
 import { Button } from "@/components/ui/button";
+import DashboardPagination from "@/components/ui/dashboard-pagination";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useDeleteServiceMutation, useGetAllServicesQuery } from "@/redux/features/service/service.api";
@@ -17,6 +18,8 @@ type Service = {
   image?: string;
   picture?: string;
 };
+
+const PAGE_SIZE = 10;
 
 const pageVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -120,7 +123,7 @@ const SkeletonServicesTable = () => {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="w-full overflow-x-auto">
-          <Table className="min-w-262.5 border-separate [border-spacing:0_10px]">
+          <Table className="min-w-[760px] border-separate [border-spacing:0_10px]">
             <TableHeader>
               <TableRow className="border-none hover:bg-transparent">
                 <TableHead className="px-4">Image</TableHead>
@@ -169,9 +172,18 @@ const SkeletonServicesTable = () => {
 
 const ServicesManagement = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetAllServicesQuery(undefined);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, isLoading } = useGetAllServicesQuery({
+    page: currentPage,
+    limit: PAGE_SIZE,
+  });
   const [deleteService] = useDeleteServiceMutation();
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
+
+  const rawServices: Service[] = data?.data || [];
+  const hasServerPagination = typeof data?.meta?.totalPage === "number";
+  const totalPage = hasServerPagination ? data.meta.totalPage : Math.max(1, Math.ceil(rawServices.length / PAGE_SIZE));
+  const services = hasServerPagination ? rawServices : rawServices.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   const handleDeleteService = async (serviceId: string) => {
     const toastId = toast.loading("Deleting service...");
@@ -231,7 +243,7 @@ const ServicesManagement = () => {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="w-full overflow-x-auto">
-          <Table className="border-separate [border-spacing:0_10px]">
+          <Table className="min-w-[760px] border-separate [border-spacing:0_10px]">
             <TableHeader>
               <TableRow className="border-none hover:bg-transparent">
                 <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
@@ -242,7 +254,7 @@ const ServicesManagement = () => {
             </TableHeader>
 
             <TableBody>
-              {data?.data?.map((item: Service, index: number) => {
+              {services.map((item: Service, index: number) => {
                 const baseDelay = 0.08 + index * 0.05;
                 const isSelected = selectedServiceId === item._id;
                 const toneClass = isSelected ? "border-primary/35 bg-primary/[0.06]" : "border-border/50 bg-background/80";
@@ -293,9 +305,9 @@ const ServicesManagement = () => {
                     </TableCell>
 
                     <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                      <motion.div custom={baseDelay + 0.03} variants={cellVariants} initial="hidden" animate="visible" className="min-w-0 max-w-65">
+                      <motion.div custom={baseDelay + 0.03} variants={cellVariants} initial="hidden" animate="visible" className="min-w-0 max-w-[16rem]">
                         <motion.p
-                          className="line-clamp-3 wrap-break-word text-sm font-medium leading-6 whitespace-normal"
+                          className="line-clamp-3 break-words text-sm font-medium leading-6 whitespace-normal"
                           whileHover={{ x: 3 }}
                           animate={isSelected ? { x: 2 } : { x: 0 }}
                           transition={{ type: "spring", stiffness: 260 }}
@@ -351,8 +363,8 @@ const ServicesManagement = () => {
                               onClick={(e) => e.stopPropagation()}
                               className={`group/btn size-9 rounded-full border backdrop-blur-sm transition-all duration-300 ${
                                 isSelected
-                                  ? "border-primary/30 bg-primary/10 shadow-[0_8px_24px_-8px_rgba(59,130,246,0.35)]"
-                                  : "border-transparent bg-background/70 hover:border-primary/20 hover:bg-primary/10 hover:shadow-[0_8px_24px_-8px_rgba(59,130,246,0.35)]"
+                                  ? "border-primary/30 bg-primary/10 text-primary shadow-[0_8px_24px_-8px_rgba(47,58,153,0.2)]"
+                                  : "border-transparent bg-background/70 text-slate-500 hover:border-primary/35 hover:bg-background/70 hover:text-slate-500 dark:text-slate-300 dark:hover:bg-background/70 dark:hover:text-slate-300"
                               }`}
                             >
                               <motion.div
@@ -365,7 +377,7 @@ const ServicesManagement = () => {
                                 }}
                                 className="flex items-center justify-center"
                               >
-                                <MoreHorizontalIcon className="h-4 w-4 transition-colors duration-300 group-hover/btn:text-primary" />
+                                <MoreHorizontalIcon className="h-4 w-4" />
                               </motion.div>
                               <span className="sr-only">Open menu</span>
                             </Button>
@@ -396,7 +408,7 @@ const ServicesManagement = () => {
                                     e.stopPropagation();
                                     handleServiceDetails(item._id);
                                   }}
-                                  className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
+                                  className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 hover:text-blue-600 focus:bg-primary/10 focus:text-blue-600"
                                 >
                                   <Eye className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
                                   <span className="font-medium">View</span>
@@ -409,7 +421,7 @@ const ServicesManagement = () => {
                                     e.stopPropagation();
                                     handleServiceEdit(item._id);
                                   }}
-                                  className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
+                                  className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 hover:text-blue-600 focus:bg-primary/10 focus:text-blue-600"
                                 >
                                   <Pencil className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
                                   <span className="font-medium">Edit</span>
@@ -442,6 +454,13 @@ const ServicesManagement = () => {
           </Table>
         </div>
       </motion.div>
+
+      <DashboardPagination
+        currentPage={currentPage}
+        totalPage={totalPage}
+        onPageChange={setCurrentPage}
+        layoutId="activeServicePageBubble"
+      />
     </motion.div>
   );
 };

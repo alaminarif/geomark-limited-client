@@ -2,9 +2,9 @@ import { useState } from "react";
 import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import ProjectFilter from "@/components/modules/Project/ProjectFilter";
 import ProjectCard from "@/components/modules/Project/ProjectCard";
+import DashboardPagination from "@/components/ui/dashboard-pagination";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useDeleteProjectMutation, useGetAllProjectsQuery } from "@/redux/features/project/project.api";
 import { BriefcaseBusiness, CalendarRange, Eye, FolderKanban, LayoutGrid, MoreHorizontalIcon, Pencil, Rows3, Trash2 } from "lucide-react";
@@ -242,7 +242,7 @@ const ProjectManagement = () => {
   }
 
   return (
-    <section className="container mx-auto overflow-x-hidden">
+    <section className="container mx-auto">
       <motion.div variants={pageVariants} initial="hidden" animate="visible" className="px-4 md:px-6 lg:px-8 xl:px-10">
         <motion.div variants={headerVariants} className="my-6">
           <motion.div variants={headerVariants} className="flex items-center justify-between my-6">
@@ -368,7 +368,7 @@ const ProjectManagement = () => {
               <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
               <div className="w-full overflow-x-auto ">
-                <Table className="border-separate [border-spacing:0_10px]">
+                <Table className="min-w-[920px] border-separate [border-spacing:0_10px]">
                   <TableHeader>
                     <TableRow className="border-none hover:bg-transparent">
                       <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
@@ -440,9 +440,9 @@ const ProjectManagement = () => {
                               animate="visible"
                               className="flex items-center gap-2"
                             >
-                              <div className="min-w-40">
+                              <div className="min-w-0 max-w-[16rem]">
                                 <motion.div
-                                  className="wrap-break-word line-clamp-3 font-medium whitespace-normal"
+                                  className="break-words line-clamp-3 font-medium whitespace-normal"
                                   whileHover={{ x: 3 }}
                                   animate={isSelected ? { x: 2 } : { x: 0 }}
                                   transition={{ type: "spring", stiffness: 260 }}
@@ -492,7 +492,7 @@ const ProjectManagement = () => {
                             <motion.div custom={baseDelay + 0.12} variants={cellVariants} initial="hidden" animate="visible" className="">
                               <div className="inline-flex  items-center gap-2 py-1.5 text-xs font-semibold text-primary">
                                 <FolderKanban className="h-3.5 " />
-                                <span className="wrap-break-word line-clamp-3 whitespace-normal">{item?.service?.name || "-"}</span>
+                                <span className="block max-w-[11rem] break-words line-clamp-3 whitespace-normal">{item?.service?.name || "-"}</span>
                               </div>
                             </motion.div>
                           </TableCell>
@@ -501,7 +501,7 @@ const ProjectManagement = () => {
                             <motion.div custom={baseDelay + 0.15} variants={cellVariants} initial="hidden" animate="visible" className="">
                               <div className="inline-flex items-center line-clamp-3 gap-2 text-xs text-foreground/90">
                                 <BriefcaseBusiness className="h-3.5  text-primary" />
-                                <span className="wrap-break-word  whitespace-normal">{item?.client?.name || "-"}</span>
+                                <span className="block max-w-[11rem] break-words line-clamp-3 whitespace-normal">{item?.client?.name || "-"}</span>
                               </div>
                             </motion.div>
                           </TableCell>
@@ -525,8 +525,8 @@ const ProjectManagement = () => {
                                     onClick={(e) => e.stopPropagation()}
                                     className={`group/btn size-9 rounded-full border backdrop-blur-sm transition-all duration-300 ${
                                       isSelected
-                                        ? "border-primary/30 bg-primary/10 shadow-[0_8px_24px_-8px_rgba(59,130,246,0.35)]"
-                                        : "border-transparent bg-background/70 hover:border-primary/20 hover:bg-primary/10 hover:shadow-[0_8px_24px_-8px_rgba(59,130,246,0.35)]"
+                                        ? "border-primary/30 bg-primary/10 text-primary shadow-[0_8px_24px_-8px_rgba(47,58,153,0.2)]"
+                                        : "border-transparent bg-background/70 text-slate-500 hover:border-primary/35 hover:bg-background/70 hover:text-slate-500 dark:text-slate-300 dark:hover:bg-background/70 dark:hover:text-slate-300"
                                     }`}
                                   >
                                     <motion.div
@@ -539,7 +539,7 @@ const ProjectManagement = () => {
                                       }}
                                       className="flex items-center justify-center"
                                     >
-                                      <MoreHorizontalIcon className="h-4 w-4 transition-colors duration-300 group-hover/btn:text-primary" />
+                                      <MoreHorizontalIcon className="h-4 w-4" />
                                     </motion.div>
                                     <span className="sr-only">Open menu</span>
                                   </Button>
@@ -570,7 +570,7 @@ const ProjectManagement = () => {
                                           e.stopPropagation();
                                           handleProjectDetails(item._id);
                                         }}
-                                        className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
+                                        className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 hover:text-blue-600 focus:bg-primary/10 focus:text-blue-600"
                                       >
                                         <Eye className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
                                         <span className="font-medium">View</span>
@@ -583,7 +583,7 @@ const ProjectManagement = () => {
                                           e.stopPropagation();
                                           navigate(`/admin/project/${item._id}/edit`);
                                         }}
-                                        className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
+                                        className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 hover:text-blue-600 focus:bg-primary/10 focus:text-blue-600"
                                       >
                                         <Pencil className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
                                         <span className="font-medium">Edit</span>
@@ -619,65 +619,12 @@ const ProjectManagement = () => {
           )}
         </AnimatePresence>
 
-        {totalPage > 1 && (
-          <motion.div
-            className="mt-6 flex justify-end"
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.35 }}
-          >
-            <Pagination>
-              <PaginationContent>
-                <PaginationItem>
-                  <motion.div whileHover={{ x: -2, scale: 1.04 }} whileTap={{ scale: 0.95 }}>
-                    <PaginationPrevious
-                      onClick={() => {
-                        if (currentPage > 1) {
-                          setCurrentPage((prev) => prev - 1);
-                        }
-                      }}
-                      className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-                    />
-                  </motion.div>
-                </PaginationItem>
-
-                {Array.from({ length: totalPage }, (_, index) => index + 1).map((page) => (
-                  <PaginationItem key={page}>
-                    <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
-                      <PaginationLink
-                        onClick={() => setCurrentPage(page)}
-                        isActive={currentPage === page}
-                        className="relative cursor-pointer overflow-hidden rounded-xl"
-                      >
-                        {currentPage === page && (
-                          <motion.span
-                            layoutId="activeProjectPageBubble"
-                            className="absolute inset-0 rounded-xl bg-linear-to-r from-purple-500 to-blue-500"
-                            transition={{ type: "spring", stiffness: 320, damping: 24 }}
-                          />
-                        )}
-                        <span className={`relative z-10 ${currentPage === page ? "text-white" : ""}`}>{page}</span>
-                      </PaginationLink>
-                    </motion.div>
-                  </PaginationItem>
-                ))}
-
-                <PaginationItem>
-                  <motion.div whileHover={{ x: 2, scale: 1.04 }} whileTap={{ scale: 0.95 }}>
-                    <PaginationNext
-                      onClick={() => {
-                        if (currentPage < totalPage) {
-                          setCurrentPage((prev) => prev + 1);
-                        }
-                      }}
-                      className={currentPage === totalPage ? "pointer-events-none opacity-50" : "cursor-pointer"}
-                    />
-                  </motion.div>
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-          </motion.div>
-        )}
+        <DashboardPagination
+          currentPage={currentPage}
+          totalPage={totalPage}
+          onPageChange={setCurrentPage}
+          layoutId="activeProjectPageBubble"
+        />
       </motion.div>
     </section>
   );

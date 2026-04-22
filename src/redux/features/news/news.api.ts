@@ -3,9 +3,10 @@ import { baseApi } from "@/redux/baseApi";
 export const newsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllNewss: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/news",
         method: "GET",
+        params,
       }),
       providesTags: ["NEWS"],
     }),

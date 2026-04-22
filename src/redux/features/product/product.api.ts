@@ -3,9 +3,10 @@ import { baseApi } from "@/redux/baseApi";
 export const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllProducts: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/product",
         method: "GET",
+        params,
       }),
       providesTags: ["PRODUCT"],
     }),

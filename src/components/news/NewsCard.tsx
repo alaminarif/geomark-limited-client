@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { Newspaper } from "lucide-react";
 
 interface NewsItem {
   _id?: string;
@@ -51,17 +51,19 @@ const NewsCard = ({ item, index, copy, setCardRef, onOpen }: NewsCardProps) => {
         </p>
 
         <div className="mt-4 flex justify-center">
-          <Button
+          <motion.button
             type="button"
-            variant="outline"
             onClick={(e) => {
               e.stopPropagation();
               onOpen?.(item);
             }}
-            className="rounded-full border-blue-300/60 bg-background/80 px-5 text-blue-600 backdrop-blur-sm dark:border-violet-300/40 dark:text-foreground/80"
+            whileHover={{ y: -2, scale: 1.01 }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-blue-400 bg-background/80 px-5 text-sm font-medium text-blue-600 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-primary hover:text-primary hover:shadow-md dark:border-blue-400/40 dark:text-foreground/80 dark:hover:border-primary dark:hover:text-primary"
           >
             Read More
-          </Button>
+            <Newspaper className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+          </motion.button>
         </div>
       </div>
     </motion.div>

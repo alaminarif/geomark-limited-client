@@ -310,7 +310,7 @@ const UpdateEmployee = () => {
               <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
 
-            <div className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground">
+            <div className="rounded-3xl border border-blue-400 px-4 py-2 text-foreground">
               <h1 className="text-2xl font-semibold">Update Employee</h1>
               <p className="mt-1 text-sm">Edit employee information, joining details, social profiles and image.</p>
             </div>
@@ -446,7 +446,7 @@ const UpdateEmployee = () => {
                     </FormItem>
                   )}
                 />
-                 <FormField
+                <FormField
                   control={form.control}
                   name="rank"
                   render={({ field }) => (
@@ -462,8 +462,6 @@ const UpdateEmployee = () => {
                     </FormItem>
                   )}
                 />
-
-               
 
                 <FormField
                   control={form.control}
@@ -499,7 +497,7 @@ const UpdateEmployee = () => {
                   )}
                 />
 
-                 <FormField
+                <FormField
                   control={form.control}
                   name="joinDate"
                   render={({ field }) => (

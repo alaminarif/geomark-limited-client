@@ -2,14 +2,19 @@
 
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
-import { useGetAllProjectsQuery } from "@/redux/features/project/project.api";
 import { Link, useNavigate } from "react-router";
 import ProjectCard from "../Project/ProjectCard";
-export const ProjectSection = () => {
+
+type ProjectSectionProps = {
+  projects?: any[];
+};
+
+export const ProjectSection = ({ projects = [] }: ProjectSectionProps) => {
   const [hovered, setHovered] = useState(false);
   const navigate = useNavigate();
-  const { data: projects } = useGetAllProjectsQuery({limit: 8});
   const ref = useRef(null);
+
+  if (!projects.length) return null;
 
   const handleProjectDetails = (id: string) => {
     navigate(`/project/${id}`);
@@ -27,7 +32,7 @@ export const ProjectSection = () => {
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3  xl:grid-cols-4 gap-2 sm:gap-3  md:gap-4 lg:gap-6 xl:gap-8  "
         >
           {/* CARDS */}
-          {projects?.data?.map((item: any) => (
+          {projects.map((item: any) => (
             <ProjectCard key={item?._id} item={item} onView={handleProjectDetails} />
           ))}
         </motion.div>

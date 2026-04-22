@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ArrowBigRight } from "lucide-react";
+import { Eye } from "lucide-react";
 
 type Props = {
   item: any;
@@ -18,7 +17,7 @@ const ProjectCard = ({ item, onView }: Props) => {
       transition={{ duration: 0.35, ease: "easeOut" }}
       whileHover={{ y: -6, scale: 1.01 }}
       whileTap={{ scale: 0.99 }}
-      className="group border border-muted rounded-2xl bg-background/40 overflow-hidden"
+      className="group border border-blue-100 rounded-2xl bg-background/40 overflow-hidden"
     >
       <div className="relative">
         {/* Image with zoom on hover */}
@@ -96,16 +95,17 @@ const ProjectCard = ({ item, onView }: Props) => {
             </div>
           </div>
 
-          <div className="mt-4 ">
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-              <Button onClick={() => onView(item?._id)} className="w-full bg-linear-to-r from-purple-500 to-blue-500">
-                View{" "}
-                <span>
-                  {" "}
-                  <ArrowBigRight />
-                </span>
-              </Button>
-            </motion.div>
+          <div className="mt-4">
+            <motion.button
+              type="button"
+              onClick={() => onView(item?._id)}
+              whileHover={{ y: -2, scale: 1.01 }}
+              whileTap={{ scale: 0.98 }}
+              className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border border-blue-400 bg-background/80 px-5 text-sm font-medium text-blue-600 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-primary hover:text-primary hover:shadow-md dark:border-blue-400/40 dark:text-foreground/80 dark:hover:border-primary dark:hover:text-primary"
+            >
+              View
+              <Eye className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+            </motion.button>
           </div>
         </div>
 

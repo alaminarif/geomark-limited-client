@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ArrowBigRight, MapPin, Package, Wallet } from "lucide-react";
+import { Eye, MapPin, Package, Wallet } from "lucide-react";
 
 type Product = {
   _id?: string;
@@ -82,9 +82,7 @@ const ProductCard = ({ item, onView }: Props) => {
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
               <Button onClick={() => onView(item?._id || "")} className="w-full bg-linear-to-r from-purple-500 to-blue-500">
                 View Details
-                <span>
-                  <ArrowBigRight />
-                </span>
+                <Eye className="h-4 w-4" />
               </Button>
             </motion.div>
           </div>

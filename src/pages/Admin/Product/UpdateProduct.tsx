@@ -11,12 +11,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import imageCompression from "browser-image-compression";
 import { motion } from "framer-motion";
 import { ArrowLeft, BadgeDollarSign, Boxes, ImagePlus, Loader2, MapPin, PackageOpen, Save } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, type FormEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
 type UploadKind = "picture" | "gallery";
+type SubmitButton = "header" | "footer";
 const MAX_SINGLE_FILE_SIZE = 2 * 1024 * 1024;
 const MAX_TOTAL_SIZE = 8 * 1024 * 1024;
 
@@ -65,6 +66,7 @@ const UpdateProduct = () => {
   }, []);
   const initialDataRef = useRef<Record<string, any> | null>(null);
   const initializedKeyRef = useRef("");
+  const [activeSubmitButton, setActiveSubmitButton] = useState<SubmitButton | null>(null);
   const form = useForm<UpdateProductFormValues>({ resolver: zodResolver(updateProductSchema), mode: "onChange", defaultValues });
   const { data: productData, isLoading: productLoading, isFetching: productFetching } = useGetSingleProductQuery(id, { skip: !id });
   const [updateProduct, { isLoading: isSubmitting }] = useUpdateProductMutation();
@@ -199,9 +201,14 @@ const UpdateProduct = () => {
         return;
       }
       toast.error(getErrorMessage(error), { id: toastId });
+    } finally {
+      setActiveSubmitButton(null);
     }
   };
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null;
+    const submitSource = submitter?.dataset.submitSource as SubmitButton | undefined;
+    setActiveSubmitButton(submitSource || "footer");
     form.handleSubmit(onSubmit)(event);
   };
   if (productLoading || productFetching) {
@@ -232,7 +239,7 @@ const UpdateProduct = () => {
             >
               <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
-            <div className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground">
+            <div className="rounded-3xl border border-blue-400 px-4 py-2 text-foreground">
               <h1 className="text-2xl font-semibold">Update Product</h1>
               <p className="mt-1 text-sm">Edit product details, stock information and images.</p>
             </div>
@@ -241,9 +248,10 @@ const UpdateProduct = () => {
             type="submit"
             form="update-product-form"
             disabled={isSubmitting}
+            data-submit-source="header"
             className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground"
           >
-            {isSubmitting ? (
+            {isSubmitting && activeSubmitButton === "header" ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Updating...
               </>
@@ -449,9 +457,10 @@ const UpdateProduct = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
+                data-submit-source="footer"
                 className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground"
               >
-                {isSubmitting ? (
+                {isSubmitting && activeSubmitButton === "footer" ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Updating...
                   </>

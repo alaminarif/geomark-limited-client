@@ -26,6 +26,16 @@ const cardVariants: Variants = {
 
 const normalizeText = (value: string) => value.trim().toLowerCase();
 
+const getBaseDesignation = (value: string) => {
+  const trimmedValue = value.trim();
+  const normalizedDesignation = trimmedValue.replace(/^(senior|junior)\s+/i, "").trim();
+
+  return normalizedDesignation || trimmedValue;
+};
+
+const getDesignationKey = (value: string) => normalizeText(getBaseDesignation(value));
+const EMPTY_EMPLOYEES: any[] = [];
+
 const EmployeePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -36,7 +46,7 @@ const EmployeePage = () => {
     limit: "1000",
   });
 
-  const allEmployees = data?.data || [];
+  const allEmployees = data?.data ?? EMPTY_EMPLOYEES;
 
   const designationOptions = useMemo(() => {
     const seen = new Set<string>();
@@ -44,17 +54,19 @@ const EmployeePage = () => {
 
     for (const employee of allEmployees) {
       const designation = employee?.designation?.trim?.();
+      const baseDesignation = designation ? getBaseDesignation(designation) : "";
+      const designationKey = designation ? getDesignationKey(designation) : "";
 
-      if (designation && !seen.has(normalizeText(designation))) {
-        seen.add(normalizeText(designation));
+      if (baseDesignation && designationKey && !seen.has(designationKey)) {
+        seen.add(designationKey);
         options.push({
-          label: designation,
-          value: designation,
+          label: baseDesignation,
+          value: baseDesignation,
         });
       }
     }
 
-    return [{ label: "All Members", value: "all" }, ...options];
+    return [{ label: "All Employees", value: "all" }, ...options];
   }, [allEmployees]);
 
   const employees = useMemo(() => {
@@ -64,7 +76,7 @@ const EmployeePage = () => {
       const designation = employee?.designation?.trim?.();
       if (!designation) return false;
 
-      return normalizeText(designation) === normalizeText(selectedDesignation);
+      return getDesignationKey(designation) === getDesignationKey(selectedDesignation);
     });
   }, [allEmployees, selectedDesignation]);
 
@@ -96,7 +108,7 @@ const EmployeePage = () => {
               <div className="space-y-3">
                 {designationOptions.map((item) => {
                   const isActive =
-                    item.value === "all" ? selectedDesignation === "all" : normalizeText(selectedDesignation) === normalizeText(item.value);
+                    item.value === "all" ? selectedDesignation === "all" : getDesignationKey(selectedDesignation) === getDesignationKey(item.value);
 
                   return (
                     <button

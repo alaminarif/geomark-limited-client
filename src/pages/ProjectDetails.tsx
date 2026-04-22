@@ -234,38 +234,38 @@ const ProjectDetails = () => {
             transition={{ duration: 8, ease: "easeOut" }}
           />
 
-        <div className="absolute inset-0 bg-black/55" />
+          <div className="absolute inset-0 bg-black/55" />
 
-        {!shouldReduceMotion && (
-          <>
-            <motion.div
-              className="absolute -left-16 top-20 h-56 w-56 rounded-full bg-fuchsia-500/20 blur-3xl"
-              animate={{
-                x: [0, 26, 0],
-                y: [0, -20, 0],
-                scale: [1, 1.08, 1],
-              }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            <motion.div
-              className="absolute right-0 top-32 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl"
-              animate={{
-                x: [0, -24, 0],
-                y: [0, 22, 0],
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                duration: 12,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          </>
-        )}
+          {!shouldReduceMotion && (
+            <>
+              <motion.div
+                className="absolute -left-16 top-20 h-56 w-56 rounded-full bg-fuchsia-500/20 blur-3xl"
+                animate={{
+                  x: [0, 26, 0],
+                  y: [0, -20, 0],
+                  scale: [1, 1.08, 1],
+                }}
+                transition={{
+                  duration: 10,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+              <motion.div
+                className="absolute right-0 top-32 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl"
+                animate={{
+                  x: [0, -24, 0],
+                  y: [0, 22, 0],
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  duration: 12,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+            </>
+          )}
 
           <div className="relative z-10 container text-center">
             <motion.div variants={fadeUp}>
@@ -285,93 +285,95 @@ const ProjectDetails = () => {
           </div>
         </motion.div>
 
-      {/* Intro */}
-      <div className="py-16">
-        <div className="container">
-          <motion.div
-            className="mx-auto max-w-4xl space-y-8 text-left"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-          >
-            <motion.h2 variants={fadeUp} className="text-3xl font-semibold tracking-tight text-foreground dark:text-primary-foreground md:text-4xl">
-              {project?.name}
-            </motion.h2>
+        {/* Intro */}
+        <div className="py-16">
+          <div className="container">
+            <motion.div
+              className="mx-auto max-w-4xl space-y-8 text-left"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={staggerContainer}
+            >
+              <motion.h2 variants={fadeUp} className="text-3xl font-semibold tracking-tight text-foreground dark:text-primary-foreground md:text-4xl">
+                {project?.name}
+              </motion.h2>
 
-            <motion.div variants={fadeUp} className="leading-relaxed">
-              <h3 className="text-2xl font-semibold text-foreground dark:text-primary-foreground">Project Description:</h3>
-              <div className="text-xl text-muted-foreground">{project?.description}</div>
+              <motion.div variants={fadeUp} className="leading-relaxed">
+                <h3 className="text-2xl font-semibold text-foreground dark:text-primary-foreground">Project Description:</h3>
+                <div className="text-xl text-muted-foreground">{project?.description}</div>
 
-              <div className="mt-4 flex flex-wrap gap-3">
-                {project?.status && (
-                  <span className="rounded-full border px-4 py-1 text-sm font-medium text-foreground dark:text-primary-foreground">
-                    Status: {project.status}
-                  </span>
-                )}
+                <div className="mt-4 flex flex-wrap gap-3">
+                  {project?.status && (
+                    <span className="rounded-full border px-4 py-1 text-sm font-medium text-foreground dark:text-primary-foreground">
+                      Status: {project.status}
+                    </span>
+                  )}
 
-                {formattedStartDate && (
-                  <span className="rounded-full border px-4 py-1 text-sm font-medium text-foreground dark:text-primary-foreground">
-                    Start Date: {formattedStartDate}
-                  </span>
-                )}
+                  {formattedStartDate && (
+                    <span className="rounded-full border px-4 py-1 text-sm font-medium text-foreground dark:text-primary-foreground">
+                      Start Date: {formattedStartDate}
+                    </span>
+                  )}
 
-                {formattedEndDate && (
-                  <span className="rounded-full border px-4 py-1 text-sm font-medium text-foreground dark:text-primary-foreground">
-                    End Date: {formattedEndDate}
-                  </span>
-                )}
-              </div>
-            </motion.div>
+                  {formattedEndDate && (
+                    <span className="rounded-full border px-4 py-1 text-sm font-medium text-foreground dark:text-primary-foreground">
+                      End Date: {formattedEndDate}
+                    </span>
+                  )}
+                </div>
+              </motion.div>
 
-            {/* Cinematic Crossfade Gallery */}
-            <motion.div variants={scaleIn} className="mx-auto w-full max-w-5xl space-y-4">
-              <div className="relative overflow-hidden rounded-3xl border bg-background shadow-2xl">
-                <div className="relative aspect-2/1 w-full overflow-hidden">
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={currentSlide?.id}
-                      src={currentSlide?.image}
-                      alt={currentSlide?.title || `Project slide ${safeCurrent + 1}`}
-                      className="absolute inset-0 h-full w-full object-cover"
-                      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.04, filter: "blur(10px)" }}
-                      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, filter: "blur(0px)" }}
-                      exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.08, filter: "blur(12px)" }}
-                      transition={{
-                        duration: shouldReduceMotion ? 0.25 : 0.8,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
-                    />
-                  </AnimatePresence>
-
-                  <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/30 to-transparent" />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-transparent" />
-
-                  {/* Overlay text */}
-                  <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-8 lg:p-10">
+              {/* Cinematic Crossfade Gallery */}
+              <motion.div variants={scaleIn} className="mx-auto w-full max-w-5xl space-y-4">
+                <div className="relative overflow-hidden rounded-3xl border bg-background shadow-2xl">
+                  <div className="relative aspect-2/1 w-full overflow-hidden">
                     <AnimatePresence mode="wait">
-                      <motion.div
-                        key={`overlay-${currentSlide?.id}`}
-                        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 22, filter: "blur(6px)" }}
-                        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: "blur(0px)" }}
-                        exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10, filter: "blur(6px)" }}
+                      <motion.img
+                        key={currentSlide?.id}
+                        src={currentSlide?.image}
+                        alt={currentSlide?.title || `Project slide ${safeCurrent + 1}`}
+                        className="absolute inset-0 h-full w-full object-cover"
+                        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.04, filter: "blur(10px)" }}
+                        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, filter: "blur(0px)" }}
+                        exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.08, filter: "blur(12px)" }}
                         transition={{
-                          duration: shouldReduceMotion ? 0.2 : 0.55,
+                          duration: shouldReduceMotion ? 0.25 : 0.8,
                           ease: [0.22, 1, 0.36, 1],
                         }}
-                        className="max-w-3xl"
-                      >
-                        <span className="mb-3 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.22em] text-white/85 backdrop-blur-md">
-                          {currentSlide?.eyebrow}
-                        </span>
+                      />
+                    </AnimatePresence>
 
-                        <h3 className="line-clamp-2 text-xl font-semibold leading-tight text-white md:text-2xl lg:text-3xl">{currentSlide?.title}</h3>
+                    <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/30 to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-transparent" />
 
-                        {currentSlide?.subtitle && (
-                          <p className="mt-3 max-w-2xl text-sm leading-6 text-white/80 md:text-base">{currentSlide.subtitle}</p>
-                        )}
+                    {/* Overlay text */}
+                    <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-8 lg:p-10">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={`overlay-${currentSlide?.id}`}
+                          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 22, filter: "blur(6px)" }}
+                          animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: "blur(0px)" }}
+                          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10, filter: "blur(6px)" }}
+                          transition={{
+                            duration: shouldReduceMotion ? 0.2 : 0.55,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                          className="max-w-3xl"
+                        >
+                          <span className="mb-3 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.22em] text-white/85 backdrop-blur-md">
+                            {currentSlide?.eyebrow}
+                          </span>
 
-                        {/* <div className="mt-4 flex flex-wrap gap-2">
+                          <h3 className="line-clamp-2 text-xl font-semibold leading-tight text-white md:text-2xl lg:text-3xl">
+                            {currentSlide?.title}
+                          </h3>
+
+                          {currentSlide?.subtitle && (
+                            <p className="mt-3 max-w-2xl text-sm leading-6 text-white/80 md:text-base">{currentSlide.subtitle}</p>
+                          )}
+
+                          {/* <div className="mt-4 flex flex-wrap gap-2">
                           {project?.status && (
                             <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-white/90 backdrop-blur-md">
                               Status: {project.status}
@@ -390,154 +392,154 @@ const ProjectDetails = () => {
                             </span>
                           )}
                         </div> */}
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
 
-                  {/* Slide count + keyboard hint */}
-                  <div className="absolute left-4 top-4 z-10 rounded-full border border-white/20 bg-black/35 px-3 py-1 text-xs text-white backdrop-blur-md md:text-sm">
-                    {String(safeCurrent + 1).padStart(2, "0")} / {String(slideItems.length).padStart(2, "0")}
-                  </div>
+                    {/* Slide count + keyboard hint */}
+                    <div className="absolute left-4 top-4 z-10 rounded-full border border-white/20 bg-black/35 px-3 py-1 text-xs text-white backdrop-blur-md md:text-sm">
+                      {String(safeCurrent + 1).padStart(2, "0")} / {String(slideItems.length).padStart(2, "0")}
+                    </div>
 
-                  <div className="absolute right-4 top-4 z-10 hidden rounded-full border border-white/20 bg-black/35 px-3 py-1 text-xs text-white/85 backdrop-blur-md md:block">
-                    Use ← → keys
-                  </div>
+                    <div className="absolute right-4 top-4 z-10 hidden rounded-full border border-white/20 bg-black/35 px-3 py-1 text-xs text-white/85 backdrop-blur-md md:block">
+                      Use ← → keys
+                    </div>
 
-                  {/* Nav buttons */}
-                  <div className="absolute inset-y-0 left-0 z-10 flex items-center pl-3">
-                    <Button
-                      type="button"
-                      onClick={handlePrev}
-                      variant="outline"
-                      className="h-11 w-11 rounded-full border-white/20 bg-black/35 p-0 text-white backdrop-blur-md hover:bg-black/50"
-                    >
-                      ←
-                    </Button>
-                  </div>
+                    {/* Nav buttons */}
+                    <div className="absolute inset-y-0 left-0 z-10 flex items-center pl-3">
+                      <Button
+                        type="button"
+                        onClick={handlePrev}
+                        variant="outline"
+                        className="h-11 w-11 rounded-full border-white/20 bg-black/35 p-0 text-white backdrop-blur-md hover:bg-black/50"
+                      >
+                        ←
+                      </Button>
+                    </div>
 
-                  <div className="absolute inset-y-0 right-0 z-10 flex items-center pr-3">
-                    <Button
-                      type="button"
-                      onClick={handleNext}
-                      variant="outline"
-                      className="h-11 w-11 rounded-full border-white/20 bg-black/35 p-0 text-white backdrop-blur-md hover:bg-black/50"
-                    >
-                      →
-                    </Button>
+                    <div className="absolute inset-y-0 right-0 z-10 flex items-center pr-3">
+                      <Button
+                        type="button"
+                        onClick={handleNext}
+                        variant="outline"
+                        className="h-11 w-11 rounded-full border-white/20 bg-black/35 p-0 text-white backdrop-blur-md hover:bg-black/50"
+                      >
+                        →
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Thumbnails */}
-              <div className="flex flex-wrap justify-center gap-3">
-                {slideItems.map((slide, index) => {
-                  const isActive = safeCurrent === index;
+                {/* Thumbnails */}
+                <div className="flex flex-wrap justify-center gap-3">
+                  {slideItems.map((slide, index) => {
+                    const isActive = safeCurrent === index;
 
-                  return (
-                    <motion.button
-                      key={slide.id}
-                      type="button"
-                      onClick={() => setCurrent(index)}
-                      whileHover={shouldReduceMotion ? {} : { y: -4, scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className={[
-                        "group relative h-20 w-28 overflow-hidden rounded-xl border transition-all duration-300",
-                        isActive
-                          ? "border-purple-500 shadow-lg shadow-purple-500/30 ring-2 ring-purple-500/40"
-                          : "border-border opacity-80 hover:opacity-100",
-                      ].join(" ")}
-                      aria-label={`Go to slide ${index + 1}`}
-                      aria-current={isActive ? "true" : "false"}
-                    >
-                      <img
-                        src={slide.image}
-                        alt={`Thumbnail ${index + 1}`}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className={["absolute inset-0 transition-all duration-300", isActive ? "bg-transparent" : "bg-black/25"].join(" ")} />
-                    </motion.button>
-                  );
-                })}
-              </div>
+                    return (
+                      <motion.button
+                        key={slide.id}
+                        type="button"
+                        onClick={() => setCurrent(index)}
+                        whileHover={shouldReduceMotion ? {} : { y: -4, scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className={[
+                          "group relative h-20 w-28 overflow-hidden rounded-xl border transition-all duration-300",
+                          isActive
+                            ? "border-purple-500 shadow-lg shadow-purple-500/30 ring-2 ring-purple-500/40"
+                            : "border-border opacity-80 hover:opacity-100",
+                        ].join(" ")}
+                        aria-label={`Go to slide ${index + 1}`}
+                        aria-current={isActive ? "true" : "false"}
+                      >
+                        <img
+                          src={slide.image}
+                          alt={`Thumbnail ${index + 1}`}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className={["absolute inset-0 transition-all duration-300", isActive ? "bg-transparent" : "bg-black/25"].join(" ")} />
+                      </motion.button>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Objectives and Findings */}
+        <div className="py-4">
+          <div className="container">
+            <motion.div
+              className="mx-auto mb-8 max-w-4xl"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={staggerContainer}
+            >
+              <motion.h3 variants={fadeUp} className="mb-4 text-2xl font-semibold text-foreground dark:text-primary-foreground">
+                Key Objectives:
+              </motion.h3>
+
+              <motion.ul variants={staggerContainer} className="list-outside list-disc space-y-2 pl-6 text-muted-foreground">
+                {keyPoints.map((item, index) => (
+                  <motion.li key={index} variants={fadeUp}>
+                    {item}
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </motion.div>
+
+            <motion.div
+              className="mx-auto mt-6 max-w-4xl"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={staggerContainer}
+            >
+              <motion.h3 variants={fadeUp} className="mb-4 text-2xl font-semibold text-foreground dark:text-primary-foreground">
+                Key Findings:
+              </motion.h3>
+
+              <motion.ul variants={staggerContainer} className="list-outside list-disc space-y-2 pl-6 text-muted-foreground">
+                {keyPoints.map((item, index) => (
+                  <motion.li key={index} variants={fadeUp}>
+                    {item}
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Related Projects */}
+        <div className="container max-w-4xl mx-auto  px-4">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={staggerContainer}>
+            <motion.h2 variants={fadeUp} className="mb-6 text-xl text-foreground font-bold sm:text-2xl md:text-3xl lg:text-4xl">
+              Related Projects
+            </motion.h2>
+
+            <motion.div
+              className="grid grid-cols-1 gap-2 sm:gap-3 md:gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3 xl:gap-8"
+              variants={staggerContainer}
+            >
+              {relatedProjects.map((item, index) => (
+                <motion.div
+                  key={item._id}
+                  variants={scaleIn}
+                  whileHover={shouldReduceMotion ? {} : { y: -8 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 240,
+                    damping: 18,
+                    delay: index * 0.03,
+                  }}
+                >
+                  <ProjectCard item={item} onView={handleProjectDetails} />
+                </motion.div>
+              ))}
             </motion.div>
           </motion.div>
         </div>
-      </div>
-
-      {/* Objectives and Findings */}
-      <div className="py-4">
-        <div className="container">
-          <motion.div
-            className="mx-auto mb-8 max-w-4xl"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-          >
-            <motion.h3 variants={fadeUp} className="mb-4 text-2xl font-semibold text-foreground dark:text-primary-foreground">
-              Key Objectives:
-            </motion.h3>
-
-            <motion.ul variants={staggerContainer} className="list-outside list-disc space-y-2 pl-6 text-muted-foreground">
-              {keyPoints.map((item, index) => (
-                <motion.li key={index} variants={fadeUp}>
-                  {item}
-                </motion.li>
-              ))}
-            </motion.ul>
-          </motion.div>
-
-          <motion.div
-            className="mx-auto mt-6 max-w-4xl"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-          >
-            <motion.h3 variants={fadeUp} className="mb-4 text-2xl font-semibold text-foreground dark:text-primary-foreground">
-              Key Findings:
-            </motion.h3>
-
-            <motion.ul variants={staggerContainer} className="list-outside list-disc space-y-2 pl-6 text-muted-foreground">
-              {keyPoints.map((item, index) => (
-                <motion.li key={index} variants={fadeUp}>
-                  {item}
-                </motion.li>
-              ))}
-            </motion.ul>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Related Projects */}
-      <div className="container max-w-4xl mx-auto  px-4">
-        <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={staggerContainer}>
-          <motion.h2 variants={fadeUp} className="mb-6 text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl">
-            Related Projects
-          </motion.h2>
-
-          <motion.div
-            className="grid grid-cols-1 gap-2 sm:gap-3 md:gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3 xl:gap-8"
-            variants={staggerContainer}
-          >
-            {relatedProjects.map((item, index) => (
-              <motion.div
-                key={item._id}
-                variants={scaleIn}
-                whileHover={shouldReduceMotion ? {} : { y: -8 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 240,
-                  damping: 18,
-                  delay: index * 0.03,
-                }}
-              >
-                <ProjectCard item={item} onView={handleProjectDetails} />
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </div>
       </section>
     </>
   );

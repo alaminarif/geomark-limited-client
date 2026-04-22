@@ -2,6 +2,7 @@ import { useState } from "react";
 import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import AddClientModal from "@/components/modules/Admin/Client/AddClientModal";
 import { Button } from "@/components/ui/button";
+import DashboardPagination from "@/components/ui/dashboard-pagination";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useDeleteClientMutation, useGetClientsQuery } from "@/redux/features/client/client.api";
@@ -21,6 +22,8 @@ type Client = {
   address: string;
   joinDate?: string;
 };
+
+const PAGE_SIZE = 10;
 
 const pageVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -94,9 +97,18 @@ const dropdownItemVariants: Variants = {
 
 const ClientManagement = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetClientsQuery(undefined);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, isLoading } = useGetClientsQuery({
+    page: currentPage,
+    limit: PAGE_SIZE,
+  });
   const [deleteClient] = useDeleteClientMutation();
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
+
+  const rawClients: Client[] = data?.data || [];
+  const hasServerPagination = typeof data?.meta?.totalPage === "number";
+  const totalPage = hasServerPagination ? data.meta.totalPage : Math.max(1, Math.ceil(rawClients.length / PAGE_SIZE));
+  const clients = hasServerPagination ? rawClients : rawClients.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   const handleDeleteClient = async (clientId: string) => {
     const toastId = toast.loading("Deleting client...");
@@ -152,7 +164,7 @@ const ClientManagement = () => {
       >
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
-        <Table className="border-separate [border-spacing:0_10px]">
+        <Table className="min-w-220 border-separate [border-spacing:0_10px]">
           <TableHeader>
             <TableRow className="border-none hover:bg-transparent">
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
@@ -166,7 +178,7 @@ const ClientManagement = () => {
           </TableHeader>
 
           <TableBody>
-            {data?.data?.map((item: Client, index: number) => {
+            {clients.map((item: Client, index: number) => {
               const baseDelay = 0.08 + index * 0.05;
               const isSelected = selectedClientId === item._id;
               const toneClass = isSelected ? "border-primary/35 bg-primary/[0.06]" : "border-border/50 bg-background/80";
@@ -220,10 +232,10 @@ const ClientManagement = () => {
                       variants={cellVariants}
                       initial="hidden"
                       animate="visible"
-                      className="flex items-center gap-2"
+                      className="flex min-w-0 items-start gap-2"
                     >
                       <motion.span
-                        className="font-medium"
+                        className="min-w-0 max-w-60 wrap-break-word whitespace-normal line-clamp-3 font-medium"
                         whileHover={{ x: 3 }}
                         animate={isSelected ? { x: 2 } : { x: 0 }}
                         transition={{ type: "spring", stiffness: 260 }}
@@ -312,8 +324,8 @@ const ClientManagement = () => {
                             onClick={(e) => e.stopPropagation()}
                             className={`group/btn size-9 rounded-full border backdrop-blur-sm transition-all duration-300 ${
                               isSelected
-                                ? "border-primary/30 bg-primary/10 shadow-[0_8px_24px_-8px_rgba(59,130,246,0.35)]"
-                                : "border-transparent bg-background/70 hover:border-primary/20 hover:bg-primary/10 hover:shadow-[0_8px_24px_-8px_rgba(59,130,246,0.35)]"
+                                ? "border-primary/30 bg-primary/10 text-primary shadow-[0_8px_24px_-8px_rgba(47,58,153,0.2)]"
+                                : "border-transparent bg-background/70 text-slate-500 hover:border-primary/35 hover:bg-background/70 hover:text-slate-500 dark:text-slate-300 dark:hover:bg-background/70 dark:hover:text-slate-300"
                             }`}
                           >
                             <motion.div
@@ -326,7 +338,7 @@ const ClientManagement = () => {
                               }}
                               className="flex items-center justify-center"
                             >
-                              <MoreHorizontalIcon className="h-4 w-4 transition-colors duration-300 group-hover/btn:text-primary" />
+                              <MoreHorizontalIcon className="h-4 w-4" />
                             </motion.div>
                             <span className="sr-only">Open menu</span>
                           </Button>
@@ -357,7 +369,7 @@ const ClientManagement = () => {
                                   e.stopPropagation();
                                   handleClientDetails(item._id);
                                 }}
-                                className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
+                                className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 hover:text-blue-600 focus:bg-primary/10 focus:text-blue-600"
                               >
                                 <Eye className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
                                 <span className="font-medium">View</span>
@@ -370,7 +382,7 @@ const ClientManagement = () => {
                                   e.stopPropagation();
                                   navigate(`/admin/client/${item._id}/edit`);
                                 }}
-                                className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
+                                className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 hover:text-blue-600 focus:bg-primary/10 focus:text-blue-600"
                               >
                                 <Pencil className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
                                 <span className="font-medium">Edit</span>
@@ -402,6 +414,8 @@ const ClientManagement = () => {
           </TableBody>
         </Table>
       </motion.div>
+
+      <DashboardPagination currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} layoutId="activeClientPageBubble" />
     </motion.div>
   );
 };

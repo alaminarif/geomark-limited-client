@@ -3,9 +3,10 @@ import { baseApi } from "@/redux/baseApi";
 export const clientApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getClients: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/client",
         method: "GET",
+        params,
       }),
       providesTags: ["CLIENT"],
     }),

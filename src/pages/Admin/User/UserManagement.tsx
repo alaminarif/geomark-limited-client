@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import DashboardPagination from "@/components/ui/dashboard-pagination";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { BadgeCheck, Eye, MoreHorizontalIcon, Pencil, ShieldCheck, UserRound, UserRoundPlus, XCircle } from "lucide-react";
@@ -16,6 +17,8 @@ type User = {
   role?: string;
   isActive?: boolean | string;
 };
+
+const PAGE_SIZE = 10;
 
 const pageVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -117,9 +120,18 @@ const getActiveLabel = (value?: boolean | string) => {
 
 const UserManagement = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetAllUsersQuery(undefined);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, isLoading } = useGetAllUsersQuery({
+    page: currentPage,
+    limit: PAGE_SIZE,
+  });
   // const [deleteUser] = useDeleteUserMutation();
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+
+  const rawUsers: User[] = data?.data || [];
+  const hasServerPagination = typeof data?.meta?.totalPage === "number";
+  const totalPage = hasServerPagination ? data.meta.totalPage : Math.max(1, Math.ceil(rawUsers.length / PAGE_SIZE));
+  const users = hasServerPagination ? rawUsers : rawUsers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   // const handleDeleteUser = async (userId: string) => {
   //   const toastId = toast.loading("Deleting user...");
@@ -190,7 +202,7 @@ const UserManagement = () => {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="w-full overflow-x-auto">
-          <Table className=" border-separate [border-spacing:0_10px]">
+          <Table className="min-w-[720px] border-separate [border-spacing:0_10px]">
             <TableHeader>
               <TableRow className="border-none hover:bg-transparent">
                 <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
@@ -203,7 +215,7 @@ const UserManagement = () => {
             </TableHeader>
 
             <TableBody>
-              {data?.data?.map((item: User, index: number) => {
+              {users.map((item: User, index: number) => {
                 const baseDelay = 0.08 + index * 0.05;
                 const isSelected = selectedUserId === item._id;
                 const toneClass = isSelected ? "border-primary/35 bg-primary/[0.06]" : "border-border/50 bg-background/80";
@@ -266,7 +278,7 @@ const UserManagement = () => {
                         variants={cellVariants}
                         initial="hidden"
                         animate="visible"
-                        className="font-medium text-sm text-foreground/90"
+                        className="min-w-0 max-w-[15rem] break-words whitespace-normal line-clamp-3 font-medium text-sm text-foreground/90"
                       >
                         {item.name || "-"}
                       </motion.div>
@@ -327,8 +339,8 @@ const UserManagement = () => {
                               onClick={(e) => e.stopPropagation()}
                               className={`group/btn size-9 rounded-full border backdrop-blur-sm transition-all duration-300 ${
                                 isSelected
-                                  ? "border-primary/30 bg-primary/10 shadow-[0_8px_24px_-8px_rgba(59,130,246,0.35)]"
-                                  : "border-transparent bg-background/70 hover:border-primary/20 hover:bg-primary/10 hover:shadow-[0_8px_24px_-8px_rgba(59,130,246,0.35)]"
+                                ? "border-primary/30 bg-primary/10 text-primary shadow-[0_8px_24px_-8px_rgba(47,58,153,0.2)]"
+                                : "border-transparent bg-background/70 text-slate-500 hover:border-primary/35 hover:bg-background/70 hover:text-slate-500 dark:text-slate-300 dark:hover:bg-background/70 dark:hover:text-slate-300"
                               }`}
                             >
                               <motion.div
@@ -341,7 +353,7 @@ const UserManagement = () => {
                                 }}
                                 className="flex items-center justify-center"
                               >
-                                <MoreHorizontalIcon className="h-4 w-4 transition-colors duration-300 group-hover/btn:text-primary" />
+                                <MoreHorizontalIcon className="h-4 w-4" />
                               </motion.div>
                               <span className="sr-only">Open menu</span>
                             </Button>
@@ -372,7 +384,7 @@ const UserManagement = () => {
                                     e.stopPropagation();
                                     handleUserDetails(item._id);
                                   }}
-                                  className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
+                                  className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 hover:text-blue-600 focus:bg-primary/10 focus:text-blue-600"
                                 >
                                   <Eye className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
                                   <span className="font-medium">View</span>
@@ -385,7 +397,7 @@ const UserManagement = () => {
                                     e.stopPropagation();
                                     handleUserUpdate(item._id);
                                   }}
-                                  className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 focus:bg-primary/10"
+                                  className="group/item cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-primary/10 hover:text-blue-600 focus:bg-primary/10 focus:text-blue-600"
                                 >
                                   <Pencil className="mr-2 h-4 w-4 transition-transform duration-200 group-hover/item:scale-110" />
                                   <span className="font-medium">Edit</span>
@@ -418,6 +430,13 @@ const UserManagement = () => {
           </Table>
         </div>
       </motion.div>
+
+      <DashboardPagination
+        currentPage={currentPage}
+        totalPage={totalPage}
+        onPageChange={setCurrentPage}
+        layoutId="activeUserPageBubble"
+      />
     </motion.div>
   );
 };

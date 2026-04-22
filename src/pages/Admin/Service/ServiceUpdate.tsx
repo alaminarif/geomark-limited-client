@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion } from "framer-motion";
 import { ArrowLeft, Briefcase, FileText, ImagePlus, Loader2, Save } from "lucide-react";
-import { useEffect, useMemo, useRef, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -17,6 +17,8 @@ type UpdateServiceFormValues = {
   name: string;
   description: string;
 };
+
+type SubmitButton = "header" | "footer";
 
 const MAX_IMAGE_SIZE = 2 * 1024 * 1024;
 
@@ -57,6 +59,7 @@ const UpdateService = () => {
   const imageRef = useRef<File | null>(null);
   const initialDataRef = useRef<Record<string, any> | null>(null);
   const initializedKeyRef = useRef("");
+  const [activeSubmitButton, setActiveSubmitButton] = useState<SubmitButton | null>(null);
 
   const setImage = (file: File | null) => {
     imageRef.current = file;
@@ -186,10 +189,15 @@ const UpdateService = () => {
 
       toast.error(getErrorMessage(error), { id: toastId });
       console.log(error);
+    } finally {
+      setActiveSubmitButton(null);
     }
   };
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null;
+    const submitSource = submitter?.dataset.submitSource as SubmitButton | undefined;
+    setActiveSubmitButton(submitSource || "footer");
     form.handleSubmit(onSubmit)(event);
   };
 
@@ -245,7 +253,7 @@ const UpdateService = () => {
               <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
 
-            <div className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground">
+            <div className="rounded-3xl border border-blue-400 px-4 py-2 text-foreground">
               <h1 className="text-2xl font-semibold">Update Service</h1>
               <p className="mt-1 text-sm">Edit service name, description and image.</p>
             </div>
@@ -255,9 +263,10 @@ const UpdateService = () => {
             type="submit"
             form="update-service-form"
             disabled={isSubmitting}
+            data-submit-source="header"
             className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground"
           >
-            {isSubmitting ? (
+            {isSubmitting && activeSubmitButton === "header" ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Updating...
               </>
@@ -375,9 +384,10 @@ const UpdateService = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
+                data-submit-source="footer"
                 className="rounded-3xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 px-4 py-2 text-foreground"
               >
-                {isSubmitting ? (
+                {isSubmitting && activeSubmitButton === "footer" ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Updating...
                   </>
