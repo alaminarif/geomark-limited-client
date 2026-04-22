@@ -3,13 +3,13 @@
 
 import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
 import { Link } from "react-router";
-import Loading from "./Loading";
+// import Loading from "./Loading";
 
 export default function Footer() {
-  const { data, isLoading } = useGetAllServicesQuery({ limit: 3 });
-  if (isLoading) {
-    return <Loading />;
-  }
+  const { data} = useGetAllServicesQuery({ limit: 3 });
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
   return (
     <footer className="container mx-auto">

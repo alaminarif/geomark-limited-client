@@ -6,7 +6,7 @@ export default function GlobalLoader() {
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] grid place-items-center bg-background/60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-9999 grid place-items-center bg-background/60 backdrop-blur-sm">
       <Loading />
     </div>
   );

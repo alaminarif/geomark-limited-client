@@ -197,7 +197,7 @@ const ProjectManagement = () => {
     year,
     status,
     page: currentPage,
-    limit: undefined,
+    limit: 8,
     sort: "-year",
   });
 
@@ -368,7 +368,7 @@ const ProjectManagement = () => {
               <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
               <div className="w-full overflow-x-auto ">
-                <Table className="min-w-[920px] border-separate [border-spacing:0_10px]">
+                <Table className="min-w-230 border-separate [border-spacing:0_10px]">
                   <TableHeader>
                     <TableRow className="border-none hover:bg-transparent">
                       <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
@@ -442,7 +442,7 @@ const ProjectManagement = () => {
                             >
                               <div className="min-w-0 max-w-[16rem]">
                                 <motion.div
-                                  className="break-words line-clamp-3 font-medium whitespace-normal"
+                                  className="wrap-break-word line-clamp-3 font-medium whitespace-normal"
                                   whileHover={{ x: 3 }}
                                   animate={isSelected ? { x: 2 } : { x: 0 }}
                                   transition={{ type: "spring", stiffness: 260 }}
@@ -492,7 +492,7 @@ const ProjectManagement = () => {
                             <motion.div custom={baseDelay + 0.12} variants={cellVariants} initial="hidden" animate="visible" className="">
                               <div className="inline-flex  items-center gap-2 py-1.5 text-xs font-semibold text-primary">
                                 <FolderKanban className="h-3.5 " />
-                                <span className="block max-w-[11rem] break-words line-clamp-3 whitespace-normal">{item?.service?.name || "-"}</span>
+                                <span className="block max-w-44 wrap-break-word line-clamp-3 whitespace-normal">{item?.service?.name || "-"}</span>
                               </div>
                             </motion.div>
                           </TableCell>
@@ -501,7 +501,7 @@ const ProjectManagement = () => {
                             <motion.div custom={baseDelay + 0.15} variants={cellVariants} initial="hidden" animate="visible" className="">
                               <div className="inline-flex items-center line-clamp-3 gap-2 text-xs text-foreground/90">
                                 <BriefcaseBusiness className="h-3.5  text-primary" />
-                                <span className="block max-w-[11rem] break-words line-clamp-3 whitespace-normal">{item?.client?.name || "-"}</span>
+                                <span className="block max-w-44 wrap-break-word line-clamp-3 whitespace-normal">{item?.client?.name || "-"}</span>
                               </div>
                             </motion.div>
                           </TableCell>
@@ -619,12 +619,7 @@ const ProjectManagement = () => {
           )}
         </AnimatePresence>
 
-        <DashboardPagination
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onPageChange={setCurrentPage}
-          layoutId="activeProjectPageBubble"
-        />
+        <DashboardPagination currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} layoutId="activeProjectPageBubble" />
       </motion.div>
     </section>
   );
