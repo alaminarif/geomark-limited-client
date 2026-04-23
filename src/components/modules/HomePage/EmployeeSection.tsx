@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Facebook, Linkedin } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
 import { Link } from "react-router";
+import { useState } from "react";
 
 /* Container for staggered animation */
 const containerVariants: Variants = {
@@ -30,6 +31,7 @@ type EmployeeSectionProps = {
 };
 
 export const EmployeeSection = ({ employees = [] }: EmployeeSectionProps) => {
+  const [hovered, setHovered] = useState(false);
   if (!employees.length) return null;
 
   return (
@@ -115,14 +117,22 @@ export const EmployeeSection = ({ employees = [] }: EmployeeSectionProps) => {
         </motion.div>
 
         {/* Action Button */}
-        <div className="mt-6 flex justify-end">
-          <Link
-            to="/employees"
-            className="inline-block rounded-xl bg-linear-to-r from-purple-500 to-blue-500 px-5 py-2.5 text-center text-white shadow-lg transition-all duration-300 hover:shadow-purple-500/40"
+        <motion.div className="flex justify-end items-center mx-2">
+          <motion.div
+            onHoverStart={() => setHovered(true)}
+            onHoverEnd={() => setHovered(false)}
+            animate={hovered ? { scale: [1, 1.08, 1] } : { scale: 1 }}
+            transition={hovered ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" } : { duration: 1.2 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Know More
-          </Link>
-        </div>
+            <Link
+              to="/employees"
+              className="inline-block mt-4 text-center rounded-xl px-4 py-2 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+            >
+              View More
+            </Link>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
