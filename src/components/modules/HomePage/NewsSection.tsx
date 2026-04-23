@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import NewsCard from "@/components/news/NewsCard";
+import NewsCard from "@/components/modules/news/NewsCard";
 
 interface CommunityProps {
   className?: string;
@@ -25,8 +25,10 @@ interface CardMeta {
 }
 
 const AUTO_SPEED = 65;
+
 const controlButtonClassName =
-  "inline-flex items-center justify-center rounded-full border border-blue-400 bg-background/80 text-blue-600 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary hover:text-primary hover:shadow-md dark:border-blue-400/40 dark:text-foreground/80 dark:hover:border-primary dark:hover:text-primary";
+  "inline-flex items-center justify-center rounded-full border border-blue-400 bg-background/80 text-blue-600 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-600 hover:text-white hover:shadow-md dark:border-blue-400/40 dark:text-foreground/80 ";
+
 const indicatorButtonClassName =
   "h-2.5 rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:shadow-sm";
 

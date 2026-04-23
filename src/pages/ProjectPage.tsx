@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useGetAllProjectsQuery } from "@/redux/features/project/project.api";
-import { BriefcaseBusiness, CalendarRange, FolderKanban, LayoutGrid, Rows3 } from "lucide-react";
+import { BriefcaseBusiness, CalendarRange, Eye, FolderKanban, LayoutGrid, Rows3 } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router";
 
 import { AnimatePresence, motion, type Variants } from "framer-motion";
-import AddProjectModal from "@/components/modules/Admin/Project/AddProjectModal";
+
 import { SkeletonProjectManagement } from "@/components/modules/Admin/Project/SkeletonProjectManagement";
 
 type ViewMode = "card" | "table";
@@ -215,16 +215,6 @@ const ProjectPage = () => {
               <h1 className="text-2xl font-bold tracking-tight text-blue-800 dark:text-foreground">Project</h1>
               {/* <p className="mt-1 text-sm text-muted-foreground">Manage clients with a cleaner premium dashboard feel</p> */}
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 24, scale: 0.94 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              transition={{ duration: 0.45, delay: 0.08 }}
-              whileHover={{ y: -2, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <AddProjectModal />
-            </motion.div>
           </motion.div>
 
           <motion.div
@@ -407,7 +397,7 @@ const ProjectPage = () => {
                             >
                               <div className="min-w-40">
                                 <motion.div
-                                  className="wrap-break-word line-clamp-3 font-medium whitespace-normal text-foreground/80"
+                                  className="wrap-break-word line-clamp-3 max-w-[16rem] font-medium whitespace-normal text-foreground/80"
                                   whileHover={{ x: 3 }}
                                   animate={isSelected ? { x: 2 } : { x: 0 }}
                                   transition={{ type: "spring", stiffness: 260 }}
@@ -482,12 +472,12 @@ const ProjectPage = () => {
                               className="flex justify-end"
                               onClick={(e) => e.stopPropagation()}
                             >
-                              <Button
+                              <button
                                 onClick={() => handleProjectDetails(item?._id)}
-                                className="rounded-md px-4 py-1 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+                                className="rounded-md border border-blue-400 px-4 py-1 text-blue-500 outline transition-all duration-300 hover:bg-blue-500 hover:text-white dark:text-white dark:hover:bg-blue-500 dark:hover:text-white"
                               >
-                                View
-                              </Button>
+                                <Eye className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+                              </button>
                             </motion.div>
                           </TableCell>
                         </TableRow>

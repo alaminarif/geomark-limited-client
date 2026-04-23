@@ -270,10 +270,4 @@ const ProductDetailsPage = () => {
 
 export default ProductDetailsPage;
 
-{
-  /* <div className="mt-0.5 text-primary">📦</div>
-                      <div>
-                        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Quantity</p>
-                        <p className="mt-1 text-sm font-medium text-foreground">{product?.quantity} in stock</p>
-                      </div> */
-}
+

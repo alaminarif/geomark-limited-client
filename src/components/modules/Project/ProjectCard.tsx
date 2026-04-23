@@ -101,7 +101,7 @@ const ProjectCard = ({ item, onView }: Props) => {
               onClick={() => onView(item?._id)}
               whileHover={{ y: -2, scale: 1.01 }}
               whileTap={{ scale: 0.98 }}
-              className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border border-blue-400 bg-background/80 px-5 text-sm font-medium text-blue-600 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-primary hover:text-primary hover:shadow-md dark:border-blue-400/40 dark:text-foreground/80 dark:hover:border-primary dark:hover:text-primary"
+              className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border border-blue-400 bg-background/80 px-5 text-sm font-medium text-blue-600 shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-blue-600 hover:text-white hover:shadow-md dark:border-blue-400/40 dark:text-white dark:hover:bg-blue-600 dark:hover:text-white"
             >
               View
               <Eye className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />

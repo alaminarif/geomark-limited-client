@@ -7,6 +7,8 @@ import ClientCard from "@/components/modules/Client/ClientCard";
 interface CommunityProps {
   className?: string;
   items?: ClientItem[];
+  autoPlay?: boolean;
+  showAutoPlayToggle?: boolean;
 }
 
 interface ClientItem {
@@ -23,9 +25,10 @@ const getItemsPerPage = (width: number) => {
   return 1;
 };
 
-const Client = ({ className, items = [] }: CommunityProps) => {
+const Client = ({ className, items = [], autoPlay = true, showAutoPlayToggle = true }: CommunityProps) => {
+  const [visibleItems, setVisibleItems] = useState<ClientItem[]>(items);
   const [currentPage, setCurrentPage] = useState(0);
-  const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [isAutoPlay, setIsAutoPlay] = useState(autoPlay);
   const [itemsPerPage, setItemsPerPage] = useState(() => {
     if (typeof window !== "undefined") {
       return getItemsPerPage(window.innerWidth);
@@ -42,16 +45,26 @@ const Client = ({ className, items = [] }: CommunityProps) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    if (items.length > 0) {
+      setVisibleItems(items);
+    }
+  }, [items]);
+
+  useEffect(() => {
+    setIsAutoPlay(autoPlay);
+  }, [autoPlay]);
+
   const pages = useMemo(() => {
-    if (!items.length) return [];
+    if (!visibleItems.length) return [];
 
     const result: ClientItem[][] = [];
-    for (let i = 0; i < items.length; i += itemsPerPage) {
-      result.push(items.slice(i, i + itemsPerPage));
+    for (let i = 0; i < visibleItems.length; i += itemsPerPage) {
+      result.push(visibleItems.slice(i, i + itemsPerPage));
     }
 
     return result;
-  }, [items, itemsPerPage]);
+  }, [visibleItems, itemsPerPage]);
 
   const totalPages = pages.length;
   const safeCurrentPage = totalPages > 0 ? currentPage % totalPages : 0;
@@ -76,7 +89,7 @@ const Client = ({ className, items = [] }: CommunityProps) => {
     setCurrentPage((prev) => (prev + 1) % totalPages);
   };
 
-  if (!items.length) return null;
+  if (!visibleItems.length) return null;
 
   return (
     <section className={cn("relative overflow-hidden py-20 container mx-auto", className)}>
@@ -103,24 +116,26 @@ const Client = ({ className, items = [] }: CommunityProps) => {
               <button
                 type="button"
                 onClick={handlePrev}
-                className="inline-flex size-11 items-center justify-center rounded-full border  bg-background/80 border-blue-400 text-blue-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary hover:text-primary "
+                className="inline-flex size-11 items-center justify-center rounded-full border bg-background/80 border-blue-400 dark:text-white text-blue-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-600 hover:text-white"
               >
                 <ChevronLeft className="size-5" />
               </button>
 
-              <button
-                type="button"
-                onClick={() => setIsAutoPlay((prev) => !prev)}
-                className="inline-flex h-11 min-w-27.5 items-center justify-center gap-2 rounded-full border border-blue-400 text-blue-600 bg-background/80 px-4 text-sm font-medium  shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary hover:text-primary"
-              >
-                {isAutoPlay ? <Pause className="size-4" /> : <Play className="size-4" />}
-                {isAutoPlay ? "Pause" : "Play"}
-              </button>
+              {showAutoPlayToggle && (
+                <button
+                  type="button"
+                  onClick={() => setIsAutoPlay((prev) => !prev)}
+                  className="inline-flex h-11 min-w-27.5 items-center justify-center gap-2 rounded-full border border-blue-400 text-blue-600 dark:text-white bg-background/80 px-4 text-sm font-medium shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-600 hover:text-white"
+                >
+                  {isAutoPlay ? <Pause className="size-4" /> : <Play className="size-4" />}
+                  {isAutoPlay ? "Pause" : "Play"}
+                </button>
+              )}
 
               <button
                 type="button"
                 onClick={handleNext}
-                className="inline-flex size-11 items-center justify-center rounded-full border border-blue-400 text-blue-600 bg-background/80  shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary  hover:text-primary"
+                className="inline-flex size-11 items-center justify-center rounded-full border border-blue-400 text-blue-600 dark:text-white bg-background/80 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-600 hover:text-white"
               >
                 <ChevronRight className="size-5" />
               </button>
