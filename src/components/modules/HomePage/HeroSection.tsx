@@ -81,10 +81,7 @@ export function HeroSection() {
 
           return (
             <CarouselItem key={slide.title} className="basis-full">
-              <div
-                onMouseMove={handleMouseMove}
-                className="relative flex h-[calc(100vh-100px)] min-h-128 w-full flex-col justify-end overflow-hidden"
-              >
+              <div onMouseMove={handleMouseMove} className="relative flex h-[calc(100vh-100px)] min-h-128 w-full overflow-hidden">
                 {/* Background Image */}
                 <motion.img
                   key={isActive ? `hero-image-${currentIndex}` : `hero-image-idle-${index}`}
@@ -114,28 +111,30 @@ export function HeroSection() {
                 />
 
                 {/* Slide Title */}
-                <div className="relative z-10 px-4 pb-6">
-                  <motion.h2
-                    initial={false}
-                    animate={{
-                      opacity: isActive ? 1 : 0.92,
-                      y: isActive ? 0 : 10,
-                    }}
-                    transition={{ duration: 0.45, ease: "easeOut" }}
-                    className="w-fit rounded-md bg-black/25 px-4 py-2 text-2xl font-bold tracking-wide backdrop-blur-md sm:text-2xl md:text-2xl"
-                  >
-                    {slide.title.split(" ").map((word, i) => (
-                      <motion.span
-                        key={`${slide.title}-${i}`}
-                        className="mr-3 inline-block"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: isActive ? i * 0.06 : 0 }}
-                      >
-                        {word}
-                      </motion.span>
-                    ))}
-                  </motion.h2>
+                <div className="relative z-10 grid  h-full w-full place-items-center">
+                  <div className="mx-auto flex max-w-3xl items-center justify-center text-center">
+                    <motion.h2
+                      initial={false}
+                      animate={{
+                        opacity: isActive ? 1 : 0.92,
+                        y: isActive ? 0 : 10,
+                      }}
+                      transition={{ duration: 0.45, ease: "easeOut" }}
+                      className="rounded-md bg-black/25 py-2 text-center text-2xl font-bold tracking-wide text-white backdrop-blur-sm sm:px-6 sm:text-3xl md:text-4xl"
+                    >
+                      {slide.title.split(" ").map((word, i) => (
+                        <motion.span
+                          key={`${slide.title}-${i}`}
+                          className="mx-1.5 inline-block"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5, delay: isActive ? i * 0.06 : 0 }}
+                        >
+                          {word}
+                        </motion.span>
+                      ))}
+                    </motion.h2>
+                  </div>
                 </div>
               </div>
             </CarouselItem>

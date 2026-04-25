@@ -368,7 +368,7 @@ const ProjectManagement = () => {
               <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
               <div className="w-full overflow-x-auto ">
-                <Table className="min-w-230 border-separate [border-spacing:0_10px]">
+                <Table className="min-w-200 2xl:min-w-250 border-separate mx-auto [border-spacing:0_10px]">
                   <TableHeader>
                     <TableRow className="border-none hover:bg-transparent">
                       <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
@@ -440,7 +440,7 @@ const ProjectManagement = () => {
                               animate="visible"
                               className="flex items-center gap-2"
                             >
-                              <div className="min-w-0 max-w-[16rem]">
+                              <div className="min-w-0 max-w-60 2xl:max-w-80">
                                 <motion.div
                                   className="wrap-break-word line-clamp-3 font-medium whitespace-normal"
                                   whileHover={{ x: 3 }}
@@ -492,7 +492,7 @@ const ProjectManagement = () => {
                             <motion.div custom={baseDelay + 0.12} variants={cellVariants} initial="hidden" animate="visible" className="">
                               <div className="inline-flex  items-center gap-2 py-1.5 text-xs font-semibold text-primary">
                                 <FolderKanban className="h-3.5 " />
-                                <span className="block max-w-44 wrap-break-word line-clamp-3 whitespace-normal">{item?.service?.name || "-"}</span>
+                                <span className="block max-w-40 wrap-break-word line-clamp-3 whitespace-normal">{item?.service?.name || "-"}</span>
                               </div>
                             </motion.div>
                           </TableCell>
@@ -501,7 +501,7 @@ const ProjectManagement = () => {
                             <motion.div custom={baseDelay + 0.15} variants={cellVariants} initial="hidden" animate="visible" className="">
                               <div className="inline-flex items-center line-clamp-3 gap-2 text-xs text-foreground/90">
                                 <BriefcaseBusiness className="h-3.5  text-primary" />
-                                <span className="block max-w-44 wrap-break-word line-clamp-3 whitespace-normal">{item?.client?.name || "-"}</span>
+                                <span className="block max-w-40 wrap-break-word line-clamp-3 whitespace-normal">{item?.client?.name || "-"}</span>
                               </div>
                             </motion.div>
                           </TableCell>

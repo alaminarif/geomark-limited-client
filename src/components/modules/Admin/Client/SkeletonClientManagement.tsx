@@ -27,7 +27,7 @@ export const SkeletonClientManagement = () => {
       <div className="relative rounded-3xl border border-border/50 bg-background/70 p-3 backdrop-blur-xl shadow-[0_16px_60px_-20px_rgba(0,0,0,0.35)]">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
-        <Table className="min-w-[880px] border-separate [border-spacing:0_10px]">
+        <Table className="min-w-220 border-separate [border-spacing:0_10px]">
           <TableHeader>
             <TableRow className="border-none hover:bg-transparent">
               <TableHead className="px-4">Image</TableHead>
@@ -35,7 +35,6 @@ export const SkeletonClientManagement = () => {
               <TableHead className="px-4">Email</TableHead>
               <TableHead className="px-4">Phone</TableHead>
               <TableHead className="px-4">Address</TableHead>
-              <TableHead className="px-4">Join</TableHead>
               <TableHead className="px-4 text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>

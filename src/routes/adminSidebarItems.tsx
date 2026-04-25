@@ -1,7 +1,7 @@
 import type { ISidebarItem } from "@/types";
 import { lazyRoute } from "@/utils/lazyRoute";
 
-import { Users, BriefcaseBusiness, FolderKanban, Package, UserCog, Handshake, Newspaper } from "lucide-react";
+import { Users, BriefcaseBusiness, FolderKanban, Package, UserCog, Handshake, Newspaper, ShieldEllipsis } from "lucide-react";
 
 const AdminManagement = lazyRoute(() => import("@/pages/Admin/User/UserManagement"));
 const ClientManagement = lazyRoute(() => import("@/pages/Admin/Client/ClientManagement"));
@@ -10,6 +10,7 @@ const ServicesManagement = lazyRoute(() => import("@/pages/Admin/Service/Service
 const EmployeeManagement = lazyRoute(() => import("@/pages/Admin/Employee/EmployeeManagement"));
 const NewsManagement = lazyRoute(() => import("@/pages/Admin/News/NewsManagement"));
 const ProductManagement = lazyRoute(() => import("@/pages/Admin/Product/ProductManagement"));
+const ChangePassword = lazyRoute(() => import("@/pages/Authenticantion/ChangePassword"));
 
 export const adminSidebarItems: ISidebarItem[] = [
   {
@@ -73,6 +74,18 @@ export const adminSidebarItems: ISidebarItem[] = [
         component: NewsManagement,
         icon: Newspaper,
         description: "Publish and maintain latest updates",
+      },
+    ],
+  },
+  {
+    title: "Account",
+    items: [
+      {
+        title: "Change Password",
+        url: "/admin/change-password",
+        component: ChangePassword,
+        icon: ShieldEllipsis,
+        description: "Update your dashboard sign-in password",
       },
     ],
   },

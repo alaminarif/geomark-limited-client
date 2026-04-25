@@ -9,8 +9,8 @@ import type { TRole } from "@/types";
 
 const App = lazyRoute(() => import("@/App"));
 const DashboardLayout = lazyRoute(() => import("@/components/layout/DashboardLayout"));
-const Login = lazyRoute(() => import("@/pages/Login"));
-const Register = lazyRoute(() => import("@/pages/RegisterPage"));
+const Login = lazyRoute(() => import("@/pages/Authenticantion/Login"));
+const Register = lazyRoute(() => import("@/pages/Authenticantion/RegisterPage"));
 const Homepage = lazyRoute(() => import("@/pages/Homepage"));
 const Client = lazyRoute(() => import("@/pages/Client"));
 const ClientDetails = lazyRoute(() => import("@/pages/ClientDetails"));
@@ -22,7 +22,7 @@ const EmployeeDetails = lazyRoute(() => import("@/pages/Admin/Employee/EmployeeD
 const Contact = lazyRoute(() => import("@/pages/Contact"), "Contact");
 const AboutPage = lazyRoute(() => import("@/pages/AboutPage"), "AboutPage");
 const UserDetails = lazyRoute(() => import("@/pages/Admin/User/UserDetails"));
-const Unauthorized = lazyRoute(() => import("@/pages/Unauthorized"));
+const Unauthorized = lazyRoute(() => import("@/pages/Authenticantion/Unauthorized"));
 const UserUpdate = lazyRoute(() => import("@/pages/Admin/User/UserUpdate"));
 const ServiceDetails = lazyRoute(() => import("@/pages/serviceDetails"));
 const AdminServiceDetails = lazyRoute(() => import("@/pages/Admin/Service/ServiceDetails"));
@@ -35,8 +35,8 @@ const UpdateNews = lazyRoute(() => import("@/pages/Admin/News/UpdateNews"));
 const NewsDetails = lazyRoute(() => import("@/pages/Admin/News/NewsDetails"));
 const UpdateProduct = lazyRoute(() => import("@/pages/Admin/Product/UpdateProduct"));
 const AdminProductDetails = lazyRoute(() => import("@/pages/Admin/Product/ProductDetails"));
-const ForgotPasswordPage = lazyRoute(() => import("@/pages/ForgotPasswordPage"));
-const ResetPasswordPage = lazyRoute(() => import("@/pages/ResetPasswordPage"));
+const ForgotPasswordPage = lazyRoute(() => import("@/pages/Authenticantion/ForgotPasswordPage"));
+const ResetPasswordPage = lazyRoute(() => import("@/pages/Authenticantion/ResetPasswordPage"));
 const ProductPage = lazyRoute(() => import("@/pages/ProductPage"));
 const ProductDetailsPage = lazyRoute(() => import("@/pages/ProductDetails"));
 

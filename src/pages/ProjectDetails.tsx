@@ -13,9 +13,11 @@ export const title = "Project Details";
 
 type Project = {
   _id: string;
-  title?: string;
+  service?: { name: string };
   name?: string;
   description?: string;
+  objective?: string;
+  responsibility?: string;
   picture?: string;
   gallery?: string[];
   status?: string;
@@ -75,6 +77,12 @@ const formatProjectDate = (date?: string) => {
   }).format(parsed);
 };
 
+const parseKeyPoints = (value?: string, fallback = text) =>
+  (value || fallback)
+    .split(/\r?\n|;/)
+    .map((item) => item.replace(/^[-*•]\s*/, "").trim())
+    .filter(Boolean);
+
 const ProjectDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -89,13 +97,23 @@ const ProjectDetails = () => {
   const currentProjectId = project?._id;
 
   const bgImage = project?.picture || DEFAULT_BG_IMAGE;
-  const projectName = project?.name || project?.title || "Project Details";
-  const projectDescription = project?.description || "View this Geomark Limited project profile and related consulting work.";
+  const projectService = project?.service?.name;
+  const projectName = project?.name || "Project Details";
 
-  const keyPoints = text
-    .split(";")
-    .map((item) => item.trim())
-    .filter(Boolean);
+  const projectDisplayTitle = projectService && projectService !== projectName ? `${projectService} - ${projectName}` : projectService || projectName;
+
+  const projectDescription =
+    project?.description ||
+    (projectService
+      ? `Explore ${projectName} under ${projectService} at Geomark Limited.`
+      : "View this Geomark Limited project profile and related consulting work.");
+
+  const projectKeywords = [projectName, projectService, project?.status, "Geomark Limited project", "geospatial consulting project"].filter(
+    Boolean,
+  ) as string[];
+
+  const objectivePoints = parseKeyPoints(project?.objective);
+  const responsibilityPoints = parseKeyPoints(project?.responsibility);
 
   const formattedStartDate = formatProjectDate(project?.startDate);
   const formattedEndDate = formatProjectDate(project?.endDate);
@@ -126,14 +144,15 @@ const ProjectDetails = () => {
   return (
     <>
       <SEO
-        title={projectName}
+        title={projectDisplayTitle}
         description={truncateText(projectDescription)}
         image={bgImage}
         canonical={canonical}
         type="article"
+        keywords={projectKeywords}
         jsonLd={[
           createCreativeWorkSchema({
-            name: projectName,
+            name: projectDisplayTitle,
             description: projectDescription,
             image: bgImage,
             path: canonical,
@@ -203,9 +222,9 @@ const ProjectDetails = () => {
 
             <motion.h1
               variants={fadeUp}
-              className="mx-auto max-w-5xl text-4xl font-semibold tracking-tight text-primary-foreground md:text-5xl lg:text-6xl"
+              className="mx-auto max-w-5xl text-4xl line-clamp-2 font-semibold tracking-tight text-primary-foreground md:text-5xl lg:text-6xl"
             >
-              {projectName}
+              {projectService ? projectService : projectName}
             </motion.h1>
 
             <motion.div variants={fadeUp} className="mx-auto mt-6 h-1 w-24 rounded-full bg-linear-to-r from-purple-500 to-blue-500" />
@@ -254,7 +273,7 @@ const ProjectDetails = () => {
               {/* Cinematic Crossfade Gallery */}
               <ProjectSlideSection
                 projectId={project?._id}
-                projectName={project?.name || project?.title || "Project Showcase"}
+                projectName={project?.name || "Project Showcase"}
                 projectDescription={project?.description}
                 projectStatus={project?.status}
                 projectPeriod={projectPeriod}
@@ -279,7 +298,7 @@ const ProjectDetails = () => {
               </motion.h3>
 
               <motion.ul variants={staggerContainer} className="list-outside list-disc space-y-2 pl-6 text-muted-foreground">
-                {keyPoints.map((item, index) => (
+                {objectivePoints.map((item, index) => (
                   <motion.li key={index} variants={fadeUp}>
                     {item}
                   </motion.li>
@@ -295,11 +314,11 @@ const ProjectDetails = () => {
               variants={staggerContainer}
             >
               <motion.h3 variants={fadeUp} className="mb-4 text-2xl font-semibold text-foreground dark:text-primary-foreground">
-                Key Findings:
+                Key Responsibilities:
               </motion.h3>
 
               <motion.ul variants={staggerContainer} className="list-outside list-disc space-y-2 pl-6 text-muted-foreground">
-                {keyPoints.map((item, index) => (
+                {responsibilityPoints.map((item, index) => (
                   <motion.li key={index} variants={fadeUp}>
                     {item}
                   </motion.li>

@@ -91,17 +91,28 @@ const dropdownItemVariants: Variants = {
 };
 
 const getRoleTone = (role?: string) => {
-  const value = role?.toLowerCase() || "";
+  const value = role?.trim().toUpperCase() || "";
 
-  if (value.includes("admin") || value.includes("super")) {
-    return "border-violet-500/20 bg-violet-500/10 text-violet-600 dark:text-violet-400";
+  switch (value) {
+    case "SUPER_ADMIN":
+      return "border-violet-500/25 bg-violet-500/12 text-violet-700 dark:border-violet-400/30 dark:bg-violet-500/15 dark:text-violet-300";
+    case "ADMIN":
+      return "border-sky-500/25 bg-sky-500/12 text-sky-700 dark:border-sky-400/30 dark:bg-sky-500/15 dark:text-sky-300";
+    case "USER":
+      return "border-emerald-500/25 bg-emerald-500/12 text-emerald-700 dark:border-emerald-400/30 dark:bg-emerald-500/15 dark:text-emerald-300";
+    case "MANAGER":
+      return "border-amber-500/25 bg-amber-500/12 text-amber-700 dark:border-amber-400/30 dark:bg-amber-500/15 dark:text-amber-300";
+    default:
+      if (value.includes("SUPER")) {
+        return "border-fuchsia-500/25 bg-fuchsia-500/12 text-fuchsia-700 dark:border-fuchsia-400/30 dark:bg-fuchsia-500/15 dark:text-fuchsia-300";
+      }
+
+      if (value.includes("ADMIN")) {
+        return "border-indigo-500/25 bg-indigo-500/12 text-indigo-700 dark:border-indigo-400/30 dark:bg-indigo-500/15 dark:text-indigo-300";
+      }
+
+      return "border-slate-400/25 bg-slate-500/10 text-slate-700 dark:border-slate-500/30 dark:bg-slate-500/10 dark:text-slate-300";
   }
-
-  if (value.includes("manager")) {
-    return "border-blue-500/20 bg-blue-500/10 text-blue-600 dark:text-blue-400";
-  }
-
-  return "border-primary/20 bg-primary/10 text-primary";
 };
 
 const getActiveTone = (value?: boolean | string) => {
@@ -202,7 +213,7 @@ const UserManagement = () => {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="w-full overflow-x-auto">
-          <Table className="min-w-[720px] border-separate [border-spacing:0_10px]">
+          <Table className="min-w-180 2xl:min-w-250 mx-auto border-separate [border-spacing:0_10px]">
             <TableHeader>
               <TableRow className="border-none hover:bg-transparent">
                 <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
@@ -278,7 +289,7 @@ const UserManagement = () => {
                         variants={cellVariants}
                         initial="hidden"
                         animate="visible"
-                        className="min-w-0 max-w-[15rem] break-words whitespace-normal line-clamp-3 font-medium text-sm text-foreground/90"
+                        className="min-w-0 max-w-60 wrap-break-word whitespace-normal line-clamp-3 font-medium text-sm text-foreground/90"
                       >
                         {item.name || "-"}
                       </motion.div>
@@ -339,8 +350,8 @@ const UserManagement = () => {
                               onClick={(e) => e.stopPropagation()}
                               className={`group/btn size-9 rounded-full border backdrop-blur-sm transition-all duration-300 ${
                                 isSelected
-                                ? "border-primary/30 bg-primary/10 text-primary shadow-[0_8px_24px_-8px_rgba(47,58,153,0.2)]"
-                                : "border-transparent bg-background/70 text-slate-500 hover:border-primary/35 hover:bg-background/70 hover:text-slate-500 dark:text-slate-300 dark:hover:bg-background/70 dark:hover:text-slate-300"
+                                  ? "border-primary/30 bg-primary/10 text-primary shadow-[0_8px_24px_-8px_rgba(47,58,153,0.2)]"
+                                  : "border-transparent bg-background/70 text-slate-500 hover:border-primary/35 hover:bg-background/70 hover:text-slate-500 dark:text-slate-300 dark:hover:bg-background/70 dark:hover:text-slate-300"
                               }`}
                             >
                               <motion.div
@@ -431,12 +442,7 @@ const UserManagement = () => {
         </div>
       </motion.div>
 
-      <DashboardPagination
-        currentPage={currentPage}
-        totalPage={totalPage}
-        onPageChange={setCurrentPage}
-        layoutId="activeUserPageBubble"
-      />
+      <DashboardPagination currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} layoutId="activeUserPageBubble" />
     </motion.div>
   );
 };

@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Urban Planning & Designing",
+    "description": "Preparation of master plans, structure plans, urban area plans and action area plans. Focuses on land use planning, infrastructure layout and sustainable urban growth. Supports planned development through zoning, design guidelines and spatial strategies."
+  },
+  {
+    "name": "GIS Mapping, Remote Sensing & Photogrammetry",
+    "description": "Development of accurate spatial databases, thematic maps and geospatial analysis. Uses satellite imagery, GIS tools and remote sensing techniques for land and resource assessment. Supports planning, monitoring and decision-making through reliable map-based outputs."
+  },
+  {
+    "name": "Advanced Topographic Surveying",
+    "description": "Collection of detailed ground-level data using modern survey instruments and digital methods. Includes elevation, road, structure, drainage, utility and physical feature mapping. Provides accurate base information for engineering design, planning and construction works."
+  },
+  {
+    "name": "Cadastral Mapping",
+    "description": "Preparation, digitization and updating of mouza maps, plot boundaries and land records. Supports land administration, ownership verification and parcel-level spatial analysis. Ensures accurate cadastral databases for planning, acquisition and development projects."
+  },
+  {
+    "name": "Socioeconomic And Other Related Survey",
+    "description": "Conducts household, institutional, commercial and community-level surveys. Collects data on population, income, occupation, services, housing and social conditions. Provides evidence-based inputs for planning, development projects and impact assessment."
+  },
+  {
+    "name": "Transportation Survey and Planning",
+    "description": "Carries out traffic volume surveys, OD surveys, speed-delay studies and road inventory. Analyzes travel demand, road capacity, traffic flow and transport network performance. Supports preparation of transport plans, mobility strategies and infrastructure improvement proposals."
+  },
+  {
+    "name": "Environmental Impact Assessment (EIA)",
+    "description": "Assesses potential environmental impacts of proposed projects and development activities. Covers air, water, noise, land, ecology, drainage and social-environmental conditions. Recommends mitigation measures, management plans and compliance strategies."
+  },
+  {
+    "name": "Aerial Survey; Drone Data Collection, Photogrammetry with Lidar",
+    "description": "Uses UAVs, high-resolution cameras and LiDAR technology for precise spatial data collection. Generates orthophotos, DEM, DSM, 3D models and terrain information. Supports mapping, monitoring, engineering design and large-scale planning projects."
+  },
+  {
+    "name": "Social Impact Assessment (SIA), Land Acquisition Plan (LAP), Resettlement Action Plan (RAP)",
+    "description": "Identifies social impacts related to land acquisition, displacement and livelihood loss. Prepares affected persons inventory, compensation frameworks and resettlement measures. Ensures project implementation follows social safeguards and stakeholder consultation processes."
+  },
+  {
+    "name": "Feasibility Study and Consultancy",
+    "description": "Evaluates technical, financial, social, environmental and institutional feasibility of projects. Includes data analysis, field investigation, demand assessment and alternative evaluation. Provides practical recommendations for investment decisions and project implementation."
+  }
+]

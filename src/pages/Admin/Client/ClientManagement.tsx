@@ -102,6 +102,7 @@ const ClientManagement = () => {
     page: currentPage,
     limit: PAGE_SIZE,
   });
+  
   const [deleteClient] = useDeleteClientMutation();
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
 
@@ -164,15 +165,13 @@ const ClientManagement = () => {
       >
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
-        <Table className="min-w-220 border-separate [border-spacing:0_10px]">
+        <Table className="min-w-190 2xl:min-w-250 mx-auto border-separate [border-spacing:0_10px]">
           <TableHeader>
             <TableRow className="border-none hover:bg-transparent">
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Name</TableHead>
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email</TableHead>
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Phone</TableHead>
-              <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Address</TableHead>
-              <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Join</TableHead>
               <TableHead className="px-4 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -280,18 +279,6 @@ const ClientManagement = () => {
                       className="font-medium text-sm text-foreground/90"
                     >
                       {item.phone}
-                    </motion.div>
-                  </TableCell>
-
-                  <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                    <motion.div
-                      custom={baseDelay + 0.12}
-                      variants={cellVariants}
-                      initial="hidden"
-                      animate="visible"
-                      className="font-medium text-sm text-foreground/90"
-                    >
-                      {item.address}
                     </motion.div>
                   </TableCell>
 

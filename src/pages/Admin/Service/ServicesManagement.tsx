@@ -10,6 +10,7 @@ import { Eye, MoreHorizontalIcon, Pencil, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { SkeletonServicesManagement } from "@/components/modules/Admin/Service/SkeletonServicesManagement";
 
 type Service = {
   _id: string;
@@ -19,7 +20,7 @@ type Service = {
   picture?: string;
 };
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 8;
 
 const pageVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -91,85 +92,6 @@ const dropdownItemVariants: Variants = {
   }),
 };
 
-const SkeletonBlock = ({ className = "" }: { className?: string }) => {
-  return (
-    <div className={`relative overflow-hidden rounded-md bg-muted/70 ${className}`}>
-      <motion.div
-        className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent"
-        animate={{ x: ["-100%", "100%"] }}
-        transition={{ repeat: Infinity, duration: 1.35, ease: "linear" }}
-      />
-    </div>
-  );
-};
-
-const SkeletonServicesTable = () => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 18 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35 }}
-      className="w-full max-w-7xl mx-auto px-5"
-    >
-      <div className="my-6 flex items-center justify-between">
-        <div>
-          <SkeletonBlock className="h-8 w-36 rounded-lg" />
-          <SkeletonBlock className="mt-2 h-4 w-72 rounded-lg" />
-        </div>
-        <SkeletonBlock className="h-10 w-36 rounded-xl" />
-      </div>
-
-      <div className="relative rounded-3xl border border-border/50 bg-background/70 p-3 backdrop-blur-xl shadow-[0_16px_60px_-20px_rgba(0,0,0,0.35)]">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
-
-        <div className="w-full overflow-x-auto">
-          <Table className="min-w-[760px] border-separate [border-spacing:0_10px]">
-            <TableHeader>
-              <TableRow className="border-none hover:bg-transparent">
-                <TableHead className="px-4">Image</TableHead>
-                <TableHead className="px-4">Name</TableHead>
-                <TableHead className="px-4">Description</TableHead>
-                <TableHead className="px-4 text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {Array.from({ length: 6 }).map((_, index) => (
-                <TableRow key={index} className="border-none hover:bg-transparent">
-                  <TableCell className="rounded-l-2xl border-y border-l border-border/50 bg-background/80 px-4 py-3">
-                    <SkeletonBlock className="h-20 w-24 min-h-20 min-w-24 rounded-xl" />
-                  </TableCell>
-
-                  <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
-                    <div className="space-y-2">
-                      <SkeletonBlock className="h-4 w-36" />
-                      <SkeletonBlock className="h-4 w-28" />
-                    </div>
-                  </TableCell>
-
-                  <TableCell className="border-y border-border/50 bg-background/80 px-4 py-3">
-                    <div className="space-y-2">
-                      <SkeletonBlock className="h-4 w-[90%]" />
-                      <SkeletonBlock className="h-4 w-[85%]" />
-                      <SkeletonBlock className="h-4 w-[70%]" />
-                    </div>
-                  </TableCell>
-
-                  <TableCell className="rounded-r-2xl border-y border-r border-border/50 bg-background/80 px-4 py-3 text-right">
-                    <div className="flex justify-end">
-                      <SkeletonBlock className="h-9 w-9 rounded-full" />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
 const ServicesManagement = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
@@ -212,7 +134,7 @@ const ServicesManagement = () => {
   };
 
   if (isLoading) {
-    return <SkeletonServicesTable />;
+    return <SkeletonServicesManagement />;
   }
 
   return (
@@ -243,7 +165,7 @@ const ServicesManagement = () => {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="w-full overflow-x-auto">
-          <Table className="min-w-[760px] border-separate [border-spacing:0_10px]">
+          <Table className="min-w-200 2xl:min-w-250 mx-auto border-separate [border-spacing:0_10px]">
             <TableHeader>
               <TableRow className="border-none hover:bg-transparent">
                 <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
@@ -304,10 +226,16 @@ const ServicesManagement = () => {
                       </motion.div>
                     </TableCell>
 
-                    <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                      <motion.div custom={baseDelay + 0.03} variants={cellVariants} initial="hidden" animate="visible" className="min-w-0 max-w-[16rem]">
+                    <TableCell className={`border-y px-2 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                      <motion.div
+                        custom={baseDelay + 0.03}
+                        variants={cellVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="min-w-0 max-w-[16rem]"
+                      >
                         <motion.p
-                          className="line-clamp-3 break-words text-sm font-medium leading-6 whitespace-normal"
+                          className="line-clamp-3 max-w-38 2xl:max-w-60 wrap-break-word text-sm font-medium leading-6 whitespace-normal"
                           whileHover={{ x: 3 }}
                           animate={isSelected ? { x: 2 } : { x: 0 }}
                           transition={{ type: "spring", stiffness: 260 }}
@@ -331,10 +259,10 @@ const ServicesManagement = () => {
                       </motion.div>
                     </TableCell>
 
-                    <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                      <motion.div custom={baseDelay + 0.06} variants={cellVariants} initial="hidden" animate="visible" className="max-w-120">
+                    <TableCell className={`border-y  px-2 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                      <motion.div custom={baseDelay + 0.06} variants={cellVariants} initial="hidden" animate="visible">
                         <motion.p
-                          className="line-clamp-3 wrap-break-word text-sm leading-6 text-foreground/90 whitespace-normal"
+                          className="line-clamp-3 max-w-65 2xl:max-w-85 wrap-break-word text-sm leading-6 text-foreground/90 whitespace-normal "
                           whileHover={{ x: 2 }}
                           animate={isSelected ? { x: 1 } : { x: 0 }}
                           transition={{ type: "spring", stiffness: 240 }}
@@ -345,7 +273,7 @@ const ServicesManagement = () => {
                     </TableCell>
 
                     <TableCell
-                      className={`rounded-r-2xl border-y border-r px-4 py-3 text-right align-middle transition-all duration-300 ${toneClass}`}
+                      className={`rounded-r-2xl border-y border-r px-2 py-3 text-right align-middle transition-all duration-300 ${toneClass}`}
                     >
                       <motion.div
                         custom={baseDelay + 0.09}
@@ -455,12 +383,7 @@ const ServicesManagement = () => {
         </div>
       </motion.div>
 
-      <DashboardPagination
-        currentPage={currentPage}
-        totalPage={totalPage}
-        onPageChange={setCurrentPage}
-        layoutId="activeServicePageBubble"
-      />
+      <DashboardPagination currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} layoutId="activeServicePageBubble" />
     </motion.div>
   );
 };

@@ -395,7 +395,7 @@ const ProjectPage = () => {
                               animate="visible"
                               className="flex items-center gap-2"
                             >
-                              <div className="min-w-40">
+                              <div className="max-w-60 2xl:max-w-90">
                                 <motion.div
                                   className="wrap-break-word line-clamp-3 max-w-[16rem] font-medium whitespace-normal text-foreground/80"
                                   whileHover={{ x: 3 }}
@@ -444,7 +444,13 @@ const ProjectPage = () => {
                           </TableCell>
 
                           <TableCell className={`border-y  py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                            <motion.div custom={baseDelay + 0.12} variants={cellVariants} initial="hidden" animate="visible" className="">
+                            <motion.div
+                              custom={baseDelay + 0.12}
+                              variants={cellVariants}
+                              initial="hidden"
+                              animate="visible"
+                              className="max-w-45 2xl:max-w-75"
+                            >
                               <div className="inline-flex  items-center gap-2 py-1.5 text-xs font-semibold text-primary">
                                 <FolderKanban className="h-3.5 " />
                                 <span className="wrap-break-word line-clamp-3 whitespace-normal">{item?.service?.name || "-"}</span>

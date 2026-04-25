@@ -163,7 +163,7 @@ const ProductManagement = () => {
       >
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
-        <Table className="min-w-[760px] border-separate [border-spacing:0_10px]">
+        <Table className="min-w-190 mx-auto border-separate [border-spacing:0_10px]">
           <TableHeader>
             <TableRow className="border-none hover:bg-transparent">
               <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
@@ -234,7 +234,7 @@ const ProductManagement = () => {
                       className="flex min-w-0 items-start gap-2"
                     >
                       <motion.span
-                        className="min-w-0 max-w-[15rem] break-words whitespace-normal line-clamp-3 font-medium"
+                        className="min-w-0 max-w-60 wrap-break-word whitespace-normal line-clamp-3 font-medium"
                         whileHover={{ x: 3 }}
                         animate={isSelected ? { x: 2 } : { x: 0 }}
                         transition={{ type: "spring", stiffness: 260 }}
@@ -404,12 +404,7 @@ const ProductManagement = () => {
         </Table>
       </motion.div>
 
-      <DashboardPagination
-        currentPage={currentPage}
-        totalPage={totalPage}
-        onPageChange={setCurrentPage}
-        layoutId="activeProductPageBubble"
-      />
+      <DashboardPagination currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} layoutId="activeProductPageBubble" />
     </motion.div>
   );
 };

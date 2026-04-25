@@ -161,7 +161,7 @@ const NewsManagement = () => {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="w-full overflow-x-auto">
-          <Table className="min-w-[760px] border-separate [border-spacing:0_10px]">
+          <Table className="min-w-190 2xl:min-w-250 mx-auto border-separate [border-spacing:0_10px]">
             <TableHeader>
               <TableRow className="border-none hover:bg-transparent">
                 <TableHead className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image</TableHead>
@@ -222,10 +222,16 @@ const NewsManagement = () => {
                       </motion.div>
                     </TableCell>
 
-                    <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                      <motion.div custom={baseDelay + 0.03} variants={cellVariants} initial="hidden" animate="visible" className="min-w-0 max-w-[16rem]">
+                    <TableCell className={`border-y px-2 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                      <motion.div
+                        custom={baseDelay + 0.03}
+                        variants={cellVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="min-w-0 max-w-[16rem]"
+                      >
                         <motion.p
-                          className="line-clamp-3 break-words text-sm font-medium leading-6 whitespace-normal"
+                          className="line-clamp-3 wrap-break-word text-sm font-medium leading-6 whitespace-normal"
                           whileHover={{ x: 3 }}
                           animate={isSelected ? { x: 2 } : { x: 0 }}
                           transition={{ type: "spring", stiffness: 260 }}
@@ -250,7 +256,13 @@ const NewsManagement = () => {
                     </TableCell>
 
                     <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
-                      <motion.div custom={baseDelay + 0.06} variants={cellVariants} initial="hidden" animate="visible" className="max-w-120">
+                      <motion.div
+                        custom={baseDelay + 0.06}
+                        variants={cellVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="max-w-110 2xl:max-w-140"
+                      >
                         <motion.p
                           className="line-clamp-3 wrap-break-word text-sm leading-6 text-foreground/90 whitespace-normal"
                           whileHover={{ x: 2 }}
@@ -263,7 +275,7 @@ const NewsManagement = () => {
                     </TableCell>
 
                     <TableCell
-                      className={`rounded-r-2xl border-y border-r px-4 py-3 text-right align-middle transition-all duration-300 ${toneClass}`}
+                      className={`rounded-r-2xl border-y border-r px-2 py-3 text-right align-middle transition-all duration-300 ${toneClass}`}
                     >
                       <motion.div
                         custom={baseDelay + 0.09}
@@ -373,12 +385,7 @@ const NewsManagement = () => {
         </div>
       </motion.div>
 
-      <DashboardPagination
-        currentPage={currentPage}
-        totalPage={totalPage}
-        onPageChange={setCurrentPage}
-        layoutId="activeNewsPageBubble"
-      />
+      <DashboardPagination currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} layoutId="activeNewsPageBubble" />
     </motion.div>
   );
 };
