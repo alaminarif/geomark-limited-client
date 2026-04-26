@@ -112,7 +112,7 @@ export function HeroSection() {
 
                 {/* Slide Title */}
                 <div className="relative z-10 grid  h-full w-full place-items-center">
-                  <div className="mx-auto flex max-w-3xl items-center justify-center text-center">
+                  <div className="mx-auto flex max-w-3xl items-center justify-center px-4 text-center">
                     <motion.h2
                       initial={false}
                       animate={{
@@ -120,12 +120,12 @@ export function HeroSection() {
                         y: isActive ? 0 : 10,
                       }}
                       transition={{ duration: 0.45, ease: "easeOut" }}
-                      className="rounded-md  py-2 text-center text-2xl will-change-contents font-bold tracking-wide text-white bg-black/15 backdrop-blur-sm sm:px-6 sm:text-3xl md:text-4xl"
+                      className="inline-block w-fit  rounded-md bg-black/15 px-3 py-1.5 text-center text-2xl font-bold leading-tight tracking-wide text-white backdrop-blur-sm sm:px-4 sm:text-3xl md:text-4xl"
                     >
                       {slide.title.split(" ").map((word, i) => (
                         <motion.span
                           key={`${slide.title}-${i}`}
-                          className="mx-1.5 inline-block"
+                          className="mx-1 inline-block"
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.5, delay: isActive ? i * 0.06 : 0 }}

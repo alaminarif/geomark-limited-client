@@ -24,7 +24,7 @@ const ProjectCard = ({ item, onView }: Props) => {
         <motion.img
           src={item?.picture}
           alt={item?.name}
-          className="w-full h-40 object-cover shrink-0 text-foreground/80 line-clamp-2"
+          className="w-full h-40 object-cover line-clamp-2 shrink-0 text-foreground/80 "
           whileHover={{ scale: 1.06 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
         />

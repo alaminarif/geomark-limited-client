@@ -250,8 +250,8 @@ const ProjectUpdate = () => {
     skip: !id,
   });
 
-  const { data: servicesData, isLoading: servicesLoading } = useGetAllServicesQuery(undefined);
-  const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery(undefined);
+  const { data: servicesData, isLoading: servicesLoading } = useGetAllServicesQuery({ limit: 100 });
+  const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery({ limit: 100, sort: "-des" });
   const [updateProject, { isLoading: isSubmitting }] = useUpdateProjectMutation();
 
   const project = useMemo(() => extractProject(projectData), [projectData]);

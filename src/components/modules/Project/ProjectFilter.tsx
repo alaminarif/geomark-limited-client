@@ -87,7 +87,7 @@ const ProjectFilter = () => {
             value={selectedService}
             disabled={isLoading}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full text-muted-foreground">
               <SelectValue placeholder="All Service" />
             </SelectTrigger>
             <SelectContent className="bg-linear-to-br from-primary/10 via-transparent to-purple-500/10">
@@ -118,7 +118,7 @@ const ProjectFilter = () => {
             value={selectedYear}
             disabled={isLoading}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full text-muted-foreground">
               <SelectValue placeholder="All Year" />
             </SelectTrigger>
             <SelectContent className="bg-linear-to-br from-primary/10 via-transparent to-purple-500/10">
@@ -149,7 +149,7 @@ const ProjectFilter = () => {
             value={selectedStatus}
             disabled={isLoading}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full text-muted-foreground">
               <SelectValue placeholder="All Status" />
             </SelectTrigger>
             <SelectContent className="bg-linear-to-br from-primary/10 via-transparent to-purple-500/10">

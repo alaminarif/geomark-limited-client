@@ -39,7 +39,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="border-b">
+    <header className="border-b border-primary/30">
       <div className="container mx-auto px-4 flex h-16 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex items-center gap-2">

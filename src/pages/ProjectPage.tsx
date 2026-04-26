@@ -3,8 +3,8 @@ import { useState } from "react";
 import ProjectFilter from "@/components/modules/Project/ProjectFilter";
 import ProjectCard from "@/components/modules/Project/ProjectCard";
 import { Button } from "@/components/ui/button";
+import DashboardPagination from "@/components/ui/dashboard-pagination";
 
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useGetAllProjectsQuery } from "@/redux/features/project/project.api";
 import { BriefcaseBusiness, CalendarRange, Eye, FolderKanban, LayoutGrid, Rows3 } from "lucide-react";
@@ -496,65 +496,7 @@ const ProjectPage = () => {
           )}
         </AnimatePresence>
 
-        {totalPage > 1 && (
-          <motion.div
-            className="mt-6 flex justify-end"
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.35 }}
-          >
-            <Pagination>
-              <PaginationContent>
-                <PaginationItem>
-                  <motion.div whileHover={{ x: -2, scale: 1.04 }} whileTap={{ scale: 0.95 }}>
-                    <PaginationPrevious
-                      onClick={() => {
-                        if (currentPage > 1) {
-                          setCurrentPage((prev) => prev - 1);
-                        }
-                      }}
-                      className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-                    />
-                  </motion.div>
-                </PaginationItem>
-
-                {Array.from({ length: totalPage }, (_, index) => index + 1).map((page) => (
-                  <PaginationItem key={page}>
-                    <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
-                      <PaginationLink
-                        onClick={() => setCurrentPage(page)}
-                        isActive={currentPage === page}
-                        className="relative cursor-pointer overflow-hidden rounded-xl"
-                      >
-                        {currentPage === page && (
-                          <motion.span
-                            layoutId="activeProjectPageBubble"
-                            className="absolute inset-0 rounded-xl bg-linear-to-r from-purple-500 to-blue-500"
-                            transition={{ type: "spring", stiffness: 320, damping: 24 }}
-                          />
-                        )}
-                        <span className={`relative z-10 ${currentPage === page ? "text-white" : ""}`}>{page}</span>
-                      </PaginationLink>
-                    </motion.div>
-                  </PaginationItem>
-                ))}
-
-                <PaginationItem>
-                  <motion.div whileHover={{ x: 2, scale: 1.04 }} whileTap={{ scale: 0.95 }}>
-                    <PaginationNext
-                      onClick={() => {
-                        if (currentPage < totalPage) {
-                          setCurrentPage((prev) => prev + 1);
-                        }
-                      }}
-                      className={currentPage === totalPage ? "pointer-events-none opacity-50" : "cursor-pointer"}
-                    />
-                  </motion.div>
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-          </motion.div>
-        )}
+        <DashboardPagination currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} layoutId="activeProjectPageBubble" />
       </motion.div>
     </section>
   );
