@@ -18,7 +18,7 @@ const Homepage = () => {
   const { data: servicesData, isLoading: servicesLoading } = useGetAllServicesQuery({ limit: 8 });
   const { data: projectsData, isLoading: projectsLoading } = useGetAllProjectsQuery({ limit: 8 });
   const { data: employeesData, isLoading: employeesLoading } = useGetAllEmployeesQuery({ sort: "rank", limit: 8 });
-  const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery(undefined);
+  const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery({ sort: "-dese", limit: 12 });
 
   const isHomepageLoading = newsLoading || servicesLoading || projectsLoading || employeesLoading || clientsLoading;
 

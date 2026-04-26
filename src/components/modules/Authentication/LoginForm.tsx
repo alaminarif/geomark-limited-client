@@ -18,8 +18,8 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
 
   const form = useForm<FieldValues>({
     defaultValues: {
-      email: "geomarkbd@gmail.com",
-      password: "geomark60",
+      email: "",
+      password: "",
     },
   });
 

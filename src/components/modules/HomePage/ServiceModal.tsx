@@ -32,7 +32,7 @@ export const ServiceModal = ({ open, setOpen, service }: any) => {
 
           <DialogTitle className="text-2xl font-semibold ">{service?.name}</DialogTitle>
 
-          <DialogDescription className="text-sm text-justify leading-relaxed">{service?.description}</DialogDescription>
+          <DialogDescription className="text-sm text-justify text-muted-foreground leading-relaxed">{service?.description}</DialogDescription>
         </DialogHeader>
       </DialogContent>
     </Dialog>

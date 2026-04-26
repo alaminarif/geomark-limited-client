@@ -33,7 +33,7 @@ export const SkeletonServicesManagement = () => {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="w-full overflow-x-auto">
-          <Table className="min-w-[760px] border-separate [border-spacing:0_10px]">
+          <Table className="min-w-190 border-separate [border-spacing:0_10px]">
             <TableHeader>
               <TableRow className="border-none hover:bg-transparent">
                 <TableHead className="px-4">Image</TableHead>

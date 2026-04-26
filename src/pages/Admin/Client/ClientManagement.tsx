@@ -12,10 +12,11 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { SkeletonClientManagement } from "@/components/modules/Admin/Client/SkeletonClientManagement";
+import ClientImage from "@/components/modules/Client/ClientImage";
 
 type Client = {
   _id: string;
-  picture: string;
+  picture?: string | null;
   name: string;
   email: string;
   phone: string;
@@ -23,7 +24,7 @@ type Client = {
   joinDate?: string;
 };
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 8;
 
 const pageVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -206,9 +207,7 @@ const ClientManagement = () => {
                         transition={{ duration: 0.28 }}
                       />
 
-                      <motion.img
-                        src={item.picture}
-                        alt={item.name}
+                      <motion.div
                         className="relative w-24 h-20 min-w-24 min-h-20 rounded-xl border border-border/50 object-fit shadow-md"
                         whileHover={{
                           y: -2,
@@ -221,7 +220,9 @@ const ClientManagement = () => {
                           stiffness: 260,
                           damping: 18,
                         }}
-                      />
+                      >
+                        <ClientImage src={item.picture} alt={item.name} className="h-full w-full rounded-xl object-contain p-2" iconClassName="h-9 w-9" />
+                      </motion.div>
                     </motion.div>
                   </TableCell>
 

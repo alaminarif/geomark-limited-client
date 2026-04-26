@@ -120,7 +120,7 @@ export function HeroSection() {
                         y: isActive ? 0 : 10,
                       }}
                       transition={{ duration: 0.45, ease: "easeOut" }}
-                      className="rounded-md bg-black/25 py-2 text-center text-2xl font-bold tracking-wide text-white backdrop-blur-sm sm:px-6 sm:text-3xl md:text-4xl"
+                      className="rounded-md  py-2 text-center text-2xl will-change-contents font-bold tracking-wide text-white bg-black/15 backdrop-blur-sm sm:px-6 sm:text-3xl md:text-4xl"
                     >
                       {slide.title.split(" ").map((word, i) => (
                         <motion.span

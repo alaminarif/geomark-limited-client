@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
+import ClientImage from "./ClientImage";
 
 interface ClientItem {
   _id?: string;
   name: string;
-  picture: string;
+  picture?: string | null;
   link?: string;
 }
 
@@ -22,10 +23,11 @@ const ClientCard = ({ item }: Props) => {
 
       <div className="relative z-10 flex min-h-65 flex-col items-center justify-center text-center">
         <div className="mb-6 flex h-40 w-full items-center justify-center overflow-hidden rounded-xl bg-muted/30 p-5">
-          <img
+          <ClientImage
             src={item.picture}
             alt={item.name}
-            className="max-h-35 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+            className="h-35 w-full object-contain transition-transform duration-500 group-hover:scale-105"
+            iconClassName="h-16 w-16"
           />
         </div>
 

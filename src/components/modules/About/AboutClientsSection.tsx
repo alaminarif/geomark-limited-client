@@ -8,7 +8,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 type AboutClient = {
   _id?: string;
   name: string;
-  picture: string;
+  picture?: string | null;
   link?: string;
 };
 

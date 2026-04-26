@@ -14,7 +14,7 @@ interface CommunityProps {
 interface ClientItem {
   _id?: string;
   name: string;
-  picture: string;
+  picture?: string | null;
   link?: string;
 }
 

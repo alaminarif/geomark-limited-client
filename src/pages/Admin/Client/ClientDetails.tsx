@@ -5,6 +5,7 @@ import { motion, cubicBezier } from "framer-motion";
 import { format } from "date-fns";
 import { ArrowLeft, Pencil, Mail, Phone, MapPin, CalendarDays, CircleUserRound, IdCard, UserRound, Building2 } from "lucide-react";
 
+import ClientImage from "@/components/modules/Client/ClientImage";
 import { useGetSingleClientQuery } from "@/redux/features/client/client.api";
 
 const fadeUp = {
@@ -51,14 +52,13 @@ const ClientDetails = () => {
 
   const { data, isLoading } = useGetSingleClientQuery(id as string);
 
-  const client = data?.data?.data || {};
+  const client = useMemo(() => data?.data?.data || {}, [data]);
 
   const { _id, name, email, phone, address, joinDate } = client;
 
   const profileImage = useMemo(() => {
-    const rawImage = getImageUrl(client);
-    return rawImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(name || "Client")}&background=0f172a&color=ffffff&size=256`;
-  }, [client, name]);
+    return getImageUrl(client);
+  }, [client]);
 
   const formattedJoinDate = useMemo(() => formatDateValue(joinDate), [joinDate]);
 
@@ -158,10 +158,11 @@ const ClientDetails = () => {
               <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
                   <motion.div whileHover={{ scale: 1.03 }} className="shrink-0">
-                    <img
+                    <ClientImage
                       src={profileImage}
                       alt={name || "Client"}
                       className="h-28 w-28 rounded-[24px] border-4 border-white object-cover shadow-lg dark:border-slate-800 md:h-32 md:w-32"
+                      iconClassName="h-14 w-14 md:h-16 md:w-16"
                     />
                   </motion.div>
 

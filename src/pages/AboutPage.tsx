@@ -26,7 +26,7 @@ type AboutProject = {
 type AboutClient = {
   _id?: string;
   name: string;
-  picture: string;
+  picture?: string | null;
   link?: string;
 };
 
@@ -104,10 +104,10 @@ function BreakoutCardsSection() {
 
 export const AboutPage = () => {
   const { data: projectsData } = useGetAllProjectsQuery(undefined);
-  const { data: clientsData } = useGetClientsQuery(undefined);
+  const { data: clientsData } = useGetClientsQuery({ sort: "-des", limit: 12 });
 
-  const projectItems = (projectsData?.data || []) as AboutProject[];
-  const clientItems = (clientsData?.data || []) as AboutClient[];
+  const projectItems = useMemo(() => (projectsData?.data || []) as AboutProject[], [projectsData]);
+  const clientItems = useMemo(() => (clientsData?.data || []) as AboutClient[], [clientsData]);
 
   const achievements = useMemo<AchievementItem[]>(
     () => [
