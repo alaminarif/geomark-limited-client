@@ -5,9 +5,20 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 
-import HeroOne from "@/assets/images/DEM-scaled.jpg";
-import HeroTwo from "@/assets/images/IMG_20161017_232258-scaled.jpg";
-import HeroThree from "@/assets/images/IMG_20170217_163330-scaled.jpg";
+import HeroOne from "@/assets/images/Urban Planning & Designing Hero.png";
+
+import HeroTwo from "@/assets/images/GIS Mapping, Remote Sensing & Photogrammetry Hero.png";
+
+import HeroThree from "@/assets/images/Advanced Topographic Surveying Hero.png";
+import HeroFour from "@/assets/images/Cadastral Mapping Hero.png";
+import HeroFive from "@/assets/images/Socioeconomic And Other Related Survey Hero.png";
+import HeroSix from "@/assets/images/Transportation Survey and Planning Hero.png";
+import HeroSeven from "@/assets/images/Environmental Impact Assessment (EIA) Hero.png";
+import HeroEight from "@/assets/images/Aerial Survey; Drone Data Collection, Photogrammetry with Lidar Hero.png";
+import HeroNine from "@/assets/images/Social Impact Assessment (SIA), Land Acquisition Plan (LAP), Resettlement Action Plan (RAP) Hero.png";
+import HeroTen from "@/assets/images/Feasibility Study and Consultancy Hero.png";
+
+
 
 const heroControlClassName =
   "inline-flex size-11 items-center justify-center rounded-full border border-blue-400  text-blue-600 shadow-lg bg-white/60 transition-all duration-300 hover:border-primary hover:bg-black/45 hover:text-primary hover:shadow-[0_12px_32px_rgba(0,0,0,0.3)] dark:border-blue-400/40 dark:text-foreground/80 dark:hover:border-primary dark:hover:text-primary";
@@ -15,7 +26,6 @@ const heroControlClassName =
 export function HeroSection() {
   const [emblaApi, setEmblaApi] = React.useState<any>(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
-  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
 
   const autoplay = React.useMemo(
     () =>
@@ -28,61 +38,61 @@ export function HeroSection() {
 
   const slides = [
     {
-      image: HeroTwo,
+      image: HeroOne,
       title: "Urban Planning & Designing",
       subtitle: "Mapping, CAD, GIS and survey data solutions for Bangladesh.",
       button: "Discover More",
     },
     {
-      image: HeroThree,
+      image: HeroTwo,
       title: "GIS Mapping, Remote Sensing & Photogrammetry",
       subtitle: "Planning, design, supervision and software support from one team.",
       button: "Join Now",
     },
     {
-      image: HeroOne,
+      image: HeroThree,
       title: "Advanced Topographic Surveying",
       subtitle: "Planning, design, supervision and software support from one team.",
       button: "Join Now",
     },
     {
-      image: HeroThree,
+      image: HeroFour,
       title: "Cadastral Mapping",
       subtitle: "Planning, design, supervision and software support from one team.",
       button: "Join Now",
     },
     {
-      image: HeroThree,
+      image: HeroFive,
       title: "Socioeconomic And Other Related Survey",
       subtitle: "Planning, design, supervision and software support from one team.",
       button: "Join Now",
     },
     {
-      image: HeroThree,
+      image: HeroSix,
       title: "Transportation Survey and Planning",
       subtitle: "Planning, design, supervision and software support from one team.",
       button: "Join Now",
     },
     {
-      image: HeroThree,
+      image: HeroSeven,
       title: "Environmental Impact Assessment (EIA)",
       subtitle: "Planning, design, supervision and software support from one team.",
       button: "Join Now",
     },
     {
-      image: HeroThree,
+      image: HeroEight,
       title: "Aerial Survey; Drone Data Collection, Photogrammetry with Lidar",
       subtitle: "Planning, design, supervision and software support from one team.",
       button: "Join Now",
     },
     {
-      image: HeroThree,
+      image: HeroNine,
       title: "Social Impact Assessment (SIA), Land Acquisition Plan (LAP), Resettlement Action Plan (RAP)",
       subtitle: "Planning, design, supervision and software support from one team.",
       button: "Join Now",
     },
     {
-      image: HeroThree,
+      image: HeroTen,
       title: "Feasibility Study and Consultancy",
       subtitle: "Planning, design, supervision and software support from one team.",
       button: "Join Now",
@@ -98,14 +108,6 @@ export function HeroSection() {
     onSelect();
     return () => emblaApi.off("select", onSelect);
   }, [emblaApi]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { clientX, clientY } = e;
-    setMousePosition({
-      x: (clientX / window.innerWidth - 0.5) * 20,
-      y: (clientY / window.innerHeight - 0.5) * 20,
-    });
-  };
 
   const handlePrev = () => {
     emblaApi?.scrollPrev();
@@ -123,26 +125,21 @@ export function HeroSection() {
 
           return (
             <CarouselItem key={slide.title} className="basis-full">
-              <div onMouseMove={handleMouseMove} className="relative flex h-[calc(100vh-100px)] min-h-128 w-full overflow-hidden">
+              <div className="relative flex h-[calc(100vh-100px)] min-h-128 w-full overflow-hidden">
                 {/* Background Image */}
                 <motion.img
                   key={isActive ? `hero-image-${currentIndex}` : `hero-image-idle-${index}`}
                   src={slide.image}
                   alt={slide.title}
-                  initial={isActive ? { opacity: 0.88, scale: 1.03 } : false}
+                  initial={isActive ? { opacity: 0.88, scale: 1 } : false}
                   animate={{
                     opacity: isActive ? 1 : 0.92,
-                    scale: isActive ? [1.03, 1.16] : 1.05,
-                    x: isActive ? mousePosition.x : 0,
-                    y: isActive ? mousePosition.y : 0,
+                    scale: 1,
                   }}
                   transition={{
                     opacity: { duration: 0.7, ease: "easeOut" },
-                    scale: { duration: 6.8, ease: "linear" },
-                    x: { duration: 0.45, ease: "easeOut" },
-                    y: { duration: 0.45, ease: "easeOut" },
                   }}
-                  className="absolute inset-0 h-full w-full object-cover object-center"
+                  className="absolute inset-0 h-full w-full object-fill"
                 />
 
                 {/* Animated Light Overlay */}
@@ -153,7 +150,7 @@ export function HeroSection() {
                 />
 
                 {/* Slide Title */}
-                <div className="relative z-10 grid  h-full w-full place-items-center">
+                {/* <div className="relative z-10 grid h-full w-full place-items-center">
                   <div className="mx-auto flex max-w-3xl items-center justify-center px-4 text-center">
                     <motion.h2
                       initial={false}
@@ -177,7 +174,7 @@ export function HeroSection() {
                       ))}
                     </motion.h2>
                   </div>
-                </div>
+                </div> */}
               </div>
             </CarouselItem>
           );
