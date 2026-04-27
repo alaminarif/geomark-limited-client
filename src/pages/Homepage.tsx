@@ -1,8 +1,8 @@
 import { HeroSection } from "@/components/modules/HomePage/HeroSection";
-import { Community } from "@/components/modules/HomePage/Community";
+import { CommunitySection } from "@/components/modules/HomePage/CommunitySection";
 import Loading from "@/components/layout/Loading";
 import { Contact } from "./Contact";
-import Client from "./Client";
+import { ClientSection } from "@/components/modules/HomePage/ClientSection";
 import { ProjectSection } from "@/components/modules/HomePage/ProjectSection";
 import { EmployeeSection } from "@/components/modules/HomePage/EmployeeSection";
 import { ServiceSection } from "@/components/modules/HomePage/ServiceSection";
@@ -18,7 +18,7 @@ const Homepage = () => {
   const { data: servicesData, isLoading: servicesLoading } = useGetAllServicesQuery({ limit: 8 });
   const { data: projectsData, isLoading: projectsLoading } = useGetAllProjectsQuery({ limit: 8 });
   const { data: employeesData, isLoading: employeesLoading } = useGetAllEmployeesQuery({ sort: "rank", limit: 8 });
-  const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery({ sort: "-dese", limit: 12 });
+  const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery({ sort: "createdAt", limit: 12 });
 
   const isHomepageLoading = newsLoading || servicesLoading || projectsLoading || employeesLoading || clientsLoading;
 
@@ -40,8 +40,8 @@ const Homepage = () => {
       <ServiceSection services={servicesData?.data || []} />
       <ProjectSection projects={projectsData?.data || []} />
       <EmployeeSection employees={employeesData?.data || []} />
-      <Client items={clientsData?.data || []} />
-      <Community />
+      <ClientSection items={clientsData?.data || []} />
+      <CommunitySection />
       <Contact />
     </div>
   );

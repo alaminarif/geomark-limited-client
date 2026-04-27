@@ -1,83 +1,171 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// import Logo from "@/assets/icons/Logo";
-
+import Logo from "@/assets/images/Geomark_Logo_png.png";
 import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
+import { ArrowUpRight, Clock, Facebook, Linkedin, Mail, MapPin, MessageCircle, Phone, Twitter, type LucideIcon } from "lucide-react";
 import { Link } from "react-router";
-// import Loading from "./Loading";
+
+type FooterService = {
+  _id: string;
+  name: string;
+};
+
+type FooterLink = {
+  label: string;
+  to: string;
+};
+
+type SocialLink = {
+  label: string;
+  href: string;
+  icon: LucideIcon;
+};
+
+const companyLinks: FooterLink[] = [
+  { label: "About Geomark", to: "/about" },
+  { label: "Projects", to: "/projects" },
+  { label: "Clients", to: "/client" },
+  { label: "Team", to: "/employees" },
+];
+
+const exploreLinks: FooterLink[] = [
+  { label: "Services", to: "/services" },
+  { label: "Products", to: "/product" },
+  { label: "Contact", to: "/contact" },
+];
+
+const socialLinks: SocialLink[] = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/geomark-limited-072025",
+    icon: Linkedin,
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61565933404947",
+    icon: Facebook,
+  },
+  {
+    label: "X / Twitter",
+    href: "https://twitter.com/geomarklimited",
+    icon: Twitter,
+  },
+  {
+    label: "WhatsApp",
+    href: "https://api.whatsapp.com/send?phone=8801716291050",
+    icon: MessageCircle,
+  },
+];
+
+const contactItems = [
+  {
+    icon: MapPin,
+    label: "House 33, Road 12, Pisciculture Housing Society, Mohammadpur, Dhaka, Bangladesh.",
+  },
+  {
+    icon: Phone,
+    label: "01943223060",
+    href: "tel:+8801943223060",
+  },
+  {
+    icon: Mail,
+    label: "geomarkbd@gmail.com",
+    href: "mailto:geomarkbd@gmail.com",
+  },
+  {
+    icon: Clock,
+    label: "Saturday - Thursday, 09:00 AM - 06:00 PM",
+  },
+];
+
+const footerLinkClass = "text-sm leading-6 text-muted-foreground transition hover:text-primary";
 
 export default function Footer() {
-  const { data} = useGetAllServicesQuery({ limit: 3 });
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
+  const { data } = useGetAllServicesQuery({ limit: 3 });
+  const currentYear = new Date().getFullYear();
+  const services = (data?.data || []) as FooterService[];
 
   return (
-    <footer className="container mx-auto">
-      <div className="  space-y-8 px-4 py-16 ">
-        <div className="  grid grid-cols-1 gap-8 lg:grid-cols-3">
-          <div>
-            <div className="text-foreground">{/* <Logo /> */}</div>
+    <footer className="border-t border-border/70 bg-muted/35">
+      <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <div className="grid gap-10 lg:grid-cols-[1.15fr_1.85fr] xl:gap-16">
+          <div className="max-w-xl">
+            <Link to="/" className="inline-flex items-center" aria-label="Go to Geomark Limited homepage">
+              <img src={Logo} alt="Geomark Limited" className="h-16 w-auto" />
+            </Link>
 
-            <p className="mt-4 max-w-xs text-gray-700 dark:text-muted-foreground/80 text-justify">
-              Geomark Limited was founded in 1999 by a group of IT professionals and engineers having long experience in successful implementation of
-              a large number of development studies and consulting projects including GIS and ITES related assignments of various reputed clients.
+            <p className="mt-5 max-w-lg text-sm leading-7 text-muted-foreground">
+              Geomark Limited provides GIS, digital mapping, surveying, planning, and IT-enabled consultancy for development projects across
+              Bangladesh.
             </p>
 
-            <ul className="mt-8 flex gap-6">
-              <li>
-                <a
-                  href="https://www.facebook.com/profile.php?id=61565933404947"
-                  rel="noreferrer"
-                  target="_blank"
-                  className="text-gray-700 transition hover:opacity-75"
-                >
-                  <span className="sr-only">Facebook</span>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 rounded-xl bg-blue-800 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90"
+              >
+                Contact Office
+                <ArrowUpRight className="size-4" />
+              </Link>
 
-                  <svg className="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      fillRule="evenodd"
-                      d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </a>
-              </li>
+              <a
+                href="mailto:geomarkbd@gmail.com"
+                className="inline-flex items-center gap-2 rounded-xl border border-border bg-background/70 px-4 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/50 hover:text-primary"
+              >
+                Email Us
+                <Mail className="size-4" />
+              </a>
+            </div>
 
-              <li>
-                <a href="#" rel="noreferrer" target="_blank" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                  <span className="sr-only">Instagram</span>
+            <div className="mt-8 flex items-center gap-3">
+              {socialLinks.map((item) => {
+                const Icon = item.icon;
 
-                  <svg className="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      fillRule="evenodd"
-                      d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </a>
-              </li>
-
-              <li>
-                <a href="#" rel="noreferrer" target="_blank" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                  <span className="sr-only">Twitter</span>
-
-                  <svg className="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                  </svg>
-                </a>
-              </li>
-            </ul>
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Open Geomark Limited on ${item.label}`}
+                    className="flex size-10 items-center justify-center rounded-full border border-border bg-background/70 text-blue-800 transition hover:border-primary/60 hover:bg-primary hover:text-primary-foreground dark:text-blue-300"
+                  >
+                    <Icon className="size-4" />
+                  </a>
+                );
+              })}
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
             <div>
-              <p className="font-medium text-gray-900 dark:text-muted-foreground/80">Services</p>
-
-              <ul className="mt-6 space-y-4 text-sm">
-                {data?.data?.map((item: any) => (
+              <h2 className="text-sm font-bold uppercase text-foreground">Services</h2>
+              <ul className="mt-5 space-y-3">
+                {services.map((item) => (
                   <li key={item._id}>
-                    <Link to={`/service/${item._id}`} className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
+                    <Link to={`/service/${item._id}`} className={footerLinkClass}>
                       {item.name}
+                    </Link>
+                  </li>
+                ))}
+
+                <li>
+                  <Link
+                    to="/services"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-blue-800 transition hover:text-primary dark:text-blue-300"
+                  >
+                    View all services
+                    <ArrowUpRight className="size-3.5" />
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h2 className="text-sm font-bold uppercase text-foreground">Company</h2>
+              <ul className="mt-5 space-y-3">
+                {companyLinks.map((item) => (
+                  <li key={item.to}>
+                    <Link to={item.to} className={footerLinkClass}>
+                      {item.label}
                     </Link>
                   </li>
                 ))}
@@ -85,82 +173,51 @@ export default function Footer() {
             </div>
 
             <div>
-              <p className="font-medium text-gray-900 dark:text-muted-foreground/80">Company</p>
-
-              <ul className="mt-6 space-y-4 text-sm">
-                <li>
-                  <Link to="/about" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    {" "}
-                    About{" "}
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/employees" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    Meet the Team
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/client" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    Clients
-                  </Link>
-                </li>
+              <h2 className="text-sm font-bold uppercase text-foreground">Explore</h2>
+              <ul className="mt-5 space-y-3">
+                {exploreLinks.map((item) => (
+                  <li key={item.to}>
+                    <Link to={item.to} className={footerLinkClass}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div>
-              <p className="font-medium text-gray-900 dark:text-muted-foreground/80">Helpful Links</p>
+              <h2 className="text-sm font-bold uppercase text-foreground">Office</h2>
+              <ul className="mt-5 space-y-4">
+                {contactItems.map((item) => {
+                  const Icon = item.icon;
+                  const content = (
+                    <>
+                      <Icon className="mt-0.5 size-4 shrink-0 text-primary" />
+                      <span>{item.label}</span>
+                    </>
+                  );
 
-              <ul className="mt-6 space-y-4 text-sm">
-                <li>
-                  <Link to="/contact" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    {" "}
-                    Contact{" "}
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/services" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    Services
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/projects" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    Projects
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <p className="font-medium text-gray-900 dark:text-muted-foreground/80">Legal</p>
-
-              <ul className="mt-6 space-y-4 text-sm">
-                <li>
-                  <Link to="/product" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    Products
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/services" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    Service Sectors
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/contact" className="text-gray-700 dark:text-muted-foreground/80 transition hover:opacity-75">
-                    Contact Office
-                  </Link>
-                </li>
+                  return (
+                    <li key={item.label}>
+                      {item.href ? (
+                        <a href={item.href} className="flex gap-3 text-sm leading-6 text-muted-foreground transition hover:text-primary">
+                          {content}
+                        </a>
+                      ) : (
+                        <div className="flex gap-3 text-sm leading-6 text-muted-foreground">{content}</div>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>
         </div>
 
-        <p className="text-xs text-gray-500 flex flex-cols justify-center">&copy; 2020. Geomark Limited . All rights reserved.</p>
+        <div className="mt-10 flex flex-col gap-3 border-t border-border/70 pt-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; {currentYear} Geomark Limited. All rights reserved.</p>
+          <p>GIS, surveying, digital mapping and planning consultancy in Bangladesh.</p>
+        </div>
       </div>
     </footer>
   );

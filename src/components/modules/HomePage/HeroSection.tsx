@@ -28,20 +28,62 @@ export function HeroSection() {
 
   const slides = [
     {
-      image: HeroOne,
-      title: "GIS, Surveying and Planning Consultancy",
-      subtitle: "Geospatial services for infrastructure, land and development projects.",
-      button: "Start Journey",
-    },
-    {
       image: HeroTwo,
-      title: "Digital Mapping and Remote Sensing",
+      title: "Urban Planning & Designing",
       subtitle: "Mapping, CAD, GIS and survey data solutions for Bangladesh.",
       button: "Discover More",
     },
     {
       image: HeroThree,
-      title: "Engineering and IT Enabled Services",
+      title: "GIS Mapping, Remote Sensing & Photogrammetry",
+      subtitle: "Planning, design, supervision and software support from one team.",
+      button: "Join Now",
+    },
+    {
+      image: HeroOne,
+      title: "Advanced Topographic Surveying",
+      subtitle: "Planning, design, supervision and software support from one team.",
+      button: "Join Now",
+    },
+    {
+      image: HeroThree,
+      title: "Cadastral Mapping",
+      subtitle: "Planning, design, supervision and software support from one team.",
+      button: "Join Now",
+    },
+    {
+      image: HeroThree,
+      title: "Socioeconomic And Other Related Survey",
+      subtitle: "Planning, design, supervision and software support from one team.",
+      button: "Join Now",
+    },
+    {
+      image: HeroThree,
+      title: "Transportation Survey and Planning",
+      subtitle: "Planning, design, supervision and software support from one team.",
+      button: "Join Now",
+    },
+    {
+      image: HeroThree,
+      title: "Environmental Impact Assessment (EIA)",
+      subtitle: "Planning, design, supervision and software support from one team.",
+      button: "Join Now",
+    },
+    {
+      image: HeroThree,
+      title: "Aerial Survey; Drone Data Collection, Photogrammetry with Lidar",
+      subtitle: "Planning, design, supervision and software support from one team.",
+      button: "Join Now",
+    },
+    {
+      image: HeroThree,
+      title: "Social Impact Assessment (SIA), Land Acquisition Plan (LAP), Resettlement Action Plan (RAP)",
+      subtitle: "Planning, design, supervision and software support from one team.",
+      button: "Join Now",
+    },
+    {
+      image: HeroThree,
+      title: "Feasibility Study and Consultancy",
       subtitle: "Planning, design, supervision and software support from one team.",
       button: "Join Now",
     },

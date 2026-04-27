@@ -103,8 +103,8 @@ function BreakoutCardsSection() {
 }
 
 export const AboutPage = () => {
-  const { data: projectsData } = useGetAllProjectsQuery(undefined);
-  const { data: clientsData } = useGetClientsQuery({ sort: "-des", limit: 12 });
+  const { data: projectsData } = useGetAllProjectsQuery({ limit: 1200 });
+  const { data: clientsData } = useGetClientsQuery({ sort: "createdAt", limit: 1200 });
 
   const projectItems = useMemo(() => (projectsData?.data || []) as AboutProject[], [projectsData]);
   const clientItems = useMemo(() => (clientsData?.data || []) as AboutClient[], [clientsData]);

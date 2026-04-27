@@ -8,4 +8,4 @@ Disallow: /forgot-password
 Disallow: /reset-password
 Disallow: /unauthorized
 
-Sitemap: https://geomark-limited-client.vercel.app/sitemap.xml
+Sitemap: https://geomark.com.bd/sitemap.xml

@@ -1,4 +1,4 @@
-## Frontend URL: https://geomark-limited-client.vercel.app/
+## Frontend URL: https://geomark-limited-client.vercel.app 
 
 ## Backend URL: https://geomark-limited-server.vercel.app/api/v1
 

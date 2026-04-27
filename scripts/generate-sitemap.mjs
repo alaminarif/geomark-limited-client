@@ -23,7 +23,7 @@ const readEnvFile = () => {
 };
 
 const envFile = readEnvFile();
-const siteUrl = (process.env.VITE_SITE_URL || envFile.VITE_SITE_URL || "https://geomark-limited-client.vercel.app").replace(/\/$/, "");
+const siteUrl = (process.env.VITE_SITE_URL || envFile.VITE_SITE_URL || "https://geomark.com.bd").replace(/\/$/, "");
 const apiUrl = (process.env.VITE_BASE_URL || envFile.VITE_BASE_URL || "").replace(/\/$/, "");
 
 const staticRoutes = [

@@ -1,5 +1,5 @@
 export const SITE_NAME = "Geomark Limited";
-export const SITE_URL = (import.meta.env.VITE_SITE_URL || "https://geomark-limited-client.vercel.app").replace(/\/$/, "");
+export const SITE_URL = (import.meta.env.VITE_SITE_URL || "https://geomark.com.bd").replace(/\/$/, "");
 export const DEFAULT_IMAGE = "/Geomark_Logo_png.png";
 export const DEFAULT_DESCRIPTION =
   "Geomark Limited provides GIS, digital mapping, topographical survey, planning, engineering consultancy and IT-enabled geospatial services in Bangladesh.";
