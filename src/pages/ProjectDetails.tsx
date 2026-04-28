@@ -14,6 +14,7 @@ export const title = "Project Details";
 type Project = {
   _id: string;
   service?: { name: string };
+  client?: { name?: string } | string | null;
   name?: string;
   description?: string;
   objective?: string;
@@ -26,9 +27,6 @@ type Project = {
 };
 
 const DEFAULT_BG_IMAGE = "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/photos/christopher-gower-vjMgqUkS8q8-unsplash.jpg";
-
-const text =
-  "GEOMARK LIMITED is a brand name with specific focus to the Planning and IT Enabled Services ITES specializing in the geospatial applications including Advance topographical survey; consultancy on Engineering & Architectural Design, Drawing, Supervision, Planning, Software, Data Entry, Webpage Development GIS, CAD, LIS, MIS, AM FM, processing of remote sensing data, digital mapping/surveying using GPS, geo-spatial and textual data conversion, application software and web page; solutions development and so forth.";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -77,11 +75,17 @@ const formatProjectDate = (date?: string) => {
   }).format(parsed);
 };
 
-const parseKeyPoints = (value?: string, fallback = text) =>
-  (value || fallback)
+const parseKeyPoints = (value?: string) =>
+  (value || "")
     .split(/\r?\n|;/)
     .map((item) => item.replace(/^[-*•]\s*/, "").trim())
     .filter(Boolean);
+
+const getProjectClientName = (client: Project["client"]) => {
+  if (typeof client === "string") return client.trim();
+
+  return client?.name?.trim() || "";
+};
 
 const ProjectDetails = () => {
   const navigate = useNavigate();
@@ -98,6 +102,8 @@ const ProjectDetails = () => {
 
   const bgImage = project?.picture || DEFAULT_BG_IMAGE;
   const projectService = project?.service?.name;
+  const projectClientName = getProjectClientName(project?.client);
+
   const projectName = project?.name || "Project Details";
 
   const projectDisplayTitle = projectService && projectService !== projectName ? `${projectService} - ${projectName}` : projectService || projectName;
@@ -108,9 +114,14 @@ const ProjectDetails = () => {
       ? `Explore ${projectName} under ${projectService} at Geomark Limited.`
       : "View this Geomark Limited project profile and related consulting work.");
 
-  const projectKeywords = [projectName, projectService, project?.status, "Geomark Limited project", "geospatial consulting project"].filter(
-    Boolean,
-  ) as string[];
+  const projectKeywords = [
+    projectName,
+    projectService,
+    projectClientName,
+    project?.status,
+    "Geomark Limited project",
+    "geospatial consulting project",
+  ].filter(Boolean) as string[];
 
   const objectivePoints = parseKeyPoints(project?.objective);
   const responsibilityPoints = parseKeyPoints(project?.responsibility);
@@ -251,19 +262,25 @@ const ProjectDetails = () => {
 
                 <div className="mt-4 flex flex-wrap gap-3">
                   {project?.status && (
-                    <span className="rounded-full border px-4 py-1 text-sm font-medium text-foreground dark:text-primary-foreground">
+                    <span className="rounded-full border border-blue-200 px-4 py-1 text-sm font-medium text-foreground dark:text-primary-foreground">
                       Status: {project.status}
                     </span>
                   )}
 
+                  {projectClientName && (
+                    <span className="rounded-full border border-blue-200 px-4 py-1 text-sm font-medium text-foreground dark:text-primary-foreground">
+                      Client: {projectClientName}
+                    </span>
+                  )}
+
                   {formattedStartDate && (
-                    <span className="rounded-full border px-4 py-1 text-sm font-medium text-foreground dark:text-primary-foreground">
+                    <span className="rounded-full border border-blue-200 px-4 py-1 text-sm font-medium text-foreground dark:text-primary-foreground">
                       Start Date: {formattedStartDate}
                     </span>
                   )}
 
                   {formattedEndDate && (
-                    <span className="rounded-full border px-4 py-1 text-sm font-medium text-foreground dark:text-primary-foreground">
+                    <span className="rounded-full border border-blue-200 px-4 py-1 text-sm font-medium text-foreground dark:text-primary-foreground">
                       End Date: {formattedEndDate}
                     </span>
                   )}
@@ -286,45 +303,49 @@ const ProjectDetails = () => {
         {/* Objectives and Findings */}
         <div className="py-4">
           <div className="container">
-            <motion.div
-              className="mx-auto mb-8 max-w-4xl"
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={staggerContainer}
-            >
-              <motion.h3 variants={fadeUp} className="mb-4 text-2xl font-semibold text-foreground dark:text-primary-foreground">
-                Key Objectives:
-              </motion.h3>
+            {objectivePoints.length > 0 && (
+              <motion.div
+                className="mx-auto mb-8 max-w-4xl"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={staggerContainer}
+              >
+                <motion.h3 variants={fadeUp} className="mb-4 text-2xl font-semibold text-foreground dark:text-primary-foreground">
+                  Key Objectives:
+                </motion.h3>
 
-              <motion.ul variants={staggerContainer} className="list-outside list-disc space-y-2 pl-6 text-muted-foreground">
-                {objectivePoints.map((item, index) => (
-                  <motion.li key={index} variants={fadeUp}>
-                    {item}
-                  </motion.li>
-                ))}
-              </motion.ul>
-            </motion.div>
+                <motion.ul variants={staggerContainer} className="list-outside list-disc space-y-2 pl-6 text-muted-foreground">
+                  {objectivePoints.map((item, index) => (
+                    <motion.li key={index} variants={fadeUp}>
+                      {item}
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </motion.div>
+            )}
 
-            <motion.div
-              className="mx-auto mt-6 max-w-4xl"
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={staggerContainer}
-            >
-              <motion.h3 variants={fadeUp} className="mb-4 text-2xl font-semibold text-foreground dark:text-primary-foreground">
-                Key Responsibilities:
-              </motion.h3>
+            {responsibilityPoints.length > 0 && (
+              <motion.div
+                className="mx-auto mt-6 max-w-4xl"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={staggerContainer}
+              >
+                <motion.h3 variants={fadeUp} className="mb-4 text-2xl font-semibold text-foreground dark:text-primary-foreground">
+                  Key Responsibilities:
+                </motion.h3>
 
-              <motion.ul variants={staggerContainer} className="list-outside list-disc space-y-2 pl-6 text-muted-foreground">
-                {responsibilityPoints.map((item, index) => (
-                  <motion.li key={index} variants={fadeUp}>
-                    {item}
-                  </motion.li>
-                ))}
-              </motion.ul>
-            </motion.div>
+                <motion.ul variants={staggerContainer} className="list-outside list-disc space-y-2 pl-6 text-muted-foreground">
+                  {responsibilityPoints.map((item, index) => (
+                    <motion.li key={index} variants={fadeUp}>
+                      {item}
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </motion.div>
+            )}
           </div>
         </div>
 

@@ -2,7 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { role as userRole } from "@/constants/role";
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { BadgeCheck, Ban, Crown, ShieldCheck, UserRound } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useForm } from "react-hook-form";
@@ -11,13 +15,63 @@ import { useGetSingleUserQuery, useUpdateUserMutation } from "@/redux/features/u
 import SingleImageUploader from "@/components/ui/SingleImageUploader";
 import { SkeletonUserUpdate } from "@/components/modules/Admin/User/SkeletonUserUpdate";
 
-// type TFormValues = {
-//   name: string;
-//   email: string;
-//   phone: string;
-//   role: string;
-//   isActive: string;
-// };
+const dashboardSelectContentClassName =
+  "max-h-80 w-[var(--radix-select-trigger-width)] rounded-2xl border-blue-200 bg-white p-2 text-slate-700 shadow-2xl dark:border-slate-800 dark:bg-slate-950 dark:text-foreground";
+
+const dashboardSelectItemClassName =
+  "mb-1 rounded-xl px-3 py-2.5 text-sm text-slate-700 focus:bg-blue-50 focus:text-blue-700 dark:text-foreground dark:focus:bg-slate-800 dark:focus:text-blue-200";
+
+const dashboardSelectMarkerClassName = "flex size-8 shrink-0 items-center justify-center rounded-full border text-xs font-semibold";
+const dashboardSelectTriggerClassName =
+  "h-13! w-full rounded-xl border border-blue-300 bg-gradient-to-r from-purple-50 to-blue-50 text-slate-700 focus:ring-2 focus:ring-purple-300/40 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-foreground";
+
+const roleOptions = [
+  {
+    value: userRole.user,
+    label: "User",
+    description: "Standard dashboard access",
+    markerClassName: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300",
+    Icon: UserRound,
+  },
+  {
+    value: userRole.admin,
+    label: "Admin",
+    description: "Can manage operational content",
+    markerClassName: "border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-900/60 dark:bg-sky-950/40 dark:text-sky-300",
+    Icon: ShieldCheck,
+  },
+  {
+    value: userRole.superAdmin,
+    label: "Super Admin",
+    description: "Full administrative access",
+    markerClassName: "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300",
+    Icon: Crown,
+  },
+];
+
+const statusOptions = [
+  {
+    value: "ACTIVE",
+    label: "Active",
+    description: "User can sign in and use the dashboard",
+    markerClassName: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300",
+    Icon: BadgeCheck,
+  },
+  {
+    value: "INACTIVE",
+    label: "Inactive",
+    description: "Account is paused without being blocked",
+    markerClassName: "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300",
+    Icon: Ban,
+  },
+  {
+    value: "BLOCKED",
+    label: "Blocked",
+    description: "User access is restricted",
+    markerClassName: "border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-300",
+    Icon: Ban,
+  },
+];
 
 const UserUpdate = () => {
   const { id } = useParams();
@@ -212,17 +266,30 @@ const UserUpdate = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Role</FormLabel>
-                      <FormControl>
-                        <select
-                          {...field}
-                          className="flex h-11 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                        >
-                          <option value="">Select role</option>
-                          <option value="USER">User</option>
-                          <option value="ADMIN">Admin</option>
-                          <option value="SUPER_ADMIN">Super Admin</option>
-                        </select>
-                      </FormControl>
+                      <Select onValueChange={field.onChange} value={field.value || undefined}>
+                        <FormControl>
+                          <SelectTrigger className={cn(dashboardSelectTriggerClassName, "min-w-0 overflow-hidden text-left")}>
+                            <SelectValue placeholder="Select role" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className={dashboardSelectContentClassName} position="popper" align="start">
+                          {roleOptions.map((item) => (
+                            <SelectItem key={item.value} value={item.value} className={dashboardSelectItemClassName}>
+                              <span className="flex min-w-0 items-center gap-2">
+                                <span className={cn(dashboardSelectMarkerClassName, item.markerClassName)}>
+                                  <item.Icon className="size-4" />
+                                </span>
+                                <span className="min-w-0">
+                                  <span className="block font-medium leading-snug">{item.label}</span>
+                                  <span className="block whitespace-normal wrap-break-word text-xs leading-snug text-muted-foreground">
+                                    {item.description}
+                                  </span>
+                                </span>
+                              </span>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -235,16 +302,30 @@ const UserUpdate = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Status</FormLabel>
-                      <FormControl>
-                        <select
-                          {...field}
-                          className="flex h-11 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                        >
-                          <option value="ACTIVE">Active</option>
-                          <option value="INACTIVE">Inactive</option>
-                          <option value="BLOCKED">Blocked</option>
-                        </select>
-                      </FormControl>
+                      <Select onValueChange={field.onChange} value={field.value || undefined}>
+                        <FormControl>
+                          <SelectTrigger className={cn(dashboardSelectTriggerClassName, "min-w-0 overflow-hidden text-left")}>
+                            <SelectValue placeholder="Select status" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className={dashboardSelectContentClassName} position="popper" align="start">
+                          {statusOptions.map((item) => (
+                            <SelectItem key={item.value} value={item.value} className={dashboardSelectItemClassName}>
+                              <span className="flex min-w-0 items-center gap-2">
+                                <span className={cn(dashboardSelectMarkerClassName, item.markerClassName)}>
+                                  <item.Icon className="size-4" />
+                                </span>
+                                <span className="min-w-0">
+                                  <span className="block font-medium leading-snug">{item.label}</span>
+                                  <span className="block whitespace-normal wrap-break-word text-xs leading-snug text-muted-foreground">
+                                    {item.description}
+                                  </span>
+                                </span>
+                              </span>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}

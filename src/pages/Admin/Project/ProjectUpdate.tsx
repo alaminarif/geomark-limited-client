@@ -7,6 +7,7 @@ import { FormStyles } from "@/components/ui/FormStyles";
 import { Input } from "@/components/ui/input";
 import MultipleImageUploader from "@/components/ui/MultipleImageUploader";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SingleImageUploader from "@/components/ui/SingleImageUploader";
 import { Textarea } from "@/components/ui/textarea";
 import { ProjectStatus } from "@/constants/project";
@@ -19,7 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import imageCompression from "browser-image-compression";
 import { format, formatISO, isValid } from "date-fns";
 import { motion } from "framer-motion";
-import { ArrowLeft, CalendarIcon, ChevronDown, FolderPen, ImagePlus, Loader2, MapPin, Save, XCircle } from "lucide-react";
+import { ArrowLeft, BriefcaseBusiness, CalendarIcon, FolderPen, ImagePlus, Loader2, MapPin, Save, XCircle } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
@@ -33,8 +34,12 @@ type SubmitButton = "header" | "footer";
 
 const MAX_SINGLE_FILE_SIZE = 2 * 1024 * 1024;
 const MAX_TOTAL_SIZE = 8 * 1024 * 1024;
-const nativeSelectClassName =
-  "h-11 w-full appearance-none rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 px-3 pr-10 text-slate-700 outline-none transition focus:border-purple-300 focus:ring-2 focus:ring-purple-300/40 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800 dark:text-foreground";
+const dashboardSelectContentClassName =
+  "max-h-80 w-[var(--radix-select-trigger-width)] rounded-2xl border-blue-200 bg-white p-2 text-slate-700 shadow-2xl dark:border-slate-800 dark:bg-slate-950 dark:text-foreground";
+const dashboardSelectItemClassName =
+  "mb-1 rounded-xl px-3 py-2.5 text-sm text-slate-700 focus:bg-blue-50 focus:text-blue-700 dark:text-foreground dark:focus:bg-slate-800 dark:focus:text-blue-200";
+const dashboardSelectMarkerClassName =
+  "flex size-8 shrink-0 items-center justify-center rounded-full border border-blue-200 bg-blue-50 text-xs font-semibold text-blue-700 dark:border-slate-700 dark:bg-slate-900 dark:text-blue-200";
 
 const defaultValues: UpdateProjectFormValues = {
   service: "",
@@ -197,6 +202,28 @@ const mergeSelectOptions = (options: SelectOption[], resolvedOption: SelectOptio
   return [resolvedOption, ...options];
 };
 
+const getOptionInitial = (label: string) => {
+  return label.trim().charAt(0).toUpperCase() || "-";
+};
+
+const getStatusMarkerClassName = (status: string) => {
+  const statusKey = status.trim().toUpperCase();
+
+  if (statusKey === "COMPLETED") {
+    return "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300";
+  }
+
+  if (statusKey === "ONGOING") {
+    return "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-300";
+  }
+
+  return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300";
+};
+
+const sortSelectOptionsByLabel = (options: SelectOption[]) => {
+  return [...options].sort((a, b) => a.label.localeCompare(b.label, undefined, { sensitivity: "base", numeric: true }));
+};
+
 const canCompressImage = (file: File) => {
   return ["image/jpeg", "image/png", "image/webp"].includes(file.type);
 };
@@ -251,7 +278,7 @@ const ProjectUpdate = () => {
   });
 
   const { data: servicesData, isLoading: servicesLoading } = useGetAllServicesQuery({ limit: 100 });
-  const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery({ limit: 100, sort: "-des" });
+  const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery({ limit: 1000 });
   const [updateProject, { isLoading: isSubmitting }] = useUpdateProjectMutation();
 
   const project = useMemo(() => extractProject(projectData), [projectData]);
@@ -261,23 +288,27 @@ const ProjectUpdate = () => {
 
   const serviceOptions = useMemo<SelectOption[]>(
     () =>
-      services
-        .map((item: any) => ({
-          value: safeString(item?._id),
-          label: safeString(item?.name),
-        }))
-        .filter((item: SelectOption) => item.value && item.label),
+      sortSelectOptionsByLabel(
+        services
+          .map((item: any) => ({
+            value: safeString(item?._id),
+            label: safeString(item?.name),
+          }))
+          .filter((item: SelectOption) => item.value && item.label),
+      ),
     [services],
   );
 
   const clientOptions = useMemo<SelectOption[]>(
     () =>
-      clients
-        .map((item: any) => ({
-          value: safeString(item?._id),
-          label: safeString(item?.name),
-        }))
-        .filter((item: SelectOption) => item.value && item.label),
+      sortSelectOptionsByLabel(
+        clients
+          .map((item: any) => ({
+            value: safeString(item?._id),
+            label: safeString(item?.name),
+          }))
+          .filter((item: SelectOption) => item.value && item.label),
+      ),
     [clients],
   );
 
@@ -294,12 +325,18 @@ const ProjectUpdate = () => {
   const resolvedStatusOption = useMemo(() => resolveSelectOption(project?.status, projectStatusOptions), [project?.status, projectStatusOptions]);
   const resolvedClientOption = useMemo(() => resolveSelectOption(project?.client, clientOptions), [project?.client, clientOptions]);
 
-  const hydratedServiceOptions = useMemo(() => mergeSelectOptions(serviceOptions, resolvedServiceOption), [serviceOptions, resolvedServiceOption]);
+  const hydratedServiceOptions = useMemo(
+    () => sortSelectOptionsByLabel(mergeSelectOptions(serviceOptions, resolvedServiceOption)),
+    [serviceOptions, resolvedServiceOption],
+  );
   const hydratedStatusOptions = useMemo(
     () => mergeSelectOptions(projectStatusOptions, resolvedStatusOption),
     [projectStatusOptions, resolvedStatusOption],
   );
-  const hydratedClientOptions = useMemo(() => mergeSelectOptions(clientOptions, resolvedClientOption), [clientOptions, resolvedClientOption]);
+  const hydratedClientOptions = useMemo(
+    () => sortSelectOptionsByLabel(mergeSelectOptions(clientOptions, resolvedClientOption)),
+    [clientOptions, resolvedClientOption],
+  );
 
   const existingThumbnail = useMemo(() => {
     return getImageUrl(project?.picture) || getImageUrl(project?.image) || getImageUrl(project?.thumbnail) || getImageUrl(project?.file) || "";
@@ -566,32 +603,31 @@ const ProjectUpdate = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-slate-700 dark:text-foreground">Service</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <select
-                            {...field}
-                            value={field.value ?? ""}
-                            onChange={(event) => field.onChange(event.target.value)}
-                            className={nativeSelectClassName}
-                          >
-                            <option value="" disabled>
-                              Select service
-                            </option>
-                            {hydratedServiceOptions.length > 0 ? (
-                              hydratedServiceOptions.map((item) => (
-                                <option key={item.value} value={item.value}>
-                                  {item.label}
-                                </option>
-                              ))
-                            ) : (
-                              <option value="" disabled>
-                                No services available
-                              </option>
-                            )}
-                          </select>
-                          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-foreground/60" />
-                        </div>
-                      </FormControl>
+                      <Select onValueChange={field.onChange} value={field.value || undefined} disabled={servicesLoading}>
+                        <FormControl>
+                          <SelectTrigger className={cn(FormStyles.selectTrigger, "min-w-0 overflow-hidden text-left")}>
+                            <SelectValue placeholder={servicesLoading ? "Loading services..." : "Select service"} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className={dashboardSelectContentClassName} position="popper" align="start">
+                          {hydratedServiceOptions.length > 0 ? (
+                            hydratedServiceOptions.map((item) => (
+                              <SelectItem key={item.value} value={item.value} className={dashboardSelectItemClassName}>
+                                <span className="flex min-w-0 items-center gap-2">
+                                  <span className={dashboardSelectMarkerClassName}>
+                                    <BriefcaseBusiness className="size-4" />
+                                  </span>
+                                  <span className="min-w-0 whitespace-normal wrap-break-word leading-snug">{item.label}</span>
+                                </span>
+                              </SelectItem>
+                            ))
+                          ) : (
+                            <SelectItem value="__no_services_available__" disabled className={dashboardSelectItemClassName}>
+                              No services available
+                            </SelectItem>
+                          )}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -603,26 +639,27 @@ const ProjectUpdate = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-slate-700 dark:text-foreground">Status</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <select
-                            {...field}
-                            value={field.value ?? ""}
-                            onChange={(event) => field.onChange(event.target.value)}
-                            className={nativeSelectClassName}
-                          >
-                            <option value="" disabled>
-                              Select status
-                            </option>
-                            {hydratedStatusOptions.map((item) => (
-                              <option key={item.value} value={item.value}>
-                                {item.label}
-                              </option>
-                            ))}
-                          </select>
-                          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-foreground/60" />
-                        </div>
-                      </FormControl>
+                      <Select onValueChange={field.onChange} value={field.value || undefined}>
+                        <FormControl>
+                          <SelectTrigger className={cn(FormStyles.selectTrigger, "min-w-0 overflow-hidden text-left")}>
+                            <SelectValue placeholder="Select status" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className={dashboardSelectContentClassName} position="popper" align="start">
+                          {hydratedStatusOptions.map((item) => (
+                            <SelectItem key={item.value} value={item.value} className={dashboardSelectItemClassName}>
+                              <span className="flex min-w-0 items-center gap-2">
+                                <span
+                                  className={cn(dashboardSelectMarkerClassName, "text-[10px] tracking-wide", getStatusMarkerClassName(item.value))}
+                                >
+                                  {getOptionInitial(item.label)}
+                                </span>
+                                <span className="min-w-0 whitespace-normal wrap-break-word leading-snug">{item.label}</span>
+                              </span>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -781,32 +818,36 @@ const ProjectUpdate = () => {
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel className="text-slate-700 dark:text-foreground">Client</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <select
-                            {...field}
-                            value={field.value ?? ""}
-                            onChange={(event) => field.onChange(event.target.value)}
-                            className={nativeSelectClassName}
-                          >
-                            <option value="" disabled>
-                              Select client
-                            </option>
-                            {hydratedClientOptions.length > 0 ? (
-                              hydratedClientOptions.map((item) => (
-                                <option key={item.value} value={item.value}>
-                                  {item.label}
-                                </option>
-                              ))
-                            ) : (
-                              <option value="" disabled>
-                                No clients available
-                              </option>
-                            )}
-                          </select>
-                          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-foreground/60" />
-                        </div>
-                      </FormControl>
+                      <Select onValueChange={field.onChange} value={field.value || undefined} disabled={clientsLoading}>
+                        <FormControl>
+                          <SelectTrigger className={cn(FormStyles.selectTrigger, "min-w-0 overflow-hidden text-left")}>
+                            <SelectValue placeholder={clientsLoading ? "Loading clients..." : "Select client"} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className={dashboardSelectContentClassName} position="popper" align="start">
+                          {hydratedClientOptions.length > 0 ? (
+                            hydratedClientOptions.map((item) => (
+                              <SelectItem key={item.value} value={item.value} className={dashboardSelectItemClassName}>
+                                <span className="flex min-w-0 items-center gap-2">
+                                  <span
+                                    className={cn(
+                                      dashboardSelectMarkerClassName,
+                                      "bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300",
+                                    )}
+                                  >
+                                    {getOptionInitial(item.label)}
+                                  </span>
+                                  <span className="min-w-0 whitespace-normal wrap-break-word leading-snug">{item.label}</span>
+                                </span>
+                              </SelectItem>
+                            ))
+                          ) : (
+                            <SelectItem value="__no_clients_available__" disabled className={dashboardSelectItemClassName}>
+                              No clients available
+                            </SelectItem>
+                          )}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
