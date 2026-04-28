@@ -100,6 +100,7 @@ const ClientManagement = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const { data, isLoading } = useGetClientsQuery({
+    sort: "rank",
     page: currentPage,
     limit: PAGE_SIZE,
   });

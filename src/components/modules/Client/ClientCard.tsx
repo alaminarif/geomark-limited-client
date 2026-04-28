@@ -31,7 +31,7 @@ const ClientCard = ({ item }: Props) => {
           />
         </div>
 
-        <h3 className="text-xl font-semibold text-foreground/90 sm:text-2xl">{item.name}</h3>
+        <h3 className="text-xl line-clamp-1  font-semibold text-foreground/90 sm:text-2xl">{item.name}</h3>
 
         {item.link && <p className="mt-2 text-sm text-muted-foreground">Visit client profile</p>}
       </div>
