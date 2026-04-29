@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { ProjectSelectControl } from "@/components/modules/Admin/Project/ProjectSelectControl";
 import {
   Drawer,
   DrawerClose,
@@ -16,7 +17,6 @@ import { FormStyles } from "@/components/ui/FormStyles";
 import { Input } from "@/components/ui/input";
 import MultipleImageUploader from "@/components/ui/MultipleImageUploader";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SingleImageUploader from "@/components/ui/SingleImageUploader";
 import { Textarea } from "@/components/ui/textarea";
 import { ProjectStatus } from "@/constants/project";
@@ -129,8 +129,8 @@ const AddProjectModal = () => {
   });
 
   const [addProject, { isLoading: isSubmitting }] = useAddProjectMutation();
-  const { data: servicesData, isLoading: servicesLoading } = useGetAllServicesQuery(undefined);
-  const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery(undefined);
+  const { data: servicesData, isLoading: servicesLoading } = useGetAllServicesQuery({ limit: 100 });
+  const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery({ limit: 1000 });
 
   const serviceOptions = useMemo(() => getOptionsFromResponse(servicesData), [servicesData]);
   const clientOptions = useMemo(() => getOptionsFromResponse(clientsData), [clientsData]);
@@ -312,20 +312,19 @@ const AddProjectModal = () => {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="text-foreground">Service</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value || undefined} disabled={servicesLoading}>
-                              <FormControl>
-                                <SelectTrigger className={FormStyles.selectTrigger}>
-                                  <SelectValue placeholder={servicesLoading ? "Loading services..." : "Select service"} />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent className={FormStyles.selectContent}>
-                                {serviceOptions.map((item) => (
-                                  <SelectItem key={item.value} value={item.value}>
-                                    {item.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                            <FormControl>
+                              <ProjectSelectControl
+                                name={field.name}
+                                value={field.value}
+                                onChange={field.onChange}
+                                onBlur={field.onBlur}
+                                inputRef={field.ref}
+                                disabled={servicesLoading}
+                                options={serviceOptions}
+                                placeholder={servicesLoading ? "Loading services..." : serviceOptions.length > 0 ? "Select service" : "No services available"}
+                                variant="service"
+                              />
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -337,20 +336,18 @@ const AddProjectModal = () => {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="text-foreground">Status</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value || undefined}>
-                              <FormControl>
-                                <SelectTrigger className={FormStyles.selectTrigger}>
-                                  <SelectValue placeholder="Select status" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent className={FormStyles.selectContent}>
-                                {projectStatusOptions.map((item) => (
-                                  <SelectItem key={item.value} value={item.value}>
-                                    {item.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                            <FormControl>
+                              <ProjectSelectControl
+                                name={field.name}
+                                value={field.value}
+                                onChange={field.onChange}
+                                onBlur={field.onBlur}
+                                inputRef={field.ref}
+                                options={projectStatusOptions}
+                                placeholder="Select status"
+                                variant="status"
+                              />
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -505,20 +502,19 @@ const AddProjectModal = () => {
                         render={({ field }) => (
                           <FormItem className="w-full">
                             <FormLabel className="text-foreground">Client</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value || undefined} disabled={clientsLoading}>
-                              <FormControl>
-                                <SelectTrigger className={FormStyles.selectTrigger}>
-                                  <SelectValue placeholder={clientsLoading ? "Loading clients..." : "Select client"} />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent className={FormStyles.selectContent}>
-                                {clientOptions.map((item) => (
-                                  <SelectItem key={item.value} value={item.value}>
-                                    {item.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                            <FormControl>
+                              <ProjectSelectControl
+                                name={field.name}
+                                value={field.value}
+                                onChange={field.onChange}
+                                onBlur={field.onBlur}
+                                inputRef={field.ref}
+                                disabled={clientsLoading}
+                                options={clientOptions}
+                                placeholder={clientsLoading ? "Loading clients..." : clientOptions.length > 0 ? "Select client" : "No clients available"}
+                                variant="client"
+                              />
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}

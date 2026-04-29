@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SkeletonUpdateProject } from "@/components/modules/Admin/Project/SkeletonUpdateProject";
+import { ProjectSelectControl } from "@/components/modules/Admin/Project/ProjectSelectControl";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -7,7 +8,6 @@ import { FormStyles } from "@/components/ui/FormStyles";
 import { Input } from "@/components/ui/input";
 import MultipleImageUploader from "@/components/ui/MultipleImageUploader";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SingleImageUploader from "@/components/ui/SingleImageUploader";
 import { Textarea } from "@/components/ui/textarea";
 import { ProjectStatus } from "@/constants/project";
@@ -20,7 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import imageCompression from "browser-image-compression";
 import { format, formatISO, isValid } from "date-fns";
 import { motion } from "framer-motion";
-import { ArrowLeft, BriefcaseBusiness, CalendarIcon, FolderPen, ImagePlus, Loader2, MapPin, Save, XCircle } from "lucide-react";
+import { ArrowLeft, CalendarIcon, FolderPen, ImagePlus, Loader2, MapPin, Save, XCircle } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
@@ -34,12 +34,6 @@ type SubmitButton = "header" | "footer";
 
 const MAX_SINGLE_FILE_SIZE = 2 * 1024 * 1024;
 const MAX_TOTAL_SIZE = 8 * 1024 * 1024;
-const dashboardSelectContentClassName =
-  "max-h-80 w-[var(--radix-select-trigger-width)] rounded-2xl border-blue-200 bg-white p-2 text-slate-700 shadow-2xl dark:border-slate-800 dark:bg-slate-950 dark:text-foreground";
-const dashboardSelectItemClassName =
-  "mb-1 rounded-xl px-3 py-2.5 text-sm text-slate-700 focus:bg-blue-50 focus:text-blue-700 dark:text-foreground dark:focus:bg-slate-800 dark:focus:text-blue-200";
-const dashboardSelectMarkerClassName =
-  "flex size-8 shrink-0 items-center justify-center rounded-full border border-blue-200 bg-blue-50 text-xs font-semibold text-blue-700 dark:border-slate-700 dark:bg-slate-900 dark:text-blue-200";
 
 const defaultValues: UpdateProjectFormValues = {
   service: "",
@@ -74,10 +68,7 @@ const getImageUrl = (value: any) => {
 const extractArray = (payload: any, extraKeys: string[] = []) => {
   const candidates = [
     payload?.data?.data,
-    payload?.data?.result,
-    payload?.data?.items,
-    payload?.data?.services,
-    payload?.data?.clients,
+    ...extraKeys.map((key) => payload?.data?.[key]),
     payload?.data,
     payload?.result,
     payload?.items,
@@ -86,12 +77,6 @@ const extractArray = (payload: any, extraKeys: string[] = []) => {
 
   for (const candidate of candidates) {
     if (Array.isArray(candidate)) return candidate;
-
-    if (candidate && typeof candidate === "object") {
-      for (const key of extraKeys) {
-        if (Array.isArray(candidate[key])) return candidate[key];
-      }
-    }
   }
 
   return [];
@@ -107,121 +92,69 @@ const safeDate = (value: unknown): Date | undefined => {
   return isValid(date) ? date : undefined;
 };
 
-const collectSelectCandidates = (rawValue: any) => {
-  if (!rawValue) return [];
+const getSelectValue = (rawValue: any) => {
+  if (typeof rawValue === "string" || typeof rawValue === "number") return safeString(rawValue);
+  if (!rawValue || typeof rawValue !== "object") return "";
 
-  const queue = [rawValue];
-  const visited = new Set<any>();
-  const candidates: string[] = [];
-
-  while (queue.length > 0) {
-    const current = queue.shift();
-
-    if (current === null || current === undefined) continue;
-
-    if (typeof current === "string" || typeof current === "number") {
-      const value = String(current).trim();
-      if (value) candidates.push(value);
-      continue;
-    }
-
-    if (typeof current !== "object" || visited.has(current)) continue;
-    visited.add(current);
-
-    if (Array.isArray(current)) {
-      queue.push(...current);
-      continue;
-    }
-
-    const priorityKeys = ["_id", "id", "value", "name", "label", "title", "status"];
-
-    priorityKeys.forEach((key) => {
-      if (current[key] !== undefined && current[key] !== null) {
-        queue.push(current[key]);
-      }
-    });
-
-    Object.values(current).forEach((value) => {
-      if (value !== undefined && value !== null) {
-        queue.push(value);
-      }
-    });
-  }
-
-  return [...new Set(candidates)];
+  return safeString(rawValue?._id || rawValue?.id || rawValue?.value);
 };
 
-const findMatchingOption = (rawValue: any, options: SelectOption[]) => {
-  const candidates = collectSelectCandidates(rawValue);
+const getSelectLabel = (rawValue: any) => {
+  if (typeof rawValue === "string" || typeof rawValue === "number") return safeString(rawValue);
+  if (!rawValue || typeof rawValue !== "object") return "";
 
-  for (const candidate of candidates) {
-    const cleaned = candidate.trim().toLowerCase();
-
-    const matchedByValue = options.find((item) => item.value.trim().toLowerCase() === cleaned);
-    if (matchedByValue) return matchedByValue;
-
-    const matchedByLabel = options.find((item) => item.label.trim().toLowerCase() === cleaned);
-    if (matchedByLabel) return matchedByLabel;
-  }
-
-  return null;
-};
-
-const buildFallbackOption = (rawValue: any) => {
-  const candidates = collectSelectCandidates(rawValue);
-  if (!candidates.length) return null;
-
-  const labelCandidate =
-    candidates.find((item) => /[a-zA-Z]/.test(item) && item.length < 120) || candidates.find((item) => item.length < 120) || candidates[0];
-
-  const valueCandidate = candidates[0];
-
-  if (!valueCandidate || !labelCandidate) return null;
-
-  return {
-    value: valueCandidate,
-    label: labelCandidate,
-  };
+  return safeString(rawValue?.name || rawValue?.label || rawValue?.title || rawValue?.status || rawValue?._id || rawValue?.id || rawValue?.value);
 };
 
 const resolveSelectOption = (rawValue: any, options: SelectOption[]) => {
-  return findMatchingOption(rawValue, options) || buildFallbackOption(rawValue);
+  const value = getSelectValue(rawValue);
+  const label = getSelectLabel(rawValue);
+  const normalizedValue = value.toLowerCase();
+  const normalizedLabel = label.toLowerCase();
+
+  const matchedOption = options.find(
+    (item) => item.value.toLowerCase() === normalizedValue || item.label.toLowerCase() === normalizedLabel,
+  );
+  if (matchedOption) return matchedOption;
+
+  const fallbackValue = value || label;
+  const fallbackLabel = label || value;
+
+  return fallbackValue && fallbackLabel ? { value: fallbackValue, label: fallbackLabel } : null;
 };
 
 const mergeSelectOptions = (options: SelectOption[], resolvedOption: SelectOption | null) => {
   if (!resolvedOption) return options;
 
-  const exists = options.some(
-    (item) =>
-      item.value.trim().toLowerCase() === resolvedOption.value.trim().toLowerCase() ||
-      item.label.trim().toLowerCase() === resolvedOption.label.trim().toLowerCase(),
-  );
+  const exists = options.some((item) => item.value.toLowerCase() === resolvedOption.value.toLowerCase());
 
   if (exists) return options;
 
   return [resolvedOption, ...options];
 };
 
-const getOptionInitial = (label: string) => {
-  return label.trim().charAt(0).toUpperCase() || "-";
-};
-
-const getStatusMarkerClassName = (status: string) => {
-  const statusKey = status.trim().toUpperCase();
-
-  if (statusKey === "COMPLETED") {
-    return "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300";
-  }
-
-  if (statusKey === "ONGOING") {
-    return "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-300";
-  }
-
-  return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300";
-};
-
 const sortSelectOptionsByLabel = (options: SelectOption[]) => {
   return [...options].sort((a, b) => a.label.localeCompare(b.label, undefined, { sensitivity: "base", numeric: true }));
+};
+
+const toSelectOption = (item: any): SelectOption | null => {
+  const value = getSelectValue(item);
+  const label = getSelectLabel(item);
+
+  if (!value || !label) return null;
+
+  return { value, label };
+};
+
+const uniqueSelectOptions = (options: SelectOption[]) => {
+  const seen = new Set<string>();
+
+  return options.filter((item) => {
+    const key = item.value.trim().toLowerCase();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 };
 
 const canCompressImage = (file: File) => {
@@ -289,12 +222,7 @@ const ProjectUpdate = () => {
   const serviceOptions = useMemo<SelectOption[]>(
     () =>
       sortSelectOptionsByLabel(
-        services
-          .map((item: any) => ({
-            value: safeString(item?._id),
-            label: safeString(item?.name),
-          }))
-          .filter((item: SelectOption) => item.value && item.label),
+        uniqueSelectOptions(services.map(toSelectOption).filter((item): item is SelectOption => Boolean(item))),
       ),
     [services],
   );
@@ -302,12 +230,7 @@ const ProjectUpdate = () => {
   const clientOptions = useMemo<SelectOption[]>(
     () =>
       sortSelectOptionsByLabel(
-        clients
-          .map((item: any) => ({
-            value: safeString(item?._id),
-            label: safeString(item?.name),
-          }))
-          .filter((item: SelectOption) => item.value && item.label),
+        uniqueSelectOptions(clients.map(toSelectOption).filter((item): item is SelectOption => Boolean(item))),
       ),
     [clients],
   );
@@ -535,7 +458,7 @@ const ProjectUpdate = () => {
     form.handleSubmit(onSubmit)(event);
   };
 
-  if (projectLoading || projectFetching || servicesLoading || clientsLoading) {
+  if (projectLoading || (!project && projectFetching) || servicesLoading || clientsLoading) {
     return <SkeletonUpdateProject />;
   }
 
@@ -603,31 +526,19 @@ const ProjectUpdate = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-slate-700 dark:text-foreground">Service</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value || undefined} disabled={servicesLoading}>
-                        <FormControl>
-                          <SelectTrigger className={cn(FormStyles.selectTrigger, "min-w-0 overflow-hidden text-left")}>
-                            <SelectValue placeholder={servicesLoading ? "Loading services..." : "Select service"} />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className={dashboardSelectContentClassName} position="popper" align="start">
-                          {hydratedServiceOptions.length > 0 ? (
-                            hydratedServiceOptions.map((item) => (
-                              <SelectItem key={item.value} value={item.value} className={dashboardSelectItemClassName}>
-                                <span className="flex min-w-0 items-center gap-2">
-                                  <span className={dashboardSelectMarkerClassName}>
-                                    <BriefcaseBusiness className="size-4" />
-                                  </span>
-                                  <span className="min-w-0 whitespace-normal wrap-break-word leading-snug">{item.label}</span>
-                                </span>
-                              </SelectItem>
-                            ))
-                          ) : (
-                            <SelectItem value="__no_services_available__" disabled className={dashboardSelectItemClassName}>
-                              No services available
-                            </SelectItem>
-                          )}
-                        </SelectContent>
-                      </Select>
+                      <FormControl>
+                        <ProjectSelectControl
+                          name={field.name}
+                          value={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          inputRef={field.ref}
+                          disabled={servicesLoading}
+                          options={hydratedServiceOptions}
+                          placeholder={servicesLoading ? "Loading services..." : hydratedServiceOptions.length > 0 ? "Select service" : "No services available"}
+                          variant="service"
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -639,27 +550,18 @@ const ProjectUpdate = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-slate-700 dark:text-foreground">Status</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value || undefined}>
-                        <FormControl>
-                          <SelectTrigger className={cn(FormStyles.selectTrigger, "min-w-0 overflow-hidden text-left")}>
-                            <SelectValue placeholder="Select status" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className={dashboardSelectContentClassName} position="popper" align="start">
-                          {hydratedStatusOptions.map((item) => (
-                            <SelectItem key={item.value} value={item.value} className={dashboardSelectItemClassName}>
-                              <span className="flex min-w-0 items-center gap-2">
-                                <span
-                                  className={cn(dashboardSelectMarkerClassName, "text-[10px] tracking-wide", getStatusMarkerClassName(item.value))}
-                                >
-                                  {getOptionInitial(item.label)}
-                                </span>
-                                <span className="min-w-0 whitespace-normal wrap-break-word leading-snug">{item.label}</span>
-                              </span>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <FormControl>
+                        <ProjectSelectControl
+                          name={field.name}
+                          value={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          inputRef={field.ref}
+                          options={hydratedStatusOptions}
+                          placeholder="Select status"
+                          variant="status"
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -818,36 +720,19 @@ const ProjectUpdate = () => {
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel className="text-slate-700 dark:text-foreground">Client</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value || undefined} disabled={clientsLoading}>
-                        <FormControl>
-                          <SelectTrigger className={cn(FormStyles.selectTrigger, "min-w-0 overflow-hidden text-left")}>
-                            <SelectValue placeholder={clientsLoading ? "Loading clients..." : "Select client"} />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className={dashboardSelectContentClassName} position="popper" align="start">
-                          {hydratedClientOptions.length > 0 ? (
-                            hydratedClientOptions.map((item) => (
-                              <SelectItem key={item.value} value={item.value} className={dashboardSelectItemClassName}>
-                                <span className="flex min-w-0 items-center gap-2">
-                                  <span
-                                    className={cn(
-                                      dashboardSelectMarkerClassName,
-                                      "bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300",
-                                    )}
-                                  >
-                                    {getOptionInitial(item.label)}
-                                  </span>
-                                  <span className="min-w-0 whitespace-normal wrap-break-word leading-snug">{item.label}</span>
-                                </span>
-                              </SelectItem>
-                            ))
-                          ) : (
-                            <SelectItem value="__no_clients_available__" disabled className={dashboardSelectItemClassName}>
-                              No clients available
-                            </SelectItem>
-                          )}
-                        </SelectContent>
-                      </Select>
+                      <FormControl>
+                        <ProjectSelectControl
+                          name={field.name}
+                          value={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          inputRef={field.ref}
+                          disabled={clientsLoading}
+                          options={hydratedClientOptions}
+                          placeholder={clientsLoading ? "Loading clients..." : hydratedClientOptions.length > 0 ? "Select client" : "No clients available"}
+                          variant="client"
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}

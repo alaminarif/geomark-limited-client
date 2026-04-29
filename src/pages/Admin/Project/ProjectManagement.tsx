@@ -197,7 +197,7 @@ const ProjectManagement = () => {
     year,
     status,
     page: currentPage,
-    limit: 8,
+    limit: 12,
     sort: "-year",
   });
 

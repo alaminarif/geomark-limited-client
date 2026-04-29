@@ -96,8 +96,6 @@ const UserUpdate = () => {
 
   const user = data?.data;
 
-  console.log(user);
-
   useEffect(() => {
     if (user) {
       form.reset({
@@ -263,36 +261,50 @@ const UserUpdate = () => {
                   control={form.control}
                   name="role"
                   rules={{ required: "Role is required" }}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Role</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value || undefined}>
-                        <FormControl>
-                          <SelectTrigger className={cn(dashboardSelectTriggerClassName, "min-w-0 overflow-hidden text-left")}>
-                            <SelectValue placeholder="Select role" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className={dashboardSelectContentClassName} position="popper" align="start">
-                          {roleOptions.map((item) => (
-                            <SelectItem key={item.value} value={item.value} className={dashboardSelectItemClassName}>
-                              <span className="flex min-w-0 items-center gap-2">
-                                <span className={cn(dashboardSelectMarkerClassName, item.markerClassName)}>
-                                  <item.Icon className="size-4" />
-                                </span>
-                                <span className="min-w-0">
-                                  <span className="block font-medium leading-snug">{item.label}</span>
-                                  <span className="block whitespace-normal wrap-break-word text-xs leading-snug text-muted-foreground">
-                                    {item.description}
+                  render={({ field }) => {
+                    const selectedRoleValue = field.value || user?.role || "";
+                    const selectedRoleOption = roleOptions.find((item) => item.value === selectedRoleValue);
+
+                    return (
+                      <FormItem>
+                        <FormLabel>Role</FormLabel>
+                        <Select onValueChange={field.onChange} value={selectedRoleValue || undefined}>
+                          <FormControl>
+                            <SelectTrigger className={cn(dashboardSelectTriggerClassName, "h-auto! min-h-16 min-w-0 overflow-hidden py-2 text-left")}>
+                              <SelectValue placeholder="Select role" className="min-w-0 flex-col items-start! gap-0! line-clamp-none!">
+                                {selectedRoleOption && (
+                                  <span className="flex min-w-0 flex-col items-start leading-tight">
+                                    <span className="block max-w-full truncate font-medium">{selectedRoleOption.label}</span>
+                                    <span className="mt-0.5 block max-w-full truncate text-xs leading-snug text-muted-foreground">
+                                      {selectedRoleOption.description}
+                                    </span>
+                                  </span>
+                                )}
+                              </SelectValue>
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className={dashboardSelectContentClassName} position="popper" align="start">
+                            {roleOptions.map((item) => (
+                              <SelectItem key={item.value} value={item.value} className={dashboardSelectItemClassName}>
+                                <span className="flex min-w-0 items-center gap-2">
+                                  <span className={cn(dashboardSelectMarkerClassName, item.markerClassName)}>
+                                    <item.Icon className="size-4" />
+                                  </span>
+                                  <span className="min-w-0">
+                                    <span className="block font-medium leading-snug">{item.label}</span>
+                                    <span className="block whitespace-normal wrap-break-word text-xs leading-snug text-muted-foreground">
+                                      {item.description}
+                                    </span>
                                   </span>
                                 </span>
-                              </span>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
                 />
 
                 <FormField

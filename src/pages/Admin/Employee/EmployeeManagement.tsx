@@ -95,6 +95,48 @@ const dropdownItemVariants: Variants = {
   }),
 };
 
+const designationTonePalette = [
+  "border-sky-500/25 bg-sky-500/12 text-sky-700 dark:border-sky-400/30 dark:bg-sky-500/15 dark:text-sky-300",
+  "border-emerald-500/25 bg-emerald-500/12 text-emerald-700 dark:border-emerald-400/30 dark:bg-emerald-500/15 dark:text-emerald-300",
+  "border-violet-500/25 bg-violet-500/12 text-violet-700 dark:border-violet-400/30 dark:bg-violet-500/15 dark:text-violet-300",
+  "border-amber-500/25 bg-amber-500/12 text-amber-700 dark:border-amber-400/30 dark:bg-amber-500/15 dark:text-amber-300",
+  "border-rose-500/25 bg-rose-500/12 text-rose-700 dark:border-rose-400/30 dark:bg-rose-500/15 dark:text-rose-300",
+  "border-cyan-500/25 bg-cyan-500/12 text-cyan-700 dark:border-cyan-400/30 dark:bg-cyan-500/15 dark:text-cyan-300",
+  "border-fuchsia-500/25 bg-fuchsia-500/12 text-fuchsia-700 dark:border-fuchsia-400/30 dark:bg-fuchsia-500/15 dark:text-fuchsia-300",
+  "border-lime-500/25 bg-lime-500/12 text-lime-700 dark:border-lime-400/30 dark:bg-lime-500/15 dark:text-lime-300",
+];
+
+const getDesignationTone = (designation?: string) => {
+  const value = designation?.trim().toLowerCase() || "";
+
+  if (!value) {
+    return "border-slate-400/25 bg-slate-500/10 text-slate-700 dark:border-slate-500/30 dark:bg-slate-500/10 dark:text-slate-300";
+  }
+
+  if (value.includes("chairman") || value.includes("director") || value.includes("ceo") || value.includes("founder")) {
+    return "border-violet-500/25 bg-violet-500/12 text-violet-700 dark:border-violet-400/30 dark:bg-violet-500/15 dark:text-violet-300";
+  }
+
+  if (value.includes("manager") || value.includes("lead") || value.includes("head")) {
+    return "border-amber-500/25 bg-amber-500/12 text-amber-700 dark:border-amber-400/30 dark:bg-amber-500/15 dark:text-amber-300";
+  }
+
+  if (value.includes("engineer") || value.includes("developer") || value.includes("architect")) {
+    return "border-sky-500/25 bg-sky-500/12 text-sky-700 dark:border-sky-400/30 dark:bg-sky-500/15 dark:text-sky-300";
+  }
+
+  if (value.includes("survey") || value.includes("gis") || value.includes("planner")) {
+    return "border-emerald-500/25 bg-emerald-500/12 text-emerald-700 dark:border-emerald-400/30 dark:bg-emerald-500/15 dark:text-emerald-300";
+  }
+
+  if (value.includes("account") || value.includes("finance") || value.includes("admin")) {
+    return "border-cyan-500/25 bg-cyan-500/12 text-cyan-700 dark:border-cyan-400/30 dark:bg-cyan-500/15 dark:text-cyan-300";
+  }
+
+  const paletteIndex = [...value].reduce((sum, char) => sum + char.charCodeAt(0), 0) % designationTonePalette.length;
+  return designationTonePalette[paletteIndex];
+};
+
 const EmployeeManagement = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
@@ -278,7 +320,7 @@ const EmployeeManagement = () => {
                         whileHover={{ y: -1 }}
                         animate={isSelected ? { scale: 1.02 } : { scale: 1 }}
                         transition={{ type: "spring", stiffness: 260, damping: 18 }}
-                        className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/8 px-3 py-1.5 text-xs font-semibold text-primary"
+                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${getDesignationTone(item.designation)}`}
                       >
                         <BriefcaseBusiness className="h-3.5 w-3.5" />
                         <span>{item.designation || "-"}</span>

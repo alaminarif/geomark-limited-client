@@ -1,6 +1,6 @@
 import Logo from "@/assets/images/Geomark_Logo_png.png";
 import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
-import { ArrowUpRight, Clock, Facebook, Linkedin, Mail, MapPin, MessageCircle, Phone, Twitter, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Facebook, Linkedin, Mail, MapPin, MessageCircle, Phone, Twitter, type LucideIcon } from "lucide-react";
 import { Link } from "react-router";
 
 type FooterService = {
@@ -70,10 +70,10 @@ const contactItems = [
     label: "geomarkbd@gmail.com",
     href: "mailto:geomarkbd@gmail.com",
   },
-  {
-    icon: Clock,
-    label: "Saturday - Thursday, 09:00 AM - 06:00 PM",
-  },
+  // {
+  //   icon: Clock,
+  //   label: "Saturday - Thursday, 09:00 AM - 06:00 PM",
+  // },
 ];
 
 const footerLinkClass = "text-sm leading-6 text-muted-foreground transition hover:text-primary";
@@ -140,7 +140,7 @@ export default function Footer() {
               <h2 className="text-sm font-bold uppercase text-foreground">Services</h2>
               <ul className="mt-5 space-y-3">
                 {services.map((item) => (
-                  <li key={item._id}>
+                  <li key={item._id} className="line-clamp-2 ">
                     <Link to={`/service/${item._id}`} className={footerLinkClass}>
                       {item.name}
                     </Link>
@@ -214,7 +214,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-border/70 pt-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-3 border-t border-blue-200 pt-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>&copy; {currentYear} Geomark Limited. All rights reserved.</p>
           <p>GIS, surveying, digital mapping and planning consultancy in Bangladesh.</p>
         </div>

@@ -7,7 +7,8 @@
     "status": "ONGOING",
     "location": "Magura District",
     "description": "Desk-based preparatory activities were completed. A web-based platform was used for field survey data collection. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. Traffic volume and socioeconomic survey data were integrated into MIS and GIS databases in an ArcGIS environment. The project database was published to a web-based data server.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "Preparation of UAV Based Physical Feature, Topographic & Landuse GIS Database, Mouza Map Collection, Scanning, Digitization, Editing & Printing. Under Preparation of Development Plan for Meherpur Zilla Project.",
@@ -17,7 +18,8 @@
     "status": "ONGOING",
     "location": "Meherpur District",
     "description": "Desk-based preparatory activities were completed. A web-based platform was used for field survey data collection. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. Traffic volume and socioeconomic survey data were integrated into MIS and GIS databases in an ArcGIS environment. The project database was published to a web-based data server.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, DSM, contour and 3D feature datasets for planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Preparation of Development Plan for Mirshrai Upazila, Chittagong District: Risk Sensitive land use Plan. Urban Development Directorate (UDD)",
@@ -27,7 +29,8 @@
     "status": "COMPLETED",
     "location": "Mirsharai Upazila, Chittagong District",
     "description": "Desk-based preparatory activities were completed. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment. A web-based platform was used for field survey data collection. The project database was published to a web-based data server.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "Mymensingh Strategic Development Plan 2011-2031(MUDP) (Rural & Urban) with Physical Feature Survey work with RTK GPS, Total Station & using3D image with Relevant Supporting other Survey.",
@@ -37,7 +40,8 @@
     "status": "COMPLETED",
     "location": "Mymensingh",
     "description": "Desk-based preparatory activities were completed, including stereo image collection, image processing and database preparation. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment. GIS base map preparation was completed. A web-based platform was used for field survey data collection. The project database was published to a web-based data server.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, DSM, contour and 3D feature datasets for planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Preparation of Payra-Kuakata Comprehensive Plan Focusing on Eco Tourism, (PKCP)” with Establishment of BM Pillars, Physical Features, Land use and Topographical Survey.",
@@ -47,7 +51,8 @@
     "status": "COMPLETED",
     "location": "Galachipa and Rangabali Upazila in Patuakhali District",
     "description": "Desk-based preparatory activities were completed. A web-based platform was used for field survey data collection. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment. The project database was published to a web-based data server.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "Consultancy Services for “A Pilot Project on Preparation of Comprehensive Development Plan for Nine Upazila (9upzCP), Package 03 (Jagannathpur and South Sunamganj Upazila, Sunamganj), Urban Development Directorate (UDD)",
@@ -57,7 +62,8 @@
     "status": "ONGOING",
     "location": "Jagannathpur and South Sunamganj Upazila, Sunamganj",
     "description": "Desk-based preparatory activities were completed. A web-based platform was used for field survey data collection. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. MIS and GIS databases were integrated in an ArcGIS environment. The project database was published to a web-based data server.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "Consultancy Services for “A Pilot Project on Preparation of Comprehensive Development Plan for Nine Upazila (9upzCP), Package 05 (Mohammadpur and Shalikha Upazila, Magura), Urban Development Directorate (UDD)",
@@ -67,7 +73,8 @@
     "status": "ONGOING",
     "location": "Mohammadpur and Shalikha Upazila, Magura",
     "description": "Desk-based preparatory activities were completed. A web-based platform was used for field survey data collection. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. MIS and GIS databases were integrated in an ArcGIS environment. The project database was published to a web-based data server.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "GIS Data Collection for Jashore and Benapole Paurashava’s IMIS Following Standard Data Quality Management",
@@ -77,7 +84,8 @@
     "status": "COMPLETED",
     "location": "Jashore Paurashava and Benapole Paurashava, Bangladesh",
     "description": "Attribute data were collected for the Jashore and Benapole Paurashava IMIS. GIS maps of Jashore and Benapole Paurashava were updated. The holding database was updated and integrated with the GIS database. The holding database was linked with GIS building outlines.",
-    "responsibility": ""
+    "objective": "Update GIS and attribute databases for municipal IMIS and holding management; Improve data management, map production and technical capacity for project stakeholders; Deliver printable maps, digital files, training and software support",
+    "responsibility": "Collect, validate and organize attribute and GIS data for the target paurashavas; Prepare GIS maps, layouts, geodatabases and printed outputs; Link holding records with GIS building outlines and updated map layers; Provide GIS training, technical support and final delivery documentation"
   },
   {
     "name": "Physical Feature Survey Work with RTK GPS, Total Station & Using 3D Image and Other Surveys for area of “Preparation of Development Plan for Benapole-Jessore Highway Corridor Project”",
@@ -87,7 +95,8 @@
     "status": "COMPLETED",
     "location": "Jessore Sadar, Jikorgacha, Sharsa and Benapole Upazila in Jessore District, Bangladesh",
     "description": "Desk-based preparatory activities were completed, including stereo image collection, image processing and database preparation. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment. The project database was published to a web-based data server.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, DSM, contour and 3D feature datasets for planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Preparation of Master Plan for Kushtia Paurashava Jessore Paurashava Under Third Urban Governance Infrastructural Improvement project (UGIIP-III)",
@@ -97,7 +106,8 @@
     "status": "COMPLETED",
     "location": "Kushtia and Jessore Pourashava, Bangladesh",
     "description": "Desk-based preparatory activities included mouza map digitization and geo-referencing before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. DGPS and Total Station surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, drainage and environmental surveys were conducted, followed by base map and drainage master plan preparation.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "Preparation of Master Plan for Dupchachia, Shntahar, Khahloo, Nandigram Sherpur Paurashava Under Upazila Town Infrastructure Development Project (UTIDP)",
@@ -107,7 +117,8 @@
     "status": "COMPLETED",
     "location": "Dupchachia, Santahar, Kahaloo, Nandigram and Sherpur Paurashava, Bangladesh",
     "description": "Desk-based preparatory activities included mouza map digitization and geo-referencing before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. MIS and GIS databases were integrated in an ArcGIS environment.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "Preparation of Master Plan for Kotchandpur, Jibonagar, Darshona, Harinakundu, Shailkupa, Kailakoir Mirzapur, Bhangah Pourashava.",
@@ -117,7 +128,8 @@
     "status": "COMPLETED",
     "location": "Kotchandpur, Jibonagar, Darshona, Harinakundu, Shailkupa, Kaliakoir, Mirzapur and Bhanga Pourashava, Bangladesh",
     "description": "Desk-based preparatory activities included mouza map digitization and geo-referencing before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. MIS and GIS databases were integrated in an ArcGIS environment.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "Preparation of Master Plan for Amtoli, Kalapara, Bakerganj, Betagi, Sarupkathi, Betagi Pourashava Kuakata Tourism center Banaripara 9.Gouranadi Under Upazila Town Infrastructure Development Project (UTIDP)",
@@ -127,7 +139,8 @@
     "status": "COMPLETED",
     "location": "Amtoli, Kalapara, Bakerganj, Betagi, Sarupkathi, Kuakata Tourism Centre, Banaripara and Gauranadi Paurashava, Bangladesh",
     "description": "Desk-based preparatory activities included mouza map digitization and geo-referencing before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. MIS and GIS databases were integrated in an ArcGIS environment.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "Preparation of Base Map, Drainage Master Plan & Topography Survey (contour Map) for (18 Paurashava) Mymensingh, Jamalpur, Chandpur, Faridpur, Bhanga, Barguna, Kalapra, Bhola, Munshiganj, Mirzapur, Sreepur, BrahmonBaria, Ghorasal, Comilla, Noakhali, Choumuhuni, Poshuram Cox’s Bazaar Paurashava. Geomark Limited.",
@@ -137,7 +150,8 @@
     "status": "COMPLETED",
     "location": "Mymensingh, Jamalpur, Chandpur, Faridpur, Bhanga, Barguna, Kalapara, Bhola, Munshiganj, Mirzapur, Sreepur, Brahmanbaria, Ghorasal, Comilla, Noakhali, Chowmuhani, Poshuram and Cox's Bazar Paurashava, Bangladesh",
     "description": "Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment. Base map preparation was completed. Drainage master plan preparation was completed.",
-    "responsibility": ""
+    "objective": "Prepare drainage network evidence and base maps for municipal drainage master planning; Support master planning, capacity assessment and infrastructure improvement decisions; Prepare GIS-based maps, profiles and reports for municipal planning use",
+    "responsibility": "Conduct topographic, road, drainage, sewerage, land use and physical feature surveys; Map network alignments, structures, profiles, cross sections and related infrastructure; Prepare base maps, inventories, capacity assessment inputs and GIS datasets; Deliver drawings, master plan inputs and final survey reports"
   },
   {
     "name": "Topographical Survey of Road, drainage and Landuse GIS Map and Network for Sewerage Master Plan of Zinzira Union.",
@@ -147,7 +161,8 @@
     "status": "COMPLETED",
     "location": "Keraniganj Upazila, Dhaka",
     "description": "Topographic surveys and digital maps were prepared for Upazila and Union roads, including benchmark surveys, cross sections, longitudinal sections and draft drawings.",
-    "responsibility": ""
+    "objective": "Prepare road, drainage and land use GIS inputs for sewerage master planning; Support master planning, capacity assessment and infrastructure improvement decisions; Prepare GIS-based maps, profiles and reports for municipal planning use",
+    "responsibility": "Conduct topographic, road, drainage, sewerage, land use and physical feature surveys; Map network alignments, structures, profiles, cross sections and related infrastructure; Prepare base maps, inventories, capacity assessment inputs and GIS datasets; Deliver drawings, master plan inputs and final survey reports"
   },
   {
     "name": "Preparation of Master Plan for Barisal City.",
@@ -157,7 +172,8 @@
     "status": "COMPLETED",
     "location": "Barisal City, Bangladesh",
     "description": "Desk-based preparatory activities included mouza map digitization and geo-referencing before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. Total Station surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. MIS and GIS databases were integrated in an ArcGIS environment.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "Drone based Topographical Survey Works under Consultancy Services for Feasibility Study and tender assistance for Dhaka Circular Rail Line (DCRL) Project.",
@@ -167,7 +183,8 @@
     "status": "COMPLETED",
     "location": "Dhaka City, Bangladesh",
     "description": "Aerial surveys were conducted to generate DSM, DEM and contour outputs. 3D physical features were digitized. Desk-based preparatory activities were completed. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure and topographical surveys were conducted.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, DSM, contour and 3D feature datasets for planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Topographic and Hydrological Survey work, GIS Based route Map, DEM, Contour and Areal Survey of the route. for The Dhaka Mass Rapid Transit Development Project (MRT Line 1).",
@@ -177,7 +194,8 @@
     "status": "COMPLETED",
     "location": "Dhaka City, Bangladesh",
     "description": "Aerial surveys were conducted to generate DSM, DEM and contour outputs. 3D physical features were digitized. Desk-based preparatory activities were completed. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure and topographical surveys were conducted.",
-    "responsibility": ""
+    "objective": "Develop reliable transport, traffic and mobility evidence for the project area; Support route planning, terminal planning, feasibility assessment and conceptual design decisions; Prepare GIS-based transport outputs and reports for stakeholder review",
+    "responsibility": "Prepare survey plans, schedules and field formats for transport and traffic data collection; Conduct traffic counts, route surveys, interviews, field observations and network mapping as required; Process, validate and analyze transport survey datasets; Prepare GIS maps, planning inputs, summary tables and technical reports"
   },
   {
     "name": "Topographic and Areal Survey for Eastern Village Project of ATN Properties Limited.",
@@ -187,7 +205,8 @@
     "status": "COMPLETED",
     "location": "Dhaka City",
     "description": "Aerial surveys were conducted to generate DSM, DEM and contour outputs. 3D physical features were digitized. Desk-based preparatory activities were completed. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure and topographical surveys were conducted.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, DSM, contour and 3D feature datasets for planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Topographic and Areal Survey for Amer Bari Project of Greenatic Limited.",
@@ -197,7 +216,8 @@
     "status": "COMPLETED",
     "location": "Bangladesh",
     "description": "Aerial surveys were conducted to generate DSM, DEM and contour outputs. 3D physical features were digitized. Desk-based preparatory activities were completed. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure and topographical surveys were conducted.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, DSM, contour and 3D feature datasets for planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Drone Based Topographic Survey for Solar Power Plant at Madhabpur, Habiganj.",
@@ -207,7 +227,8 @@
     "status": "COMPLETED",
     "location": "Madhabpur, Habiganj",
     "description": "Reconnaissance survey and boundary demarcation were completed. Secondary data were collected. RTK-based benchmarks were established from the Bangladesh National Datum. TBMs were established. CS, RS and BS mouza maps were geo-referenced. Base maps were prepared. Orthophotos were prepared. DEMs were prepared. Contour maps were prepared. Topographic maps were prepared.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, contour and topographic datasets for solar power plant planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Drone Based Topographic Survey for Solar Power Plant at Bahir Char & Char Khondakar, Sonagazi.",
@@ -217,7 +238,8 @@
     "status": "COMPLETED",
     "location": "Sonagazi, Feni",
     "description": "Reconnaissance survey and boundary demarcation were completed. Secondary data were collected. RTK-based benchmarks were established from the Bangladesh National Datum. TBMs were established. CS, RS and BS mouza maps were geo-referenced. Base maps were prepared. Orthophotos were prepared. DEMs were prepared. Contour maps were prepared. Topographic maps were prepared.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, contour and topographic datasets for solar power plant planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Supplying of Re-produced Mouza map and scanning digitization with Geo database for Package-5, Mohammad, Shalikha & Magura Sadar Dist. Magura under 9UpzCp project, UDD",
@@ -227,7 +249,8 @@
     "status": "COMPLETED",
     "location": "Mohammadpur, Shalikha and Magura Sadar Upazila of Magura District",
     "description": "Desk-based preparatory activities were completed. Mouza maps were collected from the Department of Land Records and Surveys. RTK field surveys were conducted for benchmark identification. GPS-based GCP surveys were conducted for important locations. GNSS surveys were conducted. Mouza map scanning was completed. Mouza maps were geo-referenced. Digitization and edit plot checking were completed. Base map preparation and printing were completed.",
-    "responsibility": ""
+    "objective": "Provide accurate geo-referenced mouza maps and land-record datasets for project use; Improve map reliability through scanning, digitization, ground control and plot checking; Deliver printable and digital map outputs to support planning and land administration tasks",
+    "responsibility": "Collect, scan and organize mouza maps from source authorities and project records; Establish or use RTK, GPS and GNSS ground controls for geo-referencing; Digitize maps, edit features, check plots and prepare geodatabase layers; Prepare hard-copy maps, digital files, schedules and final delivery packages"
   },
   {
     "name": "Supplying of Digitized Mouza maps of MSDP (2011-2031) project area (Hard Copy) with necessary geo-referencing by RTK GPS based ground control Point (GCP)",
@@ -237,7 +260,8 @@
     "status": "COMPLETED",
     "location": "Mymensingh Upazila in Mymensingh District",
     "description": "Desk-based preparatory activities were completed. Mouza maps were collected from the Department of Land Records and Surveys. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS-based GCP surveys were conducted for important locations. GNSS surveys were conducted. Mouza map scanning was completed. Mouza maps were geo-referenced. Digitization and edit plot checking were completed. Base map preparation and printing were completed.",
-    "responsibility": ""
+    "objective": "Provide accurate geo-referenced mouza maps and land-record datasets for project use; Improve map reliability through scanning, digitization, ground control and plot checking; Deliver printable and digital map outputs to support planning and land administration tasks",
+    "responsibility": "Collect, scan and organize mouza maps from source authorities and project records; Establish or use RTK, GPS and GNSS ground controls for geo-referencing; Digitize maps, edit features, check plots and prepare geodatabase layers; Prepare hard-copy maps, digital files, schedules and final delivery packages"
   },
   {
     "name": "Supplying of Mouza map (C.S/R. S) at the project directors office of “Preparation of Development Plan for Benapole-Jessore Highway Corridor”",
@@ -247,7 +271,8 @@
     "status": "COMPLETED",
     "location": "Jessore",
     "description": "Desk-based preparatory activities were completed. Mouza maps were collected from the Department of Land Records and Surveys. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS-based GCP surveys were conducted for important locations. GNSS surveys were conducted. Mouza map scanning was completed. Mouza maps were geo-referenced. Digitization and edit plot checking were completed. Base map preparation and printing were completed.",
-    "responsibility": ""
+    "objective": "Provide accurate geo-referenced mouza maps and land-record datasets for project use; Improve map reliability through scanning, digitization, ground control and plot checking; Deliver printable and digital map outputs to support planning and land administration tasks",
+    "responsibility": "Collect, scan and organize mouza maps from source authorities and project records; Establish or use RTK, GPS and GNSS ground controls for geo-referencing; Digitize maps, edit features, check plots and prepare geodatabase layers; Prepare hard-copy maps, digital files, schedules and final delivery packages"
   },
   {
     "name": "Procurement, Supplying of Mouza map of DRLS, GoB (Goods) for Mymensingh Sadar Upazila and Bhangamari Union Under Garuipur Upazila of Mymensingh District.",
@@ -257,7 +282,8 @@
     "status": "COMPLETED",
     "location": "Mymensingh Upazila in Mymensingh District",
     "description": "Desk-based preparatory activities were completed. Mouza maps were collected from the Department of Land Records and Surveys. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS-based GCP surveys were conducted for important locations. GNSS surveys were conducted. Mouza map scanning was completed. Mouza maps were geo-referenced. Digitization and edit plot checking were completed. Base map preparation and printing were completed.",
-    "responsibility": ""
+    "objective": "Provide accurate geo-referenced mouza maps and land-record datasets for project use; Improve map reliability through scanning, digitization, ground control and plot checking; Deliver printable and digital map outputs to support planning and land administration tasks",
+    "responsibility": "Collect, scan and organize mouza maps from source authorities and project records; Establish or use RTK, GPS and GNSS ground controls for geo-referencing; Digitize maps, edit features, check plots and prepare geodatabase layers; Prepare hard-copy maps, digital files, schedules and final delivery packages"
   },
   {
     "name": "Collection and Supply of Stereo Satellite images for the area of 1268.37sq.km (Galachipa and Rangabali Upazila of Patuakhali) and Collected image processing, Survey, 3-D Digitization, Editing database preparation, Georeferencing Printing of PayraKuakata Development Project (PKCP)",
@@ -267,7 +293,8 @@
     "status": "COMPLETED",
     "location": "Galachipa and Rangabali Upazila in Patuakhali District",
     "description": "Desk-based preparatory activities were completed. Satellite imagery was collected from an international vendor. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS-based GCP surveys were conducted for important locations. DGPS surveys were conducted. 3D data were extracted using photogrammetric software. DSM, DEM and TIN outputs were prepared from stereo satellite imagery. Base maps were prepared for physical feature survey.",
-    "responsibility": ""
+    "objective": "Acquire high-resolution stereo satellite imagery for the defined project area; Generate terrain and surface datasets to support base mapping and physical feature survey; Provide remote-sensing outputs suitable for planning, analysis and field verification",
+    "responsibility": "Source and collect satellite imagery for the required coverage area; Establish and verify ground control and benchmark information; Process stereo imagery through photogrammetric workflows to prepare DSM, DEM and TIN outputs; Prepare base maps and spatial data packages for downstream survey and planning work"
   },
   {
     "name": "Collection and Supply of Stereo Satellite images for the area of 841.73.km (Barguna sadar and Patharghta Upazila, Barguna District and Collected image processing, Survey,3-D Digitization, Editing database preparations, Georeferencing Printing of Payra Kuakata Development Project (PKCP)",
@@ -277,7 +304,8 @@
     "status": "COMPLETED",
     "location": "Barguna Sadar and Patharghata Upazila in Barguna District",
     "description": "Desk-based preparatory activities were completed. Satellite imagery was collected from an international vendor. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS-based GCP surveys were conducted for important locations. DGPS surveys were conducted. 3D data were extracted using photogrammetric software. DSM, DEM and TIN outputs were prepared from stereo satellite imagery. Base maps were prepared for physical feature survey.",
-    "responsibility": ""
+    "objective": "Acquire high-resolution stereo satellite imagery for the defined project area; Generate terrain and surface datasets to support base mapping and physical feature survey; Provide remote-sensing outputs suitable for planning, analysis and field verification",
+    "responsibility": "Source and collect satellite imagery for the required coverage area; Establish and verify ground control and benchmark information; Process stereo imagery through photogrammetric workflows to prepare DSM, DEM and TIN outputs; Prepare base maps and spatial data packages for downstream survey and planning work"
   },
   {
     "name": "Aerial Survey for Khulna Development Authority (KDA). Khulna",
@@ -287,7 +315,8 @@
     "status": "COMPLETED",
     "location": "Bangladesh",
     "description": "Aerial surveys were conducted to generate DSM, DEM and contour outputs. 3D physical features were digitized.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, DSM, contour and 3D feature datasets for planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Aerial Survey for Khulna University, Urban and Rural Planing Discipline (URPD). Khulna",
@@ -297,7 +326,8 @@
     "status": "COMPLETED",
     "location": "Khulna City",
     "description": "Aerial surveys were conducted to generate DSM, DEM and contour outputs. 3D physical features were digitized.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, DSM, contour and 3D feature datasets for planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Supplying of Drone capturing 3D image and Geo database for Package-5, Magura Sadar, Mohammadpur and Salikha Upazila, Dist. Magura under 9UpzCP project, UDD.",
@@ -307,7 +337,8 @@
     "status": "COMPLETED",
     "location": "Magura Sadar, Mohammadpur and Shalikha Upazila, Magura",
     "description": "Desk-based preparatory activities were completed. A web-based platform was used for field survey data collection. RTK field surveys were conducted for benchmark identification and BM pillar installation. Aerial images were collected. RTK field surveys were conducted for benchmark identification. Image processing was carried out to extract 3D vector data, DTM data and DEM outputs. High-resolution orthophoto mosaics were generated. 3D vector data with Z values were generated. The physical feature database was prepared.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, DSM, contour and 3D feature datasets for planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Supplying of Drone capturing 3D image and Geo database for Package-3, Jagannathpur and Santiganj (South Sunamganj) Upazila, Dist. Sunamganj under 9UpzCP project, UDD.",
@@ -317,7 +348,8 @@
     "status": "COMPLETED",
     "location": "Jagannathpur and Santiganj (South Sunamganj) Upazila, Sunamganj",
     "description": "Desk-based preparatory activities were completed. RTK field surveys were conducted for benchmark identification. Work Volume Assessment and reconnaissance survey, Work plan of field survey. Aerial images were collected. Image processing was carried out to extract 3D vector data, DTM data and DEM outputs. High-resolution orthophoto mosaics were generated. 3D vector data with Z values were generated. The physical feature database was prepared.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, DSM, contour and 3D feature datasets for planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Supplying of Drone capturing 3D image and Geo database for Package-2, Bakshiganj and Dewanganj Upazila, Dist. Jamalpur under 9UpzCp project, UDD",
@@ -327,7 +359,8 @@
     "status": "COMPLETED",
     "location": "Bakshiganj and Dewanganj Upazila, Jamalpur District",
     "description": "Desk-based preparatory activities were completed. RTK field surveys were conducted for benchmark identification. Work Volume Assessment and reconnaissance survey, Work plan of field survey. Aerial images were collected. Image processing was carried out to extract 3D vector data, DTM data and DEM outputs. High-resolution orthophoto mosaics were generated. 3D vector data with Z values were generated. The physical feature database was prepared.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, DSM, contour and 3D feature datasets for planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Topographical Survey of Roads, Drain, pipeline and Tubewell for Gazipur City corporation under CGP, LGED",
@@ -337,7 +370,8 @@
     "status": "COMPLETED",
     "location": "Gazipur City Corporation",
     "description": "Topographic surveys of roads, drains, water pipelines and tube wells were conducted, including benchmark establishment, bridge and culvert surveys, cross sections, longitudinal sections and draft drawings.",
-    "responsibility": ""
+    "objective": "Prepare accurate topographic, alignment and physical feature data for infrastructure planning and design; Support road, bridge, market, ghat, railway or rural infrastructure works with reliable survey outputs; Provide drawings, land acquisition inputs and technical reports for project implementation",
+    "responsibility": "Conduct GPS, Total Station, leveling, cross-section, long-section and physical feature surveys; Map roads, drains, bridges, culverts, markets, waterways, pipelines or related infrastructure as required; Prepare alignments, profiles, AutoCAD drawings, GIS layers and land acquisition layouts; Compile survey results, schedules, maps and final technical reports"
   },
   {
     "name": "Supply and Delivery of Digital Survey map for all Land area including building and physical feature of 21 district and 20 Upazila Sadar under WZPDCL.",
@@ -347,7 +381,8 @@
     "status": "COMPLETED",
     "location": "Bangladesh",
     "description": "Desk-based preparatory activities were completed. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment.",
-    "responsibility": ""
+    "objective": "Develop GIS digital maps and spatial databases for the service or project area; Improve data management, map production and technical capacity for project stakeholders; Deliver printable maps, digital files, training and software support",
+    "responsibility": "Collect, process and organize spatial and non-spatial service area data; Prepare GIS maps, layouts, geodatabases and printed outputs; Install or configure required GIS software and technical tools; Provide GIS training, technical support and final delivery documentation"
   },
   {
     "name": "Route selection and layout setting using GIS based coordinate of Payra (Lebukhali) Bridge Project, Lebukhali, Patuakhali.",
@@ -357,7 +392,8 @@
     "status": "COMPLETED",
     "location": "Patuakhali, Bangladesh",
     "description": "Desk-based preparatory activities were completed. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment.",
-    "responsibility": ""
+    "objective": "Support bridge route selection and layout setting with GIS-based coordinates; Support route planning, terminal planning, feasibility assessment and conceptual design decisions; Prepare GIS-based transport outputs and reports for stakeholder review",
+    "responsibility": "Prepare survey plans, schedules and field formats for transport and traffic data collection; Conduct traffic counts, route surveys, interviews, field observations and network mapping as required; Process, validate and analyze transport survey datasets; Prepare GIS maps, planning inputs, summary tables and technical reports"
   },
   {
     "name": "Site survey for selection of cyclone shelter sites of Koyra and Shyamnagar Upazila under the Fael Khair Program of Islamic Development Bank (IDB).",
@@ -367,7 +403,8 @@
     "status": "COMPLETED",
     "location": "Koyra and Shyamnagar Upazila, Bangladesh",
     "description": "Desk-based preparatory activities were completed. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment.",
-    "responsibility": ""
+    "objective": "Support cyclone shelter site selection through verified field and location information; Support project planning, research, site selection or community development decisions; Prepare GIS-based outputs and reports for stakeholder use",
+    "responsibility": "Conduct field verification, GPS location survey and site condition assessment; Collect facility, settlement, school, shelter or community asset information as required; Digitize and prepare GIS layers, maps and attribute databases; Prepare final maps, survey findings and reporting deliverables"
   },
   {
     "name": "Traffic and Transportation Planning under A Pilot Project on Preparation of Comprehensive Development Plan for Nine Upazilas (Revised 10 Upazila) (1st Revised)",
@@ -377,7 +414,8 @@
     "status": "ONGOING",
     "location": "Chandpur, Jamalpur, Sunamganj, Lalmonirhat and Magura",
     "description": "The existing transportation system of the project area was studied. Future traffic movement and land-port-generated demand were analyzed. Policy statements required for the plan were formulated. Transportation and traffic data were collected. A methodology was prepared for a computer-based four-step travel demand forecasting model. Sub-models were developed for trip generation, trip distribution, mode choice and traffic assignment. A 20-year transportation master plan was developed in line with Vision 2041 to optimize resources across all transport modes.",
-    "responsibility": ""
+    "objective": "Develop reliable transport, traffic and mobility evidence for the project area; Support route planning, terminal planning, feasibility assessment and conceptual design decisions; Prepare GIS-based transport outputs and reports for stakeholder review",
+    "responsibility": "Prepare survey plans, schedules and field formats for transport and traffic data collection; Conduct traffic counts, route surveys, interviews, field observations and network mapping as required; Process, validate and analyze transport survey datasets; Prepare GIS maps, planning inputs, summary tables and technical reports"
   },
   {
     "name": "Transportation Plan for Roadways and Waterways; Package-03 under Preparation of Development Plan for Meherpur Zilla Project.",
@@ -387,7 +425,8 @@
     "status": "ONGOING",
     "location": "Meherpur",
     "description": "The existing transportation system of the project area was studied. Future traffic movement and land-port-generated demand were analyzed. Policy statements required for the plan were formulated. Transportation and traffic data were collected. A methodology was prepared for a computer-based four-step travel demand forecasting model. Sub-models were developed for trip generation, trip distribution, mode choice and traffic assignment. A 20-year transportation master plan was developed in line with Vision 2041 to optimize resources across all transport modes.",
-    "responsibility": ""
+    "objective": "Develop reliable transport, traffic and mobility evidence for the project area; Support route planning, terminal planning, feasibility assessment and conceptual design decisions; Prepare GIS-based transport outputs and reports for stakeholder review",
+    "responsibility": "Prepare survey plans, schedules and field formats for transport and traffic data collection; Conduct traffic counts, route surveys, interviews, field observations and network mapping as required; Process, validate and analyze transport survey datasets; Prepare GIS maps, planning inputs, summary tables and technical reports"
   },
   {
     "name": "Traffic Survey under Preparation of Comprehensive Transport Master Plan with Pre-Feasibility Study and Conceptual Design of Truck Terminal for Gazipur City Corporation",
@@ -397,7 +436,8 @@
     "status": "COMPLETED",
     "location": "Gazipur City, Bangladesh",
     "description": "Road inventory surveys were conducted. Household interview surveys were conducted. Video traffic count, origin-destination and vehicle occupancy surveys were conducted. Travel time and speed surveys were conducted. Pedestrian flow surveys were conducted. Bus, rail and launch surveys, intersection turning movement surveys and freight operation surveys were conducted. Establishment surveys were conducted.",
-    "responsibility": ""
+    "objective": "Develop reliable transport, traffic and mobility evidence for the project area; Support route planning, terminal planning, feasibility assessment and conceptual design decisions; Prepare GIS-based transport outputs and reports for stakeholder review",
+    "responsibility": "Prepare survey plans, schedules and field formats for transport and traffic data collection; Conduct traffic counts, route surveys, interviews, field observations and network mapping as required; Process, validate and analyze transport survey datasets; Prepare GIS maps, planning inputs, summary tables and technical reports"
   },
   {
     "name": "Feasibility study for Dhaka-Mymensingh Expressway (DME) PPP project",
@@ -407,7 +447,8 @@
     "status": "COMPLETED",
     "location": "Dhaka City, Bangladesh",
     "description": "Aerial surveys were conducted to generate DSM, DEM and contour outputs. 3D physical features were digitized. Desk-based preparatory activities were completed. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure and topographical surveys were conducted.",
-    "responsibility": ""
+    "objective": "Develop reliable transport, traffic and mobility evidence for the project area; Support route planning, terminal planning, feasibility assessment and conceptual design decisions; Prepare GIS-based transport outputs and reports for stakeholder review",
+    "responsibility": "Prepare survey plans, schedules and field formats for transport and traffic data collection; Conduct traffic counts, route surveys, interviews, field observations and network mapping as required; Process, validate and analyze transport survey datasets; Prepare GIS maps, planning inputs, summary tables and technical reports"
   },
   {
     "name": "Socio-Economic and Other Related Surveys; Package-04 under Preparation of Development Plan for Meherpur Zilla Project",
@@ -417,7 +458,8 @@
     "status": "COMPLETED",
     "location": "Meherpur",
     "description": "Desk-based preparatory activities were completed. Sample size design was completed before fieldwork. Questionnaires were designed. Online data collection applications were designed. Survey GIS maps were prepared for location distribution. Socioeconomic survey data were integrated with MIS and GIS databases in an ArcGIS environment.",
-    "responsibility": ""
+    "objective": "Establish a reliable socioeconomic baseline for the project area or affected communities; Assess community conditions, project impacts and planning needs through structured field data; Provide analyzed findings for planning, impact assessment, resettlement or reporting decisions",
+    "responsibility": "Prepare survey tools, sampling plans and field data collection schedules; Conduct household, institutional, stakeholder or community surveys as required; Clean, validate, enter, tabulate and analyze collected data; Prepare summary tables, GIS-linked datasets, impact findings and survey reports"
   },
   {
     "name": "Consultancy Services for Social Impact Assessment (SIA), Land Acquisition Plan (LAP) and Resettlement Action Plan (RAP)",
@@ -427,7 +469,8 @@
     "status": "ONGOING",
     "location": "Rangpur-Dinajpur, Bangladesh",
     "description": "Mouza Map collection digitization and Preparation of Layout for Land acquisition Plan. Social Impact Assessment was conducted. Land Acquisition Plan was prepared. Resettlement Action Plan study was completed. Survey and research reports were prepared.",
-    "responsibility": ""
+    "objective": "Assess social impacts, land acquisition requirements and resettlement needs for the project; Prepare planning documents that support compliance, compensation and stakeholder decision-making; Provide mapped and analyzed evidence for project implementation and mitigation planning",
+    "responsibility": "Collect cadastral, socioeconomic, asset and stakeholder information from the project area; Conduct field verification, consultation and affected-person data collection; Prepare land acquisition, resettlement and social impact datasets, maps and schedules; Deliver SIA, LAP, RAP and supporting reports with validated analysis"
   },
   {
     "name": "Socio-Economic and Other Surveys Package -4, under Preparation of Payra – Kuakata Comprehensive Plan Focusing Eco Tourism (PKCP)”",
@@ -437,7 +480,8 @@
     "status": "COMPLETED",
     "location": "Galachipa and Rangabali Upazila in Patuakhali District",
     "description": "Desk-based preparatory activities were completed. Sample size design was completed before fieldwork. Questionnaires were designed. Online data collection applications were designed. Survey GIS maps were prepared for location distribution. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment. The project database was published to a web-based data server.",
-    "responsibility": ""
+    "objective": "Establish a reliable socioeconomic baseline for the project area or affected communities; Assess community conditions, project impacts and planning needs through structured field data; Provide analyzed findings for planning, impact assessment, resettlement or reporting decisions",
+    "responsibility": "Prepare survey tools, sampling plans and field data collection schedules; Conduct household, institutional, stakeholder or community surveys as required; Clean, validate, enter, tabulate and analyze collected data; Prepare summary tables, GIS-linked datasets, impact findings and survey reports"
   },
   {
     "name": "Socio-Economic and Other Surveys under Preparation of Development Plan for Mirsharai Upazila, Chittagong District: Risk Sensitive Land Use Plan.",
@@ -447,7 +491,8 @@
     "status": "COMPLETED",
     "location": "Mirsharai Upazila in Chittagong District",
     "description": "Desk-based preparatory activities were completed. Sample size design was completed before fieldwork. Questionnaires were designed. Online data collection applications were designed. Survey GIS maps were prepared for location distribution. Socioeconomic surveys were conducted and integrated with MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment. The project database was published to a web-based data server.",
-    "responsibility": ""
+    "objective": "Establish a reliable socioeconomic baseline for the project area or affected communities; Assess community conditions, project impacts and planning needs through structured field data; Provide analyzed findings for planning, impact assessment, resettlement or reporting decisions",
+    "responsibility": "Prepare survey tools, sampling plans and field data collection schedules; Conduct household, institutional, stakeholder or community surveys as required; Clean, validate, enter, tabulate and analyze collected data; Prepare summary tables, GIS-linked datasets, impact findings and survey reports"
   },
   {
     "name": "Data Collection, Entry & Data from Monitoring and Distribution of oil for the Kishoree Kontha Program",
@@ -457,7 +502,8 @@
     "status": "COMPLETED",
     "location": "Barisal Division",
     "description": "Data collection, data entry, project monitoring and report writing were completed.",
-    "responsibility": ""
+    "objective": "Create reliable digital records and management information outputs for the project or organization; Improve data storage, monitoring, reporting and operational decision-making; Deliver usable database, software or reporting support for project stakeholders",
+    "responsibility": "Collect, enter, clean, validate and organize project or organizational data; Design, customize or support MIS, database and reporting workflows; Generate reports, summaries and digital outputs for monitoring and management use; Provide training, technical assistance, testing and final handover support"
   },
   {
     "name": "Entry of Data from Monitoring and Distribution of Oil for the Kishore Kontha Program",
@@ -467,7 +513,8 @@
     "status": "COMPLETED",
     "location": "Barisal, Patuakhali and Bhola",
     "description": "Data collection, data entry, log sheet preparation, project monitoring and report writing were completed.",
-    "responsibility": ""
+    "objective": "Create reliable digital records and management information outputs for the project or organization; Improve data storage, monitoring, reporting and operational decision-making; Deliver usable database, software or reporting support for project stakeholders",
+    "responsibility": "Collect, enter, clean, validate and organize project or organizational data; Design, customize or support MIS, database and reporting workflows; Generate reports, summaries and digital outputs for monitoring and management use; Provide training, technical assistance, testing and final handover support"
   },
   {
     "name": "Develop a Detailed Community Settlement Map in Taleb Camp under Millat Bihari Camp",
@@ -477,7 +524,8 @@
     "status": "COMPLETED",
     "location": "Millat Bihari Camp, Mirpur",
     "description": "Desk-based preparatory activities were completed. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. Digital maps were prepared. Detailed settlement maps were prepared showing roads, walkways, drainage systems, water lines, access points, structure types, elevation conditions, waterlogging areas, contours, DEM outputs, photographs and reports.",
-    "responsibility": ""
+    "objective": "Map facilities, sites or community assets with reliable location and condition information; Support project planning, research, site selection or community development decisions; Prepare GIS-based outputs and reports for stakeholder use",
+    "responsibility": "Conduct field verification, GPS location survey and site condition assessment; Collect facility, settlement, school, shelter or community asset information as required; Digitize and prepare GIS layers, maps and attribute databases; Prepare final maps, survey findings and reporting deliverables"
   },
   {
     "name": "GIS based Digital mapping of Sonapur Bazar, Maizdi Pouro Bazar and Pourashava Campus Area in Noakhali Pourashava.",
@@ -487,7 +535,8 @@
     "status": "COMPLETED",
     "location": "Noakhali Pourashava, Noakhali",
     "description": "Desk-based preparatory activities were completed. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. Digital mapping was completed. Layout design and planning were completed.",
-    "responsibility": ""
+    "objective": "Develop GIS digital maps and spatial databases for the service or project area; Improve data management, map production and technical capacity for project stakeholders; Deliver printable maps, digital files, training and software support",
+    "responsibility": "Collect, process and organize spatial and non-spatial service area data; Prepare GIS maps, layouts, geodatabases and printed outputs; Install or configure required GIS software and technical tools; Provide GIS training, technical support and final delivery documentation"
   },
   {
     "name": "Landscaping, Beautification, Architectural Design and 3D Animation of DND Lake in Narayanganj City Corporation",
@@ -497,7 +546,8 @@
     "status": "COMPLETED",
     "location": "Narayanganj, Narayanganj District",
     "description": "Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment. Base map preparation was completed. Architectural design was completed. Landscaping design was prepared. 3D animation was prepared. Master plan preparation was completed.",
-    "responsibility": ""
+    "objective": "Prepare design and visualization outputs that communicate the proposed development concept; Support stakeholder review through landscape, architectural and 3D presentation materials; Create clear visual products for planning, approval and communication needs",
+    "responsibility": "Review site information, design requirements and planning context; Prepare landscape, beautification, architectural or master plan concepts as required; Develop 3D visualization, animation and presentation materials; Deliver drawings, visual assets and final presentation products"
   },
   {
     "name": "Asian Duplex Town Master Plan",
@@ -507,7 +557,8 @@
     "status": "COMPLETED",
     "location": "Dhaka, Bangladesh",
     "description": "Desk-based preparatory activities were completed. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "Preparation of Master Plan for Green land Town, Purbachal, Dhaka, Bangladesh",
@@ -517,7 +568,8 @@
     "status": "COMPLETED",
     "location": "Purbachal, Dhaka",
     "description": "Desk-based preparatory activities included mouza map digitization and geo-referencing before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. Total Station surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. MIS and GIS databases were integrated in an ArcGIS environment. Site plans, land use plans, contour maps, 3D layouts and sectoral, block, zonal and neighborhood plans were prepared. Road network plans, traffic circulation plans, drainage master plans, utility service plans and water supply and sewerage plans were prepared.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "Preparation of Master Plan of Neelachol Housing, Purbachol, Dhaka. Bangladesh.",
@@ -527,7 +579,8 @@
     "status": "COMPLETED",
     "location": "Purbachal, Dhaka",
     "description": "Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. Total Station surveys were conducted for topographical features and spot heights. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted. MIS and GIS databases were integrated in an ArcGIS environment. Site plans, land use plans, contour maps, 3D layouts and sectoral, block, zonal and neighborhood plans were prepared.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "Preparation of Master Plan of Asian Town, Purbachal, Dhaka. Bangladesh.",
@@ -537,7 +590,8 @@
     "status": "COMPLETED",
     "location": "Purbachal, Dhaka",
     "description": "Mouza maps were digitized and geo-referenced before fieldwork. Total station survey for topographical features and for Spot Height. Physical infrastructure, topographical, land use, drainage and environmental surveys were conducted.",
-    "responsibility": ""
+    "objective": "Prepare a reliable planning database and base maps for the project area; Support evidence-based land use, infrastructure, drainage, transport and environmental planning; Provide integrated MIS/GIS outputs for review, reporting and decision-making",
+    "responsibility": "Complete desk study, work planning and field survey preparation; Digitize, geo-reference and verify mouza maps, source maps and spatial layers; Conduct RTK, GPS, DGPS, physical feature, topographic, land use, drainage, environmental, traffic and socioeconomic surveys as required; Integrate survey outputs into MIS/GIS databases, maps, reports and web-based data services"
   },
   {
     "name": "Topographical Survey of Upazila Road, Bridge, Growth center market, ghat and rural waterways and Preparation of Land acquisition Plan for Rural Transport Improvement projects, (RTIP-II)",
@@ -547,7 +601,8 @@
     "status": "COMPLETED",
     "location": "Manikganj and Jamalpur District",
     "description": "Topographic surveys of Upazila and Union roads were completed, including benchmark surveys, cross sections, longitudinal sections, mouza map collection, digitization and land acquisition layout preparation.",
-    "responsibility": ""
+    "objective": "Prepare accurate topographic, alignment and physical feature data for infrastructure planning and design; Support road, bridge, market, ghat, railway or rural infrastructure works with reliable survey outputs; Provide drawings, land acquisition inputs and technical reports for project implementation",
+    "responsibility": "Conduct GPS, Total Station, leveling, cross-section, long-section and physical feature surveys; Map roads, drains, bridges, culverts, markets, waterways, pipelines or related infrastructure as required; Prepare alignments, profiles, AutoCAD drawings, GIS layers and land acquisition layouts; Compile survey results, schedules, maps and final technical reports"
   },
   {
     "name": "Engineering Survey of Bhelumia subproject in Upazila Bhola Sadar, Dist. Bhola under PSSWRSP, LGED",
@@ -557,7 +612,8 @@
     "status": "COMPLETED",
     "location": "Upazila Bhola Sadar, Bhola District",
     "description": "Desk-based preparatory activities were completed. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment.",
-    "responsibility": ""
+    "objective": "Prepare accurate topographic, alignment and physical feature data for infrastructure planning and design; Support road, bridge, market, ghat, railway or rural infrastructure works with reliable survey outputs; Provide drawings, land acquisition inputs and technical reports for project implementation",
+    "responsibility": "Conduct GPS, Total Station, leveling, cross-section, long-section and physical feature surveys; Map roads, drains, bridges, culverts, markets, waterways, pipelines or related infrastructure as required; Prepare alignments, profiles, AutoCAD drawings, GIS layers and land acquisition layouts; Compile survey results, schedules, maps and final technical reports"
   },
   {
     "name": "Engineering Survey of PSSWRSP subproject in Cox’s Bazar under PSSWRSP, LGED",
@@ -567,7 +623,8 @@
     "status": "COMPLETED",
     "location": "Cox's Bazar, Bangladesh",
     "description": "Desk-based preparatory activities were completed. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment.",
-    "responsibility": ""
+    "objective": "Prepare accurate topographic, alignment and physical feature data for infrastructure planning and design; Support road, bridge, market, ghat, railway or rural infrastructure works with reliable survey outputs; Provide drawings, land acquisition inputs and technical reports for project implementation",
+    "responsibility": "Conduct GPS, Total Station, leveling, cross-section, long-section and physical feature surveys; Map roads, drains, bridges, culverts, markets, waterways, pipelines or related infrastructure as required; Prepare alignments, profiles, AutoCAD drawings, GIS layers and land acquisition layouts; Compile survey results, schedules, maps and final technical reports"
   },
   {
     "name": "Conducting Topographic Survey of Drainage Channels of the Ganges-Kabadak Irrigation Project in District: Kushtia, Jheniadah, Chuandanga and Magura",
@@ -577,7 +634,8 @@
     "status": "COMPLETED",
     "location": "Kushtia, Jhenidah, Chuadanga and Magura",
     "description": "Topographic surveys of canals, bridges and culverts were conducted, including temporary benchmark establishment, cross-section preparation and long-profile creation.",
-    "responsibility": ""
+    "objective": "Prepare accurate topographic, hydrological and structural information for water management assets; Support canal, irrigation, drainage and water-resource planning with verified field measurements; Deliver drawings, profiles, maps and reports for engineering and operational decisions",
+    "responsibility": "Establish temporary benchmarks and survey controls for the project area; Conduct canal, structure, discharge, cross-section, long-profile and hydrological field surveys as required; Process measurements into maps, profiles, drawings and summary sheets; Prepare location maps, TBM lists, technical datasets and survey reports"
   },
   {
     "name": "Survey of Ghior-Tepra via Baratia Bazar Road under transport improvement Project (RTIP-II), LGED",
@@ -587,7 +645,8 @@
     "status": "COMPLETED",
     "location": "Bangladesh",
     "description": "Desk-based preparatory activities were completed. Mouza maps were digitized and geo-referenced before fieldwork. RTK field surveys were conducted for benchmark identification and BM pillar installation. GPS field surveys were conducted for important locations. DGPS surveys were conducted for topographical features and spot heights. Traffic volume and socioeconomic surveys were conducted and integrated into MIS and GIS databases in an ArcGIS environment. MIS and GIS databases were integrated in an ArcGIS environment.",
-    "responsibility": ""
+    "objective": "Prepare accurate topographic, alignment and physical feature data for infrastructure planning and design; Support road, bridge, market, ghat, railway or rural infrastructure works with reliable survey outputs; Provide drawings, land acquisition inputs and technical reports for project implementation",
+    "responsibility": "Conduct GPS, Total Station, leveling, cross-section, long-section and physical feature surveys; Map roads, drains, bridges, culverts, markets, waterways, pipelines or related infrastructure as required; Prepare alignments, profiles, AutoCAD drawings, GIS layers and land acquisition layouts; Compile survey results, schedules, maps and final technical reports"
   },
   {
     "name": "Topographical survey work for the Upazila Road (UZR) and Union Road (UNR) subprojects for the year 2014-2015 in different districts under the project NOBIDEP.",
@@ -597,7 +656,8 @@
     "status": "COMPLETED",
     "location": "Bakshiganj Upazila",
     "description": "Topographic surveys of roads, drains, water pipelines and tube wells were conducted, including benchmark establishment, bridge and culvert surveys, cross sections, longitudinal sections and draft drawings.",
-    "responsibility": ""
+    "objective": "Prepare accurate topographic, alignment and physical feature data for infrastructure planning and design; Support road, bridge, market, ghat, railway or rural infrastructure works with reliable survey outputs; Provide drawings, land acquisition inputs and technical reports for project implementation",
+    "responsibility": "Conduct GPS, Total Station, leveling, cross-section, long-section and physical feature surveys; Map roads, drains, bridges, culverts, markets, waterways, pipelines or related infrastructure as required; Prepare alignments, profiles, AutoCAD drawings, GIS layers and land acquisition layouts; Compile survey results, schedules, maps and final technical reports"
   },
   {
     "name": "Data collection, Entry and Training Management for the Development and Maintainance of Web based social protection MIS Project for DMRD/MoFDM.",
@@ -607,7 +667,8 @@
     "status": "COMPLETED",
     "location": "Bangladesh",
     "description": "Desk-based preparatory activities were completed. Data collection, data entry, training management and MIS development support were provided. MIS system development and maintenance were completed.",
-    "responsibility": ""
+    "objective": "Create reliable digital records and management information outputs for the project or organization; Improve data storage, monitoring, reporting and operational decision-making; Deliver usable database, software or reporting support for project stakeholders",
+    "responsibility": "Collect, enter, clean, validate and organize project or organizational data; Design, customize or support MIS, database and reporting workflows; Generate reports, summaries and digital outputs for monitoring and management use; Provide training, technical assistance, testing and final handover support"
   },
   {
     "name": "Preparation and supply of 45 minutes 3D-visualization and animation along with presentation product on Action Area plan of Block-A (consist of 5 wards) at Narayangonj City Corporation.",
@@ -617,7 +678,8 @@
     "status": "COMPLETED",
     "location": "Narayanganj City Corporation",
     "description": "3D visualization, animation and presentation products were prepared for the Action Area Plan of Block-A.",
-    "responsibility": ""
+    "objective": "Prepare a 3D visualization and animation package for the Action Area Plan; Support stakeholder review through landscape, architectural and 3D presentation materials; Create clear visual products for planning, approval and communication needs",
+    "responsibility": "Review site information, design requirements and planning context; Prepare landscape, beautification, architectural or master plan concepts as required; Develop 3D visualization, animation and presentation materials for the planning block; Deliver drawings, visual assets and final presentation products"
   },
   {
     "name": "Topographical Survey Work, Land Acquisition Plan and Master Plan for rural bazar and road of Khulna and Madaripur region under Costal Climate Resilience Improvement Projects (CCRIP)",
@@ -627,7 +689,8 @@
     "status": "COMPLETED",
     "location": "Khulna and Madaripur Region, Bangladesh",
     "description": "Topographical survey, land acquisition plan preparation and master plan support were provided for rural bazars and roads under the Coastal Climate Resilience Improvement Project. The work included field surveys, road and bazar inventory, benchmark establishment, cross-section and longitudinal-section surveys, mouza map collection and digitization, land acquisition layout preparation, land schedule preparation, drawings and project reporting.",
-    "responsibility": ""
+    "objective": "Prepare accurate topographic, alignment and physical feature data for infrastructure planning and design; Support road, bridge, market, ghat, railway or rural infrastructure works with reliable survey outputs; Provide drawings, land acquisition inputs and technical reports for project implementation",
+    "responsibility": "Conduct GPS, Total Station, leveling, cross-section, long-section and physical feature surveys; Map roads, drains, bridges, culverts, markets, waterways, pipelines or related infrastructure as required; Prepare alignments, profiles, AutoCAD drawings, GIS layers and land acquisition layouts; Compile survey results, schedules, maps and final technical reports"
   },
   {
     "name": "Development of GIS Digital Map of service providing of area, Printing, GIS Training, Software installation",
@@ -637,7 +700,8 @@
     "status": "COMPLETED",
     "location": "Service providing area, Bangladesh",
     "description": "GIS digital maps were developed for the service-providing area. The work included collection, processing and management of spatial and non-spatial service area data, GIS map preparation and printing, GIS training support, software installation and technical support for service area mapping.",
-    "responsibility": ""
+    "objective": "Develop GIS digital maps and spatial databases for the service or project area; Improve data management, map production and technical capacity for project stakeholders; Deliver printable maps, digital files, training and software support",
+    "responsibility": "Collect, process and organize spatial and non-spatial service area data; Prepare GIS maps, layouts, geodatabases and printed outputs; Install or configure required GIS software and technical tools; Provide GIS training, technical support and final delivery documentation"
   },
   {
     "name": "Survey of road, bridge, growth center market, ghat and rural waterway and preparation of land acquisition plan under transport improvement Project (RTIP-II), LGED",
@@ -647,7 +711,8 @@
     "status": "COMPLETED",
     "location": "Manikganj and Jamalpur District, Bangladesh",
     "description": "Road, bridge, growth centre market, ghat and rural waterway surveys were conducted under the Rural Transport Improvement Project. The work included topographic survey, physical feature survey, mouza map collection and digitization, land acquisition plan and schedule preparation, alignment drawings and final reporting.",
-    "responsibility": ""
+    "objective": "Prepare accurate topographic, alignment and physical feature data for infrastructure planning and design; Support road, bridge, market, ghat, railway or rural infrastructure works with reliable survey outputs; Provide drawings, land acquisition inputs and technical reports for project implementation",
+    "responsibility": "Conduct GPS, Total Station, leveling, cross-section, long-section and physical feature surveys; Map roads, drains, bridges, culverts, markets, waterways, pipelines or related infrastructure as required; Prepare alignments, profiles, AutoCAD drawings, GIS layers and land acquisition layouts; Compile survey results, schedules, maps and final technical reports"
   },
   {
     "name": "Suply and Delivery of Digital Survey map for all Land area including building and physical feature of 21 district and 20 Upazila Sadar under WZPDCL.",
@@ -657,7 +722,8 @@
     "status": "COMPLETED",
     "location": "Bangladesh",
     "description": "Digital survey maps were prepared and delivered for land areas, buildings and physical features of 21 districts and 20 Upazila Sadars under WZPDCL. The work included field survey, physical feature mapping, GIS database preparation, geo-referencing, map production and final digital delivery.",
-    "responsibility": ""
+    "objective": "Develop GIS digital maps and spatial databases for the service or project area; Improve data management, map production and technical capacity for project stakeholders; Deliver printable maps, digital files, training and software support",
+    "responsibility": "Collect, process and organize spatial and non-spatial service area data; Prepare GIS maps, layouts, geodatabases and printed outputs; Install or configure required GIS software and technical tools; Provide GIS training, technical support and final delivery documentation"
   },
   {
     "name": "Route selection and layout setting using GIS based coordinate of Payra (Lebukhali) Bridge Project,Lebukhali,Patuakhali.",
@@ -667,7 +733,8 @@
     "status": "COMPLETED",
     "location": "Lebukhali, Patuakhali, Bangladesh",
     "description": "GIS-based route selection and layout setting were carried out using high-resolution RTK GPS coordinates for the Payra (Lebukhali) Bridge Project. The work included coordinate-based alignment support, field verification, RTK survey, layout preparation and map production.",
-    "responsibility": ""
+    "objective": "Support bridge route selection and layout setting with GIS-based coordinates; Support route planning, terminal planning, feasibility assessment and conceptual design decisions; Prepare GIS-based transport outputs and reports for stakeholder review",
+    "responsibility": "Prepare survey plans, schedules and field formats for transport and traffic data collection; Conduct traffic counts, route surveys, interviews, field observations and network mapping as required; Process, validate and analyze transport survey datasets; Prepare GIS maps, planning inputs, summary tables and technical reports"
   },
   {
     "name": "MIS System Development for the storage system and accounts management of South pole cold storage Ltd.",
@@ -677,7 +744,8 @@
     "status": "COMPLETED",
     "location": "Bangladesh",
     "description": "MIS system development was completed for the storage and accounts management system. The work included data collection, data entry, database preparation, inventory and accounts module customization, data processing, report generation, software testing and final system delivery.",
-    "responsibility": ""
+    "objective": "Develop a practical inventory and accounts system for cold storage operations; Improve data storage, monitoring, reporting and operational decision-making; Deliver usable database, software or reporting support for project stakeholders",
+    "responsibility": "Collect, enter, clean, validate and organize project or organizational data; Design, customize and test inventory, storage and accounts modules; Generate reports, summaries and digital outputs for monitoring and management use; Provide training, technical assistance, testing and final handover support"
   },
   {
     "name": "Drone based advance Survey and Master Plan of Urbana Housing",
@@ -687,7 +755,8 @@
     "status": "ONGOING",
     "location": "Bangladesh",
     "description": "Drone-based advanced survey and master plan preparation were carried out for Urbana Housing. The work included reconnaissance survey, boundary demarcation, RTK-based BM and GCP collection, aerial image collection and processing, orthophoto, DEM, contour and topographic map preparation, master plan support and final map and report preparation.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, DSM, contour and 3D feature datasets for planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Drone Based Topographic Survey for Solar Power Plant at Madhabpur, Habiganj.",
@@ -697,7 +766,8 @@
     "status": "COMPLETED",
     "location": "Madhabpur, Habiganj",
     "description": "Reconnaissance survey and boundary demarcation were completed for the solar power plant site at Madhabpur, Habiganj. The work included secondary data collection, RTK-based benchmark establishment from the Bangladesh National Datum, TBM establishment, CS, RS and BS mouza map geo-referencing, base map preparation, orthophoto preparation, DEM preparation, contour map preparation and topographic map preparation.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, contour and topographic datasets for solar power plant planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Drone Based Topographic Survey for Solar Power Plant at Bahir Char & Char Khondakar, Sonagazi.",
@@ -707,7 +777,8 @@
     "status": "COMPLETED",
     "location": "Bahir Char and Char Khondakar, Sonagazi, Feni",
     "description": "Reconnaissance survey and boundary demarcation were completed for the solar power plant site at Bahir Char and Char Khondakar, Sonagazi. The work included secondary data collection, RTK-based benchmark establishment from the Bangladesh National Datum, TBM establishment, CS, RS and BS mouza map geo-referencing, base map preparation, orthophoto preparation, DEM preparation, contour map preparation and topographic map preparation.",
-    "responsibility": ""
+    "objective": "Capture accurate aerial and topographic information for the project site; Produce orthophoto, DEM, contour and topographic datasets for solar power plant planning and design; Establish reliable survey control through benchmarks, GCPs and RTK observations",
+    "responsibility": "Conduct reconnaissance, boundary verification and survey control establishment; Plan and execute UAV or aerial image capture for the target area; Process imagery into orthophotos, DEM, DSM, contours and 3D vector datasets; Prepare topographic maps, GIS databases, drawings and survey reports"
   },
   {
     "name": "Conducting Topographic Survey of Structures of the Ganges-Kabadak Irrigation Project (GKIP) in Districts: Kushtia, Jhenidah, Chuadanga and Magura",
@@ -717,7 +788,8 @@
     "status": "COMPLETED",
     "location": "Kushtia, Jhenidah, Chuadanga and Magura",
     "description": "Topographic survey of structures was conducted for the Ganges-Kabadak Irrigation Project. The work included temporary benchmark establishment, field survey of structures, canals, bridges and culverts, cross-section and long-profile creation, location map preparation, drawing preparation, TBM list preparation and survey reporting.",
-    "responsibility": ""
+    "objective": "Prepare accurate topographic, hydrological and structural information for water management assets; Support canal, irrigation, drainage and water-resource planning with verified field measurements; Deliver drawings, profiles, maps and reports for engineering and operational decisions",
+    "responsibility": "Establish temporary benchmarks and survey controls for the project area; Conduct canal, structure, discharge, cross-section, long-profile and hydrological field surveys as required; Process measurements into maps, profiles, drawings and summary sheets; Prepare location maps, TBM lists, technical datasets and survey reports"
   },
   {
     "name": "Taking Discharge measurement in the Secondary canals of (i)The ganges-Kobadak Irrigation Project and (ii) the Teesta Barrage Project under IMIP",
@@ -727,7 +799,8 @@
     "status": "COMPLETED",
     "location": "Ganges-Kobadak Irrigation Project and Teesta Barrage Project areas, Bangladesh",
     "description": "Discharge measurements were taken in secondary canals of the Ganges-Kobadak Irrigation Project and the Teesta Barrage Project. The work included field measurement of canal flow and hydrological conditions, canal section and flow data collection and processing, measurement sheet preparation, discharge summary preparation and final reporting.",
-    "responsibility": ""
+    "objective": "Prepare accurate topographic, hydrological and structural information for water management assets; Support canal, irrigation, drainage and water-resource planning with verified field measurements; Deliver drawings, profiles, maps and reports for engineering and operational decisions",
+    "responsibility": "Establish temporary benchmarks and survey controls for the project area; Conduct canal, structure, discharge, cross-section, long-profile and hydrological field surveys as required; Process measurements into maps, profiles, drawings and summary sheets; Prepare location maps, TBM lists, technical datasets and survey reports"
   },
   {
     "name": "Conducting Topographic Survey of Canals: Ganges, Kushtia, Alamdanga main canal of the Ganges-Kabadak Irrigation Project (GKIP) Area",
@@ -737,7 +810,8 @@
     "status": "COMPLETED",
     "location": "Ganges, Kushtia and Alamdanga Main Canal area of the Ganges-Kabadak Irrigation Project, Bangladesh",
     "description": "Topographic surveys of canals were conducted for the Ganges, Kushtia and Alamdanga main canals of the Ganges-Kabadak Irrigation Project area. The work included temporary benchmark establishment, canal cross-section survey, long-profile preparation, location map preparation, drawing preparation and survey reporting.",
-    "responsibility": ""
+    "objective": "Prepare accurate topographic, hydrological and structural information for water management assets; Support canal, irrigation, drainage and water-resource planning with verified field measurements; Deliver drawings, profiles, maps and reports for engineering and operational decisions",
+    "responsibility": "Establish temporary benchmarks and survey controls for the project area; Conduct canal, structure, discharge, cross-section, long-profile and hydrological field surveys as required; Process measurements into maps, profiles, drawings and summary sheets; Prepare location maps, TBM lists, technical datasets and survey reports"
   },
   {
     "name": "Conducting Topographic Survey of Canals of the Teesta Barrage Project (TBP) in Districts: Rangpur, Nilphamari, Dinajpur, Bogra",
@@ -747,7 +821,8 @@
     "status": "COMPLETED",
     "location": "Rangpur, Nilphamari, Dinajpur and Bogra",
     "description": "Topographic surveys of canals were conducted for the Teesta Barrage Project in Rangpur, Nilphamari, Dinajpur and Bogra. The work included temporary benchmark establishment, canal cross-section survey, long-profile preparation, location map preparation, drawing preparation and survey reporting.",
-    "responsibility": ""
+    "objective": "Prepare accurate topographic, hydrological and structural information for water management assets; Support canal, irrigation, drainage and water-resource planning with verified field measurements; Deliver drawings, profiles, maps and reports for engineering and operational decisions",
+    "responsibility": "Establish temporary benchmarks and survey controls for the project area; Conduct canal, structure, discharge, cross-section, long-profile and hydrological field surveys as required; Process measurements into maps, profiles, drawings and summary sheets; Prepare location maps, TBM lists, technical datasets and survey reports"
   },
   {
     "name": "Preparation of base Map, Longitudinal map and land acquisition Plan for kalukhali to Bhatiapara Railway Line",
@@ -757,7 +832,8 @@
     "status": "COMPLETED",
     "location": "Kalukhali to Bhatiapara Railway Line, Bangladesh",
     "description": "Base maps, longitudinal maps and land acquisition plans were prepared for the Kalukhali to Bhatiapara Railway Line. The work included Total Station, GPS and leveling surveys, physical feature survey along the railway alignment, cross-section and long-section preparation, mouza map collection, land acquisition layout and land schedule preparation, AutoCAD drawing and report submission.",
-    "responsibility": ""
+    "objective": "Prepare accurate survey, alignment and mapping inputs for railway planning and design; Support road, bridge, market, ghat, railway or rural infrastructure works with reliable survey outputs; Provide drawings, land acquisition inputs and technical reports for project implementation",
+    "responsibility": "Conduct GPS, Total Station, leveling, cross-section, long-section and physical feature surveys; Map roads, drains, bridges, culverts, markets, waterways, pipelines or related infrastructure as required; Prepare alignments, profiles, AutoCAD drawings, GIS layers and land acquisition layouts; Compile survey results, schedules, maps and final technical reports"
   },
   {
     "name": "Socio-Economic Survey Data Collection and Analysis",
@@ -767,7 +843,8 @@
     "status": "COMPLETED",
     "location": "Bangladesh",
     "description": "Socio-economic survey data collection and analysis were completed. The work included questionnaire-based field data collection, data entry, cleaning and validation, tabulation and analysis of survey findings and preparation of summary tables and survey report.",
-    "responsibility": ""
+    "objective": "Establish a reliable socioeconomic baseline for the project area or affected communities; Assess community conditions, project impacts and planning needs through structured field data; Provide analyzed findings for planning, impact assessment, resettlement or reporting decisions",
+    "responsibility": "Prepare survey tools, sampling plans and field data collection schedules; Conduct household, institutional, stakeholder or community surveys as required; Clean, validate, enter, tabulate and analyze collected data; Prepare summary tables, GIS-linked datasets, impact findings and survey reports"
   },
   {
     "name": "Data Collection, Data Entry in a customized software, analysis and report for the marketing campaign.",
@@ -777,7 +854,8 @@
     "status": "COMPLETED",
     "location": "Bangladesh",
     "description": "Data collection and data entry were completed in customized software for the marketing campaign. The work included data cleaning and validation, data processing and analysis, campaign database preparation, summary output preparation, table generation and final reporting.",
-    "responsibility": ""
+    "objective": "Create reliable digital records and management information outputs for the project or organization; Improve data storage, monitoring, reporting and operational decision-making; Deliver usable database, software or reporting support for project stakeholders",
+    "responsibility": "Collect, enter, clean, validate and organize project or organizational data; Design, customize or support MIS, database and reporting workflows; Generate reports, summaries and digital outputs for monitoring and management use; Provide training, technical assistance, testing and final handover support"
   },
   {
     "name": "Data Collection Entry and software Design foe web-based Program for Social Safety Net Program, MoF& DM",
@@ -787,7 +865,8 @@
     "status": "COMPLETED",
     "location": "Bangladesh",
     "description": "Data collection, data entry and software design were completed for the web-based Social Safety Net Program. The work included MIS database development, data cleaning, validation and processing, training and technical support, report generation and final data submission.",
-    "responsibility": ""
+    "objective": "Create reliable digital records and management information outputs for the project or organization; Improve data storage, monitoring, reporting and operational decision-making; Deliver usable database, software or reporting support for project stakeholders",
+    "responsibility": "Collect, enter, clean, validate and organize project or organizational data; Design, customize or support MIS, database and reporting workflows; Generate reports, summaries and digital outputs for monitoring and management use; Provide training, technical assistance, testing and final handover support"
   },
   {
     "name": "Feasibility Study for Water management project of Gungai Juri Haore Area,Sylhet.",
@@ -797,7 +876,8 @@
     "status": "COMPLETED",
     "location": "Gungai Juri Haor Area, Sylhet",
     "description": "Feasibility study support was provided for the water management project of Gungai Juri Haore Area, Sylhet. The work included collection of physical, hydrological and water resource data, topographical and physical feature surveys, GIS map preparation, data analysis and interpretation and preparation of feasibility study inputs, maps and report.",
-    "responsibility": ""
+    "objective": "Prepare physical, hydrological and GIS inputs for water management feasibility assessment; Support canal, irrigation, drainage and water-resource planning with verified field measurements; Deliver drawings, profiles, maps and reports for engineering and operational decisions",
+    "responsibility": "Establish temporary benchmarks and survey controls for the project area; Conduct canal, structure, discharge, cross-section, long-profile and hydrological field surveys as required; Process measurements into maps, profiles, drawings and summary sheets; Prepare location maps, TBM lists, technical datasets and survey reports"
   },
   {
     "name": "Preparation of sewerage Master plan for Zinzira Union of KeraniganjUpazila",
@@ -807,7 +887,8 @@
     "status": "COMPLETED",
     "location": "Zinzira Union, Keraniganj Upazila, Dhaka",
     "description": "Sewerage master plan preparation was completed for Zinzira Union of Keraniganj Upazila. The work included topographic survey, road and drainage network mapping, land use GIS mapping, digital map preparation, profile preparation and report submission.",
-    "responsibility": ""
+    "objective": "Prepare road, drainage and land use GIS inputs for sewerage master planning; Support master planning, capacity assessment and infrastructure improvement decisions; Prepare GIS-based maps, profiles and reports for municipal planning use",
+    "responsibility": "Conduct topographic, road, drainage, sewerage, land use and physical feature surveys; Map network alignments, structures, profiles, cross sections and related infrastructure; Prepare base maps, inventories, capacity assessment inputs and GIS datasets; Deliver drawings, master plan inputs and final survey reports"
   },
   {
     "name": "Preparation of Drainage Master Plan of Rangamati Pourashava",
@@ -817,7 +898,8 @@
     "status": "COMPLETED",
     "location": "Rangamati Pourashava",
     "description": "Drainage master plan preparation was completed for Rangamati Pourashava. The work included drainage network survey, physical feature survey, base map preparation, drainage inventory, capacity assessment, mapping and report preparation.",
-    "responsibility": ""
+    "objective": "Prepare drainage network evidence and base maps for municipal drainage master planning; Support master planning, capacity assessment and infrastructure improvement decisions; Prepare GIS-based maps, profiles and reports for municipal planning use",
+    "responsibility": "Conduct topographic, road, drainage, sewerage, land use and physical feature surveys; Map network alignments, structures, profiles, cross sections and related infrastructure; Prepare base maps, inventories, capacity assessment inputs and GIS datasets; Deliver drawings, master plan inputs and final survey reports"
   },
   {
     "name": "Digital Survey Mapping and geo-referencing (including report) of Sonapur Bazar, Maizdee Poura Bazar and Poura Bhaban of Noakhali Pourashava",
@@ -827,7 +909,8 @@
     "status": "COMPLETED",
     "location": "Sonapur Bazar, Maizdee Poura Bazar and Poura Bhaban of Noakhali Pourashava",
     "description": "Digital survey mapping and geo-referencing were completed for Sonapur Bazar, Maizdee Poura Bazar and Poura Bhaban of Noakhali Pourashava. The work included field survey, GIS-based digital mapping, geo-referencing, map preparation and report submission.",
-    "responsibility": ""
+    "objective": "Develop GIS digital maps and spatial databases for the service or project area; Improve data management, map production and technical capacity for project stakeholders; Deliver printable maps, digital files, training and software support",
+    "responsibility": "Collect, process and organize spatial and non-spatial service area data; Prepare GIS maps, layouts, geodatabases and printed outputs; Install or configure required GIS software and technical tools; Provide GIS training, technical support and final delivery documentation"
   },
   {
     "name": "Development of GIS Digital map of service providing of area, Printing, IS Training, Software installation.",
@@ -837,7 +920,8 @@
     "status": "COMPLETED",
     "location": "Service providing area, Bangladesh",
     "description": "GIS digital maps were developed for the service-providing area. The work included collection, processing and management of spatial and non-spatial service area data, GIS map preparation and printing, GIS training support, software installation and technical support for service area mapping.",
-    "responsibility": ""
+    "objective": "Develop GIS digital maps and spatial databases for the service or project area; Improve data management, map production and technical capacity for project stakeholders; Deliver printable maps, digital files, training and software support",
+    "responsibility": "Collect, process and organize spatial and non-spatial service area data; Prepare GIS maps, layouts, geodatabases and printed outputs; Install or configure required GIS software and technical tools; Provide GIS training, technical support and final delivery documentation"
   },
   {
     "name": "GPS Survey of School Mapping and Digitization of Secondary School of Dhaka for Nottingham University research Project",
@@ -847,7 +931,8 @@
     "status": "COMPLETED",
     "location": "Dhaka, Bangladesh",
     "description": "GPS survey, school mapping and digitization of secondary schools of Dhaka were completed for the Nottingham University research project. The work included collection of school location data, digitization of secondary school features, GIS database preparation, map production and final survey reporting.",
-    "responsibility": ""
+    "objective": "Map secondary school locations and related attributes for the research project; Support project planning, research, site selection or community development decisions; Prepare GIS-based outputs and reports for stakeholder use",
+    "responsibility": "Conduct field verification, GPS location survey and site condition assessment; Collect facility, settlement, school, shelter or community asset information as required; Digitize and prepare GIS layers, maps and attribute databases; Prepare final maps, survey findings and reporting deliverables"
   },
   {
     "name": "Feasibility study of Majhgram to Dhlarchar via Pabna new railway line",
@@ -857,7 +942,8 @@
     "status": "COMPLETED",
     "location": "Majhgram to Dhalarchar via Pabna Railway Line, Bangladesh",
     "description": "Feasibility study support was provided for the Majhgram to Dhlarchar via Pabna new railway line. The work included topographical and hydrographical surveys, route and alignment mapping, GPS and Total Station survey support, DEM, contour and base map preparation, data analysis, map production and report support.",
-    "responsibility": ""
+    "objective": "Prepare accurate survey, alignment and mapping inputs for railway planning and design; Support road, bridge, market, ghat, railway or rural infrastructure works with reliable survey outputs; Provide drawings, land acquisition inputs and technical reports for project implementation",
+    "responsibility": "Conduct GPS, Total Station, leveling, cross-section, long-section and physical feature surveys; Map roads, drains, bridges, culverts, markets, waterways, pipelines or related infrastructure as required; Prepare alignments, profiles, AutoCAD drawings, GIS layers and land acquisition layouts; Compile survey results, schedules, maps and final technical reports"
   },
   {
     "name": "Fael Khair School-Cum-Shelter Programme for the Victims of the Cyclone Sidr(Zone-1)",
@@ -867,7 +953,8 @@
     "status": "COMPLETED",
     "location": "Koyra and Shyamnagar Upazila, Bangladesh",
     "description": "Site surveys were conducted for the selection of school-cum-shelter sites under the Fael Khair Programme for the victims of Cyclone Sidr. The work included field verification, site condition assessment, GPS-based location survey, mapping support and reporting.",
-    "responsibility": ""
+    "objective": "Support cyclone shelter site selection through verified field and location information; Support project planning, research, site selection or community development decisions; Prepare GIS-based outputs and reports for stakeholder use",
+    "responsibility": "Conduct field verification, GPS location survey and site condition assessment; Collect facility, settlement, school, shelter or community asset information as required; Digitize and prepare GIS layers, maps and attribute databases; Prepare final maps, survey findings and reporting deliverables"
   },
   {
     "name": "Cold Storage Store Inventory & Accounts Software Preparation",
@@ -877,7 +964,8 @@
     "status": "COMPLETED",
     "location": "Bangladesh",
     "description": "Cold storage inventory and accounts software were prepared. The work included data collection and entry for inventory and accounts records, database design, software customization, inventory and accounts module development, software testing, installation, user support and final delivery.",
-    "responsibility": ""
+    "objective": "Develop a practical inventory and accounts system for cold storage operations; Improve data storage, monitoring, reporting and operational decision-making; Deliver usable database, software or reporting support for project stakeholders",
+    "responsibility": "Collect, enter, clean, validate and organize project or organizational data; Design, customize and test inventory, storage and accounts modules; Generate reports, summaries and digital outputs for monitoring and management use; Provide training, technical assistance, testing and final handover support"
   },
   {
     "name": "Total Station Survey of long section and cross section and Horizontal Alignment of Railway embankment in Rajbari and supply of AutoCAD maps.",
@@ -887,6 +975,7 @@
     "status": "COMPLETED",
     "location": "Rajbari, Bangladesh",
     "description": "Total Station surveys of long sections, cross sections and horizontal alignment were conducted for the railway embankment in Rajbari. The work included field data collection and processing, longitudinal profile preparation, cross-section drawing preparation, alignment drawing preparation, AutoCAD map preparation and final drawing and report submission.",
-    "responsibility": ""
+    "objective": "Prepare accurate survey, alignment and mapping inputs for railway planning and design; Support road, bridge, market, ghat, railway or rural infrastructure works with reliable survey outputs; Provide drawings, land acquisition inputs and technical reports for project implementation",
+    "responsibility": "Conduct GPS, Total Station, leveling, cross-section, long-section and physical feature surveys; Map roads, drains, bridges, culverts, markets, waterways, pipelines or related infrastructure as required; Prepare alignments, profiles, AutoCAD drawings, GIS layers and land acquisition layouts; Compile survey results, schedules, maps and final technical reports"
   }
 ]

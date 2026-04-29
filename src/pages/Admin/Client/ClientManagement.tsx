@@ -24,7 +24,7 @@ type Client = {
   joinDate?: string;
 };
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 10;
 
 const pageVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -104,7 +104,7 @@ const ClientManagement = () => {
     page: currentPage,
     limit: PAGE_SIZE,
   });
-  
+
   const [deleteClient] = useDeleteClientMutation();
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
 
@@ -222,12 +222,17 @@ const ClientManagement = () => {
                           damping: 18,
                         }}
                       >
-                        <ClientImage src={item.picture} alt={item.name} className="h-full w-full rounded-xl object-contain p-2" iconClassName="h-9 w-9" />
+                        <ClientImage
+                          src={item.picture}
+                          alt={item.name}
+                          className="h-full w-full rounded-xl object-contain p-2"
+                          iconClassName="h-9 w-9"
+                        />
                       </motion.div>
                     </motion.div>
                   </TableCell>
 
-                  <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                  <TableCell className={`border-y  p-3 align-middle transition-all duration-300 ${toneClass}`}>
                     <motion.div
                       custom={baseDelay + 0.03}
                       variants={cellVariants}
@@ -260,37 +265,37 @@ const ClientManagement = () => {
                     </motion.div>
                   </TableCell>
 
-                  <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                  <TableCell className={`border-y p-3 text-center align-middle transition-all duration-300 ${toneClass}`}>
                     <motion.div
                       custom={baseDelay + 0.06}
                       variants={cellVariants}
                       initial="hidden"
                       animate="visible"
-                      className="font-medium text-sm text-foreground/90"
+                      className="mx-auto flex min-h-20 max-w-35 2xl:max-w-50 items-center justify-center gap-2 text-center text-sm text-foreground/90"
                     >
-                      {item.email}
+                      <span className="line-clamp-3 wrap-break-word whitespace-normal">{item.email}</span>
                     </motion.div>
                   </TableCell>
 
-                  <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                  <TableCell className={`border-y  p-3  transition-all duration-300 ${toneClass}`}>
                     <motion.div
                       custom={baseDelay + 0.09}
                       variants={cellVariants}
                       initial="hidden"
                       animate="visible"
-                      className="font-medium text-sm text-foreground/90"
+                      className=" text-sm text-foreground/90"
                     >
                       {item.phone}
                     </motion.div>
                   </TableCell>
 
-                  <TableCell className={`border-y px-4 py-3 align-middle transition-all duration-300 ${toneClass}`}>
+                  <TableCell className={`border-y  p-3 align-middle transition-all duration-300 ${toneClass}`}>
                     <motion.div
                       custom={baseDelay + 0.15}
                       variants={cellVariants}
                       initial="hidden"
                       animate="visible"
-                      className="font-medium text-sm text-foreground/90"
+                      className=" text-sm text-foreground/90"
                     >
                       {item.joinDate ? format(new Date(item.joinDate), "PPP") : "-"}
                     </motion.div>
