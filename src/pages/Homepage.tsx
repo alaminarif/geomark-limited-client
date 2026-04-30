@@ -16,7 +16,7 @@ import { useGetAllServicesQuery } from "@/redux/features/service/service.api";
 const Homepage = () => {
   const { data: newsData, isLoading: newsLoading } = useGetAllNewssQuery(undefined);
   const { data: servicesData, isLoading: servicesLoading } = useGetAllServicesQuery({ limit: 8 });
-  const { data: projectsData, isLoading: projectsLoading } = useGetAllProjectsQuery({ limit: 8 });
+  const { data: projectsData, isLoading: projectsLoading } = useGetAllProjectsQuery({ sort: "-year", limit: 8 });
   const { data: employeesData, isLoading: employeesLoading } = useGetAllEmployeesQuery({ sort: "rank", limit: 8 });
   const { data: clientsData, isLoading: clientsLoading } = useGetClientsQuery({ sort: "rank", limit: 12 });
 
